@@ -11,7 +11,13 @@ class Cube():
 pg.init()
 screen = pg.display.set_mode([500, 500])
 screen.fill((255, 255, 255))
+
+image = pg.image.load("icon.png")
+pg.display.set_icon(image)
+pg.display.set_caption("Cube")
 pg.display.flip()
+
+
 
 running = True
 while running:
