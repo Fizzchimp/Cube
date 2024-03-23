@@ -1,0 +1,7 @@
+Turning Methods for cube
+PathFinding algorithm
+Cube Display for pygame
+
+Add colours to Display
+
+3D model?
