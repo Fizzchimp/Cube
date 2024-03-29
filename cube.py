@@ -10,8 +10,8 @@ class Cube():
 
                      "YYYY"]
         
-    # Display the cube in net form
     def display(self):
+    # Display the cube in net form
         print(f"""
    |{self.cube[0][:2]}|
    |{self.cube[0][2:4]}|
@@ -20,8 +20,9 @@ class Cube():
    |{self.cube[5][:2]}|
    |{self.cube[5][2:4]}|""")
    
-    # Rotation U clockwise
+
     def U(self):
+        # Rotation U clockwise
         self.cube[0] = self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1]
 
         sub = self.cube[1][:2]
@@ -29,8 +30,8 @@ class Cube():
             self.cube[i] = self.cube[i + 1][:2] + self.cube[i][2:4]
         self.cube[4] = sub + self.cube[4][2:4]
 
-    # Rotation U anticlockwise
     def U_Prime(self):
+        # Rotation U anticlockwise
         self.cube[0] = self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2]
         
         sub = self.cube[4][:2]
@@ -38,12 +39,68 @@ class Cube():
             self.cube[4 - i] = self.cube[3 - i][:2] + self.cube[4 - i][2:4]
         self.cube[1] = sub + self.cube[1][2:4]
 
-    # Rotation D clockwise
+
     def D(self):
-        self.cube[5] = self.cube[5][2] + self.cube[5][0] + self.cube[0][3] + self.cube[0][1]
+        # Rotation D clockwise
+        self.cube[5] = self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1]
+
+        sub = self.cube[4][2:4]
+        for i in range(3):
+            self.cube[4 - i] = self.cube[4 - i][:2] + self.cube[3 - i][2:4]
+        self.cube[1] = self.cube[1][:2] + sub
+
+    def D_Prime(self):
+        # Rotation D anticlockwise
+        self.cube[5] = self.cube[5][1] + self.cube[5][3] + self.cube[5][0] + self.cube[5][2]
+
+        sub = self.cube[1][2:4]
+        for i in range(1, 4):
+            self.cube[i] = self.cube[i][:2] + self.cube[i + 1][2:4]
+        self.cube[4] = self.cube[4][:2] + sub
+
+
+    def F(self):
+        # Rotation F clockwise
+        self.cube[2] = self.cube[2][2] + self.cube[2][0] + self.cube[2][3] + self.cube[2][1]
+    
+        sub = self.cube[0][2:4]
+        self.cube[0] = self.cube[0][:2] + self.cube[1][1] + self.cube[1][3]
+        self.cube[1] = self.cube[1][0] + self.cube[5][0] + self.cube[1][2] + self.cube[5][1]
+        self.cube[5] = self.cube[3][0] + self.cube[3][2] + self.cube[5][2:4]
+        self.cube[3] = sub[0] + self.cube[3][1] + sub[1] + self.cube[3][3]
+    
+    def F_Prime(self):
+        # Rotation F anticlockwise
+        self.cube[2] = self.cube[2][1] + self.cube[2][3] + self.cube[2][0] + self.cube[2][2]
+
+        sub = self.cube[0][2:4]
+        self.cube[0] = self.cube[0][:2] + self.cube[3][0] + self.cube[3][2]
+        self.cube[3] = self.cube[5][1] + self.cube[3][1] + self.cube[5][0] + self.cube[3][3]
+        self.cube[5] = self.cube[1][1] + self.cube[1][3] + self.cube[5][2:4]
+        self.cube[1] = self.cube[1][0] + sub[1] + self.cube[1][2] + sub[0]
+
+
+    def B(self):
+        self.cube[4] = self.cube[4][2] + self.cube[4][0] + self.cube[4][3] + self.cube[4][1]
+
+        sub = self.cube[0][:2]
+        self.cube[0] = self.cube[3][1] + self.cube[3][3] + self.cube[0][2:4]
+        self.cube[3] = self.cube[3][0] + self.cube[5][3] + self.cube[3][2] + self.cube[5][2]
+        self.cube[5] = self.cube[5][:2] + self.cube[1][0] + self.cube[1][2]
+        self.cube[1] = sub[1] + self.cube[1][1] + sub[0] + self.cube[1][3]
+    
+    def B_Prime(self):
+        self.cube[4] = self.cube[4][1] + self.cube[4][3] + self.cube[4][0] + self.cube[4][2]
         
+        sub = self.cube[0][:2]
+        self.cube[0] = self.cube[1][2] + self.cube[1][0] + self.cube[0][2:4]
+        self.cube[1] = self.cube[5][2] + self.cube[1][1] + self.cube[5][3] + self.cube[1][3]
+        self.cube[5] = self.cube[5][:2] + self.cube[3][1] + self.cube[3][3]
+        self.cube[3] = self.cube[3][0] + sub[0] + self.cube[3][2] + sub[1]
+
+
+    def L(self):
 
 cube = Cube()
-cube.U()
-cube.U_Prime()
+cube.B_Prime()
 cube.display()
