@@ -21,6 +21,15 @@ class Cube():
    |{self.cube[5][2:4]}|""")
    
 
+    def solved(self):
+        # Checks if the cube is solved
+        for face in self.cube:
+            if face[0] == face[1] == face[2] == face[3]:
+                continue
+            else: return False
+        return True
+
+
     def U(self):
         # Rotation U clockwise
         self.cube[0] = self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1]
@@ -141,11 +150,3 @@ class Cube():
         self.cube[4] = self.cube[5][3] + self.cube[4][1] + self.cube[5][1] + self.cube[4][3]
         self.cube[5] = self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]
         self.cube[2] = self.cube[2][0] + sub[0] + self.cube[2][2] + sub[1]
-
-cube = Cube()
-for i in range(6):
-    cube.R()
-    cube.U()
-    cube.R_Prime()
-    cube.U_Prime()
-cube.display()
