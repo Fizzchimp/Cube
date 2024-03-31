@@ -17,4 +17,5 @@ Way to set up the cube
 -----Display:----
 =================
 Cube Display for pygame
+Animations?
 3D model?
