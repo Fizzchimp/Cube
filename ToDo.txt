@@ -1,8 +1,15 @@
-Turning Methods for cube:
-Testing
-PathFinding algorithm
-Cube Display for pygame
+Methods for cube:
 
+Testing
+Solved Checker
 Add colours to Display?
 
+Main:
+
+PathFinding algorithm
+Cube Display for pygame
+Turning UI/keybindings
+Way to set up the cube
+
+Set algorithms?
 3D model?
