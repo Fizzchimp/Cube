@@ -18,7 +18,7 @@ class Display():
         self.x, self.y  = self.width / 2, self.height / 2
 
         # Length of side of cube
-        self.z = self.width / 2.5 if self.width <= self.height else self.height / 2.5
+        self.length = self.width / 2.5 if self.width <= self.height else self.height / 2.5
 
     def draw_cube(self, rotating = False):
 
@@ -27,22 +27,37 @@ class Display():
 
         # Each vertex of hexagon
         cos30 = np.cos(np.pi / 6)
-        top, bottom = (self.x, self.y - self.z), (self.x, self.y + self.z)
-        points = [(self.x - self.z * cos30, self.y - self.z * 0.5), (self.x + self.z * cos30, self.y - self.z * 0.5),
-                  (self.x + self.z * cos30, self.y + self.z * 0.5), (self.x - self.z * cos30, self.y + self.z * 0.5)]
+        phase = self.phase
+        x, y, length = self.x, self.y, self.length
+        top, bottom = (x, y - length), (x, y + length)
+
+        # points = [(self.x - self.z * cos30, self.y - self.z * 0.5), (self.x + self.z * cos30, self.y - self.z * 0.5),
+        #           (self.x + self.z * cos30, self.y + self.z * 0.5), (self.x - self.z * cos30, self.y + self.z * 0.5)]
         
-        colour1 = 150 + 50 * np.sin(self.phase)
-        pg.draw.polygon(self.screen, (colour1, colour1, colour1), [(self.x, self.y), points[0], top, points[1]])
+        # colour1 = 150 + 50 * np.sin(self.phase)
+        # pg.draw.polygon(self.screen, (colour1, colour1, colour1), [(self.x, self.y), points[0], top, points[1]])
 
-        colour2 = 150 + 50 * np.sin(self.phase + 2 * np.pi / 3)
-        pg.draw.polygon(self.screen, (colour2, colour2, colour2), [(self.x, self.y), points[1], points[2], bottom])
+        # colour2 = 150 + 50 * np.sin(self.phase + 2 * np.pi / 3)
+        # pg.draw.polygon(self.screen, (colour2, colour2, colour2), [(self.x, self.y), points[1], points[2], bottom])
 
-        colour3 = 150 + 50 * np.sin(self.phase + 4 * np.pi / 3)
-        pg.draw.polygon(self.screen, (colour3, colour3, colour3), [(self.x, self.y), bottom, points[3], points[0]])
+        # colour3 = 150 + 50 * np.sin(self.phase + 4 * np.pi / 3)
+        # pg.draw.polygon(self.screen, (colour3, colour3, colour3), [(self.x, self.y), bottom, points[3], points[0]])
 
+
+        pg.draw.circle(self.screen, (75, 75, 150), top, 5)
+        pg.draw.circle(self.screen, (75, 75, 150), bottom, 5)
+
+        points = [(x + length * cos30 * np.sin(phase), y + length / 2 * np.sin(phase / 2)), (x - length * cos30, y - length / 2),
+                  (x - length * cos30, y + length / 2),
+                  (x, y),
+                  (x + length * cos30, y + length / 2),
+                  (x + length * cos30, y - length / 2)]
+        
+        for i, x in enumerate(points):
+            pg.draw.circle(self.screen, (150, 75, 75), x, 5)
 
         pg.display.flip()
-        if rotating: self.phase += np.pi / 72
+        if rotating: self.phase += np.pi / 144
 
 
 
@@ -54,5 +69,5 @@ while running:
         if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): running = False
 
     screen.draw_cube(True)
-    pg.time.wait(50)
+    pg.time.wait(25)
 pg.quit()
