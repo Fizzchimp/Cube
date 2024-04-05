@@ -42,7 +42,6 @@ class Display():
 
 
         pg.display.flip()
- 
         if rotating: self.phase += np.pi / 72
 
 
@@ -54,6 +53,6 @@ while running:
     for event in pg.event.get():
         if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): running = False
 
-    screen.draw_cube()
+    screen.draw_cube(True)
     pg.time.wait(50)
 pg.quit()
