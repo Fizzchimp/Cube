@@ -20,7 +20,7 @@ class Display():
         # Length of side of cube
         self.z = self.width / 2.5 if self.width <= self.height else self.height / 2.5
 
-    def draw_cube(self):
+    def draw_cube(self, rotating = False):
 
         self.screen.fill((255, 255, 255))
 
@@ -54,6 +54,6 @@ while running:
     for event in pg.event.get():
         if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): running = False
 
-    screen.draw_cube(True)
+    screen.draw_cube()
     pg.time.wait(50)
 pg.quit()
