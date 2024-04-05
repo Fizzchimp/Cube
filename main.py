@@ -3,7 +3,7 @@ from display import Display
 from cube import Cube
 
 
-screen = Display()
+screen = Display(700, 700)
 
 running = True
 while running:
