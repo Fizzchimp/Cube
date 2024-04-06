@@ -16,6 +16,5 @@ Way to set up the cube
 =================
 -----Display:----
 =================
-Cube Display for pygame
-Animations?
-3D model?
+Psuedo 3D model movement/animations for 2 by 2 model
+Implement Queue to draw each face in order of visibility.

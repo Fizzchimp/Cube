@@ -54,9 +54,7 @@ class Display():
                   (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) + 1)),
                   (x + length * cos30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) + 1)),
                   (x + length * cos30 * -np.cos(phase), y + length / 2 * (np.sin(phase) + 1))]
-        
-        for i, x in enumerate(points):
-            pg.draw.circle(self.screen, (150, 75, 75), x, 5)
+
 
         for i in range(4):
             pg.draw.line(self.screen, (100, 100, 100), points[i], points[i + 4])
