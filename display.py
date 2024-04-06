@@ -44,21 +44,31 @@ class Display():
         # pg.draw.polygon(self.screen, (colour3, colour3, colour3), [(self.x, self.y), bottom, points[3], points[0]])
 
 
-        pg.draw.circle(self.screen, (75, 75, 150), top, 5)
-        pg.draw.circle(self.screen, (75, 75, 150), bottom, 5)
 
-        points = [(x + length * cos30 * np.sin(phase), y + length / 2 * np.sin(phase / 2)), (x - length * cos30, y - length / 2),
-                  (x - length * cos30, y + length / 2),
-                  (x, y),
-                  (x + length * cos30, y + length / 2),
-                  (x + length * cos30, y - length / 2)]
+        points = [(x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) - 1)),
+                  (x + length * cos30 * np.cos(phase), y + length / 2 * (np.cos(phase + np.pi / 2) - 1)),
+                  (x + length * cos30 * np.sin(phase + np.pi), y + length / 2 * (np.cos(phase + np.pi) - 1)),
+                  (x + length * cos30 * np.cos(phase + np.pi), y + length / 2 * (np.cos(phase + np.pi * 1.5) - 1)),
+
+                  (x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) + 1)),
+                  (x + length * cos30 * np.cos(phase), y + length / 2 * (np.cos(phase + np.pi / 2) + 1)),
+                  (x + length * cos30 * np.sin(phase + np.pi), y + length / 2 * (np.cos(phase + np.pi) + 1)),
+                  (x + length * cos30 * np.cos(phase + np.pi), y + length / 2 * (np.cos(phase + np.pi * 1.5) + 1))]
         
         for i, x in enumerate(points):
             pg.draw.circle(self.screen, (150, 75, 75), x, 5)
 
-        pg.display.flip()
-        if rotating: self.phase += np.pi / 144
+        for i in range(4):
+            pg.draw.line(self.screen, (100, 100, 100), points[i], points[i + 4])
+        for i in range(3):
+            pg.draw.line(self.screen, (100, 100, 100), points[i], points[i + 1])
+            pg.draw.line(self.screen, (100, 100, 100), points[i + 4], points[i + 5])
 
+        pg.draw.line(self.screen, (100, 100, 100), points[3], points[0])
+        pg.draw.line(self.screen, (100, 100, 100), points[7], points[4])
+
+        pg.display.flip()
+        if rotating: self.phase += np.pi / 288
 
 
 screen = Display(700, 700)
@@ -69,5 +79,5 @@ while running:
         if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): running = False
 
     screen.draw_cube(True)
-    pg.time.wait(25)
+    pg.time.wait(15)
 pg.quit()
