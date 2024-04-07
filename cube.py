@@ -142,6 +142,7 @@ class Cube():
         self.cube[4] = sub[1] + self.cube[4][1] + sub[0] + self.cube[4][3]
 
     def R_Prime(self):
+
         # Rotation R anticlockwise
         self.cube[3] = self.cube[3][1] + self.cube[3][3] + self.cube[3][0] + self.cube[3][2]
 
