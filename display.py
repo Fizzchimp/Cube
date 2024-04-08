@@ -87,9 +87,7 @@ while running:
         if key == pg.K_ESCAPE: running = False
         if key == pg.K_RIGHT and screen.phase == 0: screen.phase = -90
         if key == pg.K_LEFT and screen.phase == 0: screen.phase = 90
-
-
-            
+  
 
     screen.draw_cube()
     pg.time.wait(2)
