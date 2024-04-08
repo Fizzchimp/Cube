@@ -16,5 +16,7 @@ Way to set up the cube
 =================
 -----Display:----
 =================
-Psuedo 3D model movement/animations for 2 by 2 model
+Psuedo 3D model movement/animations for 2 by 2 model:
+    Rotation around x axis (With key press)
+    
 Implement Queue to draw each face in order of visibility.
