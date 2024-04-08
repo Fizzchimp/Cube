@@ -18,10 +18,10 @@ class Display():
         self.x, self.y  = self.width / 2, self.height / 2
 
         # Length of side of cube
-        self.length = self.width / 2.5 if self.width <= self.height else self.height / 2.5
+        self.length = self.width / 2.5 if self.width <= self.height else self.height / 2.5    
 
 
-    def draw_cube(self, rotating = False):
+    def draw_cube(self):
 
         self.screen.fill((255, 255, 255))
 
@@ -67,18 +67,20 @@ class Display():
         pg.draw.line(self.screen, (100, 100, 100), points[7], points[4])
 
         pg.display.flip()
-        if rotating: self.phase += np.pi / 288
+        
+        if self.phase < np.pi / 2:
+            self.phase += np.pi / 256
+            print(self.phase / np.pi)
+        
 
-
-def imageFace(self):
-    face = pg.surface
 screen = Display(700, 700)
+screen.phase = 0
 
 running = True
 while running:
     for event in pg.event.get():
         if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): running = False
-
-    screen.draw_cube(True)
-    pg.time.wait(15)
+        
+    screen.draw_cube()
+    pg.time.wait(10)
 pg.quit()
