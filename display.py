@@ -28,7 +28,7 @@ class Display():
 
         # Each vertex of hexagon
         cos30 = np.cos(np.pi / 6)
-        phase = self.phase
+        phase = self.phase * np.pi / 180
         x, y, length = self.x, self.y, self.length
         top, bottom = (x, y - length), (x, y + length)
 
@@ -68,19 +68,29 @@ class Display():
 
         pg.display.flip()
         
-        if self.phase < np.pi / 2:
-            self.phase += np.pi / 256
-            print(self.phase / np.pi)
+        if self.phase < 0: self.phase += 1
+        if self.phase > 0: self.phase -= 1
         
 
 screen = Display(700, 700)
-screen.phase = 0
-
+screen.phase = - 90
 running = True
+keyDown = False
 while running:
     for event in pg.event.get():
-        if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE): running = False
-        
+        if event.type == pg.QUIT: running = False
+        if event.type == pg.KEYDOWN: keyDown, key = True, event.key
+        if event.type == pg.KEYUP: keyDown = False
+
+    if keyDown:
+        print(key)
+        if key == pg.K_ESCAPE: running = False
+        if key == pg.K_RIGHT and screen.phase == 0: screen.phase = -90
+        if key == pg.K_LEFT and screen.phase == 0: screen.phase = 90
+
+
+            
+
     screen.draw_cube()
-    pg.time.wait(10)
+    pg.time.wait(2)
 pg.quit()
