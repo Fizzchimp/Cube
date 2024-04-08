@@ -20,6 +20,7 @@ class Display():
         # Length of side of cube
         self.length = self.width / 2.5 if self.width <= self.height else self.height / 2.5
 
+
     def draw_cube(self, rotating = False):
 
         self.screen.fill((255, 255, 255))
@@ -69,6 +70,8 @@ class Display():
         if rotating: self.phase += np.pi / 288
 
 
+def imageFace(self):
+    face = pg.surface
 screen = Display(700, 700)
 
 running = True
