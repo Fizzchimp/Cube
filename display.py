@@ -25,26 +25,11 @@ class Display():
 
         self.screen.fill((255, 255, 255))
 
-
         # Each vertex of hexagon
         cos30 = np.cos(np.pi / 6)
-        phase = self.phase * np.pi / 180
+        phase = self.phase * np.pi / 180 + np.pi / 6
         x, y, length = self.x, self.y, self.length
         top, bottom = (x, y - length), (x, y + length)
-
-        # points = [(self.x - self.z * cos30, self.y - self.z * 0.5), (self.x + self.z * cos30, self.y - self.z * 0.5),
-        #           (self.x + self.z * cos30, self.y + self.z * 0.5), (self.x - self.z * cos30, self.y + self.z * 0.5)]
-        
-        # colour1 = 150 + 50 * np.sin(self.phase)
-        # pg.draw.polygon(self.screen, (colour1, colour1, colour1), [(self.x, self.y), points[0], top, points[1]])
-
-        # colour2 = 150 + 50 * np.sin(self.phase + 2 * np.pi / 3)
-        # pg.draw.polygon(self.screen, (colour2, colour2, colour2), [(self.x, self.y), points[1], points[2], bottom])
-
-        # colour3 = 150 + 50 * np.sin(self.phase + 4 * np.pi / 3)
-        # pg.draw.polygon(self.screen, (colour3, colour3, colour3), [(self.x, self.y), bottom, points[3], points[0]])
-
-
 
         points = [(x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) - 1)),
                   (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) - 1)),
@@ -65,7 +50,14 @@ class Display():
 
         pg.draw.line(self.screen, (100, 100, 100), points[3], points[0])
         pg.draw.line(self.screen, (100, 100, 100), points[7], points[4])
-
+        
+        shade1 = (int(200 * np.cos(phase)) for i in range(3))
+        shade2 = (int(200 * np.sin(phase)) for i in range(3))
+        print(shade1)
+        pg.draw.polygon(self.screen, shade1, (points[0], points[1], points[5], points[4]))
+        pg.draw.polygon(self.screen, shade2, (points[0], points[4], points[7], points[3]))
+        pg.draw.polygon(self.screen, (220, 110, 0), points[0:4])
+        
         pg.display.flip()
         
         if self.phase < 0: self.phase += 1
@@ -83,12 +75,11 @@ while running:
         if event.type == pg.KEYUP: keyDown = False
 
     if keyDown:
-        print(key)
         if key == pg.K_ESCAPE: running = False
         if key == pg.K_RIGHT and screen.phase == 0: screen.phase = -90
         if key == pg.K_LEFT and screen.phase == 0: screen.phase = 90
   
 
     screen.draw_cube()
-    pg.time.wait(2)
+    pg.time.wait(8)
 pg.quit()
