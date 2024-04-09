@@ -18,5 +18,6 @@ Way to set up the cube
 =================
 Psuedo 3D model movement/animations for 2 by 2 model:
     Rotation around x axis (With key press)
+    Keybindings cleanup for input keys
     
-Implement Queue to draw each face in order of visibility.
+Implement Queue to draw each face in order of visibility?

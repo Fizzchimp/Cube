@@ -51,12 +51,11 @@ class Display():
         pg.draw.line(self.screen, (100, 100, 100), points[3], points[0])
         pg.draw.line(self.screen, (100, 100, 100), points[7], points[4])
         
-        shade1 = (int(200 * np.cos(phase)) for i in range(3))
-        shade2 = (int(200 * np.sin(phase)) for i in range(3))
-        print(shade1)
-        pg.draw.polygon(self.screen, shade1, (points[0], points[1], points[5], points[4]))
-        pg.draw.polygon(self.screen, shade2, (points[0], points[4], points[7], points[3]))
-        pg.draw.polygon(self.screen, (220, 110, 0), points[0:4])
+       # shade1 = [int(100 * (1 + np.cos(phase))) for i in range(3)]
+       # shade2 = [int(100 * (1 + np.sin(phase))) for i in range(3)]
+       # pg.draw.polygon(self.screen, shade1, (points[0], points[1], points[5], points[4]))
+       # pg.draw.polygon(self.screen, shade2, (points[0], points[4], points[7], points[3]))
+       # pg.draw.polygon(self.screen, (200, 200, 200), points[0:4])
         
         pg.display.flip()
         
@@ -81,5 +80,5 @@ while running:
   
 
     screen.draw_cube()
-    pg.time.wait(8)
+    pg.time.wait(2)
 pg.quit()
