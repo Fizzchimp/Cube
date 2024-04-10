@@ -44,7 +44,7 @@ q = Queue(6)
 
 for i in range(7):
     q.enqueue(10 * i)
-    
+
 q.display()
 print(q.dequeue())
 q.display()
