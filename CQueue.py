@@ -1,6 +1,3 @@
-from tkinter import END
-
-
 class Queue:
     def __init__(self, size):
         self.size = size
@@ -35,14 +32,19 @@ class Queue:
     
 
     def display(self):
+        print("[", end = "")
         for i in range(self.front, self.rear):
             print(self.queue[i], end = ", ")
+        print(str(self.queue[self.rear]) + "]")
+        print("Front:", self.queue[self.front], "\nRear:", self.queue[self.rear])
+        print("Items:", self.rear - self.front + 1)
 
 
-q = Queue(9)
+q = Queue(6)
 
-for i in range(20):
-    q.enqueue(i)
+for i in range(7):
+    q.enqueue(10 * i)
     
+q.display()
 print(q.dequeue())
 q.display()
