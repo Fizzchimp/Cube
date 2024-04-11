@@ -10,7 +10,7 @@ Set algorithms?
 =================
 PathFinding algorithm
 Turning UI/keybindings
-Way to set up the cube
+Cube set up UI
 
 
 =================
