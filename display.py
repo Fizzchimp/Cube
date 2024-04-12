@@ -57,14 +57,12 @@ class Display():
        # pg.draw.polygon(self.screen, shade2, (points[0], points[4], points[7], points[3]))
        # pg.draw.polygon(self.screen, (200, 200, 200), points[0:4])
         
-        pg.display.flip()
         
         if self.phase < 0: self.phase += 1
         if self.phase > 0: self.phase -= 1
         
 
 screen = Display(700, 700)
-screen.phase = - 90
 running = True
 keyDown = False
 while running:
@@ -78,7 +76,7 @@ while running:
         if key == pg.K_RIGHT and screen.phase == 0: screen.phase = -90
         if key == pg.K_LEFT and screen.phase == 0: screen.phase = 90
   
-
     screen.draw_cube()
+    pg.display.flip()
     pg.time.wait(2)
 pg.quit()
