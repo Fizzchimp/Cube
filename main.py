@@ -11,8 +11,6 @@ class World:
     
 
     def solve(self, startCube):
-        nodeX = Node(startCube)
-        nodeX.cube.display()
         # Cube used for checking each node
         cube = Cube(startCube.cube)
         
@@ -28,16 +26,21 @@ class World:
         solved = False
         while not solved:
             # Fetch the current node
-            node = nodeQ.dequeue()
+            cNode = nodeQ.dequeue()
             
             # Check if the current node is solved
-            if node.cube.solved():
+            if cNode.cube.solved():
                 solved = True
                 
             else:
-                nNode1 = Node(Cube(node.cube.U()), node, "U")
-                print(nNode1.cube)
-                nNode1.cube.display()
+                nNode1 = Node(Cube(cNode.cube.U()), cNode, "U")
+                nNode2 = Node(Cube(cNode.cube.U_Prime()), cNode, "U'")
+                
+                nNode3 = Node(Cube(cNode.cube.F()), cNode, "F")
+                nNode4 = Node(Cube(cNode.cube.F_Prime()), cNode, "F'")
+
+                nNode5 = Node(Cube(cNode.cube.L()), cNode, "L")
+                nNode6 = Node(Cube(cNode.cube.L_Prime()), cNode, "L'")
         print("DONE")
             
             
@@ -47,7 +50,7 @@ class World:
 
 
 world = World()
-world.solve(Cube(["WWYY",
+world.solve(Cube(["WWWX",
                      
                   "GGGG",
                   "RRRR",
