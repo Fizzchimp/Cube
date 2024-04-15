@@ -62,21 +62,24 @@ class Display():
         if self.phase > 0: self.phase -= 1
         
 
-screen = Display(700, 700)
-running = True
-keyDown = False
-while running:
-    for event in pg.event.get():
-        if event.type == pg.QUIT: running = False
-        if event.type == pg.KEYDOWN: keyDown, key = True, event.key
-        if event.type == pg.KEYUP: keyDown = False
+def main():
+    screen = Display(700, 700)
+    running = True
+    keyDown = False
+    while running:
+        for event in pg.event.get():
+            if event.type == pg.QUIT: running = False
+            if event.type == pg.KEYDOWN: keyDown, key = True, event.key
+            if event.type == pg.KEYUP: keyDown = False
 
-    if keyDown:
-        if key == pg.K_ESCAPE: running = False
-        if key == pg.K_RIGHT and screen.phase == 0: screen.phase = -90
-        if key == pg.K_LEFT and screen.phase == 0: screen.phase = 90
+        if keyDown:
+            if key == pg.K_ESCAPE: running = False
+            if key == pg.K_RIGHT and screen.phase == 0: screen.phase = -90
+            if key == pg.K_LEFT and screen.phase == 0: screen.phase = 90
   
-    screen.draw_cube()
-    pg.display.flip()
-    pg.time.wait(2)
-pg.quit()
+        screen.draw_cube()
+        pg.display.flip()
+        pg.time.wait(2)
+    pg.quit()
+
+#main()

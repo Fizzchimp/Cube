@@ -1,15 +1,16 @@
 class Cube():
-    def __init__(self):
-        # Representation of cube as an array
-        self.cube = ["WWWW",
+    def __init__(self, cube = ["WWWW",
                      
-                        "GGGG",
-                        "RRRR",
-                        "BBBB",
-                        "OOOO",
+                               "GGGG",
+                               "RRRR",
+                               "BBBB",
+                               "OOOO",
 
-                        "YYYY"]
+                               "YYYY"]):
+        # Representation of cube as an array
+        self.cube = cube
         
+    
     def display(self):
     # Display the cube in net form
         print(f"""
@@ -151,6 +152,3 @@ class Cube():
         self.cube[4] = self.cube[5][3] + self.cube[4][1] + self.cube[5][1] + self.cube[4][3]
         self.cube[5] = self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]
         self.cube[2] = self.cube[2][0] + sub[0] + self.cube[2][2] + sub[1]
-
-cube = Cube()
-cube.display()
