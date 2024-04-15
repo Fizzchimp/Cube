@@ -11,11 +11,12 @@ class World:
     
 
     def solve(self, startCube):
+        nodeX = Node(startCube)
+        nodeX.cube.display()
         # Cube used for checking each node
         cube = Cube(startCube.cube)
         
-        solved = False
-        
+
         # Queue for the current nodes
         nodeQ = Queue(999)
         nodeQ.enqueue(Node(startCube))
@@ -23,6 +24,8 @@ class World:
         # Queue for the visited node states
         visitedQ = Queue(999)
         
+
+        solved = False
         while not solved:
             # Fetch the current node
             node = nodeQ.dequeue()
@@ -32,10 +35,10 @@ class World:
                 solved = True
                 
             else:
-                nNode1 = Node(node.cube, node, "U")
-                nNode1.cube.U()
-                nNode1.cube.display
-                
+                nNode1 = Node(Cube(node.cube.U()), node, "U")
+                print(nNode1.cube)
+                nNode1.cube.display()
+        print("DONE")
             
             
               
@@ -44,10 +47,10 @@ class World:
 
 
 world = World()
-world.solve(Cube(["WWWW",
+world.solve(Cube(["WWYY",
                      
                   "GGGG",
-                  "RBRR",
+                  "RRRR",
                   "BBBB",
                   "OOOO",
 
