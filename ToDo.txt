@@ -3,14 +3,21 @@ Methods for cube:
 =================
 Testing
 Set algorithms?
+Change all to Return cube structure
 
 
 =================
 ------Main:------
 =================
-PathFinding algorithm
+PathFinding algorithm:
+---Add all cube newNodes
+---Check for visitedNodes
+---Check for last movement
+
 Turning UI/keybindings
 Cube set up UI
+
+Cube Comparison / Solved Checker
 
 
 =================
