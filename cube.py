@@ -32,23 +32,26 @@ class Cube():
 
 
     def U(self):
-        # Rotation U clockwise
-        self.cube[0] = self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1]
-
-        sub = self.cube[1][:2]
-        for i in range(1, 4):
-            self.cube[i] = self.cube[i + 1][:2] + self.cube[i][2:4]
-        self.cube[4] = sub + self.cube[4][2:4]
+        # Returns rotation U clockwise
+        return [self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1],
+                
+                self.cube[2][:2] + self.cube[1][2:4],
+                self.cube[3][:2] + self.cube[2][2:4],
+                self.cube[4][:2] + self.cube[3][2:4],
+                self.cube[1][:2] + self.cube[4][2:4],
+                
+                self.cube[5]]
 
     def U_Prime(self):
-        # Rotation U anticlockwise
-        self.cube[0] = self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2]
-        
-        sub = self.cube[4][:2]
-        for i in range(3):
-            self.cube[4 - i] = self.cube[3 - i][:2] + self.cube[4 - i][2:4]
-        self.cube[1] = sub + self.cube[1][2:4]
-
+        # Return rotation U anticlockwise
+        return [self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
+                
+                self.cube[4][:2] + self.cube[1][2:4],
+                self.cube[1][:2] + self.cube[2][2:4],
+                self.cube[2][:2] + self.cube[3][2:4],
+                self.cube[3][:2] + self.cube[4][2:4],
+                
+                self.cube[5]]
 
     def D(self):
         # Rotation D clockwise
