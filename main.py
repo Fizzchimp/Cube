@@ -27,7 +27,7 @@ class World:
         while not solved:
             # Fetch the current node
             cNode = nodeQ.dequeue()
-            
+            cNode.cube.display()
             # Check if the current node is solved
             if cNode.cube.solved():
                 solved = True
@@ -41,6 +41,8 @@ class World:
 
                 nNode5 = Node(Cube(cNode.cube.L()), cNode, "L")
                 nNode6 = Node(Cube(cNode.cube.L_Prime()), cNode, "L'")
+                
+                nodeQ.enqueue(nNode1)
         print("DONE")
             
             
@@ -50,11 +52,6 @@ class World:
 
 
 world = World()
-world.solve(Cube(["WWWX",
-                     
-                  "GGGG",
-                  "RRRR",
-                  "BBBB",
-                  "OOOO",
-
-                  "YYYY"]))
+cube = Cube()
+cube.cube = cube.U()
+world.solve(cube)

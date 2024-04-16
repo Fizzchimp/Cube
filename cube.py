@@ -73,25 +73,26 @@ class Cube():
 
 
     def F(self):
-        # Rotation F clockwise
-        self.cube[2] = self.cube[2][2] + self.cube[2][0] + self.cube[2][3] + self.cube[2][1]
-    
-        sub = self.cube[0][2:4]
-        self.cube[0] = self.cube[0][:2] + self.cube[1][1] + self.cube[1][3]
-        self.cube[1] = self.cube[1][0] + self.cube[5][0] + self.cube[1][2] + self.cube[5][1]
-        self.cube[5] = self.cube[3][0] + self.cube[3][2] + self.cube[5][2:4]
-        self.cube[3] = sub[0] + self.cube[3][1] + sub[1] + self.cube[3][3]
+        # Returns rotation F clockwise
+        return [self.cube[0][:2] + self.cube[1][1] + self.cube[1][3],
+                
+                self.cube[1][0] + self.cube[5][0] + self.cube[1][2] + self.cube[5][1],
+                self.cube[2][2] + self.cube[2][0] + self.cube[2][3] + self.cube[2][1],
+                self.cube[0][2] + self.cube[3][1] + self.cube[0][3] + self.cube[3][3],
+                self.cube[4],
+                
+                self.cube[3][0] + self.cube[3][2] + self.cube[5][2:4]]
     
     def F_Prime(self):
-        # Rotation F anticlockwise
-        self.cube[2] = self.cube[2][1] + self.cube[2][3] + self.cube[2][0] + self.cube[2][2]
-
-        sub = self.cube[0][2:4]
-        self.cube[0] = self.cube[0][:2] + self.cube[3][0] + self.cube[3][2]
-        self.cube[3] = self.cube[5][1] + self.cube[3][1] + self.cube[5][0] + self.cube[3][3]
-        self.cube[5] = self.cube[1][1] + self.cube[1][3] + self.cube[5][2:4]
-        self.cube[1] = self.cube[1][0] + sub[1] + self.cube[1][2] + sub[0]
-
+        # Returns rotation F anticlockwise
+        return [self.cube[0][:2] + self.cube[3][0] + self.cube[3][2],
+                
+                self.cube[1][0] + self.cube[0][2] + self.cube[1][2] + self.cube[0][3],
+                self.cube[2][1] + self.cube[2][3] + self.cube[2][0] + self.cube[2][2],
+                self.cube[5][1] + self.cube[3][1] + self.cube[5][0] + self.cube[3][3],
+                self.cube[4],
+                
+                self.cube[1][1] + self.cube[1][3] + self.cube[5][2:4]]
 
     def B(self):
         # Rotation B clockwise
@@ -155,3 +156,8 @@ class Cube():
         self.cube[4] = self.cube[5][3] + self.cube[4][1] + self.cube[5][1] + self.cube[4][3]
         self.cube[5] = self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]
         self.cube[2] = self.cube[2][0] + sub[0] + self.cube[2][2] + sub[1]
+       
+
+cube = Cube()
+cube.cube = cube.F_Prime()
+cube.display()
