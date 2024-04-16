@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, cube, parent = None, movement = None):
+    def __init__(self, cube, parent = None, move = None):
         self.cube = cube
         self.parent = parent
-        self.movement = movement
+        self.move = move

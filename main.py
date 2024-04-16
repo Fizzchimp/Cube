@@ -16,35 +16,43 @@ class World:
         
 
         # Queue for the current nodes
-        nodeQ = Queue(999)
+        nodeQ = Queue(9999999)
         nodeQ.enqueue(Node(startCube))
 
         # Queue for the visited node states
-        visitedQ = Queue(999)
+        visitedQ = Queue(9999)
         
 
         solved = False
         while not solved:
             # Fetch the current node
             cNode = nodeQ.dequeue()
-            cNode.cube.display()
+
             # Check if the current node is solved
             if cNode.cube.solved():
                 solved = True
                 
             else:
-                nNode1 = Node(Cube(cNode.cube.U()), cNode, "U")
-                nNode2 = Node(Cube(cNode.cube.U_Prime()), cNode, "U'")
+                nodeQ.enqueue(Node(Cube(cNode.cube.U()), cNode, "U"))
+                nodeQ.enqueue(Node(Cube(cNode.cube.U_Prime()), cNode, "U'"))
                 
-                nNode3 = Node(Cube(cNode.cube.F()), cNode, "F")
-                nNode4 = Node(Cube(cNode.cube.F_Prime()), cNode, "F'")
+                nodeQ.enqueue(Node(Cube(cNode.cube.F()), cNode, "F"))
+                nodeQ.enqueue(Node(Cube(cNode.cube.F_Prime()), cNode, "F'"))
 
-                nNode5 = Node(Cube(cNode.cube.L()), cNode, "L")
-                nNode6 = Node(Cube(cNode.cube.L_Prime()), cNode, "L'")
+                nodeQ.enqueue(Node(Cube(cNode.cube.R()), cNode, "R"))
+                nodeQ.enqueue(Node(Cube(cNode.cube.R_Prime()), cNode, "R'"))
                 
-                nodeQ.enqueue(nNode1)
         print("DONE")
-            
+        cNode.cube.display()
+        path = []
+        while True:
+            if cNode.parent != None:
+                path.append(cNode.move)
+                cNode = cNode.parent
+            else:
+                break
+        print(path)
+
             
               
             
@@ -54,4 +62,11 @@ class World:
 world = World()
 cube = Cube()
 cube.cube = cube.U()
+cube.cube = cube.R()
+cube.cube = cube.F()
+cube.cube = cube.R_Prime()
+cube.cube = cube.U_Prime()
+# cube.cube = cube.F()
+# cube.cube = cube.R_Prime()
+
 world.solve(cube)

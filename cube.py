@@ -116,14 +116,15 @@ class Cube():
 
 
     def L(self):
-        # Rotation L clockwise
-        self.cube[1] = self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1]
+        # Returns rotation L clockwise
+        return [self.cube[4][3] + self.cube[0][1] + self.cube[4][1] + self.cube[0][3],
+                
+                self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
+                self.cube[0][0] + self.cube[2][1] + self.cube[0][2] + self.cube[2][3],
+                self.cube[3],
+                self.cube[4][0] + self.cube[5][2] + self.cube[4][2] + self.cube[5][0],
 
-        sub = self.cube[0][0] + self.cube[0][2]
-        self.cube[0] = self.cube[4][3] + self.cube[0][1] + self.cube[4][1] + self.cube[0][3]
-        self.cube[4] = self.cube[4][0] + self.cube[5][2] + self.cube[4][2] + self.cube[5][0]
-        self.cube[5] = self.cube[2][0] + self.cube[5][1] + self.cube[2][2] + self.cube[5][3]
-        self.cube[2] = sub[0] + self.cube[2][1] + sub[1] + self.cube[2][3]
+                self.cube[2][0] + self.cube[5][1] + self.cube[2][2] + self.cube[5][3]]
 
     def L_Prime(self):
         # Rotation L anticlockwise
@@ -148,17 +149,12 @@ class Cube():
                 self.cube[5][0] + self.cube[4][2] + self.cube[5][2] + self.cube[4][0]]
         
     def R_Prime(self):
+        # Returns rotation R anticlockwise
+        return [self.cube[0][0] + self.cube[4][2] + self.cube[0][2] + self.cube[4][0],
+                
+                self.cube[1],
+                self.cube[2][0] + self.cube[0][1] + self.cube[2][2] + self.cube[0][3],
+                self.cube[3][1] + self.cube[3][3] + self.cube[3][0] + self.cube[3][2],
+                self.cube[5][3] + self.cube[4][1] + self.cube[5][1] + self.cube[4][3],
 
-        # Rotation R anticlockwise
-        self.cube[3] = self.cube[3][1] + self.cube[3][3] + self.cube[3][0] + self.cube[3][2]
-
-        sub = self.cube[0][1] + self.cube[0][3]
-        self.cube[0] = self.cube[0][0] + self.cube[4][2] + self.cube[0][2] + self.cube[4][0]
-        self.cube[4] = self.cube[5][3] + self.cube[4][1] + self.cube[5][1] + self.cube[4][3]
-        self.cube[5] = self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]
-        self.cube[2] = self.cube[2][0] + sub[0] + self.cube[2][2] + sub[1]
-       
-
-cube = Cube()
-cube.cube = cube.R()
-cube.display()
+                self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]]
