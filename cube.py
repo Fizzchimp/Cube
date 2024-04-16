@@ -137,15 +137,16 @@ class Cube():
         
 
     def R(self):
-        # Rotation R clockwise
-        self.cube[3] = self.cube[3][2] + self.cube[3][0] + self.cube[3][3] + self.cube[3][1]
+        # Returns rotation R clockwise
+        return [self.cube[0][0] + self.cube[2][1] + self.cube[0][2] + self.cube[2][3],
 
-        sub = self.cube[0][1] + self.cube[0][3]
-        self.cube[0] = self.cube[0][0] + self.cube[2][1] + self.cube[0][2] + self.cube[2][3]
-        self.cube[2] = self.cube[2][0] + self.cube[5][1] + self.cube[2][2] + self.cube[5][3]
-        self.cube[5] = self.cube[5][0] + self.cube[4][2] + self.cube[5][2] + self.cube[4][0]
-        self.cube[4] = sub[1] + self.cube[4][1] + sub[0] + self.cube[4][3]
+                self.cube[1],
+                self.cube[2][0] + self.cube[5][1] + self.cube[2][2] + self.cube[5][3],
+                self.cube[3][2] + self.cube[3][0] + self.cube[3][3] + self.cube[3][1],
+                self.cube[0][1] + self.cube[4][1] + self.cube[0][3] + self.cube[4][3],
 
+                self.cube[5][0] + self.cube[4][2] + self.cube[5][2] + self.cube[4][0]]
+        
     def R_Prime(self):
 
         # Rotation R anticlockwise
@@ -159,5 +160,5 @@ class Cube():
        
 
 cube = Cube()
-cube.cube = cube.F_Prime()
+cube.cube = cube.R()
 cube.display()
