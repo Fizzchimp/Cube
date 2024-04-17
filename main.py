@@ -34,6 +34,7 @@ class World:
                 solved = True
                 
             else:  
+                # Enqueueing all nodes adjacent to cNode
                 if cNode.move != "U'":  
                     nodeQ.enqueue(Node(Cube(cNode.cube.U()), cNode, "U"))
                 if cNode.move != "U":   
@@ -48,11 +49,11 @@ class World:
                     nodeQ.enqueue(Node(Cube(cNode.cube.R()), cNode, "R"))
                 if cNode.move != "R":   
                     nodeQ.enqueue(Node(Cube(cNode.cube.R_Prime()), cNode, "R'"))
-               
                 
             if iter % 50000 == 0:
                 print(iter)
-        print("DONE")
+        print("DONE", iter)
+
         cNode.cube.display()
         path = []
         while True:
@@ -70,13 +71,10 @@ class World:
 
 
 world = World()
-#cube = Cube()
-#cube.cube = cube.U()
-#cube.cube = cube.R()
-#cube.cube = cube.F()
-#cube.cube = cube.R_Prime()
-#cube.cube = cube.U_Prime()
-#cube.cube = cube.F()
-#cube.cube = cube.R_Prime()
+cube = Cube()
+
+cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
+# cube.move(["L'", "U", "U", "L'", "U", "L", "U", "L'"])
+cube.display()
 
 world.solve(cube)
