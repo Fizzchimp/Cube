@@ -53,11 +53,12 @@ class Cube():
                 
                 self.cube[5]]
 
+
     def D(self):
         # Returns rotation D clockwise
         return [self.cube[0],
                 
-                self.cube[1][2:] + self.cube[4][2:4],
+                self.cube[1][:2] + self.cube[4][2:4],
                 self.cube[2][:2] + self.cube[1][2:4],
                 self.cube[3][:2] + self.cube[2][2:4],
                 self.cube[4][:2] + self.cube[3][2:4],
@@ -78,31 +79,32 @@ class Cube():
 
     def F(self):
         # Returns rotation F clockwise
-        return [self.cube[0][:2] + self.cube[1][1] + self.cube[1][3],
+        return [self.cube[0][:2] + self.cube[1][3] + self.cube[1][1],
                 
                 self.cube[1][0] + self.cube[5][0] + self.cube[1][2] + self.cube[5][1],
                 self.cube[2][2] + self.cube[2][0] + self.cube[2][3] + self.cube[2][1],
                 self.cube[0][2] + self.cube[3][1] + self.cube[0][3] + self.cube[3][3],
                 self.cube[4],
                 
-                self.cube[3][0] + self.cube[3][2] + self.cube[5][2:4]]
+                self.cube[3][2] + self.cube[3][0] + self.cube[5][2:4]]
     
     def F_Prime(self):
         # Returns rotation F anticlockwise
         return [self.cube[0][:2] + self.cube[3][0] + self.cube[3][2],
                 
-                self.cube[1][0] + self.cube[0][2] + self.cube[1][2] + self.cube[0][3],
+                self.cube[1][0] + self.cube[0][3] + self.cube[1][2] + self.cube[0][2],
                 self.cube[2][1] + self.cube[2][3] + self.cube[2][0] + self.cube[2][2],
                 self.cube[5][1] + self.cube[3][1] + self.cube[5][0] + self.cube[3][3],
                 self.cube[4],
                 
                 self.cube[1][1] + self.cube[1][3] + self.cube[5][2:4]]
 
+
     def B(self):
         # Returns rotation B clockwise
         return [self.cube[3][1] + self.cube[3][3] + self.cube[0][2:4],
                 
-                self.cube[0][0] + self.cube[1][1] + self.cube[0][1] + self.cube[1][3],
+                self.cube[0][1] + self.cube[1][1] + self.cube[0][0] + self.cube[1][3],
                 self.cube[2],
                 self.cube[3][0] + self.cube[5][3] + self.cube[3][2] + self.cube[5][2],
                 self.cube[4][2] + self.cube[4][0] + self.cube[4][3] + self.cube[4][1],
@@ -118,7 +120,7 @@ class Cube():
                 self.cube[3][0] + self.cube[0][0] + self.cube[3][2] + self.cube[0][1],
                 self.cube[4][1] + self.cube[4][3] + self.cube[4][0] + self.cube[4][2],
 
-                self.cube[5][:2] + self.cube[3][1] + self.cube[3][3]]
+                self.cube[5][:2] + self.cube[3][3] + self.cube[3][1]]
 
 
     def L(self):
@@ -151,7 +153,7 @@ class Cube():
                 self.cube[1],
                 self.cube[2][0] + self.cube[5][1] + self.cube[2][2] + self.cube[5][3],
                 self.cube[3][2] + self.cube[3][0] + self.cube[3][3] + self.cube[3][1],
-                self.cube[0][1] + self.cube[4][1] + self.cube[0][3] + self.cube[4][3],
+                self.cube[0][3] + self.cube[4][1] + self.cube[0][1] + self.cube[4][3],
 
                 self.cube[5][0] + self.cube[4][2] + self.cube[5][2] + self.cube[4][0]]
         
@@ -165,3 +167,4 @@ class Cube():
                 self.cube[5][3] + self.cube[4][1] + self.cube[5][1] + self.cube[4][3],
 
                 self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]]
+
