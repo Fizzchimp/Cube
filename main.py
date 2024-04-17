@@ -70,13 +70,13 @@ class World:
 
 
 world = World()
-cube = Cube()
-cube.cube = cube.U()
-cube.cube = cube.R()
-cube.cube = cube.F()
-cube.cube = cube.R_Prime()
-cube.cube = cube.U_Prime()
-cube.cube = cube.F()
-# cube.cube = cube.R_Prime()
+#cube = Cube()
+#cube.cube = cube.U()
+#cube.cube = cube.R()
+#cube.cube = cube.F()
+#cube.cube = cube.R_Prime()
+#cube.cube = cube.U_Prime()
+#cube.cube = cube.F()
+#cube.cube = cube.R_Prime()
 
 world.solve(cube)
