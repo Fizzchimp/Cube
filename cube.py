@@ -168,28 +168,29 @@ class Cube():
 
                 self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]]
 
-    def move(self, movement):
-        match movement:
-            case "U": cube.cube = cube.U()
-            case "U'": cube.cube = cube.U_Prime()
+    def move(self, algorithm):
+        for move in algorithm:
+            match move:
+                case "U": cube.cube = cube.U()
+                case "U'": cube.cube = cube.U_Prime()
 
-            case "D": cube.cube = cube.D()
-            case "D'": cube.cube = cube.D_Prime()
+                case "D": cube.cube = cube.D()
+                case "D'": cube.cube = cube.D_Prime()
 
-            case "F": cube.cube = cube.F()
-            case "F'": cube.cube = cube.F_Prime()
+                case "F": cube.cube = cube.F()
+                case "F'": cube.cube = cube.F_Prime()
 
-            case "B": cube.cube = cube.B()
-            case "B'": cube.cube = cube.B_Prime()
+                case "B": cube.cube = cube.B()
+                case "B'": cube.cube = cube.B_Prime()
 
-            case "L": cube.cube = cube.L()
-            case "L'": cube.cube = cube.L_Prime()
+                case "L": cube.cube = cube.L()
+                case "L'": cube.cube = cube.L_Prime()
 
-            case "R": cube.cube = cube.R()
-            case "R'": cube.cube = cube.R_Prime()
+                case "R": cube.cube = cube.R()
+                case "R'": cube.cube = cube.R_Prime()
 
-            case _: print("Not a valid movement")
+                case _: print("Not a valid movement")
 
 cube = Cube()
-cube.move("U")
+cube.move("UUU")
 cube.display()
