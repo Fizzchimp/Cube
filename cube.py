@@ -190,7 +190,3 @@ class Cube():
                 case "R'": cube.cube = cube.R_Prime()
 
                 case _: print("Not a valid movement")
-
-cube = Cube()
-cube.move("UUU")
-cube.display()
