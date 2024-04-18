@@ -16,11 +16,11 @@ class World:
         
 
         # Queue for the current nodes
-        nodeQ = Queue(9999999)
+        nodeQ = Queue(999999)
         nodeQ.enqueue(Node(startCube))
 
         # Queue for the visited node states
-        visitedQ = Queue(9999)
+        #visitedQ = Queue(9999)
         iter = 0
 
         solved = False
@@ -74,7 +74,7 @@ world = World()
 cube = Cube()
 
 cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
-# cube.move(["L'", "U", "U", "L'", "U", "L", "U", "L'"])
+cube.move(["L'", "U", "U", "L'", "U", "L", "U", "L'"])
 cube.display()
 
 world.solve(cube)
