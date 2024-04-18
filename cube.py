@@ -1,3 +1,5 @@
+import random as rnd
+
 class Cube():
     def __init__(self, cube = ["WWWW",
                      
@@ -190,3 +192,6 @@ class Cube():
                 case "R'": self.cube = self.R_Prime()
 
                 case _: print("Not a valid movement")
+
+    def shuffle(self):
+        
