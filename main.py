@@ -21,11 +21,10 @@ class World:
 
         # Queue for the visited node states
         #visitedQ = Queue(9999)
-        iter = 0
 
+        iter = 0
         solved = False
         while not solved:
-            iter += 1
             # Fetch the current node
             cNode = nodeQ.dequeue()
 
@@ -50,8 +49,6 @@ class World:
                 if cNode.move != "R":   
                     nodeQ.enqueue(Node(Cube(cNode.cube.R_Prime()), cNode, "R'"))
                 
-            if iter % 50000 == 0:
-                print(iter)
         print("DONE", iter)
 
         cNode.cube.display()
@@ -72,9 +69,8 @@ class World:
 
 world = World()
 cube = Cube()
+for i in range(5):
+    cube.scramble()
+    cube.display()
 
-cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
-cube.move(["L'", "U", "U", "L'", "U", "L", "U", "L'"])
-cube.display()
-
-world.solve(cube)
+#world.solve(cube)

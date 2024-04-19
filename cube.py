@@ -199,8 +199,3 @@ class Cube():
             moves.append(rnd.choice(["U", "D", "F", "B", "R", "L"]) + rnd.choice(["'", ""]))
         self.move(moves)
         print(", ".join(moves))
-
-cube = Cube()
-cube.scramble()
-cube.display()
-        
