@@ -54,6 +54,3 @@ class Queue:
             if self.queue[i % self.size] == item:
                 count += 1
         return count
-
-    def getList(self):
-        return self.queue[self.front:self.rear]
