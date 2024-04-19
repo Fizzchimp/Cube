@@ -1,7 +1,7 @@
 import pygame as pg
 from display import Display
 from cube import Cube
-from cqueue import Queue
+from cQueue import Queue
 from node import Node
 
 
