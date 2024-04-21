@@ -3,26 +3,24 @@ from node import Node
 
 def binSearch(list, node):
     mid = len(list) // 2
+    print(mid, len(list))
     midItem = list[mid]
 
-    if midItem == node:
+    if midItem.cube.cube == node.cube.cube:
         return True
     
     elif len(list) == 1:
         return False
     
-    elif nodeCompare(midItem, node):
+    elif midItem.cube.cube < node.cube.cube:
         return binSearch(list[mid + 1:], node)
     
-    elif not nodeCompare(midItem, node):
+    elif midItem.cube.cube > node.cube.cube:
         return binSearch(list[:mid], node)
     
 
-def nodeCompare(node1, node2):
-    list1, list2 = "".join(node1.cube.cube), "".join(node2.cube.cube)
-    index = 0
-    value1 = value2 = 0
-    while value1 == value2:
-        value1, value2 = ord(list1[index]), ord(list2[index])
-        index += 1
-    return True if value1 < value2 else False
+
+node1 = Node(Cube())
+arr = [Node(Cube()) for i in range(10)]
+for i in range(9):
+    arr[i + 1].cube.scramble()
