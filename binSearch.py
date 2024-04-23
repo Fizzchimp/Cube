@@ -1,26 +1,27 @@
-from cube import Cube
-from node import Node
-
-def binSearch(list, node):
-    mid = len(list) // 2
-    print(mid, len(list))
-    midItem = list[mid]
-
-    if midItem.cube.cube == node.cube.cube:
-        return True
+def binSearch(arr, item, front = 0, rear = None):
+    if rear == None: rear = len(arr) - 1
+    mid = (rear + front) // 2
+    midItem = arr[mid]
     
-    elif len(list) == 1:
-        return False
+    if midItem == item:
+        print(f"Found at pos {mid}")
+        return
     
-    elif midItem.cube.cube < node.cube.cube:
-        return binSearch(list[mid + 1:], node)
+    elif front == rear:
+        print("Not found. Inserting.")
+        #if midItem > item: list.insert(mid, item)
+        arr.insert(mid if midItem > item else mid + 1, item)
+        return
     
-    elif midItem.cube.cube > node.cube.cube:
-        return binSearch(list[:mid], node)
+    elif midItem < item:
+        return binSearch(arr, item, mid + 1, rear)
     
+    elif midItem > item:
+        return binSearch(arr, item, 0, mid - 1)
 
 
-node1 = Node(Cube())
-arr = [Node(Cube()) for i in range(10)]
-for i in range(9):
-    arr[i + 1].cube.scramble()
+arr1 = [0]
+
+for i in range(1000):
+    binSearch(arr1, 1000 - i)
+print(arr1)
