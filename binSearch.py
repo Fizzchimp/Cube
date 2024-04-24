@@ -21,21 +21,21 @@
 
 def binSearch(arr, item):
     mid = len(arr) // 2
-    print(mid)
     midItem = arr[mid]
+    print(midItem, arr)
         
     if midItem == item:
         return True
         
-    elif len(arr) == 1:
+    elif len(arr) <= 1:
         return False
         
     elif midItem < item:
-        return binSearch(arr[:mid + 1], item)
+        return binSearch(arr[mid + 1:], item)
         
     elif midItem > item:
-        return binSearch(arr[mid:], item)
+        return binSearch(arr[:mid], item)
 
 
-arr1 = [i for i in range(10)]
-print()
+arr1 = [i for i in range(11)]
+print(binSearch(arr1, 13))
