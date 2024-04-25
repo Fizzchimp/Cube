@@ -1,7 +1,7 @@
 import pygame as pg
 from display import Display
 from cube import Cube
-from cQueue import Queue
+from cqueue import Queue
 from node import Node
 
 
@@ -69,8 +69,7 @@ class World:
 
 world = World()
 cube = Cube()
-for i in range(5):
-    cube.scramble()
-    cube.display()
 
-#world.solve(cube)
+cube.scramble()
+
+world.solve(cube)
