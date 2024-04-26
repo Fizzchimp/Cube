@@ -53,4 +53,4 @@ class Queue:
         for i in range(self.front, self.rear + 1):
             if self.queue[i % self.size] == item:
                 count += 1
-        return count
+        return count   
