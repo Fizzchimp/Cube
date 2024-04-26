@@ -33,8 +33,13 @@ def mergeSort(list):
     left = list[:len(list) // 2]
     right = list[len(list) // 2:]
     print(left, right)
+    mergeSort(left)
+    mergeSort(right)
+    
+    i = j = 0
+    while i < len(left) or j < len(right):
   
-arr = [random.randint(1, 100) for i in range(15)]
+a    rr = [random.randint(1, 100) for i in range(11)]
 print(arr)
 
 
