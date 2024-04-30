@@ -134,7 +134,7 @@ class World:
 
 world = World()
 cube = Cube()
-cube.move(["U", "U", "U", "R"])
+cube.move(["U'"])
 #cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
 # cube.display()
 world.solve(cube.cube)
