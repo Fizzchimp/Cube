@@ -1,46 +1,33 @@
-import random
-
+# Recursive merge sorting algorithm
 def mergeSort(list):
-  print(list)
-  if len(list) > 1:
-    left = list[:len(list) // 2]
-    right = list[len(list) // 2:]
-    mergeSort(left)
-    mergeSort(right)
-  
-    i = j = k = 0
-    while i < len(left) and j < len(right):
-      if left[i] < right[j]:
-        list[k] = left[i]
-        i += 1
-      else:
-        list[k] = right[j]
-        j += 1
-      k += 1
+    if len(list) > 1:
+        # Break the list down into smaller pieces
+        left = mergeSort(list[:len(list) // 2])
+        right = mergeSort(list[len(list) // 2:])
     
-    while i < len(left):
-      list[k] = left[i]
-      k += 1
-      i += 1
-    while j < len(left):
-      list[k] = right[j]
-      k += 1
-      j += 1
-  return list
-
-def mergeSort(list):
-  if len(list) > 1:
-    left = list[:len(list) // 2]
-    right = list[len(list) // 2:]
-    print(left, right)
-    mergeSort(left)
-    mergeSort(right)
-    
-    i = j = 0
-    while i < len(left) or j < len(right):
-  
-a    rr = [random.randint(1, 100) for i in range(11)]
-print(arr)
-
-
-print(mergeSort(arr))
+        # Merge the two ordered lists
+        lPnt = rPnt = i = 0
+        while True:
+            try:
+                lItem = left[lPnt]
+            except IndexError:
+                list[i:] = right[rPnt:]
+                break
+            
+            try:
+                rItem = right[rPnt]
+            except IndexError:
+                list[i:] = left[lPnt:]
+                break
+      
+            if lItem.cube <= rItem.cube:
+                list[i] = lItem
+                lPnt += 1
+                
+            elif rItem.cube <= lItem.cube:
+                list[i] = rItem
+                rPnt += 1
+        
+            i += 1
+            
+    return list
