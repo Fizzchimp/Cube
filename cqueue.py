@@ -22,7 +22,7 @@ class Queue:
             self.rear += 1
             self.queue[self.rear % self.size] = item
         else:
-            print("Queue is full! Cannot enqueue")
+            raise Exception("Queue is full! Cannot enqueue")
 
     def dequeue(self):
         if not self.isEmpty():
@@ -53,4 +53,4 @@ class Queue:
         for i in range(self.front, self.rear + 1):
             if self.queue[i % self.size] == item:
                 count += 1
-        return count   
+        return count
