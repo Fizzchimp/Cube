@@ -1,16 +1,17 @@
 import random as rnd
 
 class Cube():
-    def __init__(self, cube = ["WWWW",
-                     
-                               "GGGG",
-                               "RRRR",
-                               "BBBB",
-                               "OOOO",
-
-                               "YYYY"]):
+    def __init__(self, cube = None):
         # Representation of cube as an array
-        self.cube = cube
+        self.cube = cube if cube != None else [
+            "WWWW",
+                        
+            "GGGG",
+            "RRRR",
+            "BBBB",
+            "OOOO",
+
+            "YYYY"]
         
     
     def display(self):
@@ -170,6 +171,53 @@ class Cube():
 
                 self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]]
 
+
+    def X(self):
+        # Returns full clockwise cube rotation about x axis
+        return [self.cube[2],
+                
+                self.cube[1][1] + self.cube[1][3] + self.cube[1][0] + self.cube[1][2],
+                self.cube[5],
+                self.cube[3][2] + self.cube[3][0] + self.cube[3][3] + self.cube[3][1],
+                self.cube[0][::-1],
+                
+                self.cube[4][::-1]]
+
+    def X_Prime(self):
+        # Returns full anticlockwise cube rotation about x axis
+        return [self.cube[4][::-1],
+                
+                self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
+                self.cube[0],
+                self.cube[3][1] + self.cube[3][3] + self.cube[3][0] + self.cube[3][2],
+                self.cube[5][::-1],
+                
+                self.cube[2]]
+    
+
+    def Y(self):
+        # Returns full clockwise cube rotation about y axis
+        return [self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1],
+                
+                self.cube[2],
+                self.cube[3],
+                self.cube[4],
+                self.cube[1],
+                
+                self.cube[5][1] + self.cube[5][3] + self.cube[5][0] + self.cube[5][2]]
+    
+    def Y_Prime(self):
+        # Returns full anticlockwise cube rotation about y axis
+        return [self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
+                
+                self.cube[4],
+                self.cube[1],
+                self.cube[2],
+                self.cube[3],
+                
+                self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1]]
+    
+    
     def move(self, algorithm):
         for move in algorithm:
             match move:
@@ -191,6 +239,12 @@ class Cube():
                 case "R": self.cube = self.R()
                 case "R'": self.cube = self.R_Prime()
 
+                case "X": self.cube = self.X()
+                case "X'": self.cube = self.X_Prime()
+
+                case "Y": self.cube = self.Y()
+                case "Y'": self.cube = self.Y_Prime()
+
                 case _: print("Not a valid movement")
 
     def scramble(self, num = 11):
@@ -198,4 +252,4 @@ class Cube():
         for i in range(num):
             moves.append(rnd.choice(["U", "D", "F", "B", "R", "L"]) + rnd.choice(["'", ""]))
         self.move(moves)
-        # print(", ".join(moves))
+        print(", ".join(moves))
