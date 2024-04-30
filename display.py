@@ -8,7 +8,7 @@ class Display():
         self.screen = pg.display.set_mode([width, height])
         self.screen.fill((255, 255, 255))
 
-        image = pg.image.load("icon.png")
+        image = pg.image.load("01_icon.png")
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
 
@@ -82,4 +82,4 @@ def main():
         pg.time.wait(2)
     pg.quit()
 
-#main()
+# main()
