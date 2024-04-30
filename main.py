@@ -3,63 +3,128 @@ from display import Display
 from cube import Cube
 from cqueue import Queue
 from node import Node
-
+from binsearch import binSearch
+from mergesort import mergeSort
 
 class World:
     #def __init__(self):
     #    window = Display(700, 700)
     
+    def normalisedSolved(self, cube):
+        # Returns a new solved state normalised to be comparable with start node
+        colKeys = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
+        return [
+            colKeys[cube[5][2]],
+            
+            cube[1][2] * 4,
+            colKeys[cube[4][3]],
+            colKeys[cube[1][2]],
+            cube[4][3] * 4,
 
-    def solve(self, startCube):
-        # Cube used for checking each node
-        cube = Cube(startCube.cube)
-        
+            cube[5][2] * 4
+    ]
 
+    def solve(self, startState):
         # Queue for the current nodes
-        nodeQ = Queue(999999)
-        nodeQ.enqueue(Node(startCube))
+        sNodeQ = Queue(999999)
+        cSNode = Node(startState)
 
-        # Queue for the visited node states
-        #visitedQ = Queue(9999)
+        eNodeQ = Queue(999999)
+        cENode = Node(self.normalisedSolved(startState))
 
-        iter = 0
         solved = False
+        generation = 0
+        vENodes = []
+        
         while not solved:
-            # Fetch the current node
-            cNode = nodeQ.dequeue()
+ #           print(generation)
+            # Start state tree
+            vSNodes = []
+            nextGen = generation + 1
 
-            # Check if the current node is solved
-            if cNode.cube.solved():
-                solved = True
+            while cSNode.generation == generation:
+                if binSearch(vENodes, cSNode):
+                    solved = True
+                    break
                 
-            else:  
-                # Enqueueing all nodes adjacent to cNode
-                if cNode.move != "U'":  
-                    nodeQ.enqueue(Node(Cube(cNode.cube.U()), cNode, "U"))
-                if cNode.move != "U":   
-                    nodeQ.enqueue(Node(Cube(cNode.cube.U_Prime()), cNode, "U'"))
-                
-                if cNode.move != "F'":  
-                    nodeQ.enqueue(Node(Cube(cNode.cube.F()), cNode, "F"))
-                if cNode.move != "F":   
-                    nodeQ.enqueue(Node(Cube(cNode.cube.F_Prime()), cNode, "F'"))
+                # Append current node to visited nodes
+                vSNodes.append(cSNode)
 
-                if cNode.move != "R'":  
-                    nodeQ.enqueue(Node(Cube(cNode.cube.R()), cNode, "R"))
-                if cNode.move != "R":   
-                    nodeQ.enqueue(Node(Cube(cNode.cube.R_Prime()), cNode, "R'"))
-                
-        print("DONE", iter)
+                # Enqueue all adjacent nodes
+                if cSNode.movement != "U'":  
+                    sNodeQ.enqueue(Node(cSNode.U(), cSNode, "U", ))
+                if cSNode.movement != "U":   
+                    sNodeQ.enqueue(Node(cSNode.U_Prime(), cSNode, "U'", nextGen))
 
-        cNode.cube.display()
-        path = []
-        while True:
-            if cNode.parent != None:
-                path.append(cNode.move)
-                cNode = cNode.parent
-            else:
-                break
-        print(", ".join(path[::-1]))
+                if cSNode.movement != "R'":  
+                    sNodeQ.enqueue(Node(cSNode.R(), cSNode, "R", nextGen))
+                if cSNode.movement != "R":   
+                    sNodeQ.enqueue(Node(cSNode.R_Prime(), cSNode, "R'", nextGen))
+                
+                if cSNode.movement != "F'":  
+                    sNodeQ.enqueue(Node(cSNode.F(), cSNode, "F", nextGen))
+                if cSNode.movement != "F":   
+                    sNodeQ.enqueue(Node(cSNode.F_Prime(), cSNode, "F'", nextGen))
+
+                # Fetch the next node
+                cSNode = sNodeQ.dequeue()
+
+            # Sort visited nodes
+            vSNodes = mergeSort(vSNodes)
+
+            # End state tree
+            vENodes = []
+            while cENode.generation == generation:
+
+                if binSearch(vSNodes, cENode):
+                    solved = True
+                    break
+
+                # Append current node to visited nodes
+                vENodes.append(cENode)
+
+                # Enqueue all adjacent nodes
+                if cENode.movement != "U'":  
+                    eNodeQ.enqueue(Node(cENode.U(), cENode, "U", ))
+                if cENode.movement != "U":   
+                    eNodeQ.enqueue(Node(cENode.U_Prime(), cENode, "U'", nextGen))
+
+                if cENode.movement != "R'":  
+                    eNodeQ.enqueue(Node(cENode.R(), cENode, "R", nextGen))
+                if cENode.movement != "R":   
+                    eNodeQ.enqueue(Node(cENode.R_Prime(), cENode, "R'", nextGen))
+                
+                if cENode.movement != "F'":  
+                    eNodeQ.enqueue(Node(cENode.F(), cENode, "F", nextGen))
+                if cENode.movement != "F":   
+                    eNodeQ.enqueue(Node(cENode.F_Prime(), cENode, "F'", nextGen))
+
+                # Fetch the next node
+                cENode = eNodeQ.dequeue()
+
+            # Sort visited nodes
+            vENodes = mergeSort(vENodes)
+            #print(vENodes)
+
+            # Increment the node generation counter
+            generation += 1
+
+
+
+        print("DONE")
+        
+        path = [cSNode]
+        while path[-1].parent != None:
+            path.append(path[-1].parent)
+        path = path[::-1]
+
+        path.append(cENode)
+        while path[-1].parent != None:
+            path.append(path[-1].parent)
+            
+        for x in path:
+            print(x.movement)
+        
 
             
               
@@ -69,7 +134,7 @@ class World:
 
 world = World()
 cube = Cube()
-
-cube.scramble()
-
-world.solve(cube)
+cube.move(["U", "U", "U", "R"])
+#cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
+# cube.display()
+world.solve(cube.cube)
