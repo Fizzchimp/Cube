@@ -29,7 +29,7 @@ class Queue:
             self.front += 1
             return self.queue[(self.front - 1) % self.size]
         else:
-            print("Queue is empty! Cannot dequeue")
+            raise Exception("Queue is empty! Cannot dequeue")
 
 
     def display(self):
