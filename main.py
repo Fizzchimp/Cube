@@ -9,7 +9,6 @@ from mergesort import mergeSort
 
 class World:
     #def __init__(self):
-    #    window = Display(700, 700)
     
     def normalisedSolved(self, cube):
         # Returns a new solved state normalised to be comparable with start node
@@ -37,8 +36,7 @@ class World:
         vENodes = []
         vSNodes = []
         
-        while generation < 10:
-            print(generation)
+        while True:
             # Start state tree
             vSNodes = []
             nextGen = generation + 1
@@ -49,13 +47,12 @@ class World:
                 if check == True:
                     return cSNode, node
                 
-                print(cSNode.movement)
                 # Append current node to visited nodes
                 vSNodes.append(cSNode)
 
                 # Enqueue all adjacent nodes
                 if cSNode.movement != "U'":  
-                    sNodeQ.enqueue(Node(cSNode.U(), cSNode, "U", ))
+                    sNodeQ.enqueue(Node(cSNode.U(), cSNode, "U", nextGen))
                 if cSNode.movement != "U":   
                     sNodeQ.enqueue(Node(cSNode.U_Prime(), cSNode, "U'", nextGen))
 
@@ -87,8 +84,8 @@ class World:
                 vENodes.append(cENode)
 
                 # Enqueue all adjacent nodes
-                if cENode.movement != "U'":  
-                    eNodeQ.enqueue(Node(cENode.U_Prime(), cENode, "U", ))
+                if cENode.movement != "U'":
+                    eNodeQ.enqueue(Node(cENode.U_Prime(), cENode, "U", nextGen))
                 if cENode.movement != "U":   
                     eNodeQ.enqueue(Node(cENode.U(), cENode, "U'", nextGen))
 
@@ -104,10 +101,10 @@ class World:
 
                 # Fetch the next node
                 cENode = eNodeQ.dequeue()
+                
 
             # Sort visited nodes
             vENodes = mergeSort(vENodes)
-            #print(vENodes)
 
             # Increment the node generation counter
             generation += 1
@@ -135,9 +132,7 @@ class World:
 
 world = World()
 cube = Cube()
-cube.move(["L'", "U",
-           "U"
-           ])
+cube.scramble()
 cube.display()
 
 world.findPath(cube.cube)
