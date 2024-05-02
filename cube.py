@@ -248,10 +248,10 @@ class Cube():
 
                 case _: print("Not a valid movement")
 
-    def scramble(self, num = 11):
+    def scramble(self, num = 20):
         # Scrambles the cube to a random position
         moves = []
         for i in range(num):
             moves.append(rnd.choice(["U", "D", "F", "B", "R", "L"]) + rnd.choice(["'", ""]))
         self.move(moves)
-        #print(", ".join(moves))
+        print(", ".join(moves))
