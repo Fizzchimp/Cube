@@ -219,6 +219,7 @@ class Cube():
     
     
     def move(self, algorithm):
+        # Sets the cube structure after given movements
         for move in algorithm:
             match move:
                 case "U": self.cube = self.U()
@@ -248,6 +249,7 @@ class Cube():
                 case _: print("Not a valid movement")
 
     def scramble(self, num = 11):
+        # Scrambles the cube to a random position
         moves = []
         for i in range(num):
             moves.append(rnd.choice(["U", "D", "F", "B", "R", "L"]) + rnd.choice(["'", ""]))
