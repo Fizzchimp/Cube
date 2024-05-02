@@ -33,12 +33,12 @@ class World:
         eNodeQ = Queue(999999)
         cENode = Node(self.normalisedSolved(startState))
 
-        solved = False
         generation = 0
         vENodes = []
+        vSNodes = []
         
-        while not solved:
- #           print(generation)
+        while generation < 10:
+            print(generation)
             # Start state tree
             vSNodes = []
             nextGen = generation + 1
@@ -47,9 +47,9 @@ class World:
                 
                 check, node = binSearch(vENodes, cSNode)
                 if check == True:
-                    solved = True
                     return cSNode, node
                 
+                print(cSNode.movement)
                 # Append current node to visited nodes
                 vSNodes.append(cSNode)
 
@@ -81,7 +81,6 @@ class World:
 
                 check, node = binSearch(vSNodes, cENode)
                 if check == True:
-                    solved = True
                     return node, cENode
 
                 # Append current node to visited nodes
@@ -89,19 +88,19 @@ class World:
 
                 # Enqueue all adjacent nodes
                 if cENode.movement != "U'":  
-                    eNodeQ.enqueue(Node(cENode.U(), cENode, "U", ))
+                    eNodeQ.enqueue(Node(cENode.U_Prime(), cENode, "U", ))
                 if cENode.movement != "U":   
-                    eNodeQ.enqueue(Node(cENode.U_Prime(), cENode, "U'", nextGen))
+                    eNodeQ.enqueue(Node(cENode.U(), cENode, "U'", nextGen))
 
                 if cENode.movement != "R'":  
-                    eNodeQ.enqueue(Node(cENode.R(), cENode, "R", nextGen))
+                    eNodeQ.enqueue(Node(cENode.R_Prime(), cENode, "R", nextGen))
                 if cENode.movement != "R":   
-                    eNodeQ.enqueue(Node(cENode.R_Prime(), cENode, "R'", nextGen))
+                    eNodeQ.enqueue(Node(cENode.R(), cENode, "R'", nextGen))
                 
                 if cENode.movement != "F'":  
-                    eNodeQ.enqueue(Node(cENode.F(), cENode, "F", nextGen))
+                    eNodeQ.enqueue(Node(cENode.F_Prime(), cENode, "F", nextGen))
                 if cENode.movement != "F":   
-                    eNodeQ.enqueue(Node(cENode.F_Prime(), cENode, "F'", nextGen))
+                    eNodeQ.enqueue(Node(cENode.F(), cENode, "F'", nextGen))
 
                 # Fetch the next node
                 cENode = eNodeQ.dequeue()
@@ -136,7 +135,9 @@ class World:
 
 world = World()
 cube = Cube()
-cube.move(["D'"])
-#cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
-# cube.display()
+cube.move(["L'", "U",
+           "U"
+           ])
+cube.display()
+
 world.findPath(cube.cube)
