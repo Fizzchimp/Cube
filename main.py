@@ -1,3 +1,4 @@
+from pickle import TRUE
 import pygame as pg
 from display import Display
 from cube import Cube
@@ -43,9 +44,11 @@ class World:
             nextGen = generation + 1
 
             while cSNode.generation == generation:
-                if binSearch(vENodes, cSNode):
+                
+                check, node = binSearch(vENodes, cSNode)
+                if check == True:
                     solved = True
-                    break
+                    return cSNode, node
                 
                 # Append current node to visited nodes
                 vSNodes.append(cSNode)
@@ -76,9 +79,10 @@ class World:
             vENodes = []
             while cENode.generation == generation:
 
-                if binSearch(vSNodes, cENode):
+                check, node = binSearch(vSNodes, cENode)
+                if check == True:
                     solved = True
-                    break
+                    return node, cENode
 
                 # Append current node to visited nodes
                 vENodes.append(cENode)
@@ -108,24 +112,22 @@ class World:
 
             # Increment the node generation counter
             generation += 1
-
-
-
-        print("DONE")
         
-        path = [cSNode]
-        while path[-1].parent != None:
-            path.append(path[-1].parent)
+
+    def findPath(self, cube):
+        sNode, eNode = self.solve(cube)
+        
+        path = []
+        while sNode.parent != None:
+            path.append(sNode.movement)
+            sNode = sNode.parent
         path = path[::-1]
 
-        path.append(cENode)
-        while path[-1].parent != None:
-            path.append(path[-1].parent)
+        while eNode.parent != None:
+            path.append(eNode.movement)
+            eNode = eNode.parent
             
-        for x in path:
-            print(x.movement)
-        
-
+        print(", ".join(path))
             
               
             
@@ -134,7 +136,7 @@ class World:
 
 world = World()
 cube = Cube()
-cube.move(["U'"])
+cube.move(["D'"])
 #cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
 # cube.display()
-world.solve(cube.cube)
+world.findPath(cube.cube)

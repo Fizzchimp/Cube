@@ -252,4 +252,4 @@ class Cube():
         for i in range(num):
             moves.append(rnd.choice(["U", "D", "F", "B", "R", "L"]) + rnd.choice(["'", ""]))
         self.move(moves)
-        print(", ".join(moves))
+        #print(", ".join(moves))
