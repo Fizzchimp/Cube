@@ -14,7 +14,7 @@ def binSearch(arr, item, front = 0, rear = None):
         return True, midItem
     
     # Check if the range is 0 (item not in list)
-    elif front == rear:
+    elif front >= rear:
         return False, None
         
     # Check if the middle item is larger than the search term
