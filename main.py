@@ -133,6 +133,7 @@ class World:
 world = World()
 cube = Cube()
 cube.scramble()
+# cube.move(["U", "R'", "B", "L", "D", "B", "U'"])
 cube.display()
 
 world.findPath(cube.cube)
