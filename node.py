@@ -6,6 +6,3 @@ class Node(Cube):
         self.parent = parent
         self.movement = movement
         self.generation = generation
-
-    # def clone(self):
-    #     return Node(self.cube, self.parent, self.movement, self.generation)
