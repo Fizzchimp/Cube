@@ -26,10 +26,10 @@ class World:
 
     def solve(self, startState):
         # Queue for the current nodes
-        sNodeQ = Queue(999999)
+        sNodeQ = Queue(99999)
         cSNode = Node(startState)
 
-        eNodeQ = Queue(999999)
+        eNodeQ = Queue(99999)
         cENode = Node(self.normalisedSolved(startState))
 
         generation = 0
@@ -131,21 +131,13 @@ class World:
 
 
 world = World()
-cube = Cube([
-            "YWWO",
-                        
-            "GGYB",
-            "RGWR",
-            "WRBY",
-            "BRBG",
-
-            "OYOO"])
+cube = Cube(["WWYB",     "GGOY", "OYRW", "ORRY", "BOGW",      "BGBR"])
 #cube = Cube()
 #cube.scramble()
 #cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
 #cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
 #cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
 #cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
-cube.display()
+#cube.display()
 
 world.findPath(cube.cube)
