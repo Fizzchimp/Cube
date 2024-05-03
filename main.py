@@ -1,3 +1,4 @@
+from ast import Try
 from pickle import TRUE
 import pygame as pg
 from display import Display
@@ -131,7 +132,7 @@ class World:
 
 
 world = World()
-cube = Cube(["WWYB",     "GGOY", "OYRW", "ORRY", "BOGW",      "BGBR"])
+cube = Cube(["WWOB",     "RGYR", "WRYY", "YROB", "BGWO",      "GGBO"])
 #cube = Cube()
 #cube.scramble()
 #cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
@@ -140,4 +141,8 @@ cube = Cube(["WWYB",     "GGOY", "OYRW", "ORRY", "BOGW",      "BGBR"])
 #cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
 #cube.display()
 
-world.findPath(cube.cube)
+try:
+    world.findPath(cube.cube)
+    
+except Exception:
+    print("Not solvable")

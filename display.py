@@ -31,31 +31,37 @@ class Display():
         x, y, length = self.x, self.y, self.length
         top, bottom = (x, y - length), (x, y + length)
 
-        points = [(x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) - 1)),
-                  (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) - 1)),
-                  (x + length * cos30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) - 1)),
-                  (x + length * cos30 * -np.cos(phase), y + length / 2 * (np.sin(phase) - 1)),
+        #points = [(x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) - 1)),
+        #          (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) - 1)),
+        #          (x + length * cos30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) - 1)),
+        #          (x + length * cos30 * -np.cos(phase), y + length / 2 * (np.sin(phase) - 1)),
 
-                  (x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) + 1)),
-                  (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) + 1)),
-                  (x + length * cos30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) + 1)),
-                  (x + length * cos30 * -np.cos(phase), y + length / 2 * (np.sin(phase) + 1))]
+        #          (x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) + 1)),
+        #          (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) + 1)),
+        #          (x + length * cos30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) + 1)),
+        #          (x + length * cos30 * -np.cos(phase), y + length / 2 * (np.sin(phase) + 1))]
+        
+        points = [(x, y),
+                  (x + length * cos30, y - length / 2),
+                  (x + length * cos30, y + length / 2),
+                  (x, y + length),
+
+                  (x - length * cos30, y - length / 2),
+                  (x, y - length),
+                  (x, y),
+                  (x - length * cos30, y + length / 2)]
+
 
 
         for i in range(4):
             pg.draw.line(self.screen, (100, 100, 100), points[i], points[i + 4])
         for i in range(3):
-            pg.draw.line(self.screen, (100, 100, 100), points[i], points[i + 1])
-            pg.draw.line(self.screen, (100, 100, 100), points[i + 4], points[i + 5])
+            pg.draw.line(self.screen, (255, 100, 100), points[i], points[i + 1])
+            pg.draw.line(self.screen, (100, 100, 255), points[i + 4], points[i + 5])
 
-        pg.draw.line(self.screen, (100, 100, 100), points[3], points[0])
-        pg.draw.line(self.screen, (100, 100, 100), points[7], points[4])
+        pg.draw.line(self.screen, (255, 100, 100), points[3], points[0])
+        pg.draw.line(self.screen, (100, 100, 255), points[7], points[4])
         
-       # shade1 = [int(100 * (1 + np.cos(phase))) for i in range(3)]
-       # shade2 = [int(100 * (1 + np.sin(phase))) for i in range(3)]
-       # pg.draw.polygon(self.screen, shade1, (points[0], points[1], points[5], points[4]))
-       # pg.draw.polygon(self.screen, shade2, (points[0], points[4], points[7], points[3]))
-       # pg.draw.polygon(self.screen, (200, 200, 200), points[0:4])
         
         
         if self.phase < 0: self.phase += 1
@@ -82,4 +88,4 @@ def main():
         pg.time.wait(2)
     pg.quit()
 
-#main()
+main()
