@@ -143,6 +143,5 @@ cube = Cube(["WWOB",     "RGYR", "WRYY", "YROB", "BGWO",      "GGBO"])
 
 try:
     world.findPath(cube.cube)
-    
 except Exception:
     print("Not solvable")
