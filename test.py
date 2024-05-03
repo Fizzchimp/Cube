@@ -1,16 +1,16 @@
-from node import Node
-from mergesort import mergeSort
-from binsearch import binSearch
+from threading import Thread
+import time
 
-for i in range(100):
-    nodes = []
-    for j in range(1000):
-        nodes.append(Node())
-        nodes[-1].scramble()
+def myFunc(string):
+    for i in range(10):
+        print(string, i)
+        time.sleep(0.5)
+        
+thread1 = Thread(target = myFunc, args = ("Thread 1:",))
+thread2 = Thread(target = myFunc, args = ("Thread 2:",))
 
-    myNode = Node()
-    myNode.scramble()
-    #nodes.append(myNode)
-
-    nodes = mergeSort(nodes)
-    print(binSearch(nodes, myNode), i)
+thread1.start()
+time.sleep(0.1)
+thread2.start()
+time.sleep(0.1)
+myFunc("Main:")
