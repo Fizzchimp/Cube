@@ -1,5 +1,8 @@
 import pygame as pg
 import numpy as np
+COS30 = np.cos(np.pi / 6)
+THRDPI = np.pi / 3
+
 
 class Display():
     def __init__(self, width, height):
@@ -26,30 +29,29 @@ class Display():
         self.screen.fill((255, 255, 255))
 
         # Each vertex of hexagon
-        cos30 = np.cos(np.pi / 6)
         phase = self.phase * np.pi / 180 + np.pi / 6
         x, y, length = self.x, self.y, self.length
         top, bottom = (x, y - length), (x, y + length)
 
-        #points = [(x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) - 1)),
-        #          (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) - 1)),
-        #          (x + length * cos30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) - 1)),
-        #          (x + length * cos30 * -np.cos(phase), y + length / 2 * (np.sin(phase) - 1)),
+        # points = [(x + length * COS30 * np.sin(phase), y + length / 2 * (np.cos(phase) - 1)),
+        #          (x + length * COS30 * np.cos(phase), y + length / 2 * (-np.sin(phase) - 1)),
+        #          (x + length * COS30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) - 1)),
+        #          (x + length * COS30 * -np.cos(phase), y + length / 2 * (np.sin(phase) - 1)),
 
-        #          (x + length * cos30 * np.sin(phase), y + length / 2 * (np.cos(phase) + 1)),
-        #          (x + length * cos30 * np.cos(phase), y + length / 2 * (-np.sin(phase) + 1)),
-        #          (x + length * cos30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) + 1)),
-        #          (x + length * cos30 * -np.cos(phase), y + length / 2 * (np.sin(phase) + 1))]
+        #          (x + length * COS30 * np.sin(phase), y + length / 2 * (np.cos(phase) + 1)),
+        #          (x + length * COS30 * np.cos(phase), y + length / 2 * (-np.sin(phase) + 1)),
+        #          (x + length * COS30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) + 1)),
+        #          (x + length * COS30 * -np.cos(phase), y + length / 2 * (np.sin(phase) + 1))]
         
-        points = [(x, y),
-                  (x + length * cos30, y - length / 2),
-                  (x + length * cos30, y + length / 2),
-                  (x, y + length),
+        points = [(x + length * COS30 / 2 + length / 2 * np.sin(phase), y + length / 4 + 3 * length / 4 * np.cos(phase)),
+                  (x + length * COS30 / 2 + length / 2 * -np.cos(phase), y + length / 4 + 3 * length / 4 * np.sin(phase)),
+                  (x + length * COS30 / 2 + length / 2 * -np.sin(phase), y + length / 4 + 3 * length / 4 * -np.cos(phase)),
+                  (x + length * COS30 / 2 + length / 2 * np.cos(phase), y + length / 4 + 3 * length / 4 * -np.sin(phase)),
 
-                  (x - length * cos30, y - length / 2),
-                  (x, y - length),
-                  (x, y),
-                  (x - length * cos30, y + length / 2)]
+                  (x - length * COS30 / 2 + length / 2 * np.sin(phase), y - length / 2),
+                  (x - length * COS30 / 2 + length / 2 * -np.cos(phase), y - length),
+                  (x - length * COS30 / 2 + length / 2 * -np.sin(phase), y),
+                  (x - length * COS30 / 2 + length / 2 * np.cos(phase), y + length / 2)]
 
 
 
@@ -63,9 +65,9 @@ class Display():
         pg.draw.line(self.screen, (100, 100, 255), points[7], points[4])
         
         
-        
-        if self.phase < 0: self.phase += 1
-        if self.phase > 0: self.phase -= 1
+        self.phase += 1
+        # if self.phase < 0: self.phase += 1
+        # if self.phase > 0: self.phase -= 1
         
 
 def main():
@@ -85,7 +87,7 @@ def main():
   
         screen.draw_cube()
         pg.display.flip()
-        pg.time.wait(2)
+        pg.time.wait(1)
     pg.quit()
 
 main()
