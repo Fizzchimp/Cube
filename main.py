@@ -132,20 +132,20 @@ class World:
 
 world = World()
 #cube = Cube([
-#            "WWBG",
+#            "WOOB",
 #                        
-#            "RYWB",
-#            "OYWB",
-#            "RRYG",
-#            "BGYO",
-
-#            "ORGO"])
+#            "GWWR",
+#            "BYYR",
+#            "OYBR",
+#            "GOWG",
+#
+#            "GYRB"])
 cube = Cube()
 #cube.scramble()
 cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
 cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
-cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
-cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
+#cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
+#cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
 cube.display()
 
 world.findPath(cube.cube)
