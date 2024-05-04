@@ -15,7 +15,8 @@ class Display():
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
 
-        self.phase = 0
+        self.xPhase = 0
+        self.yPhase = 0
 
         # Centre co-ordinates
         self.x, self.y  = self.width / 2, self.height / 2
@@ -29,29 +30,31 @@ class Display():
         self.screen.fill((255, 255, 255))
 
         # Each vertex of hexagon
-        phase = self.phase * np.pi / 180 + np.pi / 6
+        xPhase = self.xPhase * np.pi / 180 + np.pi / 6
+        yPhase = self.yPhase * np.pi / 180# + np.pi / 6
         x, y, length = self.x, self.y, self.length
         top, bottom = (x, y - length), (x, y + length)
 
-        # points = [(x + length * COS30 * np.sin(phase), y + length / 2 * (np.cos(phase) - 1)),
-        #          (x + length * COS30 * np.cos(phase), y + length / 2 * (-np.sin(phase) - 1)),
-        #          (x + length * COS30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) - 1)),
-        #          (x + length * COS30 * -np.cos(phase), y + length / 2 * (np.sin(phase) - 1)),
+        points = [(x + length * COS30 * np.sin(yPhase), y + length / 2 * (np.cos(yPhase) - 1)),
+                 (x + length * COS30 * np.cos(yPhase), y + length / 2 * (-np.sin(yPhase) - 1)),
+                 (x + length * COS30 * -np.sin(yPhase), y + length / 2 * (-np.cos(yPhase) - 1)),
+                 (x + length * COS30 * -np.cos(yPhase), y + length / 2 * (np.sin(yPhase) - 1)),
 
-        #          (x + length * COS30 * np.sin(phase), y + length / 2 * (np.cos(phase) + 1)),
-        #          (x + length * COS30 * np.cos(phase), y + length / 2 * (-np.sin(phase) + 1)),
-        #          (x + length * COS30 * -np.sin(phase), y + length / 2 * (-np.cos(phase) + 1)),
-        #          (x + length * COS30 * -np.cos(phase), y + length / 2 * (np.sin(phase) + 1))]
+                 (x + length * COS30 * np.sin(yPhase), y + length / 2 * (np.cos(yPhase) + 1)),
+                 (x + length * COS30 * np.cos(yPhase), y + length / 2 * (-np.sin(yPhase) + 1)),
+                 (x + length * COS30 * -np.sin(yPhase), y + length / 2 * (-np.cos(yPhase) + 1)),
+                 (x + length * COS30 * -np.cos(yPhase), y + length / 2 * (np.sin(yPhase) + 1))]
+    
         
-        points = [(x + length * COS30 / 2 + length / 2 * np.sin(phase), y + length / 4 + 3 * length / 4 * np.cos(phase)),
-                  (x + length * COS30 / 2 + length / 2 * -np.cos(phase), y + length / 4 + 3 * length / 4 * np.sin(phase)),
-                  (x + length * COS30 / 2 + length / 2 * -np.sin(phase), y + length / 4 + 3 * length / 4 * -np.cos(phase)),
-                  (x + length * COS30 / 2 + length / 2 * np.cos(phase), y + length / 4 + 3 * length / 4 * -np.sin(phase)),
+        newPoints = [(x + length * COS30 / 2 + length / 2 * np.sin(xPhase), y + length / 4 + 3 * length / 4 * np.cos(xPhase)),
+                  (x + length * COS30 / 2 + length / 2 * -np.cos(xPhase), y + length / 4 + 3 * length / 4 * np.sin(xPhase)),
+                  (x + length * COS30 / 2 + length / 2 * -np.sin(xPhase), y + length / 4 + 3 * length / 4 * -np.cos(xPhase)),
+                  (x + length * COS30 / 2 + length / 2 * np.cos(xPhase), y + length / 4 + 3 * length / 4 * -np.sin(xPhase)),
 
-                  (x - length * COS30 / 2 + length / 2 * np.sin(phase), y - length / 2),
-                  (x - length * COS30 / 2 + length / 2 * -np.cos(phase), y - length),
-                  (x - length * COS30 / 2 + length / 2 * -np.sin(phase), y),
-                  (x - length * COS30 / 2 + length / 2 * np.cos(phase), y + length / 2)]
+                  (x - length * COS30 / 2 + length / 2 * np.sin(xPhase), y - length / 4 + 3 * length / 4 * np.cos(xPhase)),
+                  (x - length * COS30 / 2 + length / 2 * -np.cos(xPhase), y - length / 4 + 3 * length / 4 * np.sin(xPhase)),
+                  (x - length * COS30 / 2 + length / 2 * -np.sin(xPhase), y - length / 4 + 3 * length / 4 * -np.cos(xPhase)),
+                  (x - length * COS30 / 2 + length / 2 * np.cos(xPhase), y - length / 4 + 3 * length / 4 * -np.sin(xPhase))]
 
 
 
@@ -64,10 +67,20 @@ class Display():
         pg.draw.line(self.screen, (255, 100, 100), points[3], points[0])
         pg.draw.line(self.screen, (100, 100, 255), points[7], points[4])
         
+        for i in range(4):
+            pg.draw.line(self.screen, (100, 100, 100), newPoints[i], newPoints[i + 4])
+        for i in range(3):
+            pg.draw.line(self.screen, (255, 100, 100), newPoints[i], newPoints[i + 1])
+            pg.draw.line(self.screen, (100, 100, 255), newPoints[i + 4], newPoints[i + 5])
+
+        pg.draw.line(self.screen, (255, 100, 100), newPoints[3], newPoints[0])
+        pg.draw.line(self.screen, (100, 100, 255), newPoints[7], newPoints[4])
         
-        self.phase += 1
-        # if self.phase < 0: self.phase += 1
-        # if self.phase > 0: self.phase -= 1
+        
+        if self.yPhase < 0: self.yPhase += 1
+        if self.yPhase > 0: self.yPhase -= 1
+        if self.xPhase < 0: self.xPhase += 1
+        if self.xPhase > 0: self.xPhase -= 1
         
 
 def main():
@@ -82,12 +95,14 @@ def main():
 
         if keyDown:
             if key == pg.K_ESCAPE: running = False
-            if key == pg.K_RIGHT and screen.phase == 0: screen.phase = -90
-            if key == pg.K_LEFT and screen.phase == 0: screen.phase = 90
+            if key == pg.K_RIGHT and screen.yPhase == 0: screen.yPhase = -90
+            if key == pg.K_LEFT and screen.yPhase == 0: screen.yPhase = 90
+            if key == pg.K_DOWN and screen.xPhase == 0: screen.xPhase = -90
+            if key == pg.K_UP and screen.xPhase == 0: screen.xPhase = 90
   
         screen.draw_cube()
         pg.display.flip()
-        pg.time.wait(1)
+        pg.time.wait(20)
     pg.quit()
 
 main()
