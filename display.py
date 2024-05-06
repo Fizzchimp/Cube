@@ -45,16 +45,17 @@ class Display():
                  (x + length * COS30 * -np.sin(yPhase), y + length / 2 * (-np.cos(yPhase) + 1)),
                  (x + length * COS30 * -np.cos(yPhase), y + length / 2 * (np.sin(yPhase) + 1))]
     
-        
-        newPoints = [(x + length * COS30 / 2 + length / 2 * np.sin(xPhase), y + length / 4 + 3 * length / 4 * np.cos(xPhase)),
-                  (x + length * COS30 / 2 + length / 2 * -np.cos(xPhase), y + length / 4 + 3 * length / 4 * np.sin(xPhase)),
-                  (x + length * COS30 / 2 + length / 2 * -np.sin(xPhase), y + length / 4 + 3 * length / 4 * -np.cos(xPhase)),
-                  (x + length * COS30 / 2 + length / 2 * np.cos(xPhase), y + length / 4 + 3 * length / 4 * -np.sin(xPhase)),
+        valY = np.pi / 3
+        valX = 0
+        newPoints = [(x + length * COS30 / 2 + length / 2 * np.sin(xPhase + valX), y + length / 4 + 3 * length / 4 * np.cos(xPhase)),
+                  (x + length * COS30 / 2 + length / 2 * -np.cos(xPhase + valX), y + length / 4 + 3 * length / 4 * np.sin(xPhase + valY)),
+                  (x + length * COS30 / 2 + length / 2 * -np.sin(xPhase + valX), y + length / 4 + 3 * length / 4 * -np.cos(xPhase)),
+                  (x + length * COS30 / 2 + length / 2 * np.cos(xPhase + valX), y + length / 4 + 3 * length / 4 * -np.sin(xPhase + valY)),
 
-                  (x - length * COS30 / 2 + length / 2 * np.sin(xPhase), y - length / 4 + 3 * length / 4 * np.cos(xPhase)),
-                  (x - length * COS30 / 2 + length / 2 * -np.cos(xPhase), y - length / 4 + 3 * length / 4 * np.sin(xPhase)),
-                  (x - length * COS30 / 2 + length / 2 * -np.sin(xPhase), y - length / 4 + 3 * length / 4 * -np.cos(xPhase)),
-                  (x - length * COS30 / 2 + length / 2 * np.cos(xPhase), y - length / 4 + 3 * length / 4 * -np.sin(xPhase))]
+                  (x - length * COS30 / 2 + length / 2 * np.sin(xPhase + valX), y - length / 4 + 3 * length / 4 * np.cos(xPhase + valY)),
+                  (x - length * COS30 / 2 + length / 2 * -np.cos(xPhase + valX), y - length / 4 + 3 * length / 4 * np.sin(xPhase + valY)),
+                  (x - length * COS30 / 2 + length / 2 * -np.sin(xPhase + valX), y - length / 4 + 3 * length / 4 * -np.cos(xPhase + valY)),
+                  (x - length * COS30 / 2 + length / 2 * np.cos(xPhase + valX), y - length / 4 + 3 * length / 4 * -np.sin(xPhase + valY))]
 
 
 
@@ -102,7 +103,7 @@ def main():
   
         screen.draw_cube()
         pg.display.flip()
-        pg.time.wait(20)
+        pg.time.wait(10)
     pg.quit()
 
 main()
