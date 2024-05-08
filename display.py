@@ -54,7 +54,10 @@ class Display():
 
     def draw_cube(self):
         self.screen.fill((255, 255, 255))
-        
+        # for i in range(4):
+        #     pg.draw.line(self.screen, (100, 100, 100), self.points.points[i][:2], self.points.points[i + 4][:2])
+            
+
         for point in self.points.points:
             pg.draw.circle(self.screen, (150 + 0.25 * point[2], 100, 100), (self.x + point[0], self.y + point[1]), 4)
         self.points.points = self.points.rotateY(0.5)
