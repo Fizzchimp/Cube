@@ -1,7 +1,7 @@
 from ast import Try
 from pickle import TRUE
 import pygame as pg
-from display import Display
+#from display import Display
 from cube import Cube
 from cqueue import Queue
 from node import Node
@@ -132,7 +132,7 @@ class World:
 
 
 world = World()
-cube = Cube(["GWWY",     "YGOY", "RRRG", "GROW", "BOOB",      "BWYB"])
+cube = Cube(["YWOY",     "RGWR", "WRGO", "GRYY", "BBOB",      "WBOG"])
 #cube = Cube()
 #cube.scramble(1000)
 #cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])

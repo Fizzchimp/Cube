@@ -101,9 +101,10 @@ def main():
             if key == pg.K_DOWN and screen.xPhase == 0: screen.xPhase = -90
             if key == pg.K_UP and screen.xPhase == 0: screen.xPhase = 90
   
-        screen.draw_cube()
-        pg.display.flip()
-        pg.time.wait(10)
+        #screen.draw_cube()
+        #pg.display.flip()
+        #pg.time.wait(10)
+        
     pg.quit()
 
 main()
