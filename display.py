@@ -2,8 +2,28 @@ import pygame as pg
 import numpy as np
 COS30 = np.cos(np.pi / 6)
 THRDPI = np.pi / 3
+angle = 0
+rotY = [
+    [np.cos(angle / 360 * np.pi * 2), 0, np.sin(angle / 360 * np.pi * 2)],
+    [0, 1, 0],
+    [-np.sin(angle / 360 * np.pi * 2), 0, np.cos(angle / 360 * np.pi * 2)]]
 
+class CubePoints:
+    def __init__(self, length):
+        self.points = [
+            [length, length, length],
+            [length, length, -length],
+            [-length, length, -length],
+            [-length, length, length],
 
+            [length, -length, length],
+            [length, -length, -length],
+            [-length, -length, -length],
+            [-length, -length, length]]
+        
+    def rotateY(self, angle):
+        return [np.matmul(rotY, self.points[i]) for i in range(8)]
+        
 class Display():
     def __init__(self, width, height):
         pg.init()
@@ -15,76 +35,21 @@ class Display():
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
 
-        self.xPhase = 0
-        self.yPhase = 0
-
         # Centre co-ordinates
         self.x, self.y  = self.width / 2, self.height / 2
 
-        # Length of side of cube
-        self.length = self.width / 2.5 if self.width <= self.height else self.height / 2.5    
-
+        # 3D Matrix of all verticies in a cube
+        self.points = CubePoints(self.width / 2.5 if self.width <= self.height else self.height / 2.5)
 
     def draw_cube(self):
-
         self.screen.fill((255, 255, 255))
-
-        # Each vertex of hexagon
-        xPhase = self.xPhase * np.pi / 180 + np.pi / 6
-        yPhase = self.yPhase * np.pi / 180# + np.pi / 6
-        x, y, length = self.x, self.y, self.length
-        top, bottom = (x, y - length), (x, y + length)
-
-        points = [(x + length * COS30 * np.sin(yPhase), y + length / 2 * (np.cos(yPhase) - 1)),
-                 (x + length * COS30 * np.cos(yPhase), y + length / 2 * (-np.sin(yPhase) - 1)),
-                 (x + length * COS30 * -np.sin(yPhase), y + length / 2 * (-np.cos(yPhase) - 1)),
-                 (x + length * COS30 * -np.cos(yPhase), y + length / 2 * (np.sin(yPhase) - 1)),
-
-                 (x + length * COS30 * np.sin(yPhase), y + length / 2 * (np.cos(yPhase) + 1)),
-                 (x + length * COS30 * np.cos(yPhase), y + length / 2 * (-np.sin(yPhase) + 1)),
-                 (x + length * COS30 * -np.sin(yPhase), y + length / 2 * (-np.cos(yPhase) + 1)),
-                 (x + length * COS30 * -np.cos(yPhase), y + length / 2 * (np.sin(yPhase) + 1))]
-    
-        valY = np.pi / 3
-        valX = 0
-        newPoints = [(x + length * COS30 / 2 + length / 2 * np.sin(xPhase + valX), y + length / 4 + 3 * length / 4 * np.cos(xPhase)),
-                  (x + length * COS30 / 2 + length / 2 * -np.cos(xPhase + valX), y + length / 4 + 3 * length / 4 * np.sin(xPhase + valY)),
-                  (x + length * COS30 / 2 + length / 2 * -np.sin(xPhase + valX), y + length / 4 + 3 * length / 4 * -np.cos(xPhase)),
-                  (x + length * COS30 / 2 + length / 2 * np.cos(xPhase + valX), y + length / 4 + 3 * length / 4 * -np.sin(xPhase + valY)),
-
-                  (x - length * COS30 / 2 + length / 2 * np.sin(xPhase + valX), y - length / 4 + 3 * length / 4 * np.cos(xPhase + valY)),
-                  (x - length * COS30 / 2 + length / 2 * -np.cos(xPhase + valX), y - length / 4 + 3 * length / 4 * np.sin(xPhase + valY)),
-                  (x - length * COS30 / 2 + length / 2 * -np.sin(xPhase + valX), y - length / 4 + 3 * length / 4 * -np.cos(xPhase + valY)),
-                  (x - length * COS30 / 2 + length / 2 * np.cos(xPhase + valX), y - length / 4 + 3 * length / 4 * -np.sin(xPhase + valY))]
-
-
-
-        for i in range(4):
-            pg.draw.line(self.screen, (100, 100, 100), points[i], points[i + 4])
-        for i in range(3):
-            pg.draw.line(self.screen, (255, 100, 100), points[i], points[i + 1])
-            pg.draw.line(self.screen, (100, 100, 255), points[i + 4], points[i + 5])
-
-        pg.draw.line(self.screen, (255, 100, 100), points[3], points[0])
-        pg.draw.line(self.screen, (100, 100, 255), points[7], points[4])
         
-        for i in range(4):
-            pg.draw.line(self.screen, (100, 100, 100), newPoints[i], newPoints[i + 4])
-        for i in range(3):
-            pg.draw.line(self.screen, (255, 100, 100), newPoints[i], newPoints[i + 1])
-            pg.draw.line(self.screen, (100, 100, 255), newPoints[i + 4], newPoints[i + 5])
-
-        pg.draw.line(self.screen, (255, 100, 100), newPoints[3], newPoints[0])
-        pg.draw.line(self.screen, (100, 100, 255), newPoints[7], newPoints[4])
-        
-        
-        if self.yPhase < 0: self.yPhase += 1
-        if self.yPhase > 0: self.yPhase -= 1
-        if self.xPhase < 0: self.xPhase += 1
-        if self.xPhase > 0: self.xPhase -= 1
+        for point in self.points.points:
+            pg.draw.circle(self.screen, (100 + 0.1 * point[2], 100, 100), (point[0], point[1]), 4)
         
 
 def main():
+    theta = 1
     screen = Display(700, 700)
     running = True
     keyDown = False
@@ -96,15 +61,14 @@ def main():
 
         if keyDown:
             if key == pg.K_ESCAPE: running = False
-            if key == pg.K_RIGHT and screen.yPhase == 0: screen.yPhase = -90
-            if key == pg.K_LEFT and screen.yPhase == 0: screen.yPhase = 90
-            if key == pg.K_DOWN and screen.xPhase == 0: screen.xPhase = -90
-            if key == pg.K_UP and screen.xPhase == 0: screen.xPhase = 90
-  
-        #screen.draw_cube()
-        #pg.display.flip()
-        #pg.time.wait(10)
-        
-    pg.quit()
+        #     if key == pg.K_RIGHT and screen.yPhase == 0: screen.yPhase = -90
+        #     if key == pg.K_LEFT and screen.yPhase == 0: screen.yPhase = 90
+        #     if key == pg.K_DOWN and screen.xPhase == 0: screen.xPhase = -90
+        #     if key == pg.K_UP and screen.xPhase == 0: screen.xPhase = 90
 
+        screen.draw_cube()
+        pg.display.flip()
+        pg.time.wait(10)
+        
 main()
+pg.quit()
