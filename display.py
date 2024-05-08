@@ -3,10 +3,6 @@ import numpy as np
 COS30 = np.cos(np.pi / 6)
 THRDPI = np.pi / 3
 angle = 0
-rotY = [
-    [np.cos(angle / 360 * np.pi * 2), 0, np.sin(angle / 360 * np.pi * 2)],
-    [0, 1, 0],
-    [-np.sin(angle / 360 * np.pi * 2), 0, np.cos(angle / 360 * np.pi * 2)]]
 
 class CubePoints:
     def __init__(self, length):
@@ -22,7 +18,21 @@ class CubePoints:
             [-length, -length, length]]
         
     def rotateY(self, angle):
+        angle = angle / 360 * np.pi * 2
+        rotY = [[np.cos(angle), 0, np.sin(angle)],
+                [0, 1, 0],
+                [-np.sin(angle), 0, np.cos(angle)]]
+        
         return [np.matmul(rotY, self.points[i]) for i in range(8)]
+    
+    def rotateZ(self, angle):
+        angle = angle / 360 * np.pi * 2
+        rotZ = [[np.cos(angle), -np.sin(angle), 0],
+                [np.sin(angle), np.cos(angle), 0],
+                [0, 0, 1]]
+        
+        return [np.matmul(rotZ, self.points[i]) for i in range(8)]
+
         
 class Display():
     def __init__(self, width, height):
@@ -39,17 +49,18 @@ class Display():
         self.x, self.y  = self.width / 2, self.height / 2
 
         # 3D Matrix of all verticies in a cube
-        self.points = CubePoints(self.width / 2.5 if self.width <= self.height else self.height / 2.5)
+        self.length = self.width / 5 if self.width <= self.height else self.height / 5
+        self.points = CubePoints(self.length)
 
     def draw_cube(self):
         self.screen.fill((255, 255, 255))
         
         for point in self.points.points:
-            pg.draw.circle(self.screen, (100 + 0.1 * point[2], 100, 100), (point[0], point[1]), 4)
-        
+            pg.draw.circle(self.screen, (150 + 0.25 * point[2], 100, 100), (self.x + point[0], self.y + point[1]), 4)
+        self.points.points = self.points.rotateY(0.5)
+        self.points.points = self.points.rotateZ(0.4)
 
 def main():
-    theta = 1
     screen = Display(700, 700)
     running = True
     keyDown = False
@@ -68,7 +79,7 @@ def main():
 
         screen.draw_cube()
         pg.display.flip()
-        pg.time.wait(10)
+        pg.time.wait(5)
         
 main()
 pg.quit()
