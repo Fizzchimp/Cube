@@ -6,16 +6,21 @@ angle = 0
 
 class CubePoints:
     def __init__(self, length):
-        self.points = [
-            [length, length, length],
-            [length, length, -length],
-            [-length, length, -length],
-            [-length, length, length],
+        # self.points = [
+        #     [length, length, length],
+        #     [length, length, -length],
+        #     [-length, length, -length],
+        #     [-length, length, length],
 
-            [length, -length, length],
-            [length, -length, -length],
-            [-length, -length, -length],
-            [-length, -length, length]]
+        #     [length, -length, length],
+        #     [length, -length, -length],
+        #     [-length, -length, -length],
+        #     [-length, -length, length]]
+        
+        self.points = [
+            [length, length, -length, -length, length, length, -length, -length],
+            [length, length, length, length, -length, -length, -length, -length],
+            [length, -length, -length, length, length, -length, -length, length]]
         
     def rotateY(self, angle):
         angle = angle / 360 * np.pi * 2
@@ -23,7 +28,7 @@ class CubePoints:
                 [0, 1, 0],
                 [-np.sin(angle), 0, np.cos(angle)]]
         
-        return [np.matmul(rotY, self.points[i]) for i in range(8)]
+        return [np.matmul(rotY, self.points)]
     
     def rotateZ(self, angle):
         angle = angle / 360 * np.pi * 2
@@ -54,14 +59,19 @@ class Display():
 
     def draw_cube(self):
         self.screen.fill((255, 255, 255))
+
         # for i in range(4):
-        #     pg.draw.line(self.screen, (100, 100, 100), self.points.points[i][:2], self.points.points[i + 4][:2])
+        #     pg.draw.line(
+        #         self.screen,
+        #         (100, 100, 100),
+        #         (self.x + self.points.points[i][0], self.y + self.points.points[i][1]),
+        #         (self.x + self.points.points[i + 4][0], self.y + self.points.points[i + 4][1]))
             
 
-        for point in self.points.points:
-            pg.draw.circle(self.screen, (150 + 0.25 * point[2], 100, 100), (self.x + point[0], self.y + point[1]), 4)
+        for i in range(8):
+            pg.draw.circle(self.screen, (150 + 0.25 * self.points.points[0][i], 100, 100), (self.x + self.points.points[0][i], self.y + self.points.points[1][i]), 4)
         self.points.points = self.points.rotateY(0.5)
-        self.points.points = self.points.rotateZ(0.4)
+        # self.points.points = self.points.rotateZ(0.4)
 
 def main():
     screen = Display(700, 700)
@@ -82,7 +92,7 @@ def main():
 
         screen.draw_cube()
         pg.display.flip()
-        pg.time.wait(5)
+        pg.time.wait(20)
         
 main()
 pg.quit()
