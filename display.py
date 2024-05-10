@@ -1,7 +1,6 @@
 import pygame as pg
 import numpy as np
 angle = 0
-
        
 def rotateX(angle, points):
     angle = angle / 180 * np.pi
@@ -20,10 +19,19 @@ def rotateY(angle, points):
     return np.matmul(rotY, points)
     
 def rotateZ(angle, points):
+    axis = rotateX(30, rotateY(20, [0, 0, 1]))
     angle = angle / 180 * np.pi
-    rotZ = [[np.cos(angle), -np.sin(angle), 0],
-            [np.sin(angle), np.cos(angle), 0],
-            [0, 0, 1]]
+    rotZ = [[np.cos(angle) + axis[0] ** 2 * (1 - np.cos(angle)),
+              axis[0] * axis[1] * (1 - np.cos(angle)) - axis[2] * np.sin(angle),
+              axis[0] * axis[2] * (1 - np.cos(angle)) + axis[1] * np.sin(angle)],
+     
+             [axis[0] * axis[1] * (1 - np.cos(angle)) + axis[2] * np.sin(angle),
+              np.cos(angle) + axis[1] ** 2 * (1 - np.cos(angle)),
+              axis[1] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle)],
+     
+             [axis[0] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle),
+              axis[1] * axis[2] * (1 - np.cos(angle)) + axis[0] * np.sin(angle),
+              np.cos(angle) + axis[2] ** 2 * (1 - np.cos(angle))]]
         
     return np.matmul(rotZ, points)
         
@@ -49,13 +57,13 @@ class Display():
             [length, length, -length, -length, length, length, -length, -length],
             [length, length, length, length, -length, -length, -length, -length],
             [length, -length, -length, length, length, -length, -length, length]]
+        self.cubePoints = rotateX(30, rotateY(20, self.cubePoints))
 
         self.yPhase = 0
         self.xPhase = 0
-        
 
     def draw_cube(self):
-        points = rotateX(30 + self.xPhase, rotateY(20 + self.yPhase, self.cubePoints))
+        points = self.cubePoints
         self.screen.fill((255, 255, 255))
             
         for i in range(8):
@@ -79,7 +87,7 @@ class Display():
                          (self.x + points[0][(i + 1) % 4 + 4], self.y + points[1][(i + 1) % 4 + 4]))
             
 
-
+        self.cubePoints = rotateZ(1, points)
         #if self.yPhase < 0: self.yPhase += 1
         #if self.yPhase > 0: self.yPhase -= 1
         #if self.xPhase < 0: self.xPhase += 1
@@ -107,6 +115,6 @@ def main():
         screen.draw_cube()
         pg.display.flip()
         pg.time.wait(3)
-        
+    pg.quit()
+    
 main()
-pg.quit()

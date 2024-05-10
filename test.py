@@ -1,13 +1,4 @@
 import numpy as np
-length = 1
-
-def rotateTest(theta, alpha, points):
-    theta, alpha = theta / 180 * np.pi, alpha / 180 * np.pi
-    rotTest = [[np.cos(theta), np.sin(theta) * np.sin(alpha), -np.sin(theta) * np.cos(alpha)],
-               [0, np.cos(alpha), -np.sin(alpha)],
-               [-np.sin(theta), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.cos(alpha)]]
-    
-    return np.matmul(rotTest, points)
 
 def rotateX(angle, points):
     angle = angle / 180 * np.pi
@@ -33,15 +24,20 @@ def rotateZ(angle, points):
         
     return np.matmul(rotZ, points)
 
-cubePoints = [
-            [length, length, -length, -length, length, length, -length, -length],
-            [length, length, length, length, -length, -length, -length, -length],
-            [length, -length, -length, length, length, -length, -length, length]]
+axis = rotateX(30, rotateY(20, [0, 0, 1]))
 
-newPoints = rotateTest(90, 90, cubePoints)
-newPoints1 = rotateX(90, rotateY(90, cubePoints))
+angle = np.pi / 2
 
-for i in range(8):
-    print(newPoints[0][i], newPoints[1][i], newPoints[2][i])
-    print(newPoints1[0][i], newPoints1[1][i], newPoints1[2][i])
-    print("---------------")
+r = [[np.cos(angle) + axis[0] ** 2 * (1 - np.cos(angle)),
+      axis[0] * axis[1] * (1 - np.cos(angle)) - axis[2] * np.sin(angle),
+      axis[0] * axis[2] * (1 - np.cos(angle)) + axis[1] * np.sin(angle)],
+     
+     [axis[0] * axis[1] * (1 - np.cos(angle)) + axis[2] * np.sin(angle),
+      np.cos(angle) + axis[1] ** 2 * (1 - np.cos(angle)),
+      axis[1] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle)],
+     
+     [axis[0] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle),
+      axis[1] * axis[2] * (1 - np.cos(angle)) + axis[0] * np.sin(angle),
+      np.cos(angle) + axis[2] ** 2 * (1 - np.cos(angle))]]
+
+    
