@@ -80,10 +80,11 @@ class Display():
             
 
 
-        if self.yPhase < 0: self.yPhase += 1
-        if self.yPhase > 0: self.yPhase -= 1
-        if self.xPhase < 0: self.xPhase += 1
-        if self.xPhase > 0: self.xPhase -= 1
+        #if self.yPhase < 0: self.yPhase += 1
+        #if self.yPhase > 0: self.yPhase -= 1
+        #if self.xPhase < 0: self.xPhase += 1
+        #if self.xPhase > 0: self.xPhase -= 1
+        self.xPhase += 1
 
 def main():
     screen = Display(700, 700)
