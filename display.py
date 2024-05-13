@@ -94,7 +94,7 @@ class Display():
             pg.draw.circle(self.screen, (150 + -0.25 * points[2][i], 100, 100), (points[0][i], points[1][i]), 4)
 
 
-        for i in range(1):
+        for i in range(4):
             pg.draw.line(self.screen,
                          (100, 100, 100),
                          (points[0][i], points[1][i]),
@@ -113,28 +113,27 @@ class Display():
         shade1 = 150
         shade2 = 125
         shade3 = 100
-        pg.draw.polygon(self.screen,
-                        (shade1, shade1, shade1),
-                        ((points[0][0], points[1][0]),
-                         (points[0][4], points[1][4]),
-                         (points[0][5], points[1][5]),
-                         (points[0][1], points[1][1])))
-        
-        pg.draw.polygon(self.screen, 
-                        (shade3, shade3, shade3),
-                        ((points[0][2], points[1][2]),
-                         (points[0][6], points[1][6]),
-                         (points[0][7], points[1][7]),
-                         (points[0][3], points[1][3])))
-        
-        pg.draw.polygon(self.screen,
-                        (shade2, shade2, shade2),
-                        ((points[0][1], points[1][1]),
-                         (points[0][5], points[1][5]),
-                         (points[0][6], points[1][6]),
-                         (points[0][2], points[1][2])))
-            
-
+        #pg.draw.polygon(self.screen,
+        #                (shade1, shade1, shade1),
+        #                ((points[0][0], points[1][0]),
+        #                 (points[0][4], points[1][4]),
+        #                 (points[0][5], points[1][5]),
+        #                 (points[0][1], points[1][1])))
+       # 
+       # pg.draw.polygon(self.screen, 
+       #                 (shade3, shade3, shade3),
+       #                 ((points[0][2], points[1][2]),
+       #                  (points[0][6], points[1][6]),
+       #                  (points[0][7], points[1][7]),
+       #                  (points[0][3], points[1][3])))
+       # 
+       # pg.draw.polygon(self.screen,
+       #                 (shade2, shade2, shade2),
+       #                 ((points[0][1], points[1][1]),
+       #                  (points[0][5], points[1][5]),
+       #                  (points[0][6], points[1][6]),
+       #                  (points[0][2], points[1][2])))
+       
         if self.yPhase < 0: self.yPhase += 1
         if self.yPhase > 0: self.yPhase -= 1
 
@@ -157,11 +156,11 @@ def main():
         if keyDown:
             if key == pg.K_ESCAPE: running = False
             if key == pg.K_SPACE: print(pg.key.get_pressed())
-            if key == pg.K_RIGHT and screen.yPhase == 0: screen.yPhase = 90
-            if key == pg.K_LEFT and screen.yPhase == 0: screen.yPhase = -90
-            if key == pg.K_UP and screen.xPhase == 0: screen.xPhase = 90
-            if key == pg.K_DOWN and screen.xPhase == 0: screen.xPhase = -90
-            if key == pg.K_z and screen.zPhase == 0: screen.zPhase = -90
+            if key == pg.K_RIGHT and screen.yPhase == 0: screen.yPhase += 90
+            if key == pg.K_LEFT and screen.yPhase == 0: screen.yPhase -= 90
+            if key == pg.K_UP and screen.xPhase == 0: screen.xPhase += 90
+            if key == pg.K_DOWN and screen.xPhase == 0: screen.xPhase -= 90
+            if key == pg.K_z and screen.zPhase == 0: screen.zPhase -= 90
 
         screen.draw_cube()
         pg.display.flip()
