@@ -1,7 +1,7 @@
 import pygame as pg
 import numpy as np
-angle = 0
-       
+
+
 def rotateX(angle, points):
     angle = angle / 180 * np.pi
     axis = [0.93969262, 0.17101007, -0.29619813]
@@ -18,7 +18,7 @@ def rotateX(angle, points):
             np.cos(angle) + axis[2] * axis[2] * (1 - np.cos(angle))]]
         
     return np.matmul(rotX, points)
-        
+
 def rotateY(angle, points):
     angle = angle / 180 * np.pi
     axis = [0, 0.8660254, 0.5]
@@ -33,9 +33,9 @@ def rotateY(angle, points):
             [axis[0] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle),
             axis[1] * axis[2] * (1 - np.cos(angle)) + axis[0] * np.sin(angle),
             np.cos(angle) + axis[2] * axis[2] * (1 - np.cos(angle))]]
-        
+
     return np.matmul(rotY, points)
-    
+
 def rotateZ(angle, points):
     angle = angle / 180 * np.pi
     axis = [0.34202014, -0.46984631, 0.81379768]
@@ -50,11 +50,11 @@ def rotateZ(angle, points):
             [axis[0] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle),
             axis[1] * axis[2] * (1 - np.cos(angle)) + axis[0] * np.sin(angle),
             np.cos(angle) + axis[2] * axis[2] * (1 - np.cos(angle))]]
-        
-    return np.matmul(rotZ, points)
-        
 
-        
+    return np.matmul(rotZ, points)
+
+
+
 class Display():
     def __init__(self, width, height):
         pg.init()
