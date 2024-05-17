@@ -1,10 +1,15 @@
 import pygame as pg
 import numpy as np
 
+alpha = 20 / 180 * np.pi
+theta = 30 / 180 * np.pi
+newAxis = [[np.cos(alpha), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.sin(alpha)],
+        [0, np.cos(theta), np.sin(theta)],
+        [np.sin(alpha), -np.sin(theta) * np.cos(alpha), np.cos(theta) * np.cos(alpha)]]
 
 def rotateX(angle, points):
     angle = angle / 180 * np.pi
-    axis = [0.93969262, 0.17101007, -0.29619813]
+    axis = newAxis[0]
     rotX = [[np.cos(angle) + axis[0] * axis[0] * (1 - np.cos(angle)),
             axis[0] * axis[1] * (1 - np.cos(angle)) - axis[2] * np.sin(angle),
             axis[0] * axis[2] * (1 - np.cos(angle)) + axis[1] * np.sin(angle)],
@@ -21,7 +26,7 @@ def rotateX(angle, points):
 
 def rotateY(angle, points):
     angle = angle / 180 * np.pi
-    axis = [0, 0.8660254, 0.5]
+    axis = newAxis[1]
     rotY = [[np.cos(angle) + axis[0] * axis[0] * (1 - np.cos(angle)),
             axis[0] * axis[1] * (1 - np.cos(angle)) - axis[2] * np.sin(angle),
             axis[0] * axis[2] * (1 - np.cos(angle)) + axis[1] * np.sin(angle)],
@@ -38,7 +43,7 @@ def rotateY(angle, points):
 
 def rotateZ(angle, points):
     angle = angle / 180 * np.pi
-    axis = [0.34202014, -0.46984631, 0.81379768]
+    axis = newAxis[2]
     rotZ = [[np.cos(angle) + axis[0] * axis[0] * (1 - np.cos(angle)),
             axis[0] * axis[1] * (1 - np.cos(angle)) - axis[2] * np.sin(angle),
             axis[0] * axis[2] * (1 - np.cos(angle)) + axis[1] * np.sin(angle)],
@@ -75,7 +80,7 @@ class Display():
             [length, length, -length, -length, length, length, -length, -length],
             [length, length, length, length, -length, -length, -length, -length],
             [length, -length, -length, length, length, -length, -length, length]]
-        self.cubePoints = rotateX(30, rotateY(20, self.cubePoints))
+        self.cubePoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.cubePoints))
 
         self.yPhase = 0
         self.xPhase = 0
