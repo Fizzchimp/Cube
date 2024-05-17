@@ -1,10 +1,11 @@
 import pygame as pg
 import numpy as np
+from numpy import cos, sin
 
 alpha = 20 / 180 * np.pi
 theta = 30 / 180 * np.pi
 newAxis = [[np.cos(alpha), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.sin(alpha)],
-        [0, np.cos(theta), np.sin(theta)],
+        [0, cos(theta), np.sin(theta)],
         [np.sin(alpha), -np.sin(theta) * np.cos(alpha), np.cos(theta) * np.cos(alpha)]]
 
 def rotateX(angle, points):
@@ -86,6 +87,9 @@ class Display():
         self.xPhase = 0
         self.zPhase = 0
 
+    
+    def isMoving(self):
+        return True if self.xPhase != 0 or self.yPhase != 0 or self.zPhase != 0 else False
     def draw_cube(self):
         points = rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.cubePoints)))))
         for i in range(8):
@@ -159,12 +163,11 @@ def main():
 
         if keyDown:
             if key == pg.K_ESCAPE: running = False
-            if key == pg.K_SPACE: print(pg.key.get_pressed())
-            if key == pg.K_RIGHT and screen.yPhase == 0: screen.yPhase += 90
-            if key == pg.K_LEFT and screen.yPhase == 0: screen.yPhase -= 90
-            if key == pg.K_UP and screen.xPhase == 0: screen.xPhase += 90
-            if key == pg.K_DOWN and screen.xPhase == 0: screen.xPhase -= 90
-            if key == pg.K_z and screen.zPhase == 0: screen.zPhase -= 90
+            if key == pg.K_RIGHT and not screen.isMoving(): screen.yPhase += 90
+            if key == pg.K_LEFT and not screen.isMoving(): screen.yPhase -= 90
+            if key == pg.K_UP and not screen.isMoving(): screen.xPhase += 90
+            if key == pg.K_DOWN and not screen.isMoving(): screen.xPhase -= 90
+            if key == pg.K_z and not screen.isMoving(): screen.zPhase -= 90
 
         screen.draw_cube()
         pg.display.flip()

@@ -1,5 +1,3 @@
-from ast import Try
-from pickle import TRUE
 import pygame as pg
 #from display import Display
 from cube import Cube
@@ -27,17 +25,17 @@ class World:
 
     def solve(self, startState):
         # Queue for the current nodes
-        sNodeQ = Queue(99999)
+        sNodeQ = Queue(999999)
         cSNode = Node(startState)
 
-        eNodeQ = Queue(99999)
+        eNodeQ = Queue(999999)
         cENode = Node(self.normalisedSolved(startState))
 
         generation = 0
         vENodes = []
         vSNodes = []
         
-        while True:
+        while generation < 8:
             # Start state tree
             vSNodes = []
             nextGen = generation + 1
@@ -113,7 +111,6 @@ class World:
 
     def findPath(self, cube):
         sNode, eNode = self.solve(cube)
-        
         path = []
         while sNode.parent != None:
             path.append(sNode.movement)
@@ -123,8 +120,10 @@ class World:
         while eNode.parent != None:
             path.append(eNode.movement)
             eNode = eNode.parent
-            
-        print(", ".join(path))
+        if len(path) == 13:
+            print(13, "moves")
+            print(", ".join(path))
+            return True
             
               
             
@@ -132,16 +131,18 @@ class World:
 
 
 world = World()
-cube = Cube(["YWOY",     "WWWW", "WRGO", "GRYY", "BBOB",      "WBOG"])
-#cube = Cube()
-#cube.scramble(1000)
-#cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
-#cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
-#cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
-#cube.move(["L'", "U", "U", "L", "U", "L'", "U", "L"])
+#cube = Cube(["YWOR",     "GGGR", "WYGB", "BRWY", "BRBO",      "WOYO"])
+cube = Cube()
+#cube.scramble(21)
 #cube.display()
 
-try:
-    world.findPath(cube.cube)
-except Exception:
-    print("Not solvable")
+iter = 0
+while True:
+    scramb = cube.scramble(20)
+    try:
+        if world.findPath(cube.cube):
+            print("Scramble:", scramb)
+    except Exception:
+        print("Not solvable")
+    print(iter)
+    iter += 1

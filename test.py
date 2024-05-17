@@ -15,3 +15,4 @@ newAxis = [[np.cos(alpha), 0, np.sin(alpha)],
 for x in newAxis:
     print(np.sqrt(x[0] ** 2 + x[1] ** 2 + x[2] ** 2))
     print(x)
+    
