@@ -91,7 +91,7 @@ class Display():
         self.screen.fill((255, 255, 255))
             
         for i in range(8):
-            pg.draw.circle(self.screen, (150 + -0.25 * points[2][i], 100, 100), (points[0][i], points[1][i]), 30)
+            pg.draw.circle(self.screen, (150 + -0.25 * points[2][i], 100, 100), (points[0][i], points[1][i]), 4)
 
         for i in range(4):
             pg.draw.line(self.screen,

@@ -132,7 +132,7 @@ class World:
 
 
 world = World()
-cube = Cube(["YWOY",     "RGWR", "WRGO", "GRYY", "BBOB",      "WBOG"])
+cube = Cube(["YWOY",     "WWWW", "WRGO", "GRYY", "BBOB",      "WBOG"])
 #cube = Cube()
 #cube.scramble(1000)
 #cube.move(["R", "U", "U", "R'", "U'", "R", "U'", "R'"])
