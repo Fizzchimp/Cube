@@ -78,9 +78,10 @@ class Display():
         # 3D Matrix of all verticies in a cube
         length = self.width / 5 if self.width <= self.height else self.height / 5
         self.cubePoints = [
-            [length, length, -length, -length, length, length, -length, -length],
-            [length, length, length, length, -length, -length, -length, -length],
-            [length, -length, -length, length, length, -length, -length, length]]
+            [length,  length, -length, -length,  length,  length, -length, -length, length,      0,      0, -length,        0,       0],
+            [length,  length,  length,  length, -length, -length, -length, -length,      0, length,      0,        0, -length,       0],
+            [length, -length, -length,  length,  length, -length, -length,  length,      0,      0, length,        0,       0, -length]]
+        
         self.cubePoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.cubePoints))
 
         self.yPhase = 0
@@ -92,14 +93,14 @@ class Display():
         return True if self.xPhase != 0 or self.yPhase != 0 or self.zPhase != 0 else False
     def draw_cube(self):
         points = rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.cubePoints)))))
-        for i in range(8):
+        for i in range(len(points[0])):
             points[0][i] += self.x
             points[1][i] += self.y
 
 
         self.screen.fill((255, 255, 255))
             
-        for i in range(8):
+        for i in range(len(points[0])):
             pg.draw.circle(self.screen, (150 + -0.25 * points[2][i], 100, 100), (points[0][i], points[1][i]), 4)
 
         for i in range(4):
@@ -163,11 +164,12 @@ def main():
 
         if keyDown:
             if key == pg.K_ESCAPE: running = False
-            if key == pg.K_RIGHT and not screen.isMoving(): screen.yPhase += 90
-            if key == pg.K_LEFT and not screen.isMoving(): screen.yPhase -= 90
-            if key == pg.K_UP and not screen.isMoving(): screen.xPhase += 90
-            if key == pg.K_DOWN and not screen.isMoving(): screen.xPhase -= 90
-            if key == pg.K_z and not screen.isMoving(): screen.zPhase -= 90
+            if not screen.isMoving():
+                if key == pg.K_RIGHT: screen.yPhase += 90
+                if key == pg.K_LEFT: screen.yPhase -= 90
+                if key == pg.K_UP: screen.xPhase += 90
+                if key == pg.K_DOWN: screen.xPhase -= 90
+                if key == pg.K_z: screen.zPhase -= 90
 
         screen.draw_cube()
         pg.display.flip()

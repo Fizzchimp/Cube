@@ -128,21 +128,21 @@ class World:
               
             
             
+def longestPath():
+    world = World()
+    cube = Cube()
+    iter = 0
+    while True:
+        scramb = cube.scramble(21)
+        try:
+            if world.findPath(cube.cube):
+                print("Scramble:", scramb)
+        except Exception:
+            print("Not solvable")
+        print(iter)
+        iter += 1
 
-
-world = World()
 #cube = Cube(["YWOR",     "GGGR", "WYGB", "BRWY", "BRBO",      "WOYO"])
-cube = Cube()
+#cube = Cube()
 #cube.scramble(21)
 #cube.display()
-
-iter = 0
-while True:
-    scramb = cube.scramble(20)
-    try:
-        if world.findPath(cube.cube):
-            print("Scramble:", scramb)
-    except Exception:
-        print("Not solvable")
-    print(iter)
-    iter += 1
