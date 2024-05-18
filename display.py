@@ -82,26 +82,81 @@ class Display():
             [length,  length,  length,  length, -length, -length, -length, -length,      0, length,      0,        0, -length,       0],
             [length, -length, -length,  length,  length, -length, -length,  length,      0,      0, length,        0,       0, -length]]
         
+        self.newPoints = [
+            [
+                [length, length ,  length, length],
+                [0     , -length, -length, 0     ],
+                [0     , 0      ,  length, length]
+            ],
+            [
+                [length,  length,  length, length ],
+                [0     , -length, -length, 0      ],
+                [0     , 0      , -length, -length]
+            ],
+            [
+                [0      , 0      ,  length, length ],
+                [0      , -length, -length, 0      ],
+                [-length, -length, -length, -length]
+            ],
+            [
+                [0      , 0      , -length, -length],
+                [0      , -length, -length, 0      ],
+                [-length, -length, -length, -length]
+            ],
+            [
+                [-length, -length, -length, -length],
+                [0      , -length, -length, 0      ],
+                [0      , 0      , -length, -length]
+            ],
+            [
+                [-length, -length, -length, -length],
+                [0      , -length, -length, 0      ],
+                [0      , 0      ,  length,  length]
+            ],
+            [
+                [0     , 0      , -length, -length],
+                [0     , -length, -length, 0      ],
+                [length,  length,  length, length ]
+            ],
+            [
+                [0     , 0      ,  length, length],
+                [0     , -length, -length, 0     ],
+                [length,  length,  length, length]
+            ]
+        ]
+        
         self.cubePoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.cubePoints))
-
+        self.newPoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.newPoints))
         self.yPhase = 0
         self.xPhase = 0
         self.zPhase = 0
 
-    
+
     def isMoving(self):
+        # Check if animation is currently playing
         return True if self.xPhase != 0 or self.yPhase != 0 or self.zPhase != 0 else False
+    
+
     def draw_cube(self):
         points = rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.cubePoints)))))
         for i in range(len(points[0])):
             points[0][i] += self.x
             points[1][i] += self.y
 
+        newPoints = []
+        for i in range(len(self.newPoints)):
+            newPoints.append(rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.newPoints[i]))))))
+            for j in range(len(newPoints[i][0])):
+                newPoints[i][0][j] += self.x
+                newPoints[i][1][j] += self.y
 
         self.screen.fill((255, 255, 255))
-            
-        for i in range(len(points[0])):
-            pg.draw.circle(self.screen, (150 + -0.25 * points[2][i], 100, 100), (points[0][i], points[1][i]), 4)
+        
+        for quad in newPoints:
+            if quad[2][0] < 0:
+            # if True:
+                for i in range(len(quad[0])):
+                    pg.draw.circle(self.screen, (150 + -0.25 * quad[2][i], 100, 100), (quad[0][i], quad[1][i]), 4)
 
         for i in range(4):
             pg.draw.line(self.screen,
@@ -119,29 +174,6 @@ class Display():
                          (points[0][i + 4], points[1][i + 4]),
                          (points[0][(i + 1) % 4 + 4], points[1][(i + 1) % 4 + 4]))
             
-        shade1 = 150
-        shade2 = 125
-        shade3 = 100
-        #pg.draw.polygon(self.screen,
-        #                (shade1, shade1, shade1),
-        #                ((points[0][0], points[1][0]),
-        #                 (points[0][4], points[1][4]),
-        #                 (points[0][5], points[1][5]),
-        #                 (points[0][1], points[1][1])))
-       # 
-       # pg.draw.polygon(self.screen, 
-       #                 (shade3, shade3, shade3),
-       #                 ((points[0][2], points[1][2]),
-       #                  (points[0][6], points[1][6]),
-       #                  (points[0][7], points[1][7]),
-       #                  (points[0][3], points[1][3])))
-       # 
-       # pg.draw.polygon(self.screen,
-       #                 (shade2, shade2, shade2),
-       #                 ((points[0][1], points[1][1]),
-       #                  (points[0][5], points[1][5]),
-       #                  (points[0][6], points[1][6]),
-       #                  (points[0][2], points[1][2])))
        
         if self.yPhase < 0: self.yPhase += 1
         if self.yPhase > 0: self.yPhase -= 1
