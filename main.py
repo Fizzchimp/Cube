@@ -35,7 +35,7 @@ class World:
         vENodes = []
         vSNodes = []
         
-        while generation < 8:
+        while generation < 9:
             # Start state tree
             vSNodes = []
             nextGen = generation + 1
@@ -120,10 +120,8 @@ class World:
         while eNode.parent != None:
             path.append(eNode.movement)
             eNode = eNode.parent
-        if len(path) == 13:
-            print(13, "moves")
-            print(", ".join(path))
-            return True
+
+        print(", ".join(path))
             
               
             
@@ -142,7 +140,12 @@ def longestPath():
         print(iter)
         iter += 1
 
-#cube = Cube(["YWOR",     "GGGR", "WYGB", "BRWY", "BRBO",      "WOYO"])
-#cube = Cube()
-#cube.scramble(21)
-#cube.display()
+# cube = Cube(["WROO",     "RYYW", "GWGR", "BGBW", "YGBO",      "OYBR"])
+cube = Cube()
+cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
+# cube.scramble()
+world = World()
+try:
+    world.findPath(cube.cube)
+except Exception:
+    print("Not Solvable")
