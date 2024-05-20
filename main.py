@@ -146,9 +146,7 @@ class World:
                 
             except:
                 break
-            
-            
-
+               
     def findPath(self, cube):
         sNode, eNode = self.solve(cube)
         path = []
@@ -180,10 +178,10 @@ def longestPath():
         print(iter)
         iter += 1
 
-#cube = Cube(["WOOO",     "RYYW", "GWGR", "BGBW", "YGBO",      "OYBR"])
-cube = Cube()
+cube = Cube(["YWRB",     "GWOO", "GRGO", "YRWW", "BROB",      "YGYB"])
+#cube = Cube()
 #cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
-cube.scramble()
+#cube.scramble()
 
 clock = pg.time.Clock()
 clock.tick()
