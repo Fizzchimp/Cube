@@ -35,7 +35,7 @@ class World:
         vENodes = []
         vSNodes = []
         
-        while generation <= 7:
+        while generation <= 6:
             # Start state tree
             vSNodes = []
             nextGen = generation + 1
@@ -107,7 +107,47 @@ class World:
 
             # Increment the node generation counter
             generation += 1
+            
+
+
+
+        ### Final generation 7 check
+
+        # Start tree
+        vSNodes = []
+        while True:
+            try:
+                check, node = binSearch(vENodes, cSNode)
+                if check == True:
+                    return cSNode, node
+            
+                # Append current node to visited nodes
+                vSNodes.append(cSNode)
+            
+                # Fetch the next node
+                cSNode = sNodeQ.dequeue()
+                
+            except:
+                break
+            
+        # Sort visited nodes
+        vSNodes = mergeSort(vSNodes)
         
+        # End tree
+        vENodes = []
+        while True:
+            try:
+                check, node = binSearch(vSNodes, cENode)
+                if check == True:
+                    return node, cENode
+
+                # Fetch the next node
+                cENode = eNodeQ.dequeue()
+                
+            except:
+                break
+            
+            
 
     def findPath(self, cube):
         sNode, eNode = self.solve(cube)
@@ -140,10 +180,10 @@ def longestPath():
         print(iter)
         iter += 1
 
-# cube = Cube(["WROO",     "RYYW", "GWGR", "BGBW", "YGBO",      "OYBR"])
+#cube = Cube(["WOOO",     "RYYW", "GWGR", "BGBW", "YGBO",      "OYBR"])
 cube = Cube()
-cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
-#cube.scramble()
+#cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
+cube.scramble()
 
 clock = pg.time.Clock()
 clock.tick()
