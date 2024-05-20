@@ -35,7 +35,7 @@ class World:
         vENodes = []
         vSNodes = []
         
-        while generation < 8:
+        while generation <= 7:
             # Start state tree
             vSNodes = []
             nextGen = generation + 1
