@@ -35,7 +35,7 @@ class World:
         vENodes = []
         vSNodes = []
         
-        while generation < 9:
+        while generation < 8:
             # Start state tree
             vSNodes = []
             nextGen = generation + 1
@@ -143,9 +143,14 @@ def longestPath():
 # cube = Cube(["WROO",     "RYYW", "GWGR", "BGBW", "YGBO",      "OYBR"])
 cube = Cube()
 cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
-# cube.scramble()
+#cube.scramble()
+
+clock = pg.time.Clock()
+clock.tick()
 world = World()
 try:
     world.findPath(cube.cube)
 except Exception:
     print("Not Solvable")
+clock.tick()
+print(clock.get_time())
