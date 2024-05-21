@@ -178,7 +178,7 @@ def longestPath():
         print(iter)
         iter += 1
 
-cube = Cube(["YWRB",     "GWOO", "GRGO", "YRWW", "BROB",      "YGYB"])
+cube = Cube(["OWWY",     "BGRG", "RGRW", "ORGO", "BWYY",      "YOBB"])
 #cube = Cube()
 #cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
 #cube.scramble()
