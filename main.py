@@ -1,10 +1,10 @@
 import pygame as pg
-#from display import Display
+#from Display.display import Instance
 from cube import Cube
-from cqueue import Queue
-from node import Node
-from binsearch import binSearch
-from mergesort import mergeSort
+from Pathfinding.cqueue import Queue
+from Pathfinding.node import Node
+from Pathfinding.binsearch import binSearch
+from Pathfinding.mergesort import mergeSort
 
 class World:
     #def __init__(self):
@@ -25,10 +25,10 @@ class World:
 
     def solve(self, startState):
         # Queue for the current nodes
-        sNodeQ = Queue(999999)
+        sNodeQ = Queue(99999)
         cSNode = Node(startState)
 
-        eNodeQ = Queue(999999)
+        eNodeQ = Queue(99999)
         cENode = Node(self.normalisedSolved(startState))
 
         generation = 0
@@ -146,10 +146,13 @@ class World:
                 
             except:
                 break
+        return None, None
                
     def findPath(self, cube):
         sNode, eNode = self.solve(cube)
         path = []
+        if sNode == None:
+            return False
         while sNode.parent != None:
             path.append(sNode.movement)
             sNode = sNode.parent
@@ -159,36 +162,43 @@ class World:
             path.append(eNode.movement)
             eNode = eNode.parent
 
-        print(", ".join(path))
+        return path
             
               
             
-            
-def longestPath():
+
+
+def repeat():
     world = World()
     cube = Cube()
     iter = 0
     while True:
-        scramb = cube.scramble(21)
-        try:
-            if world.findPath(cube.cube):
-                print("Scramble:", scramb)
-        except Exception:
-            print("Not solvable")
-        print(iter)
+        scramb = cube.scramble(20)
+        path = world.findPath(cube.cube)
+        if path != False:
+            print(iter)
+            if len(path) > 12:
+                print(len(path), "moves:", scramb, ", ".join(path))
+        else:
+            return "UH OH"
         iter += 1
 
-cube = Cube(["WWWY",     "BGRG", "RGRW", "ORGO", "BWYY",      "YOBB"])
-#cube = Cube()
-#cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
-#cube.scramble()
+def main():     
+    #cube = Cube(["WWWY",     "BGRG", "RGRW", "ORGO", "BWYY",      "YOBB"])
+    cube = Cube()
+    #cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
+    cube.scramble()
 
-clock = pg.time.Clock()
-clock.tick()
-world = World()
-try:
-    world.findPath(cube.cube)
-except Exception:
-    print("Not Solvable")
-clock.tick()
-print(clock.get_time())
+    clock = pg.time.Clock()
+    world = World()
+
+    clock.tick()
+    path = world.findPath(cube.cube)
+    if path == False:
+        print("Not solvable")
+    else:
+        print(", ".join(path))
+    clock.tick()
+    print(clock.get_time())
+    
+main()

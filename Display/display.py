@@ -1,6 +1,7 @@
 import pygame as pg
 import numpy as np
 from numpy import cos, sin
+from model import CubeModel
 
 alpha = 20 / 180 * np.pi
 theta = 30 / 180 * np.pi
@@ -61,14 +62,14 @@ def rotateZ(angle, points):
 
 
 
-class Display():
+class Instance():
     def __init__(self, width, height):
         pg.init()
         self.width, self.height = width, height
         self.screen = pg.display.set_mode([width, height])
         self.screen.fill((255, 255, 255))
 
-        image = pg.image.load("01_icon.png")
+        image = pg.image.load("Display/01_icon.png")
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
 
@@ -82,51 +83,13 @@ class Display():
             [length,  length,  length,  length, -length, -length, -length, -length,      0, length,      0,        0, -length,       0],
             [length, -length, -length,  length,  length, -length, -length,  length,      0,      0, length,        0,       0, -length]]
         
-        self.newPoints = [
-            [
-                [length, length ,  length, length],
-                [0     , -length, -length, 0     ],
-                [0     , 0      ,  length, length]
-            ],
-            [
-                [length,  length,  length, length ],
-                [0     , -length, -length, 0      ],
-                [0     , 0      , -length, -length]
-            ],
-            [
-                [0      , 0      ,  length, length ],
-                [0      , -length, -length, 0      ],
-                [-length, -length, -length, -length]
-            ],
-            [
-                [0      , 0      , -length, -length],
-                [0      , -length, -length, 0      ],
-                [-length, -length, -length, -length]
-            ],
-            [
-                [-length, -length, -length, -length],
-                [0      , -length, -length, 0      ],
-                [0      , 0      , -length, -length]
-            ],
-            [
-                [-length, -length, -length, -length],
-                [0      , -length, -length, 0      ],
-                [0      , 0      ,  length,  length]
-            ],
-            [
-                [0     , 0      , -length, -length],
-                [0     , -length, -length, 0      ],
-                [length,  length,  length, length ]
-            ],
-            [
-                [0     , 0      ,  length, length],
-                [0     , -length, -length, 0     ],
-                [length,  length,  length, length]
-            ]
-        ]
         
+        self.newerPoints = CubeModel(length)
+        
+
         self.cubePoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.cubePoints))
-        self.newPoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.newPoints))
+        self.newerPoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.newerPoints))
+        
         self.yPhase = 0
         self.xPhase = 0
         self.zPhase = 0
@@ -147,6 +110,14 @@ class Display():
         for i in range(len(self.newPoints)):
             newPoints.append(rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.newPoints[i]))))))
             for j in range(len(newPoints[i][0])):
+                newPoints[i][0][j] += self.x
+                newPoints[i][1][j] += self.y
+                
+
+        newerPoints = []
+        for i in range(len(self.newerPoints)):
+            newerPoints.append(rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.newerPoints[i]))))))
+            for j in range(len(newPoints[0])):
                 newPoints[i][0][j] += self.x
                 newPoints[i][1][j] += self.y
 
@@ -185,7 +156,7 @@ class Display():
         if self.zPhase > 0: self.zPhase -= 1
 
 def main():
-    screen = Display(700, 700)
+    screen = Instance(700, 700)
     running = True
     keyDown = False
     while running:
