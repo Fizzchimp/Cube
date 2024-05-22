@@ -86,10 +86,9 @@ class Instance():
         
         self.newerPoints = CubeModel(length)
         
-
         self.cubePoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.cubePoints))
-        self.newerPoints = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, self.newerPoints))
-        
+        for i, quad in enumerate(self.newerPoints.points):
+            self.newerPoints.points[i] = rotateX(theta * 180 / np.pi, rotateY(alpha * 180 / np.pi, quad))
         self.yPhase = 0
         self.xPhase = 0
         self.zPhase = 0
@@ -106,28 +105,19 @@ class Instance():
             points[0][i] += self.x
             points[1][i] += self.y
 
-        newPoints = []
-        for i in range(len(self.newPoints)):
-            newPoints.append(rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.newPoints[i]))))))
-            for j in range(len(newPoints[i][0])):
-                newPoints[i][0][j] += self.x
-                newPoints[i][1][j] += self.y
-                
 
         newerPoints = []
-        for i in range(len(self.newerPoints)):
+        for i in range(len(self.newerPoints.points)):
             newerPoints.append(rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.newerPoints[i]))))))
-            for j in range(len(newPoints[0])):
-                newPoints[i][0][j] += self.x
-                newPoints[i][1][j] += self.y
+            for j in range(len(newerPoints[0][0])):
+                newerPoints[i][0][j] += self.x
+                newerPoints[i][1][j] += self.y
 
         self.screen.fill((255, 255, 255))
         
-        for quad in newPoints:
-            if quad[2][0] < 0:
-            # if True:
-                for i in range(len(quad[0])):
-                    pg.draw.circle(self.screen, (150 + -0.25 * quad[2][i], 100, 100), (quad[0][i], quad[1][i]), 4)
+        for quad in newerPoints:
+            for i in range(len(quad[0])):
+                pg.draw.circle(self.screen, (150 + -0.25 * quad[2][i], 100, 100), (quad[0][i], quad[1][i]), 4)
 
         for i in range(4):
             pg.draw.line(self.screen,
