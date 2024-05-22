@@ -3,12 +3,50 @@ from numpy import cos, sin
 
 class CubeModel:
     def __init__(self, length):
-        self.points = [
+        bdr = length / 20
+        self.points = [ 
+                        ### Top Cubies
                         [
-                            [0     , length, length, 0     , 0     , length, length, 0     ],
-                            [length, length, length, length, 0     , 0     , 0     , 0     ],
-                            [0     , 0     , length, length, 0     , 0     , length, length]
-                         ]
+                            [0      ,  length - bdr,  length - bdr, 0      ,  length - bdr,  length - bdr, 0      ],
+                            [-length + bdr, -length + bdr, -length + bdr, -length + bdr, 0      , 0      , 0      ],
+                            [0      , 0      , -length + bdr, -length + bdr, 0      , -length + bdr, -length + bdr]
+                        ],
+                        [
+                            [0      , 0      , -length, -length, 0      , -length, -length],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , -length, -length, 0      , -length, -length, 0      ]
+                        ],
+                        [
+                            [0      , -length, -length, 0      , -length, -length, 0      ],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , 0      ,  length,  length, 0      ,  length,  length]
+                        ],
+                        [
+                            [0      , 0      ,  length, length , 0      ,  length,  length],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ]
+                        ],
+                        # Bottom Cubies
+                        [
+                            [0      , 0      ,  length,  length, 0      ,  length,  length],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      , -length, -length,  0     , -length, -length, 0      ]
+                        ],
+                        [
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      ,  0     ,  length,  length, 0      ,  length,  length]
+                        ],
+                        [
+                            [0      , 0      , -length, -length, 0      , -length, -length],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      ,  length,  length,  0     ,  length,  length, 0      ]
+                        ],
+                        [
+                            [0      , -length, -length, 0      , -length, -length, 0      ],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      , 0      , -length, -length, 0      , -length, -length]
+                        ]
             
             ]
      

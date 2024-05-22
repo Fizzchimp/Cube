@@ -180,14 +180,15 @@ def repeat():
             if len(path) > 12:
                 print(len(path), "moves:", scramb, ", ".join(path))
         else:
-            return "UH OH"
+            print("UH OH")
+            return
         iter += 1
 
 def main():     
-    #cube = Cube(["WWWY",     "BGRG", "RGRW", "ORGO", "BWYY",      "YOBB"])
+    cube = Cube(["WWWY",     "BGRG", "RGRW", "ORGO", "BWYY",      "YOBB"])
     cube = Cube()
     #cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
-    cube.scramble()
+    #cube.scramble()
 
     clock = pg.time.Clock()
     world = World()
@@ -200,5 +201,5 @@ def main():
         print(", ".join(path))
     clock.tick()
     print(clock.get_time())
-    
-main()
+
+repeat()
