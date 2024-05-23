@@ -7,9 +7,9 @@ class CubeModel:
         self.points = [ 
                         ### Top Cubies
                         [
-                            [0      ,  length - bdr,  length - bdr, 0      ,  length - bdr,  length - bdr, 0      ],
-                            [-length + bdr, -length + bdr, -length + bdr, -length + bdr, 0      , 0      , 0      ],
-                            [0      , 0      , -length + bdr, -length + bdr, 0      , -length + bdr, -length + bdr]
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , 0      , -length, -length, 0      , -length, -length]
                         ],
                         [
                             [0      , 0      , -length, -length, 0      , -length, -length],
