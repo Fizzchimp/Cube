@@ -100,6 +100,7 @@ class Instance():
     
 
     def draw_cube(self):
+        width = 1
         points = rotateX(self.xPhase, (rotateY(self.yPhase, (rotateZ(self.zPhase, self.cubePoints)))))
         for i in range(len(points[0])):
             points[0][i] += self.x
@@ -114,43 +115,65 @@ class Instance():
                 newerPoints[i][1][j] += self.y
 
         self.screen.fill((255, 255, 255))
-        
+
         for quad in newerPoints:
-            shade = 125 + -0.5 * quad[2][0]
-            if quad[2][0] < 0: pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][0], quad[1][0]), 
-                                                                                                   (quad[0][1], quad[1][1]),
-                                                                                                   (quad[0][2], quad[1][2]),
-                                                                                                   (quad[0][3], quad[1][3])))
-            shade = 125 + -0.5 * quad[2][4]
-            if quad[2][4] < 0: pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][4], quad[1][4]),
-                                                                                (quad[0][1], quad[1][1]),
-                                                                                (quad[0][2], quad[1][2]),
-                                                                                (quad[0][5], quad[1][5])))
-            shade = 125 + -0.5 * quad[2][6]    
-            if quad[2][6] < 0: pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][6], quad[1][6]),
-                                                                                (quad[0][3], quad[1][3]),
-                                                                                (quad[0][2], quad[1][2]),
-                                                                                (quad[0][5], quad[1][5])))
+            if quad[2][0] < 0:
+                shade = 125 + -0.5 * quad[2][0]
+                pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][0], quad[1][0]), 
+                                                                    (quad[0][1], quad[1][1]),
+                                                                    (quad[0][2], quad[1][2]),
+                                                                    (quad[0][3], quad[1][3])))
+                
+                pg.draw.lines(self.screen, (100, 100, 100), True, ((quad[0][0], quad[1][0]),
+                                                                    (quad[0][1], quad[1][1]),
+                                                                    (quad[0][2], quad[1][2]),
+                                                                    (quad[0][3], quad[1][3])), width)
+
+
+            if quad[2][4] < 0:
+                shade = 125 + -0.5 * quad[2][4]
+                pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][4], quad[1][4]),
+                                                                    (quad[0][1], quad[1][1]),
+                                                                    (quad[0][2], quad[1][2]),
+                                                                    (quad[0][5], quad[1][5])))
+                
+                pg.draw.lines(self.screen, (100, 100, 100), True, ((quad[0][4], quad[1][4]),
+                                                                    (quad[0][1], quad[1][1]),
+                                                                    (quad[0][2], quad[1][2]),
+                                                                    (quad[0][5], quad[1][5])), width)
+                
+
+            if quad[2][6] < 0:
+                shade = 125 + -0.5 * quad[2][6]
+                pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][6], quad[1][6]),
+                                                                    (quad[0][3], quad[1][3]),
+                                                                    (quad[0][2], quad[1][2]),
+                                                                    (quad[0][5], quad[1][5])))
+                
+                pg.draw.lines(self.screen, (100, 100, 100), True, ((quad[0][6], quad[1][6]),
+                                                                    (quad[0][3], quad[1][3]),
+                                                                    (quad[0][2], quad[1][2]),
+                                                                    (quad[0][5], quad[1][5])), width)
             
             for i in range(len(quad[0])):
                 pg.draw.circle(self.screen, (150 + -0.25 * quad[2][i], 100, 100), (quad[0][i], quad[1][i]), (self.width / 5 if self.width <= self.height else self.height / 5) / 25)
                 
 
-        for i in range(4):
-            pg.draw.line(self.screen,
-                         (100, 100, 100),
-                         (points[0][i], points[1][i]),
-                         (points[0][4 + i], points[1][i + 4]))
+        # for i in range(4):
+        #     pg.draw.aaline(self.screen,
+        #                  (100, 100, 100),
+        #                  (points[0][i], points[1][i]),
+        #                  (points[0][4 + i], points[1][i + 4]))
             
-            pg.draw.line(self.screen,
-                         (100, 100, 100),
-                         (points[0][i], points[1][i]),
-                         (points[0][(i + 1) % 4], points[1][(i + 1) % 4]))
+        #     pg.draw.aaline(self.screen,
+        #                  (100, 100, 100),
+        #                  (points[0][i], points[1][i]),
+        #                  (points[0][(i + 1) % 4], points[1][(i + 1) % 4]))
             
-            pg.draw.line(self.screen,
-                         (100, 100, 100),
-                         (points[0][i + 4], points[1][i + 4]),
-                         (points[0][(i + 1) % 4 + 4], points[1][(i + 1) % 4 + 4]))
+        #     pg.draw.aaline(self.screen,
+        #                  (100, 100, 100),
+        #                  (points[0][i + 4], points[1][i + 4]),
+        #                  (points[0][(i + 1) % 4 + 4], points[1][(i + 1) % 4 + 4]))
             
        
         if self.yPhase < 0: self.yPhase += 1

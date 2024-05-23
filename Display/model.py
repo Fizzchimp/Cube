@@ -3,7 +3,6 @@ from numpy import cos, sin
 
 class CubeModel:
     def __init__(self, length):
-        bdr = length / 20
         self.points = [ 
                         ### Top Cubies
                         [
