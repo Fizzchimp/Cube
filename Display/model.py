@@ -60,7 +60,7 @@ def rotateZ(angle, points):
 
 class CubeModel:
     def __init__(self, length):
-        self.points = [ 
+        points = [ 
                         ### Top Cubies
                         [
                             [0      ,  length,  length, 0      ,  length,  length, 0      ],
@@ -104,6 +104,14 @@ class CubeModel:
                             [0      , 0      , -length, -length, 0      , -length, -length]
                         ]
                     ]
+        self.points = [points[6],
+                       points[5],
+                       points[7],
+                       points[4],
+                       points[2],
+                       points[3],
+                       points[1],
+                       points[0]]
         
         for i, quad in enumerate(self.points):
             self.points[i] = rotateX(theta * 180 / pi, rotateY(alpha * 180 / pi, quad))
@@ -124,14 +132,14 @@ class CubeModel:
     
     def getPoints(self):
 
-        return [rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase, self.points[0]))),
-                rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase, self.points[1]))),
-                rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase, self.points[2]))),
-                rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase, self.points[3]))),
-                rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase, self.points[4]))),
-                rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase, self.points[5]))),
-                rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase, self.points[6]))),
-                rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase, self.points[7])))]
+        return [rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase, self.points[0]))),
+                rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase, self.points[1]))),
+                rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.fPhase, self.points[2]))),
+                rotateX(self.xPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.fPhase, self.points[3]))),
+                rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase, self.points[4]))),
+                rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase, self.points[5]))),
+                rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.fPhase, self.points[6]))),
+                rotateX(self.xPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.fPhase, self.points[7])))]
 
     def isMoving(self):
-        if self.xPhase != 0 or self.yPhase != 0 or self.zPhase != 0 or self.uPhase != 0 or self.dPhase != 0: return True
+        if self.xPhase != 0 or self.yPhase != 0 or self.zPhase != 0 or self.uPhase != 0 or self.dPhase != 0 or self.fPhase != 0: return True
