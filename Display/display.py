@@ -65,10 +65,11 @@ def rotateZ(angle, points):
 class Instance():
     def __init__(self, width, height):
         pg.init()
+
+        # Setup the window
         self.width, self.height = width, height
         self.screen = pg.display.set_mode([width, height])
         self.screen.fill((255, 255, 255))
-
         image = pg.image.load("Display/01_icon.png")
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")

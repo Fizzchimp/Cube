@@ -46,18 +46,19 @@ def rotateZ(angle, points):
     angle = angle / 180 * np.pi
     axis = newAxis[2]
     rotZ = [[np.cos(angle) + axis[0] * axis[0] * (1 - np.cos(angle)),
-            axis[0] * axis[1] * (1 - np.cos(angle)) - axis[2] * np.sin(angle),
-            axis[0] * axis[2] * (1 - np.cos(angle)) + axis[1] * np.sin(angle)],
+             axis[0] * axis[1] * (1 - np.cos(angle)) - axis[2] * np.sin(angle),
+             axis[0] * axis[2] * (1 - np.cos(angle)) + axis[1] * np.sin(angle)],
 
-            [axis[0] * axis[1] * (1 - np.cos(angle)) + axis[2] * np.sin(angle),
-            np.cos(angle) + axis[1] * axis[1] * (1 - np.cos(angle)),
-            axis[1] * axis[2] * (1 - np.cos(angle)) - axis[0] * np.sin(angle)],
+             [axis[0] * axis[1] * (1 - np.cos(angle)) + axis[2] * np.sin(angle),
+             np.cos(angle) + axis[1] * axis[1] * (1 - np.cos(angle)),
+             axis[1] * axis[2] * (1 - np.cos(angle)) - axis[0] * np.sin(angle)],
 
-            [axis[0] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle),
-            axis[1] * axis[2] * (1 - np.cos(angle)) + axis[0] * np.sin(angle),
-            np.cos(angle) + axis[2] * axis[2] * (1 - np.cos(angle))]]
+             [axis[0] * axis[2] * (1 - np.cos(angle)) - axis[1] * np.sin(angle),
+             axis[1] * axis[2] * (1 - np.cos(angle)) + axis[0] * np.sin(angle),
+             np.cos(angle) + axis[2] * axis[2] * (1 - np.cos(angle))]]
 
     return np.matmul(rotZ, points)
+
 
 class CubeModel:
     def __init__(self, length):
@@ -114,30 +115,4 @@ class CubeModel:
     def __getitem__(self, index):
         return self.points[index]
     
-    def getPoints(self):
-        points = self.points
-        
-        if self.xPhase != 0:
-            for i, quadrant in enumerate(self.points):
-                points[i] = rotateX(self.xPhase, quadrant)
-                
-        elif self.yPhase != 0:
-            for i, quadrant in enumerate(self.points):
-                points[i] = rotateY(self.yPhase, quadrant)
-                
-        elif self.zPhase != 0:
-            for i, quadrant in enumerate(self.points):
-                points[i] = rotateZ(self.zPhase, points)
-                
-
-        if self.yPhase < 0: self.yPhase += 1
-        if self.yPhase > 0: self.yPhase -= 1
-
-        if self.xPhase < 0: self.xPhase += 1
-        if self.xPhase > 0: self.xPhase -= 1
-
-        if self.zPhase < 0: self.zPhase += 1
-        if self.zPhase > 0: self.zPhase -= 1
-        print(self.xPhase, self.yPhase, self.zPhase)
-        return points
                 
