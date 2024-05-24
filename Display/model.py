@@ -106,6 +106,38 @@ class CubeModel:
                         ]
             
             ]
+        
+        self.xPhase = 0
+        self.yPhase = 0
+        self.zPhase = 0
      
     def __getitem__(self, index):
         return self.points[index]
+    
+    def getPoints(self):
+        points = self.points
+        
+        if self.xPhase != 0:
+            for i, quadrant in enumerate(self.points):
+                points[i] = rotateX(self.xPhase, quadrant)
+                
+        elif self.yPhase != 0:
+            for i, quadrant in enumerate(self.points):
+                points[i] = rotateY(self.yPhase, quadrant)
+                
+        elif self.zPhase != 0:
+            for i, quadrant in enumerate(self.points):
+                points[i] = rotateZ(self.zPhase, points)
+                
+
+        if self.yPhase < 0: self.yPhase += 1
+        if self.yPhase > 0: self.yPhase -= 1
+
+        if self.xPhase < 0: self.xPhase += 1
+        if self.xPhase > 0: self.xPhase -= 1
+
+        if self.zPhase < 0: self.zPhase += 1
+        if self.zPhase > 0: self.zPhase -= 1
+        print(self.xPhase, self.yPhase, self.zPhase)
+        return points
+                
