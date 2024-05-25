@@ -137,7 +137,7 @@ def main():
 
         screen.draw_cube()
         pg.display.flip()
-        pg.time.wait(8)
+        # pg.time.wait(8)
     pg.quit()
     
 main()

@@ -2,17 +2,23 @@ import numpy as np
 from numpy import cos, sin, pi
 
 alpha = pi / 9
+sinAlph = sin(alpha)
+cosAlph = cos(alpha)
+
 theta = pi / 6
-newAxis = [[np.cos(alpha),  np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.sin(alpha)],
+sinThet = sin(theta)
+cosThet = cos(theta)
+
+newAxis = [[cosAlph,  sinThet * sinAlph, -cosThet * sinAlph],
            [0            , cos(theta)                    , np.sin(theta)                 ],
            [np.sin(alpha), -np.sin(theta) * np.cos(alpha), np.cos(theta) * np.cos(alpha)]]
 
 def rotateX(angle, points):
     angle = angle / 180 * pi
     axis = newAxis[0]
-    rotX = [[cos(angle) + axis[0] * axis[0] * (1 - cos(angle)),
-            axis[0] * axis[1] * (1 - cos(angle)) - axis[2] * sin(angle),
-            axis[0] * axis[2] * (1 - cos(angle)) + axis[1] * sin(angle)],
+    rotX = [[cos(angle) + cosAlph ** 2 * (1 - cos(angle)),
+            cosAlph * sinThet * sinAlph * (1 - cos(angle)) + cosThet * sinAlph * sin(angle),
+            cosAlph * -cosThet * sinAlph * (1 - cos(angle)) + sinThet * sinAlph * sin(angle)],
 
             [axis[0] * axis[1] * (1 - cos(angle)) + axis[2] * sin(angle),
             cos(angle) + axis[1] * axis[1] * (1 - cos(angle)),
