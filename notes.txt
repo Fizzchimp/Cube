@@ -5,8 +5,7 @@ newAxis = [[np.cos(alpha), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.si
            [np.sin(alpha), -np.sin(theta) * np.cos(alpha), np.cos(theta) * np.cos(alpha)]]
 
 
-rotX = [[cos(angle) + cAlpha * cAlpha * (1 - cos(angle)),
-        ]
+
 
 
 14 move scramble: cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])

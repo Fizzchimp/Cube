@@ -1,8 +1,6 @@
 import pygame as pg
-import numpy as np
-from numpy import cos, sin, pi
 from model import CubeModel
-add = 2
+add = 3
 
 class Instance():
     def __init__(self, width, height):
@@ -77,23 +75,7 @@ class Instance():
            #     pg.draw.circle(self.screen, (150 + -0.25 * quad[2][i], 100, 100), (quad[0][i], quad[1][i]), (self.width / 5 if self.width <= self.height else self.height / 5) / 25)
                 
 
-        if self.model.yPhase < 0: self.model.yPhase += add
-        if self.model.yPhase > 0: self.model.yPhase -= add
-
-        if self.model.xPhase < 0: self.model.xPhase += add
-        if self.model.xPhase > 0: self.model.xPhase -= add
-
-        if self.model.zPhase < 0: self.model.zPhase += add
-        if self.model.zPhase > 0: self.model.zPhase -= add
-
-        if self.model.uPhase < 0: self.model.uPhase += add
-        if self.model.uPhase > 0: self.model.uPhase -= add
-
-        if self.model.dPhase < 0: self.model.dPhase += add
-        if self.model.dPhase > 0: self.model.dPhase -= add
-
-        if self.model.fPhase < 0: self.model.fPhase += add
-        if self.model.fPhase > 0: self.model.fPhase -= add
+        self.model.phaseUpdate(add)
 
 
 def main():
@@ -113,21 +95,30 @@ def main():
             if key == pg.K_ESCAPE: running = False
             if not screen.model.isMoving():
                 if key == pg.K_RIGHT: screen.model.yPhase += 90
-                if key == pg.K_LEFT: screen.model.yPhase -= 90
-                if key == pg.K_UP: screen.model.xPhase += 90
-                if key == pg.K_DOWN: screen.model.xPhase -= 90
-                if key == pg.K_z:
+                elif key == pg.K_LEFT: screen.model.yPhase -= 90
+                elif key == pg.K_UP: screen.model.xPhase += 90
+                elif key == pg.K_DOWN: screen.model.xPhase -= 90
+                elif key == pg.K_z:
                     if pg.key.get_mods() in shiftKey: screen.model.zPhase += 90
                     else: screen.model.zPhase -= 90
-                if key == pg.K_u:
-                    if pg.key.get_mods() in shiftKey: screen.model.uPhase -= 90
-                    else: screen.model.uPhase += 90
-                if key == pg.K_d:
+                elif key == pg.K_u:
+                    if pg.key.get_mods() in shiftKey: screen.model.uPhase += 90
+                    else: screen.model.uPhase -= 90
+                elif key == pg.K_d:
                     if pg.key.get_mods() in shiftKey: screen.model.dPhase -= 90
                     else: screen.model.dPhase += 90
-                if key == pg.K_f:
+                elif key == pg.K_f:
                     if pg.key.get_mods() in shiftKey: screen.model.fPhase += 90
                     else: screen.model.fPhase -= 90
+                elif key == pg.K_b:
+                    if pg.key.get_mods() in shiftKey: screen.model.bPhase -= 90
+                    else: screen.model.bPhase += 90
+                elif key == pg.K_l:
+                    if pg.key.get_mods() in shiftKey: screen.model.lPhase += 90
+                    else: screen.model.lPhase -= 90
+                elif key == pg.K_r:
+                    if pg.key.get_mods() in shiftKey: screen.model.rPhase -= 90
+                    else: screen.model.rPhase += 90
 
         iter += 1
         clock.tick()
