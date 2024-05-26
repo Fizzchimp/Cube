@@ -48,52 +48,8 @@ class Instance():
                             (quad[0][2] + self.x, quad[1][2] + self.y),
                             (quad[0][5] + self.x, quad[1][5] + self.y),
                             (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4))
-                
-        # for i in range(len(points)):
-        #     for j in range(len(points[0][0])):
-        #         points[i][0][j] += self.x
-        #         points[i][1][j] += self.y
 
         self.screen.fill((255, 255, 255))
-
-        # for quad in points:
-        #     if quad[2][0] < 0:
-        #         shade = 125 + -0.5 * quad[2][0]
-        #         pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][0], quad[1][0]), 
-        #                                                             (quad[0][1], quad[1][1]),
-        #                                                             (quad[0][2], quad[1][2]),
-        #                                                             (quad[0][3], quad[1][3])))
-                
-        #         pg.draw.aalines(self.screen, (100, 100, 100), True, ((quad[0][0], quad[1][0]),
-        #                                                             (quad[0][1], quad[1][1]),
-        #                                                             (quad[0][2], quad[1][2]),
-        #                                                             (quad[0][3], quad[1][3])))
-
-
-        #     if quad[2][4] < 0:
-        #         shade = 125 + -0.5 * quad[2][4]
-        #         pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][4], quad[1][4]),
-        #                                                             (quad[0][1], quad[1][1]),
-        #                                                             (quad[0][2], quad[1][2]),
-        #                                                             (quad[0][5], quad[1][5])))
-                
-        #         pg.draw.aalines(self.screen, (100, 100, 100), True, ((quad[0][4], quad[1][4]),
-        #                                                             (quad[0][1], quad[1][1]),
-        #                                                             (quad[0][2], quad[1][2]),
-        #                                                             (quad[0][5], quad[1][5])))
-                
-
-        #     if quad[2][6] < 0:
-        #         shade = 125 + -0.5 * quad[2][6]
-        #         pg.draw.polygon(self.screen, (shade, shade, shade), ((quad[0][6], quad[1][6]),
-        #                                                             (quad[0][3], quad[1][3]),
-        #                                                             (quad[0][2], quad[1][2]),
-        #                                                             (quad[0][5], quad[1][5])))
-                
-        #         pg.draw.aalines(self.screen, (100, 100, 100), True, ((quad[0][6], quad[1][6]),
-        #                                                             (quad[0][3], quad[1][3]),
-        #                                                             (quad[0][2], quad[1][2]),
-        #                                                             (quad[0][5], quad[1][5])))
             
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, (150, 150, 150), face[0:4])
