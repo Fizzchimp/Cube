@@ -1,6 +1,9 @@
 import pygame as pg
 from model import CubeModel
-add = 3
+add = 1
+
+def depth(quad):
+    return quad[2][2] / 2
 
 class Instance():
     def __init__(self, width, height):
@@ -24,7 +27,7 @@ class Instance():
     
 
     def draw_cube(self):
-        points = self.model.getPoints()
+        points = sorted(self.model.getPoints(), key = depth, reverse = True)
         for i in range(len(points)):
             for j in range(len(points[0][0])):
                 points[i][0][j] += self.x
