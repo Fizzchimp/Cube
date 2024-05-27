@@ -60,16 +60,6 @@ class CubeModel:
         self.points = [ 
                         ### Top Cubies
                         [
-                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
-                            [-length, -length, -length, -length, 0      , 0      , 0      ],
-                            [0      , 0      , -length, -length, 0      , -length, -length]
-                        ],
-                        [
-                            [0      , 0      , -length, -length, 0      , -length, -length],
-                            [-length, -length, -length, -length, 0      , 0      , 0      ],
-                            [0      , -length, -length, 0      , -length, -length, 0      ]
-                        ],
-                        [
                             [0      , -length, -length, 0      , -length, -length, 0      ],
                             [-length, -length, -length, -length, 0      , 0      , 0      ],
                             [0      , 0      ,  length,  length, 0      ,  length,  length]
@@ -79,16 +69,26 @@ class CubeModel:
                             [-length, -length, -length, -length, 0      , 0      , 0      ],
                             [0      ,  length,  length, 0      ,  length,  length, 0      ]
                         ],
+                        [
+                            [0      , 0      , -length, -length, 0      , -length, -length],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , -length, -length, 0      , -length, -length, 0      ]
+                        ],
+                        [
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , 0      , -length, -length, 0      , -length, -length]
+                        ],
                         # Bottom Cubies
+                        [
+                            [0      , -length, -length, 0      , -length, -length, 0      ],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      , 0      , -length, -length, 0      , -length, -length]
+                        ],
                         [
                             [0      , 0      ,  length,  length, 0      ,  length,  length],
                             [ length,  length,  length,  length, 0      , 0      , 0      ],
                             [0      , -length, -length,  0     , -length, -length, 0      ]
-                        ],
-                        [
-                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
-                            [ length,  length,  length,  length, 0      , 0      , 0      ],
-                            [0      ,  0     ,  length,  length, 0      ,  length,  length]
                         ],
                         [
                             [0      , 0      , -length, -length, 0      , -length, -length],
@@ -96,9 +96,9 @@ class CubeModel:
                             [0      ,  length,  length,  0     ,  length,  length, 0      ]
                         ],
                         [
-                            [0      , -length, -length, 0      , -length, -length, 0      ],
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
                             [ length,  length,  length,  length, 0      , 0      , 0      ],
-                            [0      , 0      , -length, -length, 0      , -length, -length]
+                            [0      ,  0     ,  length,  length, 0      ,  length,  length]
                         ]
                     ]
         

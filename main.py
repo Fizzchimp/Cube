@@ -1,10 +1,11 @@
 import pygame as pg
-#from Display.display import Instance
+from Display.display import Instance
 from cube import Cube
 from Pathfinding.cqueue import Queue
 from Pathfinding.node import Node
 from Pathfinding.binsearch import binSearch
 from Pathfinding.mergesort import mergeSort
+SHIFT = (1, 2, 3)
 
 class World:
     #def __init__(self):
@@ -163,8 +164,63 @@ class World:
             eNode = eNode.parent
 
         return path
-            
-              
+    
+    def run(self):
+        iter = 0
+        clock = pg.time.Clock()
+        screen = Instance(700, 700)
+        cube = Cube(["BWGO",     "OOOO", "WGWG", "RRRR", "BYBY",      "GRYW"])
+
+        # World loop
+        running = True
+        keyDown = False
+        while running:
+            for event in pg.event.get():
+                if event.type == pg.QUIT: running = False
+                if event.type == pg.KEYDOWN: keyDown, key = True, event.key
+                if event.type == pg.KEYUP: keyDown = False
+
+            if keyDown:
+                if key == pg.K_ESCAPE: running = False
+                if not screen.model.isMoving():
+                    if key == pg.K_RIGHT:
+                        screen.model.yPhase += 90
+                        cube.cube = cube.Y_Prime()
+                    elif key == pg.K_LEFT: screen.model.yPhase -= 90
+                    elif key == pg.K_UP: screen.model.xPhase += 90
+                    elif key == pg.K_DOWN: screen.model.xPhase -= 90
+                    elif key == pg.K_z:
+                        if pg.key.get_mods() in SHIFT: screen.model.zPhase += 90
+                        else: screen.model.zPhase -= 90
+                    elif key == pg.K_u:
+                        if pg.key.get_mods() in SHIFT: screen.model.uPhase += 90
+                        else: screen.model.uPhase -= 90
+                    elif key == pg.K_d:
+                        if pg.key.get_mods() in SHIFT: screen.model.dPhase -= 90
+                        else: screen.model.dPhase += 90
+                    elif key == pg.K_f:
+                        if pg.key.get_mods() in SHIFT: screen.model.fPhase += 90
+                        else: screen.model.fPhase -= 90
+                    elif key == pg.K_b:
+                        if pg.key.get_mods() in SHIFT: screen.model.bPhase -= 90
+                        else: screen.model.bPhase += 90
+                    elif key == pg.K_l:
+                        if pg.key.get_mods() in SHIFT: screen.model.lPhase += 90
+                        else: screen.model.lPhase -= 90
+                    elif key == pg.K_r:
+                        if pg.key.get_mods() in SHIFT: screen.model.rPhase -= 90
+                        else: screen.model.rPhase += 90
+
+            iter += 1
+            clock.tick()
+            if iter % 100 == 0:
+                print(clock.get_fps())
+
+
+            screen.draw_cube(cube.cube)
+            pg.display.flip()
+            # pg.time.wait(8)
+        pg.quit()
             
 
 
@@ -185,10 +241,10 @@ def repeat():
         iter += 1
 
 def main():     
-    cube = Cube(["WWWY",     "BGRG", "RGRW", "ORGO", "BWYY",      "YOBB"])
-    cube = Cube()
-    #cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
-    #cube.scramble()
+    cube = Cube(["BWBW",     "OOOO", "WGWG", "RRRR", "BYBY",      "GYGY"])
+    # cube = Cube()
+    # cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
+    # cube.scramble()
 
     clock = pg.time.Clock()
     world = World()
@@ -201,5 +257,7 @@ def main():
         print(", ".join(path))
     clock.tick()
     print(clock.get_time())
+#main()
 
-repeat()
+world = World()
+world.run()
