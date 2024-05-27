@@ -1,6 +1,6 @@
 import pygame as pg
 from model import CubeModel
-add = 1
+add = 0.5
 
 def depth(quad):
     return quad[2][2] / 2
