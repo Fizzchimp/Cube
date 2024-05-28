@@ -73,6 +73,6 @@ class Instance():
             
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, face[5], face[0:4])
-            pg.draw.aalines(self.screen, (100, 100, 100), True, face[0:4], True)
+            pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4], True)
 
         self.model.phaseUpdate(2)
