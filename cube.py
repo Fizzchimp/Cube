@@ -217,7 +217,28 @@ class Cube():
                 
                 self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1]]
     
+
+    def Z(self):
+        return [self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
+                
+                self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1],
+                self.cube[2][2] + self.cube[2][0] + self.cube[2][3] + self.cube[2][1],
+                self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1],
+                self.cube[4][1] + self.cube[4][3] + self.cube[4][0] + self.cube[4][2],
+
+                self.cube[3][2] + self.cube[3][0] + self.cube[3][3] + self.cube[3][1]]
     
+    def Z_Prime(self):
+        return [self.cube[3][1] + self.cube[3][3] + self.cube[3][0] + self.cube[3][2],
+                
+                self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
+                self.cube[2][1] + self.cube[2][3] + self.cube[2][0] + self.cube[2][2],
+                self.cube[5][1] + self.cube[5][3] + self.cube[5][0] + self.cube[5][2],
+                self.cube[4][2] + self.cube[4][0] + self.cube[4][3] + self.cube[4][1],
+                
+                self.cube[1][1] + self.cube[1][3] + self.cube[1][0] + self.cube[1][2]]
+    
+
     def move(self, algorithm):
         # Sets the cube structure after given movements
         for move in algorithm:
@@ -246,6 +267,9 @@ class Cube():
                 case "Y": self.cube = self.Y()
                 case "Y'": self.cube = self.Y_Prime()
 
+                case "Z": self.cube = self.Z()
+                case "Z'": self.cube = self.Z_Prime()
+
                 case _: print("Not a valid movement")
 
     def scramble(self, num = 20):
@@ -255,3 +279,4 @@ class Cube():
             moves.append(rnd.choice(["U", "D", "F", "B", "R", "L"]) + rnd.choice(["'", ""]))
         self.move(moves)
         return moves
+    

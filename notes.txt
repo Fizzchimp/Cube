@@ -10,4 +10,7 @@ newAxis = [[np.cos(alpha), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.si
 
 14 move scramble: cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
 
-time: 21492
+0, 1, 4
+0, 4, 3
+0, 3, 2
+0, 2, 1

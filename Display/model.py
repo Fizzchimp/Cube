@@ -59,43 +59,44 @@ class CubeModel:
     def __init__(self, length):
         self.points = [ 
                         ### Top Cubies
-                        [
+                        [  # Back Left
                             [0      , -length, -length, 0      , -length, -length, 0      ],
                             [-length, -length, -length, -length, 0      , 0      , 0      ],
                             [0      , 0      ,  length,  length, 0      ,  length,  length]
                         ],
-                        [
+                        [ # Back Right
                             [0      , 0      ,  length, length , 0      ,  length,  length],
                             [-length, -length, -length, -length, 0      , 0      , 0      ],
                             [0      ,  length,  length, 0      ,  length,  length, 0      ]
                         ],
-                        [
+                        [ # Front Left
                             [0      , 0      , -length, -length, 0      , -length, -length],
                             [-length, -length, -length, -length, 0      , 0      , 0      ],
                             [0      , -length, -length, 0      , -length, -length, 0      ]
                         ],
-                        [
+                        [ # Front Right
                             [0      ,  length,  length, 0      ,  length,  length, 0      ],
                             [-length, -length, -length, -length, 0      , 0      , 0      ],
                             [0      , 0      , -length, -length, 0      , -length, -length]
                         ],
-                        # Bottom Cubies
-                        [
+
+                        ### Bottom Cubies
+                        [ # Front Left
                             [0      , -length, -length, 0      , -length, -length, 0      ],
                             [ length,  length,  length,  length, 0      , 0      , 0      ],
                             [0      , 0      , -length, -length, 0      , -length, -length]
                         ],
-                        [
+                        [ # Front Right
                             [0      , 0      ,  length,  length, 0      ,  length,  length],
                             [ length,  length,  length,  length, 0      , 0      , 0      ],
                             [0      , -length, -length,  0     , -length, -length, 0      ]
                         ],
-                        [
+                        [ # Back Left
                             [0      , 0      , -length, -length, 0      , -length, -length],
                             [ length,  length,  length,  length, 0      , 0      , 0      ],
                             [0      ,  length,  length,  0     ,  length,  length, 0      ]
                         ],
-                        [
+                        [ # Back Right
                             [0      ,  length,  length, 0      ,  length,  length, 0      ],
                             [ length,  length,  length,  length, 0      , 0      , 0      ],
                             [0      ,  0     ,  length,  length, 0      ,  length,  length]
@@ -120,15 +121,14 @@ class CubeModel:
         return self.points[index]
     
     def getPoints(self):
-
-        return [rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.fPhase, self.points[0]))),
-                rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.fPhase, self.points[1]))),
-                rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.bPhase, self.points[2]))),
-                rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.bPhase, self.points[3]))),
-                rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.fPhase, self.points[4]))),
-                rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.bPhase, self.points[5]))),
+        return [rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.bPhase, self.points[0]))),
+                rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.bPhase, self.points[1]))),
+                rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.fPhase, self.points[2]))),
+                rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.fPhase, self.points[3]))),
+                rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.fPhase, self.points[4]))),
+                rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.fPhase, self.points[5]))),
                 rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.bPhase, self.points[6]))),
-                rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.fPhase, self.points[7])))]
+                rotateX(self.xPhase + self.rPhase, rotateY(self.yPhase + self.dPhase, rotateZ(self.zPhase + self.bPhase, self.points[7])))]
 
     def isMoving(self):
         if any((self.xPhase, self.yPhase, self.zPhase, self.uPhase, self.dPhase, self.fPhase, self.bPhase, self.lPhase, self.rPhase)):
