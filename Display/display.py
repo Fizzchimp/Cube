@@ -26,8 +26,8 @@ class Instance():
         self.x, self.y  = self.width / 2, self.height / 2
 
         # 3D Matrix of all verticies in a cube
-        length = self.width / 5 if self.width <= self.height else self.height / 5        
-        self.model = CubeModel(length)
+        self.length = self.width / 5 if self.width <= self.height else self.height / 5        
+        self.model = CubeModel(self.length)
         
     
 
@@ -46,20 +46,22 @@ class Instance():
         faces = []
         for i, quad in enumerate(points):
             if quad[2][0] < 0:
+                shade = lambda colour : colour + quad[2][0] / self.length
+                print(list(map(shade, quadCol[i][0])))
                 faces.append(((quad[0][0] + self.x, quad[1][0] + self.y), 
                             (quad[0][1] + self.x, quad[1][1] + self.y),
                             (quad[0][2] + self.x, quad[1][2] + self.y),
                             (quad[0][3] + self.x, quad[1][3] + self.y),
                             (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
-                            quadCol[i][0] if i < len(quadCol) else (100, 100, 100)))
+                            (shade(quadCol[i][0][0]), shade(quadCol[i][0][1]), shade(quadCol[i][0][2]))))
                 
-            if quad[2][4] < 0:    
+            if quad[2][4] < 0:
                 faces.append(((quad[0][4] + self.x, quad[1][4] + self.y),
                             (quad[0][1] + self.x, quad[1][1] + self.y),
                             (quad[0][2] + self.x, quad[1][2] + self.y),
                             (quad[0][5] + self.x, quad[1][5] + self.y),
                             (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
-                            quadCol[i][1] if i < len(quadCol) else (100, 100, 100)))
+                            quadCol[i][1]))
                             
             if quad[2][6] < 0:    
                 faces.append(((quad[0][6] + self.x, quad[1][6] + self.y),
@@ -67,7 +69,7 @@ class Instance():
                             (quad[0][2] + self.x, quad[1][2] + self.y),
                             (quad[0][5] + self.x, quad[1][5] + self.y),
                             (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
-                            quadCol[i][2] if i < len(quadCol) else (100, 100, 100)))
+                            quadCol[i][2]))
 
         self.screen.fill((200, 200, 200))
             

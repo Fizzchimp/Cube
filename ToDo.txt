@@ -1,19 +1,12 @@
 =================
 Methods for cube:
 =================
-Testing
 Set algorithms?
-Change all to Return cube structure
 
 
 =================
 ------Main:------
 =================
-PathFinding algorithm:
----Add second queue to start at solved state
----Test binary search
----Check for visitedNodes
-
 Turning UI/keybindings
 Cube set up UI
 
@@ -23,8 +16,5 @@ Cube Comparison / Solved Checker
 =================
 -----Display:----
 =================
-Psuedo 3D model movement/animations for 2 by 2 model:
-    Rotation around x axis (With key press)
-    Keybindings cleanup for input keys
-    
-Implement Queue to draw each face in order of visibility?
+Hidden surface removal
+Buttons and UI
