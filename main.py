@@ -263,7 +263,7 @@ class World:
             iter += 1
             clock.tick()
             if iter % 100 == 0:
-                print(clock.get_fps())
+                pg.display.set_caption(str(clock.get_fps()))
 
 
             screen.draw_cube(cube.cube)
