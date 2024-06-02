@@ -7,7 +7,7 @@ from Pathfinding.binsearch import binSearch
 from Pathfinding.mergesort import mergeSort
 SHIFT = (1, 2, 3)
 MAX_FPS = 250
-ROTATION_SPEED = 200
+ROTATION_SPEED = 3
 
 class World:
     #def __init__(self):
@@ -270,7 +270,7 @@ class World:
             pg.display.flip()
 
             # print((90 * clock.tick(MAX_FPS)) // ROTATION_SPEED)
-            screen.model.phaseUpdate(2)
+            screen.model.phaseUpdate(ROTATION_SPEED)
             # screen.model.phaseUpdate((90 * clock.tick(MAX_FPS)) // ROTATION_SPEED)
 
             iter += 1
@@ -298,7 +298,8 @@ def main():
         print(", ".join(path))
     clock.tick()
     print(clock.get_time())
-#main()
 
+
+#main()
 world = World()
 world.run()
