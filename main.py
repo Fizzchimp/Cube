@@ -6,6 +6,8 @@ from Pathfinding.node import Node
 from Pathfinding.binsearch import binSearch
 from Pathfinding.mergesort import mergeSort
 SHIFT = (1, 2, 3)
+MAX_FPS = 250
+ROTATION_SPEED = 200
 
 class World:
     #def __init__(self):
@@ -169,17 +171,19 @@ class World:
         iter = 0
         clock = pg.time.Clock()
         screen = Instance(700, 700)
-        # cube = Cube(["RWGB",     "GGGG", "RRRR", "BBBB", "OOOO",      "YOBG"])
+        # cube = Cube(["BWOR",     "OGOG", "WGYW", "YRRY", "BYRW",      "OGBB"])
         cube = Cube()
 
         # World loop
+        clock.tick()
         running = True
         keyDown = False
         while running:
+            timeElapsed = 0
             for event in pg.event.get():
                 if event.type == pg.QUIT: running = False
                 if event.type == pg.KEYDOWN: keyDown, key = True, event.key
-                if event.type == pg.KEYUP: keyDown = False
+                if event.type == pg.KEYUP: keyDown = False 
 
             if keyDown:
                 if key == pg.K_ESCAPE: running = False
@@ -260,34 +264,22 @@ class World:
                         print(", ".join(self.findPath(cube.cube)))
 
 
-            iter += 1
-            clock.tick()
-            if iter % 100 == 0:
-                pg.display.set_caption(str(clock.get_fps()))
 
 
             screen.draw_cube(cube.cube)
             pg.display.flip()
-            # pg.time.wait(8)
+
+            # print((90 * clock.tick(MAX_FPS)) // ROTATION_SPEED)
+            screen.model.phaseUpdate(2)
+            # screen.model.phaseUpdate((90 * clock.tick(MAX_FPS)) // ROTATION_SPEED)
+
+            iter += 1
+            clock.tick(MAX_FPS)
+            if iter % MAX_FPS == 0:
+                pg.display.set_caption(str(clock.get_fps()))
+            
         pg.quit()
             
-
-
-def repeat():
-    world = World()
-    cube = Cube()
-    iter = 0
-    while True:
-        scramb = cube.scramble(20)
-        path = world.findPath(cube.cube)
-        if path != False:
-            print(iter)
-            if len(path) > 12:
-                print(len(path), "moves:", scramb, ", ".join(path))
-        else:
-            print("UH OH")
-            return
-        iter += 1
 
 def main():     
     cube = Cube(["BWBW",     "OOOO", "WGWG", "RRRR", "BYBY",      "GYGY"])
