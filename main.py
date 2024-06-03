@@ -6,6 +6,7 @@ from Pathfinding.cqueue import Queue
 from Pathfinding.node import Node
 from Pathfinding.binsearch import binSearch
 from Pathfinding.mergesort import mergeSort
+
 SHIFT = (1, 2, 3)
 MAX_FPS = 300
 ROTATION_SPEED = 2
