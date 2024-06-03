@@ -1,3 +1,4 @@
+from math import inf
 import pygame as pg
 from Display.display import Instance
 from cube import Cube
@@ -6,8 +7,8 @@ from Pathfinding.node import Node
 from Pathfinding.binsearch import binSearch
 from Pathfinding.mergesort import mergeSort
 SHIFT = (1, 2, 3)
-MAX_FPS = 250
-ROTATION_SPEED = 3
+MAX_FPS = 300
+ROTATION_SPEED = 2
 
 class World:
     #def __init__(self):
