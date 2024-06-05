@@ -7,7 +7,7 @@ from Pathfinding.binsearch import binSearch
 from Pathfinding.mergesort import mergeSort
 
 SHIFT = (1, 2, 3)
-MAX_FPS = 3000000
+MAX_FPS = 300
 ROTATION_SPEED = 2
 WIDTH = 700
 HEIGHT = 700
@@ -278,7 +278,7 @@ class World:
 
             iter += 1
             clock.tick(MAX_FPS)
-            if iter % 10000 == 0:
+            if iter % MAX_FPS == 0:
                 pg.display.set_caption(str(clock.get_fps()))
             
         pg.quit()
