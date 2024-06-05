@@ -1,4 +1,3 @@
-from math import inf
 import pygame as pg
 from Display.display import Instance
 from cube import Cube
