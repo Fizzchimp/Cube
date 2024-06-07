@@ -1,10 +1,10 @@
 import pygame as pg
 from Display.display import Display
 from cube import Cube
-from Pathfinding.cqueue import Queue
-from Pathfinding.node import Node
-from Pathfinding.binsearch import binSearch
-from Pathfinding.mergesort import mergeSort
+from Assets.cqueue import Queue
+from Assets.node import Node
+from Assets.binsearch import binSearch
+from Assets.mergesort import mergeSort
 
 SHIFT = (1, 2, 3)
 MAX_FPS = 300
@@ -12,21 +12,23 @@ ROTATION_SPEED = 1000
 WIDTH = 700
 HEIGHT = 700
 MOVE_KEYS = {pg.K_u: "U",
-        pg.K_r: "R",
-        pg.K_f: "F",
-        pg.K_d: "D",
-        pg.K_l: "L",
-        pg.K_b: "B",
-        pg.K_LEFT: "Y",
-        pg.K_RIGHT: "Y'",
-        pg.K_UP: "X",
-        pg.K_DOWN: "X'",
-        pg.K_z: "Z"}
+            pg.K_r: "R",
+            pg.K_f: "F",
+            pg.K_d: "D",
+            pg.K_l: "L",
+            pg.K_b: "B",
+            pg.K_LEFT: "Y",
+            pg.K_RIGHT: "Y'",
+            pg.K_UP: "X",
+            pg.K_DOWN: "X'",
+            pg.K_z: "Z"}
 
 class World:
     def __init__(self):
         self.screen = Display(WIDTH, HEIGHT)
         self.clock = pg.time.Clock()
+        self.moveQueue = Queue(100)
+        
     def normalisedSolved(self, cube):
         # Returns a new solved state normalised to be comparable with start node
         colKeys = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
@@ -184,14 +186,15 @@ class World:
     
     def getKeys(self):
         for event in pg.event.get():
-                if event.type == pg.QUIT: running = False
+                if event.type == pg.QUIT: return False
                 elif event.type == pg.KEYDOWN: self.keyDown, self.key = True, event.key
                 elif event.type == pg.KEYUP: self.keyDown = False
                 
         if self.keyDown == True:
             if self.key == pg.K_ESCAPE:
                 return False
-            elif self.key == pg.K_s:
+            
+            elif self.key == pg.K_s and self.moveQueue.isEmpty():
                     solution = self.findPath(self.cube.cube)
                     if solution == False:
                         print("No solution")
@@ -199,48 +202,49 @@ class World:
                         print("Already Solved!")
                     else:
                         print(", ".join(solution))
+                        for move in solution:
+                            self.moveQueue.enqueue(move)
                         
             else:
-                self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
+                if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys(): self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
                         
         return True
     
     def doMove(self, move, mod):
         if mod in SHIFT: move += "'"
-        
         self.cube.move(move)
         match move:
             case "U": self.screen.model.uPhase = -90
             case "U'": self.screen.model.uPhase = 90
             
-            case "R": self.screen.model.rPhase = -90
-            case "R'": self.screen.model.rPhase = 90
+            case "R": self.screen.model.rPhase = 90
+            case "R'": self.screen.model.rPhase = -90
             
             case "F": self.screen.model.fPhase = -90
             case "F'": self.screen.model.fPhase = 90
             
-            case "D": self.screen.model.dPhase = -90
-            case "D'": self.screnn.model.dPhase = 90
+            case "D": self.screen.model.dPhase = 90
+            case "D'": self.screen.model.dPhase = -90
             
             case "L": self.screen.model.lPhase = -90
             case "L'": self.screen.model.lPhase = 90
             
-            case "B": self.screen.model.bPhase = -90
-            case "B'": self.screen.model.bPhase = 90
+            case "B": self.screen.model.bPhase = 90
+            case "B'": self.screen.model.bPhase = -90
             
-            case "X": self.screen.model.xPhase = -90
-            case "X'": self.screen.model.xPhase = 90
+            case "X": self.screen.model.xPhase = 90
+            case "X'": self.screen.model.xPhase = -90
             
             case "Y": self.screen.model.yPhase = -90
-            case "Y;": self.screen.model.yPhase = 90
+            case "Y'": self.screen.model.yPhase = 90
             
             case "Z": self.screen.model.zPhase = -90
             case "Z'": self.screen.model.zPhase = 90
 
     def run(self):
         # Creating Cube object
-        #self.cube = Cube(["WWWW", "GGGG",  "RRRR", "BBBB", "OOOO", "YYYY"])
-        self.cube = Cube()
+        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        #self.cube = Cube()
 
         iter = 0
 
@@ -255,11 +259,17 @@ class World:
             # Get and run keyboard inputs and other events
             running = self.getKeys()
 
+            # Get moves from the movement queue
+            if not self.screen.model.isMoving() and not self.moveQueue.isEmpty():
+                move = self.moveQueue.dequeue()
+                self.doMove(move, False)
+            
             # Draw the screen
             self.screen.drawScreen(self.cube.cube)
             
             # Update ascpects of the screen
             self.screen.model.phaseUpdate(2)
+            
 
             iter += 1
             self.clock.tick(MAX_FPS)
