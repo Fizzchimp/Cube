@@ -86,21 +86,38 @@ class Display():
         self.drawCube(cube)
 
         mousePos = pg.mouse.get_pos()
-        rect = pg.Rect((self.button.pos[0] + 4, self.button.pos[1]), (self.button.width, self.button.height))
-        pg.draw.rect(self.screen, (100, 100, 100), rect)
-        self.screen.blit(self.button.getImage(mousePos), self.button.pos)
+        state = self.button.getState(mousePos)
+        image, imagePos = self.button.getImage(state)
+        self.screen.blit(image, imagePos)
         
         pg.display.flip()
 
+    def getPressed(self):
+        if self.button.getState(pg.mouse.get_pos()) == 2:
+            return True
+        return False
+
 class Button():
     def __init__(self, centre):
+        self.centre = centre
         self.width, self.height = 100, 50
-        self.pos = (centre[0] - 108 / 2, centre[1] - 60 / 2)
+        self.drawPointUp = (centre[0] - 54, centre[1] - 25)
+        self.drawPointDown = (centre[0] - 50, centre[1] - 21)
+
+        self.hitbox = ((self.centre[0] - 50, self.centre[1] - 25), (self.centre[0] + 50, self.centre[1] + 25))
         self.imageUp = pg.image.load("Display/Textures/Button_Up.png")
         self.imageHov = pg.image.load("Display/Textures/Button_Hovering.png")
+        self.imageDown = pg.image.load("Display/Textures/Button_Down.png")
 
-    def getImage(self, mousePos):
-        if self.pos[0] + 4 < mousePos[0] < self.pos[0] + self.width + 4 and self.pos[1] < mousePos[1] < self.pos[1] + self.height:
-            return self.imageHov
-        return self.imageUp
+    def getImage(self, state):
+        if state == 2: return self.imageDown, self.drawPointDown
+        elif state == 1: return self.imageHov, self.drawPointUp
+        else: return self.imageUp, self.drawPointUp
         
+    def getState(self, mousePos):
+        if self.hitbox[0][0] < mousePos[0] <self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
+            if pg.mouse.get_pressed()[0]:
+                return 2
+            return 1
+        return 0
+     

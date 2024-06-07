@@ -243,7 +243,7 @@ class World:
 
     def run(self):
         # Creating Cube object
-        self.cube = Cube(["BWYO", "WOYB", "BYYW", "GRRW", "BOGR", "RGGO"])
+        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
         #self.cube = Cube()
 
         iter = 0
@@ -270,6 +270,17 @@ class World:
             # Update ascpects of the screen
             self.screen.model.phaseUpdate(3)
             
+            if self.screen.getPressed() == True and self.moveQueue.isEmpty():
+                solution = self.findPath(self.cube.cube)
+                if solution == False:
+                    print("No solution")
+                elif solution == []:
+                    print("Already Solved!")
+                else:
+                    print(", ".join(solution))
+                    for move in solution:
+                        self.moveQueue.enqueue(move)
+
 
             iter += 1
             self.clock.tick(MAX_FPS)
