@@ -171,10 +171,17 @@ class World:
 
         return path
     
-    def doKeyEvents(self, key):
+    def doEvents(self):
+        for event in pg.event.get():
+                if event.type == pg.QUIT: running = False
+                elif event.type == pg.KEYDOWN: self.keyDown, key = True, event.key
+                elif event.type == pg.KEYUP: self.keyDown = False
+                
+        if self.keyDown == True:
+            print(key, ": Key")
             if key == pg.K_ESCAPE:
                 return False
-            if not self.screen.model.isMoving():
+            elif not self.screen.model.isMoving():
                 if key == pg.K_RIGHT:
                     self.screen.model.yPhase += 90
                     self.cube.cube = self.cube.Y_Prime()
@@ -255,8 +262,10 @@ class World:
                         print("Already Solved!")
                     else:
                         print(", ".join(solution))
-            return True
+                        
+        return True
     
+
     def animateMoves(self, moves):
         for move in moves:
             print("A")
@@ -272,17 +281,9 @@ class World:
         self.clock.tick()
         moveClock = pg.time.Clock()
         running = True
-        keyDown = False
-        moving = False
+        self.keyDown = False
         while running:
-            timeElapsed = 0
-            for event in pg.event.get():
-                if event.type == pg.QUIT: running = False
-                if event.type == pg.KEYDOWN: keyDown, key = True, event.key
-                if event.type == pg.KEYUP: keyDown = False
-                
-            if keyDown:
-                running = self.doKeyEvents(key)
+            running = self.doEvents()
 
 
             self.screen.draw_cube(self.cube.cube)
