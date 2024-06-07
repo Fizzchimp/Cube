@@ -194,7 +194,7 @@ class World:
             if self.key == pg.K_ESCAPE:
                 return False
             
-            elif self.key == pg.K_s and self.moveQueue.isEmpty():
+            elif self.key == pg.K_s and self.moveQueue.isEmpty(): 
                     solution = self.findPath(self.cube.cube)
                     if solution == False:
                         print("No solution")
@@ -243,7 +243,7 @@ class World:
 
     def run(self):
         # Creating Cube object
-        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        self.cube = Cube(["YWYG", "BBYY", "RWGO", "ORBW", "BORG", "RWOG"])
         #self.cube = Cube()
 
         iter = 0
