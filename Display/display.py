@@ -19,7 +19,7 @@ class Display():
         self.width, self.height = width, height
         self.screen = pg.display.set_mode([width, height])
         self.screen.fill((150, 150, 150))
-        image = pg.image.load("Display/01_icon.png")
+        image = pg.image.load("Display/Textures/01_icon.png")
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
 
@@ -29,6 +29,9 @@ class Display():
         # 3D Matrix of all verticies in a cube
         self.length = self.width / 5 if self.width <= self.height else self.height / 5        
         self.model = CubeModel(self.length)
+
+        # Buttons
+        self.button = Button((350, 600))
         
     
 
@@ -81,5 +84,23 @@ class Display():
     def drawScreen(self, cube):
         self.screen.fill((150, 150, 150))
         self.drawCube(cube)
+
+        mousePos = pg.mouse.get_pos()
+        rect = pg.Rect((self.button.pos[0] + 4, self.button.pos[1]), (self.button.width, self.button.height))
+        pg.draw.rect(self.screen, (100, 100, 100), rect)
+        self.screen.blit(self.button.getImage(mousePos), self.button.pos)
         
         pg.display.flip()
+
+class Button():
+    def __init__(self, centre):
+        self.width, self.height = 100, 50
+        self.pos = (centre[0] - 108 / 2, centre[1] - 60 / 2)
+        self.imageUp = pg.image.load("Display/Textures/Button_Up.png")
+        self.imageHov = pg.image.load("Display/Textures/Button_Hovering.png")
+
+    def getImage(self, mousePos):
+        if self.pos[0] + 4 < mousePos[0] < self.pos[0] + self.width + 4 and self.pos[1] < mousePos[1] < self.pos[1] + self.height:
+            return self.imageHov
+        return self.imageUp
+        

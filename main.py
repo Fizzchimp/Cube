@@ -7,7 +7,7 @@ from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
 SHIFT = (1, 2, 3)
-MAX_FPS = 300
+MAX_FPS = 200
 ROTATION_SPEED = 1000
 WIDTH = 700
 HEIGHT = 700
@@ -243,7 +243,7 @@ class World:
 
     def run(self):
         # Creating Cube object
-        self.cube = Cube(["YWYG", "BBYY", "RWGO", "ORBW", "BORG", "RWOG"])
+        self.cube = Cube(["BWYO", "WOYB", "BYYW", "GRRW", "BOGR", "RGGO"])
         #self.cube = Cube()
 
         iter = 0
@@ -268,7 +268,7 @@ class World:
             self.screen.drawScreen(self.cube.cube)
             
             # Update ascpects of the screen
-            self.screen.model.phaseUpdate(2)
+            self.screen.model.phaseUpdate(3)
             
 
             iter += 1
