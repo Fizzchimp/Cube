@@ -10,7 +10,7 @@ colours = {"W": (245, 245, 245),
 def depth(face):
     return face[4]
 
-class Instance():
+class Display():
     def __init__(self, width, height):
         pg.init()
 

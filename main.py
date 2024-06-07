@@ -1,5 +1,5 @@
 import pygame as pg
-from Display.display import Instance
+from Display.display import Display
 from cube import Cube
 from Pathfinding.cqueue import Queue
 from Pathfinding.node import Node
@@ -8,13 +8,14 @@ from Pathfinding.mergesort import mergeSort
 
 SHIFT = (1, 2, 3)
 MAX_FPS = 300
-ROTATION_SPEED = 2
+ROTATION_SPEED = 1000
 WIDTH = 700
 HEIGHT = 700
 
 class World:
-    #def __init__(self):
-    
+    def __init__(self):
+        self.screen = Display(WIDTH, HEIGHT)
+        self.clock = pg.time.Clock()
     def normalisedSolved(self, cube):
         # Returns a new solved state normalised to be comparable with start node
         colKeys = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
@@ -170,139 +171,132 @@ class World:
 
         return path
     
+    def doKeyEvents(self, key):
+            if key == pg.K_ESCAPE:
+                return False
+            if not self.screen.model.isMoving():
+                if key == pg.K_RIGHT:
+                    self.screen.model.yPhase += 90
+                    self.cube.cube = self.cube.Y_Prime()
+
+                elif key == pg.K_LEFT:
+                    self.screen.model.yPhase -= 90
+                    self.cube.cube = self.cube.Y()
+
+                elif key == pg.K_UP:
+                    self.screen.model.xPhase += 90
+                    self.cube.cube = self.cube.X()
+
+                elif key == pg.K_DOWN:
+                    self.screen.model.xPhase -= 90
+                    self.cube.cube = self.cube.X_Prime()
+
+                elif key == pg.K_z:
+                    if pg.key.get_mods() in SHIFT:
+                        self.screen.model.zPhase += 90
+                        self.cube.cube = self.cube.Z_Prime()
+                    else:
+                        self.screen.model.zPhase -= 90
+                        self.cube.cube = self.cube.Z()
+
+                elif key == pg.K_u:
+                    if pg.key.get_mods() in SHIFT:
+                        self.screen.model.uPhase += 90
+                        self.cube.cube = self.cube.U_Prime()
+                    else:
+                        self.screen.model.uPhase -= 90
+                        self.cube.cube = self.cube.U()
+
+                elif key == pg.K_d:
+                    if pg.key.get_mods() in SHIFT:
+                        self.screen.model.dPhase -= 90
+                        self.cube.cube = self.cube.D_Prime()
+                    else:
+                        self.screen.model.dPhase += 90
+                        self.cube.cube = self.cube.D()
+
+                elif key == pg.K_f:
+                    if pg.key.get_mods() in SHIFT:
+                        self.screen.model.fPhase += 90
+                        self.cube.cube = self.cube.F_Prime()
+                    else:
+                        self.screen.model.fPhase -= 90
+                        self.cube.cube = self.cube.F()
+
+                elif key == pg.K_b:
+                    if pg.key.get_mods() in SHIFT:
+                        self.screen.model.bPhase -= 90
+                        self.cube.cube = self.cube.B_Prime()
+                    else:
+                        self.screen.model.bPhase += 90
+                        self.cube.cube = self.cube.B()
+
+                elif key == pg.K_l:
+                    if pg.key.get_mods() in SHIFT:
+                        self.screen.model.lPhase += 90
+                        self.cube.cube = self.cube.L_Prime()
+                    else:
+                        self.screen.model.lPhase -= 90
+                        self.cube.cube = self.cube.L()
+
+                elif key == pg.K_r:
+                    if pg.key.get_mods() in SHIFT:
+                        self.screen.model.rPhase -= 90
+                        self.cube.cube = self.cube.R_Prime()
+                    else:
+                        self.screen.model.rPhase += 90
+                        self.cube.cube = self.cube.R()
+                    
+                elif key == pg.K_s:
+                    solution = self.findPath(self.cube.cube)
+                    if solution == False:
+                        print("No solution")
+                    elif solution == []:
+                        print("Already Solved!")
+                    else:
+                        print(", ".join(solution))
+            return True
+    
+    def animateMoves(self, moves):
+        for move in moves:
+            print("A")
+
     def run(self):
+        # Creating Cube object
+        #self.cube = Cube(["WWWW", "GGGG",  "RRRR", "BBBB", "OOOO", "YYYY"])
+        self.cube = Cube()
+
         iter = 0
-        clock = pg.time.Clock()
-        screen = Instance(WIDTH, HEIGHT)
-        # cube = Cube(["BWOR",     "OGOG", "WGYW", "YRRY", "BYRW",      "OGBB"])
-        cube = Cube()
 
         # World loop
-        clock.tick()
+        self.clock.tick()
+        moveClock = pg.time.Clock()
         running = True
         keyDown = False
+        moving = False
         while running:
             timeElapsed = 0
             for event in pg.event.get():
                 if event.type == pg.QUIT: running = False
                 if event.type == pg.KEYDOWN: keyDown, key = True, event.key
-                if event.type == pg.KEYUP: keyDown = False 
-
+                if event.type == pg.KEYUP: keyDown = False
+                
             if keyDown:
-                if key == pg.K_ESCAPE: running = False
-                if not screen.model.isMoving():
-                    if key == pg.K_RIGHT:
-                        screen.model.yPhase += 90
-                        cube.cube = cube.Y_Prime()
-
-                    elif key == pg.K_LEFT:
-                        screen.model.yPhase -= 90
-                        cube.cube = cube.Y()
-
-                    elif key == pg.K_UP:
-                        screen.model.xPhase += 90
-                        cube.cube = cube.X()
-
-                    elif key == pg.K_DOWN:
-                        screen.model.xPhase -= 90
-                        cube.cube = cube.X_Prime()
-
-                    elif key == pg.K_z:
-                        if pg.key.get_mods() in SHIFT:
-                            screen.model.zPhase += 90
-                            cube.cube = cube.Z_Prime()
-                        else:
-                            screen.model.zPhase -= 90
-                            cube.cube = cube.Z()
-
-                    elif key == pg.K_u:
-                        if pg.key.get_mods() in SHIFT:
-                            screen.model.uPhase += 90
-                            cube.cube = cube.U_Prime()
-                        else:
-                            screen.model.uPhase -= 90
-                            cube.cube = cube.U()
-
-                    elif key == pg.K_d:
-                        if pg.key.get_mods() in SHIFT:
-                            screen.model.dPhase -= 90
-                            cube.cube = cube.D_Prime()
-                        else:
-                            screen.model.dPhase += 90
-                            cube.cube = cube.D()
-
-                    elif key == pg.K_f:
-                        if pg.key.get_mods() in SHIFT:
-                            screen.model.fPhase += 90
-                            cube.cube = cube.F_Prime()
-                        else:
-                            screen.model.fPhase -= 90
-                            cube.cube = cube.F()
-
-                    elif key == pg.K_b:
-                        if pg.key.get_mods() in SHIFT:
-                            screen.model.bPhase -= 90
-                            cube.cube = cube.B_Prime()
-                        else:
-                            screen.model.bPhase += 90
-                            cube.cube = cube.B()
-
-                    elif key == pg.K_l:
-                        if pg.key.get_mods() in SHIFT:
-                            screen.model.lPhase += 90
-                            cube.cube = cube.L_Prime()
-                        else:
-                            screen.model.lPhase -= 90
-                            cube.cube = cube.L()
-
-                    elif key == pg.K_r:
-                        if pg.key.get_mods() in SHIFT:
-                            screen.model.rPhase -= 90
-                            cube.cube = cube.R_Prime()
-                        else:
-                            screen.model.rPhase += 90
-                            cube.cube = cube.R()
-                    
-                    elif key == pg.K_s:
-                        print(", ".join(self.findPath(cube.cube)))
+                running = self.doKeyEvents(key)
 
 
-
-
-            screen.draw_cube(cube.cube)
+            self.screen.draw_cube(self.cube.cube)
             pg.display.flip()
-
-            # print((90 * clock.tick(MAX_FPS)) // ROTATION_SPEED)
-            screen.model.phaseUpdate(ROTATION_SPEED)
-            # screen.model.phaseUpdate((90 * clock.tick(MAX_FPS)) // ROTATION_SPEED)
+            
+            self.screen.model.phaseUpdate(2)
 
             iter += 1
-            clock.tick(MAX_FPS)
+            self.clock.tick(MAX_FPS)
             if iter % MAX_FPS == 0:
-                pg.display.set_caption(str(clock.get_fps()))
+                pg.display.set_caption(str(self.clock.get_fps()))
             
+
         pg.quit()
-            
 
-def main():     
-    cube = Cube(["BWBW",     "OOOO", "WGWG", "RRRR", "BYBY",      "GYGY"])
-    # cube = Cube()
-    # cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
-    # cube.scramble()
-
-    clock = pg.time.Clock()
-    world = World()
-
-    clock.tick()
-    path = world.findPath(cube.cube)
-    if path == False:
-        print("Not solvable")
-    else:
-        print(", ".join(path))
-    clock.tick()
-    print(clock.get_time())
-
-
-#main()
 world = World()
 world.run()

@@ -9,8 +9,17 @@ newAxis = [[np.cos(alpha), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.si
 
 
 14 move scramble: cube.move(["U", "U", "R'", "U'", "F'", "U'", "R", "F", "F", "R'", "F", "F", "R'", "U"])
+                
 
-0, 1, 4
-0, 4, 3
-0, 3, 2
-0, 2, 1
+
+                moveClock.tick()
+                moveTime = 0
+                moving = True
+
+            if moving:
+                if moveTime >= ROTATION_SPEED:
+                    print("Done")
+                    moveTime = 0
+                    moving = False
+                else:
+                    moveTime += moveClock.tick()
