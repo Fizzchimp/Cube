@@ -174,31 +174,30 @@ class World:
     def doEvents(self):
         for event in pg.event.get():
                 if event.type == pg.QUIT: running = False
-                elif event.type == pg.KEYDOWN: self.keyDown, key = True, event.key
+                elif event.type == pg.KEYDOWN: self.keyDown, self.key = True, event.key
                 elif event.type == pg.KEYUP: self.keyDown = False
                 
         if self.keyDown == True:
-            print(key, ": Key")
-            if key == pg.K_ESCAPE:
+            if self.key == pg.K_ESCAPE:
                 return False
             elif not self.screen.model.isMoving():
-                if key == pg.K_RIGHT:
+                if self.key == pg.K_RIGHT:
                     self.screen.model.yPhase += 90
                     self.cube.cube = self.cube.Y_Prime()
 
-                elif key == pg.K_LEFT:
+                elif self.key == pg.K_LEFT:
                     self.screen.model.yPhase -= 90
                     self.cube.cube = self.cube.Y()
 
-                elif key == pg.K_UP:
+                elif self.key == pg.K_UP:
                     self.screen.model.xPhase += 90
                     self.cube.cube = self.cube.X()
 
-                elif key == pg.K_DOWN:
+                elif self.key == pg.K_DOWN:
                     self.screen.model.xPhase -= 90
                     self.cube.cube = self.cube.X_Prime()
 
-                elif key == pg.K_z:
+                elif self.key == pg.K_z:
                     if pg.key.get_mods() in SHIFT:
                         self.screen.model.zPhase += 90
                         self.cube.cube = self.cube.Z_Prime()
@@ -206,7 +205,7 @@ class World:
                         self.screen.model.zPhase -= 90
                         self.cube.cube = self.cube.Z()
 
-                elif key == pg.K_u:
+                elif self.key == pg.K_u:
                     if pg.key.get_mods() in SHIFT:
                         self.screen.model.uPhase += 90
                         self.cube.cube = self.cube.U_Prime()
@@ -214,7 +213,7 @@ class World:
                         self.screen.model.uPhase -= 90
                         self.cube.cube = self.cube.U()
 
-                elif key == pg.K_d:
+                elif self.key == pg.K_d:
                     if pg.key.get_mods() in SHIFT:
                         self.screen.model.dPhase -= 90
                         self.cube.cube = self.cube.D_Prime()
@@ -222,7 +221,7 @@ class World:
                         self.screen.model.dPhase += 90
                         self.cube.cube = self.cube.D()
 
-                elif key == pg.K_f:
+                elif self.key == pg.K_f:
                     if pg.key.get_mods() in SHIFT:
                         self.screen.model.fPhase += 90
                         self.cube.cube = self.cube.F_Prime()
@@ -230,7 +229,7 @@ class World:
                         self.screen.model.fPhase -= 90
                         self.cube.cube = self.cube.F()
 
-                elif key == pg.K_b:
+                elif self.key == pg.K_b:
                     if pg.key.get_mods() in SHIFT:
                         self.screen.model.bPhase -= 90
                         self.cube.cube = self.cube.B_Prime()
@@ -238,7 +237,7 @@ class World:
                         self.screen.model.bPhase += 90
                         self.cube.cube = self.cube.B()
 
-                elif key == pg.K_l:
+                elif self.key == pg.K_l:
                     if pg.key.get_mods() in SHIFT:
                         self.screen.model.lPhase += 90
                         self.cube.cube = self.cube.L_Prime()
@@ -246,7 +245,7 @@ class World:
                         self.screen.model.lPhase -= 90
                         self.cube.cube = self.cube.L()
 
-                elif key == pg.K_r:
+                elif self.key == pg.K_r:
                     if pg.key.get_mods() in SHIFT:
                         self.screen.model.rPhase -= 90
                         self.cube.cube = self.cube.R_Prime()
@@ -254,7 +253,7 @@ class World:
                         self.screen.model.rPhase += 90
                         self.cube.cube = self.cube.R()
                     
-                elif key == pg.K_s:
+                elif self.key == pg.K_s:
                     solution = self.findPath(self.cube.cube)
                     if solution == False:
                         print("No solution")
@@ -268,7 +267,10 @@ class World:
 
     def animateMoves(self, moves):
         for move in moves:
-            print("A")
+            match move:
+                case "U":
+                    self.cube.move("U")
+                    self.screen.model.uPhase = -90
 
     def run(self):
         # Creating Cube object
@@ -278,17 +280,21 @@ class World:
         iter = 0
 
         # World loop
-        self.clock.tick()
-        moveClock = pg.time.Clock()
-        running = True
+        
         self.keyDown = False
+        self.key = None
+        
+        running = True
+        self.clock.tick()
         while running:
+            # Get and run keyboard inputs and other events
             running = self.doEvents()
 
-
+            # Draw the screen
             self.screen.draw_cube(self.cube.cube)
             pg.display.flip()
             
+            # Update ascpects of the screen
             self.screen.model.phaseUpdate(2)
 
             iter += 1
