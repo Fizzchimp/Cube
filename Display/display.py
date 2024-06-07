@@ -1,3 +1,4 @@
+from re import S
 import pygame as pg
 from Display.model import CubeModel
 colours = {"W": (245, 245, 245),
@@ -31,7 +32,7 @@ class Display():
         
     
 
-    def draw_cube(self, cube):
+    def drawCube(self, cube):
         quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
                    [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
                    [colours[cube[0][2]], colours[cube[2][0]], colours[cube[1][1]]],
@@ -72,9 +73,13 @@ class Display():
                             (quad[0][5] + self.x, quad[1][5] + self.y),
                             (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
                             (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
-
-        self.screen.fill((150, 150, 150))
             
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, face[5], face[0:4])
             pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4])
+
+    def drawScreen(self, cube):
+        self.screen.fill((150, 150, 150))
+        self.drawCube(cube)
+        
+        pg.display.flip()
