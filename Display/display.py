@@ -31,7 +31,9 @@ class Display():
         self.model = CubeModel(self.length)
 
         # Buttons
-        self.button = Button((350, 600))
+        # self.buttonFont = pg.font.Font()
+        self.button = Button((350, 600), "Solve")
+        
         
     
 
@@ -87,8 +89,8 @@ class Display():
 
         mousePos = pg.mouse.get_pos()
         state = self.button.getState(mousePos)
-        image, imagePos = self.button.getImage(state)
-        self.screen.blit(image, imagePos)
+        image = self.button.getImage(state)
+        self.screen.blit(image, self.button.drawPoint)
         
         pg.display.flip()
 
@@ -98,26 +100,28 @@ class Display():
         return False
 
 class Button():
-    def __init__(self, centre):
-        self.centre = centre
+    def __init__(self, centre, text):
         self.width, self.height = 100, 50
-        self.drawPointUp = (centre[0] - 54, centre[1] - 25)
-        self.drawPointDown = (centre[0] - 50, centre[1] - 21)
+        self.drawPoint = (centre[0] - 54, centre[1] - 25)
+        
+        self.text = text
 
-        self.hitbox = ((self.centre[0] - 50, self.centre[1] - 25), (self.centre[0] + 50, self.centre[1] + 25))
+        self.hitbox = ((centre[0] - 50, centre[1] - 25), (centre[0] + 50, centre[1] + 25))
         self.imageUp = pg.image.load("Display/Textures/Button_Up.png")
         self.imageHov = pg.image.load("Display/Textures/Button_Hovering.png")
         self.imageDown = pg.image.load("Display/Textures/Button_Down.png")
 
     def getImage(self, state):
-        if state == 2: return self.imageDown, self.drawPointDown
-        elif state == 1: return self.imageHov, self.drawPointUp
-        else: return self.imageUp, self.drawPointUp
+        if state == 2: return self.imageDown
+        elif state == 1: return self.imageHov
+        else: return self.imageUp
         
     def getState(self, mousePos):
         if self.hitbox[0][0] < mousePos[0] <self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
+                self.state = 2
                 return 2
             return 1
         return 0
      
+

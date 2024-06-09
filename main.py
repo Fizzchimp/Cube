@@ -193,18 +193,7 @@ class World:
         if self.keyDown == True:
             if self.key == pg.K_ESCAPE:
                 return False
-            
-            elif self.key == pg.K_s and self.moveQueue.isEmpty(): 
-                    solution = self.findPath(self.cube.cube)
-                    if solution == False:
-                        print("No solution")
-                    elif solution == []:
-                        print("Already Solved!")
-                    else:
-                        print(", ".join(solution))
-                        for move in solution:
-                            self.moveQueue.enqueue(move)
-                        
+                                   
             else:
                 if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys(): self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
                         
