@@ -7,7 +7,7 @@ colours = {"W": (245, 245, 245),
            "B": (0, 0, 205),
            "O": (255, 140, 0)}
 pg.init()
-BUTTON_FONT = pg.font.SysFont("Comic Sans", 30)
+BUTTON_FONT = pg.font.SysFont("Comic Sans", 17)
 
 def depth(face):
     return face[4]
@@ -31,7 +31,7 @@ class Display():
         self.model = CubeModel(self.length)
 
         # Buttons
-        self.button = Button((350, 600), "Solve")
+        self.button = Button((350, 600), "SOLVE")
         
         
     
