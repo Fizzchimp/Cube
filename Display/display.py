@@ -1,4 +1,3 @@
-from re import S
 import pygame as pg
 from Display.model import CubeModel
 colours = {"W": (245, 245, 245),
@@ -7,13 +6,14 @@ colours = {"W": (245, 245, 245),
            "R": (220, 20, 60),
            "B": (0, 0, 205),
            "O": (255, 140, 0)}
+pg.init()
+BUTTON_FONT = pg.font.SysFont("Comic Sans", 30)
 
 def depth(face):
     return face[4]
 
 class Display():
     def __init__(self, width, height):
-        pg.init()
 
         # Setup the window
         self.width, self.height = width, height
@@ -31,7 +31,6 @@ class Display():
         self.model = CubeModel(self.length)
 
         # Buttons
-        # self.buttonFont = pg.font.Font()
         self.button = Button((350, 600), "Solve")
         
         
@@ -93,23 +92,35 @@ class Display():
         self.screen.blit(image, self.button.drawPoint)
         
         pg.display.flip()
-
+    
     def getPressed(self):
-        if self.button.getState(pg.mouse.get_pos()) == 2:
+        mousePos = pg.mouse.get_pos()
+        if self.button.getState(mousePos) == 2:
             return True
         return False
 
 class Button():
     def __init__(self, centre, text):
-        self.width, self.height = 100, 50
-        self.drawPoint = (centre[0] - 54, centre[1] - 25)
-        
-        self.text = text
-
-        self.hitbox = ((centre[0] - 50, centre[1] - 25), (centre[0] + 50, centre[1] + 25))
+        # Images for the different button states
         self.imageUp = pg.image.load("Display/Textures/Button_Up.png")
         self.imageHov = pg.image.load("Display/Textures/Button_Hovering.png")
         self.imageDown = pg.image.load("Display/Textures/Button_Down.png")
+
+        # Point where button is drawn
+        self.drawPoint = (centre[0] - 54, centre[1] - 25)
+        
+        # Surface for text on the button
+        textSurface = BUTTON_FONT.render(text, False, (0, 0, 0))
+        dims = textSurface.get_size()
+        textPoint = (54 - dims[0] / 2, 25 - dims[1] / 2 - 2)
+        
+        # Rendering the text on each button image
+        self.imageUp.blit(textSurface, textPoint)
+        self.imageHov.blit(textSurface, textPoint)
+        self.imageDown.blit(textSurface, (textPoint[0], textPoint[1] + 4))
+
+        # Hitbox for detecting mouse
+        self.hitbox = ((centre[0] - 50, centre[1] - 25), (centre[0] + 50, centre[1] + 25))
 
     def getImage(self, state):
         if state == 2: return self.imageDown
@@ -117,7 +128,7 @@ class Button():
         else: return self.imageUp
         
     def getState(self, mousePos):
-        if self.hitbox[0][0] < mousePos[0] <self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
+        if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
                 self.state = 2
                 return 2
