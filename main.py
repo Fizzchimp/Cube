@@ -234,7 +234,7 @@ class World:
         # Creating Cube object
         # self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
         self.cube = Cube()
-        self.cube.scramble()
+        #self.cube.scramble()
 
         iter = 0
 
