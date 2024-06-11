@@ -7,7 +7,7 @@ colours = {"W": (245, 245, 245),
            "B": (0, 0, 205),
            "O": (255, 140, 0)}
 pg.init()
-BUTTON_FONT = pg.font.SysFont("Jomhuria", 35, True)
+BUTTON_FONT = pg.font.SysFont("Jomhuria", 40)
 
 def depth(face):
     return face[4]
