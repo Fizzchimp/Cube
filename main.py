@@ -260,16 +260,22 @@ class World:
             # Update ascpects of the screen
             self.screen.model.phaseUpdate(3)
             
-            if self.screen.getPressed() == True and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
-                solution = self.findPath(self.cube.cube)
-                if solution == False:
-                    print("No solution")
-                elif solution == []:
-                    print("Already Solved!")
-                else:
-                    print(", ".join(solution))
-                    for move in solution:
-                        self.moveQueue.enqueue(move)
+            pressed = self.screen.getPressed()
+            if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
+
+                if pressed == 0:
+                    solution = self.findPath(self.cube.cube)
+                    if solution == False:
+                        print("No solution")
+                    elif solution == []:
+                        print("Already Solved!")
+                    else:
+                        print(", ".join(solution))
+                        for move in solution:
+                            self.moveQueue.enqueue(move)
+
+                if pressed == 1:
+                    self.cube.scramble()
 
 
             iter += 1
