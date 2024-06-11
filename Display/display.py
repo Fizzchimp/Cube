@@ -7,7 +7,7 @@ colours = {"W": (245, 245, 245),
            "B": (0, 0, 205),
            "O": (255, 140, 0)}
 pg.init()
-BUTTON_FONT = pg.font.SysFont("Comic Sans", 17)
+BUTTON_FONT = pg.font.SysFont("Jomhuria", 35, True)
 
 def depth(face):
     return face[4]
@@ -110,7 +110,7 @@ class Button():
         self.drawPoint = (centre[0] - 54, centre[1] - 25)
         
         # Surface for text on the button
-        textSurface = BUTTON_FONT.render(text, False, (0, 0, 0))
+        textSurface = BUTTON_FONT.render(text, True, (0, 0, 0))
         dims = textSurface.get_size()
         textPoint = (54 - dims[0] / 2, 25 - dims[1] / 2 - 2)
         
@@ -135,4 +135,3 @@ class Button():
             return 1
         return 0
      
-
