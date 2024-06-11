@@ -10,48 +10,58 @@ sinThet = sin(theta)
 cosThet = cos(theta)
 
 def rotateX(angle, points):
+    if angle == 0:
+        return points
     angle = angle / 180 * pi
-    rotX = [[cos(angle) + cosAlph ** 2 * (1 - cos(angle)),
-            cosAlph * sinThet * sinAlph * (1 - cos(angle)) + cosThet * sinAlph * sin(angle),
-            cosAlph * -cosThet * sinAlph * (1 - cos(angle)) + sinThet * sinAlph * sin(angle)],
+    cosAngle = cos(angle)
+    rotX = [[cosAngle + cosAlph ** 2 * (1 - cosAngle),
+            cosAlph * sinThet * sinAlph * (1 - cosAngle) + cosThet * sinAlph * sin(angle),
+            cosAlph * -cosThet * sinAlph * (1 - cosAngle) + sinThet * sinAlph * sin(angle)],
 
-            [cosAlph * sinThet * sinAlph * (1 - cos(angle)) + -cosThet * sinAlph * sin(angle),
-            cos(angle) + (sinThet * sinAlph) ** 2 * (1 - cos(angle)),
-            sinThet * sinAlph * -cosThet * sinAlph * (1 - cos(angle)) - cosAlph * sin(angle)],
+            [cosAlph * sinThet * sinAlph * (1 - cosAngle) + -cosThet * sinAlph * sin(angle),
+            cosAngle + (sinThet * sinAlph) ** 2 * (1 - cosAngle),
+            sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) - cosAlph * sin(angle)],
 
-            [cosAlph * -cosThet * sinAlph * (1 - cos(angle)) - sinThet * sinAlph * sin(angle),
-            sinThet * sinAlph * -cosThet * sinAlph * (1 - cos(angle)) + cosAlph * sin(angle),
-            cos(angle) + -cosThet * sinAlph * -cosThet * sinAlph * (1 - cos(angle))]]
+            [cosAlph * -cosThet * sinAlph * (1 - cosAngle) - sinThet * sinAlph * sin(angle),
+            sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) + cosAlph * sin(angle),
+            cosAngle + -cosThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle)]]
     return matmul(rotX, points)
 
 def rotateY(angle, points):
+    if angle == 0:
+        return points
     angle = angle / 180 * np.pi
-    rotY = [[cos(angle),
+    cosAngle = cos(angle)
+    rotY = [[cosAngle,
             -sinThet * sin(angle),
             cosThet * sin(angle)],
 
             [sinThet * sin(angle),
-            cos(angle) + cosThet ** 2 * (1 - cos(angle)),
-            cosThet * sinThet * (1 - cos(angle))],
+            cosAngle + cosThet ** 2 * (1 - cosAngle),
+            cosThet * sinThet * (1 - cosAngle)],
 
             [-cosThet * sin(angle),
-            cosThet * sinThet * (1 - cos(angle)),
-            cos(angle) + sinThet * sinThet * (1 - cos(angle))]]
+            cosThet * sinThet * (1 - cosAngle),
+            cosAngle + sinThet * sinThet * (1 - cosAngle)]]
     return matmul(rotY, points)
 
 def rotateZ(angle, points):
+    if angle == 0:
+        return points
     angle = angle / 180 * np.pi
-    rotZ = [[cos(angle) + sinAlph ** 2 * (1 - cos(angle)),
-             sinAlph * -sinThet * cosAlph * (1 - cos(angle)) - cosThet * cosAlph * sin(angle),
-             sinAlph * cosThet * cosAlph * (1 - cos(angle)) + -sinThet * cosAlph * sin(angle)],
+    cosAngle = cos(angle)
 
-             [sinAlph * -sinThet * cosAlph * (1 - cos(angle)) + cosThet * cosAlph * sin(angle),
-             cos(angle) + (sinThet * cosAlph) ** 2 * (1 - cos(angle)),
-             -sinThet * cosAlph * cosThet * cosAlph * (1 - cos(angle)) - sinAlph * sin(angle)],
+    rotZ = [[cosAngle + sinAlph ** 2 * (1 - cosAngle),
+             sinAlph * -sinThet * cosAlph * (1 - cosAngle) - cosThet * cosAlph * sin(angle),
+             sinAlph * cosThet * cosAlph * (1 - cosAngle) + -sinThet * cosAlph * sin(angle)],
 
-             [sinAlph * cosThet * cosAlph * (1 - cos(angle)) - -sinThet * cosAlph * sin(angle),
-             -sinThet * cosAlph * cosThet * cosAlph * (1 - cos(angle)) + sinAlph * sin(angle),
-             cos(angle) + (cosThet * cosAlph) ** 2 * (1 - cos(angle))]]
+             [sinAlph * -sinThet * cosAlph * (1 - cosAngle) + cosThet * cosAlph * sin(angle),
+             cosAngle + (sinThet * cosAlph) ** 2 * (1 - cosAngle),
+             -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) - sinAlph * sin(angle)],
+
+             [sinAlph * cosThet * cosAlph * (1 - cosAngle) - -sinThet * cosAlph * sin(angle),
+             -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) + sinAlph * sin(angle),
+             cosAngle + (cosThet * cosAlph) ** 2 * (1 - cosAngle)]]
     return matmul(rotZ, points)
 
 
