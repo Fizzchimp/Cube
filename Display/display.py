@@ -6,7 +6,6 @@ colours = {"W": (245, 245, 245),
            "R": (220, 20, 60),
            "B": (0, 0, 205),
            "O": (255, 140, 0)}
-pg.init()
 
 def depth(face):
     return face[4]

@@ -1,4 +1,5 @@
 import pygame as pg
+from numpy import pi
 from Display.display import Display
 from cube import Cube
 from Assets.cqueue import Queue
@@ -24,9 +25,11 @@ MOVE_KEYS = {pg.K_u: "U",
             pg.K_DOWN: "X'",
             pg.K_z: "Z"}
 COL_KEYS = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
+HALF_PI = pi / 2
 
 class World:
     def __init__(self):
+        pg.init()
         self.screen = Display(WIDTH, HEIGHT)
         self.clock = pg.time.Clock()
         self.moveQueue = Queue(100)
@@ -211,7 +214,7 @@ class World:
                     print(", ".join(solution))
                     for move in solution:
                         self.moveQueue.enqueue(move)
-            self.clock.tick()
+                self.clock.tick()
 
             if pressed == 1 and not self.buttonDown:
                 self.cube.scramble()
@@ -228,32 +231,32 @@ class World:
         if mod in SHIFT: move += "'"
         self.cube.move(move)
         match move:
-            case "U": self.screen.model.uPhase = -90
-            case "U'": self.screen.model.uPhase = 90
+            case "U": self.screen.model.uPhase = -HALF_PI
+            case "U'": self.screen.model.uPhase = HALF_PI
             
-            case "R": self.screen.model.rPhase = 90
-            case "R'": self.screen.model.rPhase = -90
+            case "R": self.screen.model.rPhase = HALF_PI
+            case "R'": self.screen.model.rPhase = -HALF_PI
             
-            case "F": self.screen.model.fPhase = -90
-            case "F'": self.screen.model.fPhase = 90
+            case "F": self.screen.model.fPhase = -HALF_PI
+            case "F'": self.screen.model.fPhase = HALF_PI
             
-            case "D": self.screen.model.dPhase = 90
-            case "D'": self.screen.model.dPhase = -90
+            case "D": self.screen.model.dPhase = HALF_PI
+            case "D'": self.screen.model.dPhase = -HALF_PI
             
-            case "L": self.screen.model.lPhase = -90
-            case "L'": self.screen.model.lPhase = 90
+            case "L": self.screen.model.lPhase = -HALF_PI
+            case "L'": self.screen.model.lPhase = HALF_PI
             
-            case "B": self.screen.model.bPhase = 90
-            case "B'": self.screen.model.bPhase = -90
+            case "B": self.screen.model.bPhase = HALF_PI
+            case "B'": self.screen.model.bPhase = -HALF_PI
             
-            case "X": self.screen.model.xPhase = 90
-            case "X'": self.screen.model.xPhase = -90
+            case "X": self.screen.model.xPhase = HALF_PI
+            case "X'": self.screen.model.xPhase = -HALF_PI
             
-            case "Y": self.screen.model.yPhase = -90
-            case "Y'": self.screen.model.yPhase = 90
+            case "Y": self.screen.model.yPhase = -HALF_PI
+            case "Y'": self.screen.model.yPhase = HALF_PI
             
-            case "Z": self.screen.model.zPhase = -90
-            case "Z'": self.screen.model.zPhase = 90
+            case "Z": self.screen.model.zPhase = -HALF_PI
+            case "Z'": self.screen.model.zPhase = HALF_PI
         self.moveTime = ROTATION_SPEED
 
     def run(self):
@@ -278,7 +281,7 @@ class World:
             running = self.doEvents()
 
             # Get moves from the movement queue
-            if not self.screen.model.isMoving() and not self.moveQueue.isEmpty():
+            if not self.moveQueue.isEmpty() and not self.screen.model.isMoving():
                 move = self.moveQueue.dequeue()
                 self.doMove(move, False)
             
@@ -286,7 +289,7 @@ class World:
             self.screen.drawScreen(self.cube.cube)
             
             # Update ascpects of the screen
-            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * 90)
+            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * pi * 0.5)
             
             iter += 1
             if iter % MAX_FPS == 0:

@@ -12,7 +12,7 @@ cosThet = cos(theta)
 def rotateX(angle, points):
     if angle == 0:
         return points
-    angle = angle / 180 * pi
+
     cosAngle = cos(angle)
     sinAngle = sin(angle)
     
@@ -32,7 +32,7 @@ def rotateX(angle, points):
 def rotateY(angle, points):
     if angle == 0:
         return points
-    angle = angle / 180 * np.pi
+
     cosAngle = cos(angle)
     sinAngle = sin(angle)
     
@@ -52,7 +52,7 @@ def rotateY(angle, points):
 def rotateZ(angle, points):
     if angle == 0:
         return points
-    angle = angle / 180 * np.pi
+
     cosAngle = cos(angle)
     sinAngle = sin(angle)
 
@@ -119,7 +119,7 @@ class CubeModel:
                     ])
         
         for i, quad in enumerate(self.points):
-            self.points[i] = rotateX(theta * 180 / pi, rotateY(alpha * 180 / pi, quad))
+            self.points[i] = rotateX(theta, rotateY(alpha, quad))
         
 
         self.xPhase = 0
