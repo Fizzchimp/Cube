@@ -31,7 +31,9 @@ class Display():
 
         # Buttons
         self.buttons = [Large_Button((250, 600), "SOLVE", 35),
-                        Large_Button((450, 600), "SCRAMBLE", 35)]
+                        Large_Button((450, 600), "SCRAMBLE", 35)
+                        #Button((100, 100), "U", 50)
+                        ]
         
         
     
@@ -86,10 +88,8 @@ class Display():
         self.screen.fill((150, 150, 150))
         self.drawCube(cube)
 
-        mousePos = pg.mouse.get_pos()
         for button in self.buttons:
-            state = button.getState(mousePos)
-            image = button.getImage(state)
+            image = button.getImage()
             self.screen.blit(image, button.drawPoint)
         
         pg.display.flip()
@@ -123,18 +123,22 @@ class Button():
 
         # Hitbox for detecting mouse
         self.hitbox = ((centre[0] - 50, centre[1] - 25), (centre[0] + 50, centre[1] + 25))
+        self.state = 0
 
 
-    def getImage(self, state):
-        if state == 2: return self.imageDown
-        elif state == 1: return self.imageHov
+    def getImage(self):
+        if self.state == 2: return self.imageDown
+        elif self.state == 1: return self.imageHov
         else: return self.imageUp
         
     def getState(self, mousePos):
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
+                self.state = 2
                 return 2
+            self.state = 1
             return 1
+        self.state = 0
         return 0
      
 class Large_Button():
@@ -160,10 +164,11 @@ class Large_Button():
 
         # Hitbox for detecting mouse
         self.hitbox = ((centre[0] - 75, centre[1] - 25), (centre[0] + 75, centre[1] + 25))
+        self.state = 0
 
-    def getImage(self, state):
-        if state == 2: return self.imageDown
-        elif state == 1: return self.imageHov
+    def getImage(self):
+        if self.state == 2: return self.imageDown
+        elif self.state == 1: return self.imageHov
         else: return self.imageUp
 
     def getState(self, mousePos):
@@ -171,5 +176,7 @@ class Large_Button():
             if pg.mouse.get_pressed()[0]:
                 self.state = 2
                 return 2
+            self.state = 1
             return 1
+        self.state = 0
         return 0

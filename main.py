@@ -22,6 +22,7 @@ MOVE_KEYS = {pg.K_u: "U",
             pg.K_UP: "X",
             pg.K_DOWN: "X'",
             pg.K_z: "Z"}
+COL_KEYS = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
 
 class World:
     def __init__(self):
@@ -31,13 +32,12 @@ class World:
         
     def normalisedSolved(self, cube):
         # Returns a new solved state normalised to be comparable with start node
-        colKeys = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
         return [
-            colKeys[cube[5][2]],
+            COL_KEYS[cube[5][2]],
             
             cube[1][2] * 4,
-            colKeys[cube[4][3]],
-            colKeys[cube[1][2]],
+            COL_KEYS[cube[4][3]],
+            COL_KEYS[cube[1][2]],
             cube[4][3] * 4,
 
             cube[5][2] * 4
@@ -287,7 +287,7 @@ class World:
             iter += 1
             if iter % MAX_FPS == 0:
                 pg.display.set_caption(str(self.clock.get_fps()))
-                
+
             self.clock.tick(MAX_FPS)
         pg.quit()
 
