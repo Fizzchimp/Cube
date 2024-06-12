@@ -151,29 +151,83 @@ class CubeModel:
             return True
         
     def phaseUpdate(self, increment):
-        if self.yPhase < 0: self.yPhase += increment
-        elif self.yPhase > 0: self.yPhase -= increment
+        # Y Phase
+        if self.yPhase < 0:
+            if self.yPhase < -increment: self.yPhase += increment
+            else: self.yPhase = 0
 
-        elif self.xPhase < 0: self.xPhase += increment
-        elif self.xPhase > 0: self.xPhase -= increment
+        elif self.yPhase > 0:
+            if self.yPhase > increment: self.yPhase -= increment
+            else: self.yPhase = 0
 
-        elif self.zPhase < 0: self.zPhase += increment
-        elif self.zPhase > 0: self.zPhase -= increment
+        # X Phase
+        elif self.xPhase < 0:
+            if self.xPhase < -increment: self.xPhase += increment
+            else: self.xPhase = 0
 
-        elif self.uPhase < 0: self.uPhase += increment
-        elif self.uPhase > 0: self.uPhase -= increment
+        elif self.xPhase > 0:
+            if self.xPhase > increment: self.xPhase -= increment
+            else: self.xPhase = 0
 
-        elif self.dPhase < 0: self.dPhase += increment
-        elif self.dPhase > 0: self.dPhase -= increment
+        # Z Phase
+        elif self.zPhase < 0:
+            if self.zPhase < -increment: self.zPhase += increment
+            else: self.zPhase = 0
 
-        elif self.fPhase < 0: self.fPhase += increment
-        elif self.fPhase > 0: self.fPhase -= increment
+        elif self.zPhase > 0:
+            if self.zPhase > increment: self.zPhase -= increment
+            else: self.zPhase = 0
 
-        elif self.bPhase < 0: self.bPhase += increment
-        elif self.bPhase > 0: self.bPhase -= increment
+        # U Phase
+        elif self.uPhase < 0:
+            if self.uPhase < -increment: self.uPhase += increment
+            else: self.uPhase = 0
 
-        elif self.lPhase < 0: self.lPhase += increment
-        elif self.lPhase > 0: self.lPhase -= increment
+        elif self.uPhase > 0:
+            if self.uPhase > increment: self.uPhase -= increment
+            else: self.uPhase = 0
 
-        elif self.rPhase < 0: self.rPhase += increment
-        elif self.rPhase > 0: self.rPhase -= increment
+        # D Phase
+        elif self.dPhase < 0:
+            if self.dPhase < -increment: self.dPhase += increment
+            else: self.dPhase = 0
+
+        elif self.dPhase > 0:
+            if self.dPhase > increment: self.dPhase -= increment
+            else: self.dPhase = 0
+
+        # F Phase
+        elif self.fPhase < 0:
+            if self.fPhase < -increment: self.fPhase += increment
+            else: self.fPhase = 0
+
+        elif self.fPhase > 0:
+            if self.fPhase > increment: self.fPhase -= increment
+            else: self.fPhase = 0
+
+        # B Phase
+        elif self.bPhase < 0:
+            if self.bPhase < -increment: self.bPhase += increment
+            else: self.bPhase = 0
+
+        elif self.bPhase > 0:
+            if self.bPhase > increment: self.bPhase -= increment
+            else: self.bPhase = 0
+
+        # L Phase
+        elif self.lPhase < 0:
+            if self.lPhase < -increment: self.lPhase += increment
+            else: self.lPhase = 0
+
+        elif self.lPhase > 0:
+            if self.lPhase > increment: self.lPhase -= increment
+            else: self.lPhase = 0
+
+        # R Phase
+        elif self.rPhase < 0:
+            if self.rPhase < -increment: self.rPhase += increment
+            else: self.rPhase = 0
+
+        elif self.rPhase > 0:
+            if self.rPhase > increment: self.rPhase -= increment
+            else: self.rPhase = 0

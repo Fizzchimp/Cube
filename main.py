@@ -6,11 +6,12 @@ from Assets.node import Node
 from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
-SHIFT = (1, 2, 3)
 MAX_FPS = 200
-ROTATION_SPEED = 1000
+ROTATION_SPEED = 200
 WIDTH = 700
 HEIGHT = 700
+
+SHIFT = (1, 2, 3)
 MOVE_KEYS = {pg.K_u: "U",
             pg.K_r: "R",
             pg.K_f: "F",
@@ -210,6 +211,7 @@ class World:
                     print(", ".join(solution))
                     for move in solution:
                         self.moveQueue.enqueue(move)
+            self.clock.tick()
 
             if pressed == 1 and not self.buttonDown:
                 self.cube.scramble()
@@ -252,6 +254,7 @@ class World:
             
             case "Z": self.screen.model.zPhase = -90
             case "Z'": self.screen.model.zPhase = 90
+        self.moveTime = ROTATION_SPEED
 
     def run(self):
         # Creating Cube object
@@ -262,11 +265,12 @@ class World:
         iter = 0
 
         # World loop
-        
         self.keyDown = False
         self.key = None
         self.buttonDown = False
-        
+
+        deltaTime = 0
+
         running = True
         self.clock.tick()
         while running:
@@ -282,13 +286,13 @@ class World:
             self.screen.drawScreen(self.cube.cube)
             
             # Update ascpects of the screen
-            self.screen.model.phaseUpdate(3)
+            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * 90)
             
             iter += 1
             if iter % MAX_FPS == 0:
                 pg.display.set_caption(str(self.clock.get_fps()))
 
-            self.clock.tick(MAX_FPS)
+            deltaTime = self.clock.tick(MAX_FPS)
         pg.quit()
 
 world = World()
