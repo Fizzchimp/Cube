@@ -184,7 +184,7 @@ class World:
 
         return path
     
-    def getKeys(self):
+    def doEvents(self):
         for event in pg.event.get():
                 if event.type == pg.QUIT: return False
                 elif event.type == pg.KEYDOWN: self.keyDown, self.key = True, event.key
@@ -195,8 +195,31 @@ class World:
                 return False
                                    
             else:
-                if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys(): self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
+                if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys():
+                    self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
                         
+        pressed = self.screen.getPressed()
+        if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
+            if pressed == 0 and not self.buttonDown:
+                solution = self.findPath(self.cube.cube)
+                if solution == False:
+                    print("No solution")
+                elif solution == []:
+                    print("Already Solved!")
+                else:
+                    print(", ".join(solution))
+                    for move in solution:
+                        self.moveQueue.enqueue(move)
+
+            if pressed == 1 and not self.buttonDown:
+                self.cube.scramble()
+                    
+            self.buttonDown = True
+
+
+        elif pressed == None:
+            self.buttonDown = False
+    
         return True
     
     def doMove(self, move, mod):
@@ -242,12 +265,13 @@ class World:
         
         self.keyDown = False
         self.key = None
+        self.buttonDown = False
         
         running = True
         self.clock.tick()
         while running:
-            # Get and run keyboard inputs and other events
-            running = self.getKeys()
+            # Get and run input events (keys, buttons and others)
+            running = self.doEvents()
 
             # Get moves from the movement queue
             if not self.screen.model.isMoving() and not self.moveQueue.isEmpty():
@@ -260,30 +284,11 @@ class World:
             # Update ascpects of the screen
             self.screen.model.phaseUpdate(3)
             
-            pressed = self.screen.getPressed()
-            if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
-
-                if pressed == 0:
-                    solution = self.findPath(self.cube.cube)
-                    if solution == False:
-                        print("No solution")
-                    elif solution == []:
-                        print("Already Solved!")
-                    else:
-                        print(", ".join(solution))
-                        for move in solution:
-                            self.moveQueue.enqueue(move)
-
-                if pressed == 1:
-                    self.cube.scramble()
-
-
             iter += 1
-            self.clock.tick(MAX_FPS)
             if iter % MAX_FPS == 0:
                 pg.display.set_caption(str(self.clock.get_fps()))
-            
-
+                
+            self.clock.tick(MAX_FPS)
         pg.quit()
 
 world = World()

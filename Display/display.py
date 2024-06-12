@@ -111,7 +111,7 @@ class Button():
         self.drawPoint = (centre[0] - 45, centre[1] - 25)
         
         # Surface for text on the button
-        font = pg.font.SysFont("Jomhuria", fontSize)
+        font = pg.font.SysFont("Jhomuria", fontSize)
         textSurface = font.render(text, True, (0, 0, 0))
         dims = textSurface.get_size()
         textPoint = (45 - dims[0] / 2, 26 - dims[1] / 2)
@@ -148,7 +148,7 @@ class Large_Button():
         self.drawPoint = (centre[0] - 79, centre[1] - 25)
         
         # Surface for text on the button
-        font = pg.font.SysFont("Jomhuria", fontSize)
+        font = pg.font.SysFont("Jhomuria", fontSize)
         textSurface = font.render(text, True, (0, 0, 0))
         dims = textSurface.get_size()
         textPoint = (79 - dims[0] / 2, 26 - dims[1] / 2)

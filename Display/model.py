@@ -14,17 +14,19 @@ def rotateX(angle, points):
         return points
     angle = angle / 180 * pi
     cosAngle = cos(angle)
-    rotX = [[cosAngle + cosAlph ** 2 * (1 - cosAngle),
-            cosAlph * sinThet * sinAlph * (1 - cosAngle) + cosThet * sinAlph * sin(angle),
-            cosAlph * -cosThet * sinAlph * (1 - cosAngle) + sinThet * sinAlph * sin(angle)],
+    sinAngle = sin(angle)
+    
+    rotX = np.array([[cosAngle + cosAlph ** 2 * (1 - cosAngle),
+            cosAlph * sinThet * sinAlph * (1 - cosAngle) + cosThet * sinAlph * sinAngle,
+            cosAlph * -cosThet * sinAlph * (1 - cosAngle) + sinThet * sinAlph * sinAngle],
 
-            [cosAlph * sinThet * sinAlph * (1 - cosAngle) + -cosThet * sinAlph * sin(angle),
+            [cosAlph * sinThet * sinAlph * (1 - cosAngle) + -cosThet * sinAlph * sinAngle,
             cosAngle + (sinThet * sinAlph) ** 2 * (1 - cosAngle),
-            sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) - cosAlph * sin(angle)],
+            sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) - cosAlph * sinAngle],
 
-            [cosAlph * -cosThet * sinAlph * (1 - cosAngle) - sinThet * sinAlph * sin(angle),
-            sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) + cosAlph * sin(angle),
-            cosAngle + -cosThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle)]]
+            [cosAlph * -cosThet * sinAlph * (1 - cosAngle) - sinThet * sinAlph * sinAngle,
+            sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) + cosAlph * sinAngle,
+            cosAngle + -cosThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle)]])
     return matmul(rotX, points)
 
 def rotateY(angle, points):
@@ -32,17 +34,19 @@ def rotateY(angle, points):
         return points
     angle = angle / 180 * np.pi
     cosAngle = cos(angle)
-    rotY = [[cosAngle,
-            -sinThet * sin(angle),
-            cosThet * sin(angle)],
+    sinAngle = sin(angle)
+    
+    rotY = np.array([[cosAngle,
+            -sinThet * sinAngle,
+            cosThet * sinAngle],
 
-            [sinThet * sin(angle),
+            [sinThet * sinAngle,
             cosAngle + cosThet ** 2 * (1 - cosAngle),
             cosThet * sinThet * (1 - cosAngle)],
 
-            [-cosThet * sin(angle),
+            [-cosThet * sinAngle,
             cosThet * sinThet * (1 - cosAngle),
-            cosAngle + sinThet * sinThet * (1 - cosAngle)]]
+            cosAngle + sinThet * sinThet * (1 - cosAngle)]])
     return matmul(rotY, points)
 
 def rotateZ(angle, points):
@@ -50,24 +54,25 @@ def rotateZ(angle, points):
         return points
     angle = angle / 180 * np.pi
     cosAngle = cos(angle)
+    sinAngle = sin(angle)
 
-    rotZ = [[cosAngle + sinAlph ** 2 * (1 - cosAngle),
-             sinAlph * -sinThet * cosAlph * (1 - cosAngle) - cosThet * cosAlph * sin(angle),
-             sinAlph * cosThet * cosAlph * (1 - cosAngle) + -sinThet * cosAlph * sin(angle)],
+    rotZ = np.array([[cosAngle + sinAlph ** 2 * (1 - cosAngle),
+             sinAlph * -sinThet * cosAlph * (1 - cosAngle) - cosThet * cosAlph * sinAngle,
+             sinAlph * cosThet * cosAlph * (1 - cosAngle) + -sinThet * cosAlph * sinAngle],
 
-             [sinAlph * -sinThet * cosAlph * (1 - cosAngle) + cosThet * cosAlph * sin(angle),
+             [sinAlph * -sinThet * cosAlph * (1 - cosAngle) + cosThet * cosAlph * sinAngle,
              cosAngle + (sinThet * cosAlph) ** 2 * (1 - cosAngle),
-             -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) - sinAlph * sin(angle)],
+             -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) - sinAlph * sinAngle],
 
-             [sinAlph * cosThet * cosAlph * (1 - cosAngle) - -sinThet * cosAlph * sin(angle),
-             -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) + sinAlph * sin(angle),
-             cosAngle + (cosThet * cosAlph) ** 2 * (1 - cosAngle)]]
+             [sinAlph * cosThet * cosAlph * (1 - cosAngle) - -sinThet * cosAlph * sinAngle,
+             -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) + sinAlph * sinAngle,
+             cosAngle + (cosThet * cosAlph) ** 2 * (1 - cosAngle)]])
     return matmul(rotZ, points)
 
 
 class CubeModel:
     def __init__(self, length):
-        self.points = [ 
+        self.points = np.array([ 
                         ### Top Cubies
                         [  # Back Left
                             [0      , -length, -length, 0      , -length, -length, 0      ],
@@ -111,10 +116,11 @@ class CubeModel:
                             [ length,  length,  length,  length, 0      , 0      , 0      ],
                             [0      ,  0     ,  length,  length, 0      ,  length,  length]
                         ]
-                    ]
+                    ])
         
         for i, quad in enumerate(self.points):
             self.points[i] = rotateX(theta * 180 / pi, rotateY(alpha * 180 / pi, quad))
+        
 
         self.xPhase = 0
         self.yPhase = 0
