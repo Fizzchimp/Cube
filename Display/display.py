@@ -21,7 +21,7 @@ class Display():
         pg.display.set_caption("Cube")
 
         # Cube centre co-ordinates
-        self.x, self.y  = 450, 350
+        self.x, self.y  = 450, 300
 
         # 3D Matrix of all verticies in a cube
         self.length = self.width / 5 if self.width <= self.height else self.height / 5        
@@ -32,7 +32,16 @@ class Display():
                         Large_Button((450, 600), "SCRAMBLE", 35),
                         Button((55, 40), "U", 50),
                         Button((145, 40), "U'", 50),
-                        Button((55, 100), "F", 50)]       
+                        Button((55, 100), "F", 50),
+                        Button((145, 100), "F'", 50),
+                        Button((55, 160), "R", 50),
+                        Button((145, 160), "R'", 50),
+                        Button((55, 240), "D", 50),
+                        Button((145, 240), "D'", 50),
+                        Button((55, 300), "B", 50),
+                        Button((145, 300), "B'", 50),
+                        Button((55, 360), "L", 50),
+                        Button((145, 360), "L'", 50)]       
         
     
 
