@@ -8,7 +8,7 @@ from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
 MAX_FPS = 200
-ROTATION_SPEED = 200
+ROTATION_SPEED = 150
 WIDTH = 700
 HEIGHT = 700
 
@@ -204,6 +204,7 @@ class World:
                         
         pressed = self.screen.getPressed()
         if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
+            
             if pressed == 0 and not self.buttonDown:
                 solution = self.findPath(self.cube.cube)
                 if solution == False:
@@ -218,6 +219,9 @@ class World:
 
             if pressed == 1 and not self.buttonDown:
                 self.cube.scramble()
+            
+            if pressed == 2 and not self.screen.model.isMoving():
+                self.doMove("U", False)
                     
             self.buttonDown = True
 
@@ -289,7 +293,7 @@ class World:
             self.screen.drawScreen(self.cube.cube)
             
             # Update ascpects of the screen
-            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * pi * 0.5)
+            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
             
             iter += 1
             if iter % MAX_FPS == 0:

@@ -30,8 +30,8 @@ class Display():
 
         # Buttons
         self.buttons = [Large_Button((250, 600), "SOLVE", 35),
-                        Large_Button((450, 600), "SCRAMBLE", 35)
-                        #Button((100, 100), "U", 50)
+                        Large_Button((450, 600), "SCRAMBLE", 35),
+                        Button((55, 40), "U", 50)
                         ]
         
         
