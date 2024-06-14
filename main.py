@@ -265,9 +265,9 @@ class World:
 
     def run(self):
         # Creating Cube object
-        # self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
-        self.cube = Cube()
-        self.cube.scramble()
+        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        #self.cube = Cube()
+        #self.cube.scramble()
 
         iter = 0
 

@@ -16,13 +16,12 @@ class Display():
         # Setup the window
         self.width, self.height = width, height
         self.screen = pg.display.set_mode([width, height])
-        self.screen.fill((150, 150, 150))
         image = pg.image.load("Display/Textures/01_icon.png")
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
 
         # Cube centre co-ordinates
-        self.x, self.y  = self.width / 2, self.height / 2
+        self.x, self.y  = 450, 350
 
         # 3D Matrix of all verticies in a cube
         self.length = self.width / 5 if self.width <= self.height else self.height / 5        
@@ -31,9 +30,9 @@ class Display():
         # Buttons
         self.buttons = [Large_Button((250, 600), "SOLVE", 35),
                         Large_Button((450, 600), "SCRAMBLE", 35),
-                        Button((55, 40), "U", 50)
-                        ]
-        
+                        Button((55, 40), "U", 50),
+                        Button((145, 40), "U'", 50),
+                        Button((55, 100), "F", 50)]       
         
     
 
@@ -84,7 +83,7 @@ class Display():
             pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4])
 
     def drawScreen(self, cube):
-        self.screen.fill((150, 150, 150))
+        self.screen.fill((100, 100, 100))
         self.drawCube(cube)
 
         for button in self.buttons:
