@@ -72,7 +72,8 @@ def rotateZ(angle, points):
 
 class CubeModel:
     def __init__(self, length):
-        self.points = np.array([ 
+        length = 1
+        points = np.array([ 
                         ### Top Cubies
                         [  # Back Left
                             [0      , -length, -length, 0      , -length, -length, 0      ],
@@ -117,7 +118,7 @@ class CubeModel:
                             [0      ,  0     ,  length,  length, 0      ,  length,  length]
                         ]
                     ])
-        
+        self.points = points.astype("float64")
         for i, quad in enumerate(self.points):
             self.points[i] = rotateX(theta, rotateY(alpha, quad))
         

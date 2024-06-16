@@ -62,35 +62,32 @@ class Display():
         for i, quad in enumerate(points):
             if quad[2][0] < 0:
                 shade = 2 / 3 - quad[2][0] / self.length / 3
-                faces.append(([quad[0][0], quad[1][0]], 
-                            [quad[0][1], quad[1][1]],
-                            [quad[0][2], quad[1][2]],
-                            [quad[0][3], quad[1][3]],
+                faces.append(([quad[0][0] * self.length + self.x, quad[1][0] * self.length + self.y], 
+                            [quad[0][1] * self.length + self.x, quad[1][1] * self.length + self.y],
+                            [quad[0][2] * self.length + self.x, quad[1][2] * self.length + self.y],
+                            [quad[0][3] * self.length + self.x, quad[1][3] * self.length + self.y],
                             (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
                             (quadCol[i][0][0] * shade, quadCol[i][0][1] * shade, quadCol[i][0][2] * shade)))
                 
             if quad[2][4] < 0:
                 shade = 2 / 3 - quad[2][4] / self.length / 3
-                faces.append(([quad[0][4], quad[1][4]],
-                            [quad[0][1], quad[1][1]],
-                            [quad[0][2], quad[1][2]],
-                            [quad[0][5], quad[1][5]],
+                faces.append(([quad[0][4] * self.length + self.x, quad[1][4] * self.length + self.y],
+                            [quad[0][1] * self.length + self.x, quad[1][1] * self.length + self.y],
+                            [quad[0][2] * self.length + self.x, quad[1][2] * self.length + self.y],
+                            [quad[0][5] * self.length + self.x, quad[1][5] * self.length + self.y],
                             (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
                             (quadCol[i][1][0] * shade, quadCol[i][1][1] * shade, quadCol[i][1][2] * shade)))
                 
             if quad[2][6] < 0:   
                 shade = 2 / 3 - quad[2][6] / self.length / 3
-                faces.append(([quad[0][6], quad[1][6]],
-                            [quad[0][3], quad[1][3]],
-                            [quad[0][2], quad[1][2]],
-                            [quad[0][5], quad[1][5]],
+                faces.append(([quad[0][6] * self.length + self.x, quad[1][6] * self.length + self.y],
+                            [quad[0][3] * self.length + self.x, quad[1][3] * self.length + self.y],
+                            [quad[0][2] * self.length + self.x, quad[1][2] * self.length + self.y],
+                            [quad[0][5] * self.length + self.x, quad[1][5] * self.length + self.y],
                             (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
                             (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
             
         for face in sorted(faces, key = depth, reverse = True):
-            for i in range(4):
-                face[i][0] += self.x
-                face[i][0] += self.y
             pg.draw.polygon(self.screen, face[5], face[0:4])
             pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4])
 
