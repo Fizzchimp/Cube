@@ -25,7 +25,7 @@ class Display():
 
         # 3D Matrix of all verticies in a cube
         self.length = self.width / 5 if self.width <= self.height else self.height / 5        
-        self.model = CubeModel(self.length)
+        self.model = CubeModel()
 
         # Buttons
         self.buttons = [Large_Button((250, 600), "SOLVE", 35),

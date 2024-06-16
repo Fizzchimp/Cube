@@ -71,51 +71,50 @@ def rotateZ(angle, points):
 
 
 class CubeModel:
-    def __init__(self, length):
-        length = 1
+    def __init__(self):
         points = np.array([ 
                         ### Top Cubies
                         [  # Back Left
-                            [0      , -length, -length, 0      , -length, -length, 0      ],
-                            [-length, -length, -length, -length, 0      , 0      , 0      ],
-                            [0      , 0      ,  length,  length, 0      ,  length,  length]
+                            [0      , -1, -1, 0      , -1, -1, 0      ],
+                            [-1, -1, -1, -1, 0      , 0      , 0      ],
+                            [0      , 0      ,  1,  1, 0      ,  1,  1]
                         ],
                         [ # Back Right
-                            [0      , 0      ,  length, length , 0      ,  length,  length],
-                            [-length, -length, -length, -length, 0      , 0      , 0      ],
-                            [0      ,  length,  length, 0      ,  length,  length, 0      ]
+                            [0      , 0      ,  1, 1 , 0      ,  1,  1],
+                            [-1, -1, -1, -1, 0      , 0      , 0      ],
+                            [0      ,  1,  1, 0      ,  1,  1, 0      ]
                         ],
                         [ # Front Left
-                            [0      , 0      , -length, -length, 0      , -length, -length],
-                            [-length, -length, -length, -length, 0      , 0      , 0      ],
-                            [0      , -length, -length, 0      , -length, -length, 0      ]
+                            [0      , 0      , -1, -1, 0      , -1, -1],
+                            [-1, -1, -1, -1, 0      , 0      , 0      ],
+                            [0      , -1, -1, 0      , -1, -1, 0      ]
                         ],
                         [ # Front Right
-                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
-                            [-length, -length, -length, -length, 0      , 0      , 0      ],
-                            [0      , 0      , -length, -length, 0      , -length, -length]
+                            [0      ,  1,  1, 0      ,  1,  1, 0      ],
+                            [-1, -1, -1, -1, 0      , 0      , 0      ],
+                            [0      , 0      , -1, -1, 0      , -1, -1]
                         ],
 
                         ### Bottom Cubies
                         [ # Front Left
-                            [0      , -length, -length, 0      , -length, -length, 0      ],
-                            [ length,  length,  length,  length, 0      , 0      , 0      ],
-                            [0      , 0      , -length, -length, 0      , -length, -length]
+                            [0      , -1, -1, 0      , -1, -1, 0      ],
+                            [ 1,  1,  1,  1, 0      , 0      , 0      ],
+                            [0      , 0      , -1, -1, 0      , -1, -1]
                         ],
                         [ # Front Right
-                            [0      , 0      ,  length,  length, 0      ,  length,  length],
-                            [ length,  length,  length,  length, 0      , 0      , 0      ],
-                            [0      , -length, -length,  0     , -length, -length, 0      ]
+                            [0      , 0      ,  1,  1, 0      ,  1,  1],
+                            [ 1,  1,  1,  1, 0      , 0      , 0      ],
+                            [0      , -1, -1,  0     , -1, -1, 0      ]
                         ],
                         [ # Back Left
-                            [0      , 0      , -length, -length, 0      , -length, -length],
-                            [ length,  length,  length,  length, 0      , 0      , 0      ],
-                            [0      ,  length,  length,  0     ,  length,  length, 0      ]
+                            [0      , 0      , -1, -1, 0      , -1, -1],
+                            [ 1,  1,  1,  1, 0      , 0      , 0      ],
+                            [0      ,  1,  1,  0     ,  1,  1, 0      ]
                         ],
                         [ # Back Right
-                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
-                            [ length,  length,  length,  length, 0      , 0      , 0      ],
-                            [0      ,  0     ,  length,  length, 0      ,  length,  length]
+                            [0      ,  1,  1, 0      ,  1,  1, 0      ],
+                            [ 1,  1,  1,  1, 0      , 0      , 0      ],
+                            [0      ,  0     ,  1,  1, 0      ,  1,  1]
                         ]
                     ])
         self.points = points.astype("float64")
