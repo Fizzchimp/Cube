@@ -241,35 +241,34 @@ class Cube():
 
     def move(self, move):
         # Sets the cube structure after given movement
-        match move:
-            case "U": self.cube = self.U()
-            case "U'": self.cube = self.U_Prime()
+        if move == "U": self.cube = self.U()
+        elif move == "U'": self.cube = self.U_Prime()
 
-            case "D": self.cube = self.D()
-            case "D'": self.cube = self.D_Prime()
+        elif move == "D": self.cube = self.D()
+        elif move == "D'": self.cube = self.D_Prime()
 
-            case "F": self.cube = self.F()
-            case "F'": self.cube = self.F_Prime()
+        elif move == "F": self.cube = self.F()
+        elif move == "F'": self.cube = self.F_Prime()
 
-            case "B": self.cube = self.B()
-            case "B'": self.cube = self.B_Prime()
+        elif move == "B": self.cube = self.B()
+        elif move == "B'": self.cube = self.B_Prime()
 
-            case "L": self.cube = self.L()
-            case "L'": self.cube = self.L_Prime()
+        elif move == "L": self.cube = self.L()
+        elif move == "L'": self.cube = self.L_Prime()
 
-            case "R": self.cube = self.R()
-            case "R'": self.cube = self.R_Prime()
+        elif move == "R": self.cube = self.R()
+        elif move == "R'": self.cube = self.R_Prime()
 
-            case "X": self.cube = self.X()
-            case "X'": self.cube = self.X_Prime()
+        elif move == "X": self.cube = self.X()
+        elif move == "X'": self.cube = self.X_Prime()
 
-            case "Y": self.cube = self.Y()
-            case "Y'": self.cube = self.Y_Prime()
+        elif move == "Y": self.cube = self.Y()
+        elif move == "Y'": self.cube = self.Y_Prime()
 
-            case "Z": self.cube = self.Z()
-            case "Z'": self.cube = self.Z_Prime()
+        elif move == "Z": self.cube = self.Z()
+        elif move == "Z'": self.cube = self.Z_Prime()
 
-            case _: print("Not a valid movement")
+        else: print("Not a valid movement")
 
     def scramble(self, num = 20):
         # Scrambles the cube to a random position

@@ -8,7 +8,7 @@ from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
 MAX_FPS = 200
-ROTATION_SPEED = 200
+ROTATION_SPEED = 150
 WIDTH = 700
 HEIGHT = 700
 
@@ -25,6 +25,12 @@ MOVE_KEYS = {pg.K_u: "U",
             pg.K_DOWN: "X'",
             pg.K_z: "Z"}
 COL_KEYS = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
+BUTTON_KEYS = {2: "U", 3: "U'",
+               4: "F", 5: "F'",
+               6: "R", 7: "R'",
+               8: "D", 9: "D'",
+               10: "B", 11: "B'",
+               12: "L", 13: "L'"}
 HALF_PI = pi / 2
 
 class World:
@@ -204,6 +210,7 @@ class World:
                         
         pressed = self.screen.getPressed()
         if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
+            
             if pressed == 0 and not self.buttonDown:
                 solution = self.findPath(self.cube.cube)
                 if solution == False:
@@ -216,8 +223,11 @@ class World:
                         self.moveQueue.enqueue(move)
                 self.clock.tick()
 
-            if pressed == 1 and not self.buttonDown:
+            elif pressed == 1 and not self.buttonDown:
                 self.cube.scramble()
+            
+            elif pressed in BUTTON_KEYS.keys():
+                self.doMove(BUTTON_KEYS[pressed], False)
                     
             self.buttonDown = True
 
@@ -230,40 +240,40 @@ class World:
     def doMove(self, move, mod):
         if mod in SHIFT: move += "'"
         self.cube.move(move)
-        match move:
-            case "U": self.screen.model.uPhase = -HALF_PI
-            case "U'": self.screen.model.uPhase = HALF_PI
+        
+        if move == "U": self.screen.model.uPhase = -HALF_PI
+        elif move == "U'": self.screen.model.uPhase = HALF_PI
             
-            case "R": self.screen.model.rPhase = HALF_PI
-            case "R'": self.screen.model.rPhase = -HALF_PI
+        elif move == "R": self.screen.model.rPhase = HALF_PI
+        elif move == "R'": self.screen.model.rPhase = -HALF_PI
             
-            case "F": self.screen.model.fPhase = -HALF_PI
-            case "F'": self.screen.model.fPhase = HALF_PI
+        elif move == "F": self.screen.model.fPhase = -HALF_PI
+        elif move == "F'": self.screen.model.fPhase = HALF_PI
             
-            case "D": self.screen.model.dPhase = HALF_PI
-            case "D'": self.screen.model.dPhase = -HALF_PI
+        elif move == "D": self.screen.model.dPhase = HALF_PI
+        elif move == "D'": self.screen.model.dPhase = -HALF_PI
             
-            case "L": self.screen.model.lPhase = -HALF_PI
-            case "L'": self.screen.model.lPhase = HALF_PI
+        elif move == "L": self.screen.model.lPhase = -HALF_PI
+        elif move == "L'": self.screen.model.lPhase = HALF_PI
             
-            case "B": self.screen.model.bPhase = HALF_PI
-            case "B'": self.screen.model.bPhase = -HALF_PI
+        elif move == "B": self.screen.model.bPhase = HALF_PI
+        elif move == "B'": self.screen.model.bPhase = -HALF_PI
             
-            case "X": self.screen.model.xPhase = HALF_PI
-            case "X'": self.screen.model.xPhase = -HALF_PI
+        elif move == "X": self.screen.model.xPhase = HALF_PI
+        elif move == "X'": self.screen.model.xPhase = -HALF_PI
             
-            case "Y": self.screen.model.yPhase = -HALF_PI
-            case "Y'": self.screen.model.yPhase = HALF_PI
+        elif move == "Y": self.screen.model.yPhase = -HALF_PI
+        elif move == "Y'": self.screen.model.yPhase = HALF_PI
             
-            case "Z": self.screen.model.zPhase = -HALF_PI
-            case "Z'": self.screen.model.zPhase = HALF_PI
+        elif move == "Z": self.screen.model.zPhase = -HALF_PI
+        elif move == "Z'": self.screen.model.zPhase = HALF_PI
         self.moveTime = ROTATION_SPEED
 
     def run(self):
         # Creating Cube object
-        # self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
-        self.cube = Cube()
-        self.cube.scramble()
+        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        #self.cube = Cube()
+        #self.cube.scramble()
 
         iter = 0
 
@@ -289,7 +299,7 @@ class World:
             self.screen.drawScreen(self.cube.cube)
             
             # Update ascpects of the screen
-            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * pi * 0.5)
+            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
             
             iter += 1
             if iter % MAX_FPS == 0:
