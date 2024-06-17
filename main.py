@@ -7,7 +7,7 @@ from Assets.node import Node
 from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
-MAX_FPS = 200
+MAX_FPS = 300
 ROTATION_SPEED = 150
 WIDTH = 700
 HEIGHT = 700

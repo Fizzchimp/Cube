@@ -9,3 +9,44 @@ newAxis = [[np.cos(alpha), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.si
 
 
 14 move scramble: ["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"]
+
+[0      , -length, -length, 0      , -length, -length, 0      ],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , 0      ,  length,  length, 0      ,  length,  length]
+                        ],
+                        [ # Back Right
+                            [0      , 0      ,  length, length , 0      ,  length,  length],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ]
+                        ],
+                        [ # Front Left
+                            [0      , 0      , -length, -length, 0      , -length, -length],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , -length, -length, 0      , -length, -length, 0      ]
+                        ],
+                        [ # Front Right
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
+                            [-length, -length, -length, -length, 0      , 0      , 0      ],
+                            [0      , 0      , -length, -length, 0      , -length, -length]
+                        ],
+
+                        ### Bottom Cubies
+                        [ # Front Left
+                            [0      , -length, -length, 0      , -length, -length, 0      ],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      , 0      , -length, -length, 0      , -length, -length]
+                        ],
+                        [ # Front Right
+                            [0      , 0      ,  length,  length, 0      ,  length,  length],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      , -length, -length,  0     , -length, -length, 0      ]
+                        ],
+                        [ # Back Left
+                            [0      , 0      , -length, -length, 0      , -length, -length],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      ,  length,  length,  0     ,  length,  length, 0      ]
+                        ],
+                        [ # Back Right
+                            [0      ,  length,  length, 0      ,  length,  length, 0      ],
+                            [ length,  length,  length,  length, 0      , 0      , 0      ],
+                            [0      ,  0     ,  length,  length, 0      ,  length,  length]
