@@ -7,7 +7,7 @@ from Assets.node import Node
 from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
-MAX_FPS = 300
+MAX_FPS = 200
 ROTATION_SPEED = 150
 WIDTH = 700
 HEIGHT = 700
@@ -271,9 +271,9 @@ class World:
 
     def run(self):
         # Creating Cube object
-        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
-        #self.cube = Cube()
-        #self.cube.scramble()
+        #self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        self.cube = Cube()
+        self.cube.scramble()
 
         iter = 0
 

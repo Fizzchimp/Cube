@@ -117,10 +117,10 @@ class CubeModel:
                             [0      ,  0     ,  1,  1, 0      ,  1,  1]
                         ]
                     ], dtype = "float64")
-        print(type(self.points))
+
         for i, quad in enumerate(self.points):
             self.points[i] = rotateX(theta, rotateY(alpha, quad))
-        print(type(self.points))
+
 
         self.xPhase = 0
         self.yPhase = 0

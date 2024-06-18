@@ -41,7 +41,8 @@ class Display():
                         Button((55, 300), "B", 50),
                         Button((145, 300), "B'", 50),
                         Button((55, 360), "L", 50),
-                        Button((145, 360), "L'", 50)]       
+                        Button((145, 360), "L'", 50)] 
+                        
         
     
 
@@ -110,16 +111,16 @@ class Display():
 class Button():
     def __init__(self, centre, text, fontSize):
         # Images for the different button states
-        self.imageUp = pg.image.load("Display/Textures/Button_Up.png")
-        self.imageHov = pg.image.load("Display/Textures/Button_Hov.png")
-        self.imageDown = pg.image.load("Display/Textures/Button_Down.png")
+        self.imageUp = pg.image.load("Display/Textures/Button_Up.png").convert_alpha()
+        self.imageHov = pg.image.load("Display/Textures/Button_Hov.png").convert_alpha()
+        self.imageDown = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
 
         # Point where button is drawn
         self.drawPoint = (centre[0] - 45, centre[1] - 25)
         
         # Surface for text on the button
         font = pg.font.SysFont("Jhomuria", fontSize)
-        textSurface = font.render(text, True, (0, 0, 0))
+        textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
         dims = textSurface.get_size()
         textPoint = (45 - dims[0] / 2, 26 - dims[1] / 2)
 
@@ -129,7 +130,7 @@ class Button():
         self.imageDown.blit(textSurface, (textPoint[0], textPoint[1] + 4))
 
         # Hitbox for detecting mouse
-        self.hitbox = ((centre[0] - 50, centre[1] - 25), (centre[0] + 50, centre[1] + 25))
+        self.hitbox = ((centre[0] - 41, centre[1] - 25), (centre[0] + 41, centre[1] + 25))
         self.state = 0
 
 
@@ -151,16 +152,16 @@ class Button():
 class Large_Button():
     def __init__(self, centre, text, fontSize):
         # Images for the different button states
-        self.imageUp = pg.image.load("Display/Textures/L_Button_Up.png")
-        self.imageHov = pg.image.load("Display/Textures/L_Button_Hov.png")
-        self.imageDown = pg.image.load("Display/Textures/L_Button_Down.png")
+        self.imageUp = pg.image.load("Display/Textures/L_Button_Up.png").convert_alpha()
+        self.imageHov = pg.image.load("Display/Textures/L_Button_Hov.png").convert_alpha()
+        self.imageDown = pg.image.load("Display/Textures/L_Button_Down.png").convert_alpha()
 
         # Point where button is drawn
         self.drawPoint = (centre[0] - 79, centre[1] - 25)
         
         # Surface for text on the button
         font = pg.font.SysFont("Jhomuria", fontSize)
-        textSurface = font.render(text, True, (0, 0, 0))
+        textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
         dims = textSurface.get_size()
         textPoint = (79 - dims[0] / 2, 26 - dims[1] / 2)
         
