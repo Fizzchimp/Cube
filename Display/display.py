@@ -91,10 +91,7 @@ class Display():
             
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, face[5], face[0:4])
-            for i in range(4):
-                pg.draw.line(self.screen, (50, 50, 50), face[i], face[(i + 1) % 4])
-                #points = face[1:4]
-                #pg.gfxdraw.aapolygon(self.screen, ((line[0] - 2, line[0] - 2), (line[1] + 2, line[1] - 2), (line[0] + 2, line[0] + 2), (line[0] - 2, line[0] + 2)), (50, 50, 50))
+            pg.draw.lines(self.screen, (50, 50, 50), True, face[0:4], 3)
 
     def drawScreen(self, cube):
         self.screen.fill((100, 100, 100))
