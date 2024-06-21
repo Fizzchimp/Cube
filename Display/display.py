@@ -29,20 +29,21 @@ class Display():
         self.model = CubeModel()
 
         # Buttons
+        fontSize = 47
         self.buttons = [Large_Button((250, 600), "SOLVE", 35),
                         Large_Button((450, 600), "SCRAMBLE", 35),
-                        Button((55, 40), "U", 50),
-                        Button((145, 40), "U'", 50),
-                        Button((55, 100), "F", 50),
-                        Button((145, 100), "F'", 50),
-                        Button((55, 160), "R", 50),
-                        Button((145, 160), "R'", 50),
-                        Button((55, 240), "D", 50),
-                        Button((145, 240), "D'", 50),
-                        Button((55, 300), "B", 50),
-                        Button((145, 300), "B'", 50),
-                        Button((55, 360), "L", 50),
-                        Button((145, 360), "L'", 50)] 
+                        Button((55, 40), "U", fontSize),
+                        Button((145, 40), "U'", fontSize),
+                        Button((55, 100), "F", fontSize),
+                        Button((145, 100), "F'", fontSize),
+                        Button((55, 160), "R", fontSize),
+                        Button((145, 160), "R'", fontSize),
+                        Button((55, 240), "D", fontSize),
+                        Button((145, 240), "D'", fontSize),
+                        Button((55, 300), "B", fontSize),
+                        Button((145, 300), "B'", fontSize),
+                        Button((55, 360), "L", fontSize),
+                        Button((145, 360), "L'", fontSize)] 
                         
         
     
@@ -60,7 +61,6 @@ class Display():
         
         points = self.model.getPoints()
         faces = []
-        
         for i, quad in enumerate(points):
             if quad[2][0] < 0:
                 shade = (2 - quad[2][0]) / 3
@@ -91,8 +91,8 @@ class Display():
             
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, face[5], face[0:4])
-            pg.draw.lines(self.screen, (50, 50, 50), True, face[0:4], 4)
-
+            pg.draw.lines(self.screen, (50, 50, 50, 255), True, face[0:4], 6)
+        
     def drawScreen(self, cube):
         self.screen.fill((100, 100, 100))
         self.drawCube(cube)
@@ -117,13 +117,13 @@ class Button():
         self.imageDown = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
 
         # Point where button is drawn
-        self.drawPoint = (centre[0] - 45, centre[1] - 25)
+        self.drawPoint = (centre[0] - 39, centre[1] - 25)
         
         # Surface for text on the button
         font = pg.font.SysFont("Jhomuria", fontSize)
         textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
         dims = textSurface.get_size()
-        textPoint = (45 - dims[0] / 2, 26 - dims[1] / 2)
+        textPoint = (39 - dims[0] / 2, 22 - dims[1] / 2)
 
         # Rendering the text on each button image
         self.imageUp.blit(textSurface, textPoint)
@@ -131,7 +131,7 @@ class Button():
         self.imageDown.blit(textSurface, (textPoint[0], textPoint[1] + 4))
 
         # Hitbox for detecting mouse
-        self.hitbox = ((centre[0] - 41, centre[1] - 25), (centre[0] + 41, centre[1] + 25))
+        self.hitbox = ((centre[0] - 35, centre[1] - 20), (centre[0] + 35, centre[1] + 20))
         self.state = 0
 
 
