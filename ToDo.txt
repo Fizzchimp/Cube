@@ -7,9 +7,6 @@ Set algorithms?
 =================
 ------Main:------
 =================
-Turning UI/keybindings
-Cube set up UI
-
 Cube Comparison / Solved Checker
 
 
@@ -17,4 +14,15 @@ Cube Comparison / Solved Checker
 -----Display:----
 =================
 Hidden surface removal
-Buttons and UI
+Smoother lines on cube (anti-aliasing)
+
+Background
+General Layout
+Cube Set Up UI
+
+
+=================
+------Other------
+=================
+3 by 3 Cube
+2 Player competitive mode?
