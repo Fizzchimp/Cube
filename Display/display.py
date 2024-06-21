@@ -30,20 +30,24 @@ class Display():
 
         # Buttons
         fontSize = 47
+        startX, startY = 45, 30
+        intervalX, intervalY = 80, 50
+        gap = 10
         self.buttons = [Large_Button((250, 600), "SOLVE", 35),
                         Large_Button((450, 600), "SCRAMBLE", 35),
-                        Button((55, 40), "U", fontSize),
-                        Button((145, 40), "U'", fontSize),
-                        Button((55, 100), "F", fontSize),
-                        Button((145, 100), "F'", fontSize),
-                        Button((55, 160), "R", fontSize),
-                        Button((145, 160), "R'", fontSize),
-                        Button((55, 240), "D", fontSize),
-                        Button((145, 240), "D'", fontSize),
-                        Button((55, 300), "B", fontSize),
-                        Button((145, 300), "B'", fontSize),
-                        Button((55, 360), "L", fontSize),
-                        Button((145, 360), "L'", fontSize)] 
+                        Button((startX, startY), "U", fontSize),
+                        Button((startX + intervalX, startY), "U'", fontSize),
+                        Button((startX, startY + intervalY), "F", fontSize),
+                        Button((startX + intervalX, startY + intervalY), "F'", fontSize),
+                        Button((startX, startY + intervalY * 2), "R", fontSize),
+                        Button((startX + intervalX, startY + intervalY * 2), "R'", fontSize),
+                        
+                        Button((startX, startY + intervalY * 3 + gap), "D", fontSize),
+                        Button((startX + intervalX, startY + intervalY * 3 + gap), "D'", fontSize),
+                        Button((startX, startY + intervalY * 4 + gap), "B", fontSize),
+                        Button((startX + intervalX, startY + intervalY * 4 + gap), "B'", fontSize),
+                        Button((startX, startY + intervalY * 5 + gap), "L", fontSize),
+                        Button((startX + intervalX, startY + intervalY * 5 + gap), "L'", fontSize)] 
                         
         
     
@@ -117,7 +121,7 @@ class Button():
         self.imageDown = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
 
         # Point where button is drawn
-        self.drawPoint = (centre[0] - 39, centre[1] - 25)
+        self.drawPoint = (centre[0] - 39, centre[1] - 20)
         
         # Surface for text on the button
         font = pg.font.SysFont("Jhomuria", fontSize)
