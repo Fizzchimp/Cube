@@ -25,7 +25,7 @@ class Display():
         self.x, self.y  = 450, 300
 
         # 3D Matrix of all verticies in a cube
-        self.length = self.width / 5 if self.width <= self.height else self.height / 5        
+        self.length = self.width / 5 if self.width <= self.height else self.height / 5
         self.model = CubeModel()
 
         # Buttons
