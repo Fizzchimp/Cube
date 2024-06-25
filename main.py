@@ -271,9 +271,9 @@ class World:
 
     def run(self):
         # Creating Cube object
-        #self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
-        self.cube = Cube()
-        self.cube.scramble()
+        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        #self.cube = Cube()
+        #self.cube.scramble()
 
         iter = 0
 
@@ -287,6 +287,9 @@ class World:
         running = True
         self.clock.tick()
         while running:
+            # Draw the screen
+            self.screen.drawScreen(self.cube.cube)
+            
             # Get and run input events (keys, buttons and others)
             running = self.doEvents()
 
@@ -295,8 +298,6 @@ class World:
                 move = self.moveQueue.dequeue()
                 self.doMove(move, False)
             
-            # Draw the screen
-            self.screen.drawScreen(self.cube.cube)
             
             # Update ascpects of the screen
             self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
