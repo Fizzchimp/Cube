@@ -14,7 +14,8 @@ Cube Comparison / Solved Checker
 -----Display:----
 =================
 Hidden surface removal
-Smoother lines on cube (anti-aliasing)
+Clean up thicker AAlines
+Draw Behind Cube
 
 Background
 General Layout
