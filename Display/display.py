@@ -61,19 +61,17 @@ class Display():
         
         angle = math.atan2(p2[0] - p1[0], p2[1] - p1[1])
         
-        UL = (centre[0] + (length/2.) * cos(angle) - (width/2.) * sin(angle),
-            centre[1] + (width/2.) * cos(angle) + (length/2.) * sin(angle))
-        UR = (centre[0] - (length/2.) * cos(angle) - (width/2.) * sin(angle),
-            centre[1] + (width/2.) * cos(angle) - (length/2.) * sin(angle))
-        BL = (centre[0] + (length/2.) * cos(angle) + (width/2.) * sin(angle),
-            centre[1] - (width/2.) * cos(angle) + (length/2.) * sin(angle))
-        BR = (centre[0] - (length/2.) * cos(angle) + (width/2.) * sin(angle),
-            centre[1] - (width/2.) * cos(angle) - (length/2.) * sin(angle))
+        UL = (centre[0] + (length/2.) * sin(angle) - (width/2.) * cos(angle),
+            centre[1] + (width/2.) * sin(angle) + (length/2.) * cos(angle))
+        UR = (centre[0] - (length/2.) * sin(angle) - (width/2.) * cos(angle),
+            centre[1] + (width/2.) * sin(angle) - (length/2.) * cos(angle))
+        BL = (centre[0] + (length/2.) * sin(angle) + (width/2.) * cos(angle),
+            centre[1] - (width/2.) * sin(angle) + (length/2.) * cos(angle))
+        BR = (centre[0] - (length/2.) * sin(angle) + (width/2.) * cos(angle),
+            centre[1] - (width/2.) * sin(angle) - (length/2.) * cos(angle))
         
         pg.gfxdraw.aapolygon(self.screen, (UL, UR, BR, BL), colour)
         pg.gfxdraw.filled_polygon(self.screen, (UL, UR, BR, BL), colour)
-                
-        pg.draw.circle(self.screen, (200, 0, 0), centre, 3)
 
     def drawCube(self, cube):
         quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
@@ -118,9 +116,8 @@ class Display():
             
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, face[5], face[0:4])
-            pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4])
             for i in range(4):
-                self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 4)
+                self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
         
     def drawScreen(self, cube):
         self.screen.fill((100, 100, 100))
@@ -219,5 +216,3 @@ class Large_Button():
         self.state = 0
         return 0
     
-
-        
