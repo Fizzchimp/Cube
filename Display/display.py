@@ -118,6 +118,7 @@ class Display():
             pg.draw.polygon(self.screen, face[5], face[0:4])
             for i in range(4):
                 self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
+            pg.draw.circle(self.screen, (50, 50, 50), face[2], 4)
         
     def drawScreen(self, cube):
         self.screen.fill((100, 100, 100))
