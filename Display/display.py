@@ -113,7 +113,20 @@ class Display():
                             [quad[0][5] * self.length + self.x, quad[1][5] * self.length + self.y],
                             (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
                             (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
-            
+        
+        #top = [None, 99999]
+        #bottom = [None, 0]
+        
+        #topLeft = None
+        #bottomLeft = None
+        
+        #topRight = None
+        #bottomRight = None
+        
+        #for face in sorted(faces):
+        #    if face[2][1] < top[1]:
+        #        top = face[2]
+        
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, face[5], face[0:4])
             #pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4])
