@@ -8,18 +8,37 @@ Set algorithms?
 ------Main:------
 =================
 Cube Comparison / Solved Checker
+Better Controls
+Seperate Thread for solving algorithm
 
 
 =================
 -----Display:----
 =================
-Hidden surface removal
-Clean up thicker AAlines
-Draw Behind Cube
+Cube:
+    Hidden surface removal
+    Clean up thicker AAlines
+    Draw Behind Cube
+    Smooth Corners?
+    Bobbing
+    Multiple Movements at once
+    Smooth Turning (sinify it)
+    Click and drag for cube movement?
+    Spin Down Intro animation
 
-Background
-General Layout
-Cube Set Up UI
+Background:
+    Sections of Screen
+    Smooth animations for Screen
+
+General Layout:
+    Buttons (Side or bottom?)
+    Input algorithms
+    Display Movements
+
+Cube Set Up UI:
+    Paint Tool
+    Easy to use colour keys
+    tab key
 
 
 =================
