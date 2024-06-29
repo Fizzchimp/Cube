@@ -1,5 +1,5 @@
 import pygame as pg
-from numpy import pi
+from numpy import pi, sin
 from Display.display import Display
 from cube import Cube
 from Assets.cqueue import Queue
@@ -8,7 +8,8 @@ from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
 MAX_FPS = 200
-ROTATION_SPEED = 1000
+ROTATION_SPEED = 125
+
 WIDTH = 700
 HEIGHT = 700
 
@@ -31,7 +32,13 @@ BUTTON_KEYS = {2: "U", 3: "U'",
                8: "D", 9: "D'",
                10: "B", 11: "B'",
                12: "L", 13: "L'"}
+
 HALF_PI = pi / 2
+DOUBLE_PI = pi * 2
+
+BOB_SPEED = 500
+BOB_STRENGTH = WIDTH * 0.02
+print(BOB_STRENGTH)
 
 class World:
     def __init__(self):
@@ -283,12 +290,15 @@ class World:
         self.buttonDown = False
 
         deltaTime = 0
+        cubeBobbingPhase = 0
 
         running = True
         self.clock.tick()
         while running:
             # Draw the screen
-            self.screen.drawScreen(self.cube.cube)
+            cubeBobbingPhase = (cubeBobbingPhase + deltaTime / BOB_SPEED)
+            # print(cubeBobbingPhase)
+            self.screen.drawScreen(self.cube.cube, BOB_STRENGTH * sin(cubeBobbingPhase))
             
             # Get and run input events (keys, buttons and others)
             running = self.doEvents()

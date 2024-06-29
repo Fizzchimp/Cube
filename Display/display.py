@@ -73,7 +73,8 @@ class Display():
         pg.gfxdraw.aapolygon(self.screen, (UL, UR, BR, BL), colour)
         pg.gfxdraw.filled_polygon(self.screen, (UL, UR, BR, BL), colour)
 
-    def drawCube(self, cube):
+    def drawCube(self, cube, centreOffset = 0):
+        x, y = self.x, self.y + centreOffset
         hiddenPoints = []
         quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
                    [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
@@ -91,10 +92,10 @@ class Display():
             shown = 0
             if quad[2][0] < 0:
                 shade = (2 - quad[2][0]) / 3
-                faces.append(([quad[0][0] * self.length + self.x, quad[1][0] * self.length + self.y], 
-                            [quad[0][1] * self.length + self.x, quad[1][1] * self.length + self.y],
-                            [quad[0][2] * self.length + self.x, quad[1][2] * self.length + self.y],
-                            [quad[0][3] * self.length + self.x, quad[1][3] * self.length + self.y],
+                faces.append(([quad[0][0] * self.length + x, quad[1][0] * self.length + y], 
+                            [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
+                            [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                            [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
                             (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
                             (quadCol[i][0][0] * shade, quadCol[i][0][1] * shade, quadCol[i][0][2] * shade)))
                 shown += 1
@@ -102,10 +103,10 @@ class Display():
 
             if quad[2][4] < 0:
                 shade = (2 - quad[2][4]) / 3
-                faces.append(([quad[0][4] * self.length + self.x, quad[1][4] * self.length + self.y],
-                            [quad[0][1] * self.length + self.x, quad[1][1] * self.length + self.y],
-                            [quad[0][2] * self.length + self.x, quad[1][2] * self.length + self.y],
-                            [quad[0][5] * self.length + self.x, quad[1][5] * self.length + self.y],
+                faces.append(([quad[0][4] * self.length + x, quad[1][4] * self.length + y],
+                            [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
+                            [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                            [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
                             (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
                             (quadCol[i][1][0] * shade, quadCol[i][1][1] * shade, quadCol[i][1][2] * shade)))
                 shown += 1
@@ -113,52 +114,32 @@ class Display():
 
             if quad[2][6] < 0:   
                 shade = (2 - quad[2][6]) / 3
-                faces.append(([quad[0][6] * self.length + self.x, quad[1][6] * self.length + self.y],
-                            [quad[0][3] * self.length + self.x, quad[1][3] * self.length + self.y],
-                            [quad[0][2] * self.length + self.x, quad[1][2] * self.length + self.y],
-                            [quad[0][5] * self.length + self.x, quad[1][5] * self.length + self.y],
+                faces.append(([quad[0][6] * self.length + x, quad[1][6] * self.length + y],
+                            [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
+                            [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                            [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
                             (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
                             (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
                 shown += 1
             
-            if shown in (1, 2):
-                hiddenPoints.append((quad[0][2] * self.length + self.x, quad[1][2] * self.length + self.y))
+            if 1 <= shown <= 2:
+                hiddenPoints.append((quad[0][2] * self.length + x, quad[1][2] * self.length + y))
 
-        
-        # top = [None, 99999]
-        # bottom = [None, 0]
-        
-        # topLeft = None
-        # bottomLeft = None
-        
-        # topRight = None
-        # bottomRight = None
-        
-        # for face in sorted(faces):
-        #     if face[2][1] < top[1]:
-        #        top = face[2]
-
-        #     if face[2][1] > bottom[1]:
-        #         bottom = face[2]
-            
-        #     if 
-
-        #backPoints = faces[1]
-        #12
         
         for face in sorted(faces, key = depth, reverse = True):
             pg.draw.polygon(self.screen, face[5], face[0:4])
             #pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4])
             for i in range(4):
                 self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
-            pg.draw.circle(self.screen, (50, 50, 50), face[2], 4)
+                pg.draw.circle(self.screen, (50, 50, 50), face[i], 4)
 
-        for point in hiddenPoints:
-            pg.draw.circle(self.screen, (200, 0, 0), point, 5)
+        # for point in hiddenPoints:
+            # pg.draw.circle(self.screen, (200, 0, 0), point, 5)
+        pg.draw.circle(self.screen, (200, 0, 0), hiddenPoints[1], 5)
         
-    def drawScreen(self, cube):
+    def drawScreen(self, cube, cubeBobOffset):
         self.screen.fill((100, 100, 100))
-        self.drawCube(cube)
+        self.drawCube(cube, cubeBobOffset)
 
         for button in self.buttons:
             image = button.getImage()
