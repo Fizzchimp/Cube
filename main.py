@@ -309,7 +309,7 @@ class World:
                 self.doMove(move, False)
             
             
-            # Update ascpects of the screen
+            # Update aspects of the screen
             self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
             
             iter += 1
