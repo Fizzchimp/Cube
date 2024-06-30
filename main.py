@@ -38,7 +38,6 @@ DOUBLE_PI = pi * 2
 
 BOB_SPEED = 500
 BOB_STRENGTH = WIDTH * 0.02
-print(BOB_STRENGTH)
 
 class World:
     def __init__(self):
@@ -296,8 +295,7 @@ class World:
         self.clock.tick()
         while running:
             # Draw the screen
-            cubeBobbingPhase = (cubeBobbingPhase + deltaTime / BOB_SPEED)
-            # print(cubeBobbingPhase)
+            cubeBobbingPhase = (cubeBobbingPhase + deltaTime / BOB_SPEED) % DOUBLE_PI
             self.screen.drawScreen(self.cube.cube, BOB_STRENGTH * sin(cubeBobbingPhase))
             
             # Get and run input events (keys, buttons and others)

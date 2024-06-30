@@ -88,7 +88,6 @@ class Display():
 
     def drawCube(self, cube, centreOffset = 0):
         x, y = self.x, self.y + centreOffset
-        hiddenPoints = []
         quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
                    [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
                    [colours[cube[0][2]], colours[cube[2][0]], colours[cube[1][1]]],
@@ -102,7 +101,6 @@ class Display():
         points = self.model.getPoints()
         faces = []
         for i, quad in enumerate(points):
-            shown = 0
             if quad[2][0] < 0:
                 shade = (2 - quad[2][0]) / 3
                 faces.append(([quad[0][0] * self.length + x, quad[1][0] * self.length + y], 
@@ -111,7 +109,6 @@ class Display():
                             [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
                             (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
                             (quadCol[i][0][0] * shade, quadCol[i][0][1] * shade, quadCol[i][0][2] * shade)))
-                shown += 1
                 
 
             if quad[2][4] < 0:
@@ -122,7 +119,6 @@ class Display():
                             [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
                             (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
                             (quadCol[i][1][0] * shade, quadCol[i][1][1] * shade, quadCol[i][1][2] * shade)))
-                shown += 1
                 
 
             if quad[2][6] < 0:   
@@ -133,20 +129,10 @@ class Display():
                             [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
                             (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
                             (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
-                shown += 1
-            
-            if 1 <= shown <= 2:
-                hiddenPoints.append((quad[0][2] * self.length + x, quad[1][2] * self.length + y))
 
-        # face1 = faces[0]
-        # point1 = face1[0]
-        # point2 = face1[0]
-        # halfWidth = 4
-        # diff1 = halfWidth * cos(arctan(point1))
 
         for face in sorted(faces, key = depth, reverse = True):
             pg.gfxdraw.filled_polygon(self.screen, face[0:4], face[5])
-            # pg.draw.aalines(self.screen, (50, 50, 50), True, face[0:4])
                 
             for i in range(4):
                 self.oldDrawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)

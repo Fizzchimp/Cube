@@ -10,6 +10,7 @@ Set algorithms?
 Cube Comparison / Solved Checker
 Better Controls
 Seperate Thread for solving algorithm
+Seperate Movement Detection
 
 
 =================
@@ -25,14 +26,18 @@ Cube:
     Smooth Turning (sinify it)
     Click and drag for cube movement?
     Spin Down Intro animation
+    Reduce Lines Drawn
+    Move Cube Drawing onto seperate surface?
 
 Background:
+    Back Texture
+    Dynamic Colouring
     Sections of Screen
     Smooth animations for Screen
 
 General Layout:
     Buttons (Side or bottom?)
-    Input algorithms
+    Input algorithms(TEXTBOX INPUT)
     Display Movements
 
     DONT FORGET TO REMOVE FPS COUNTER
