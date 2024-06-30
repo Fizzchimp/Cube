@@ -35,6 +35,8 @@ General Layout:
     Input algorithms
     Display Movements
 
+    DONT FORGET TO REMOVE FPS COUNTER
+
 Cube Set Up UI:
     Paint Tool
     Easy to use colour keys
