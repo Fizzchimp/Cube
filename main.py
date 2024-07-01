@@ -233,7 +233,7 @@ class World:
             elif pressed == 1 and not self.buttonDown:
                 self.cube.scramble()
             
-            elif pressed in BUTTON_KEYS.keys():
+            elif pressed in BUTTON_KEYS.keys() and not self.buttonDown:
                 self.doMove(BUTTON_KEYS[pressed], False)
                     
             self.buttonDown = True
