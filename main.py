@@ -1,3 +1,4 @@
+import threading
 import pygame as pg
 from numpy import pi, sin
 from Display.display import Display

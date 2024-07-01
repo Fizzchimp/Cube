@@ -53,7 +53,7 @@ class Display():
                         Button((startX + intervalX, startY + intervalY * 5 + gap), "L'", fontSize)] 
                         
         
-    def oldDrawLine(self, colour, p1, p2, width):
+    def drawLine(self, colour, p1, p2, width):
         centre = ((p1[0] + p2[0]) / 2,
                   (p1[1] + p2[1]) / 2)
         
@@ -81,10 +81,6 @@ class Display():
         
         pg.gfxdraw.aapolygon(self.screen, (UL, UR, BR, BL), colour)
         pg.gfxdraw.filled_polygon(self.screen, (UL, UR, BR, BL), colour)
-
-    def drawLine(self, colour, upL, upR, botL, botR):
-        pg.gfxdraw.aapolygon(self.screen, (upL, upR, botR, botL), colour)
-        pg.gfxdraw.filled_polygon(self.screen, (upL, upR, botR, botL), colour)
 
     def drawCube(self, cube, centreOffset = 0):
         x, y = self.x, self.y + centreOffset
@@ -135,7 +131,7 @@ class Display():
             pg.gfxdraw.filled_polygon(self.screen, face[0:4], face[5])
                 
             for i in range(4):
-                self.oldDrawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
+                self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
                 pg.draw.circle(self.screen, (50, 50, 50), face[i], 4)
         
     def drawScreen(self, cube, cubeBobOffset):
