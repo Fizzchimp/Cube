@@ -1,8 +1,7 @@
 import pygame as pg
 from pygame import gfxdraw
 from Display.model import CubeModel
-from numpy import sin, cos, sqrt
-import math
+from numpy import sin, cos, sqrt, arctan2
 
 colours = {"W": (245, 245, 245),
            "Y": (255, 255, 0),
@@ -10,6 +9,8 @@ colours = {"W": (245, 245, 245),
            "R": (220, 20, 60),
            "B": (0, 0, 205),
            "O": (255, 140, 0)}
+
+BG_IMAGE_SIZE = 120
 
 def depth(face):
     return face[4]
@@ -26,6 +27,18 @@ class Display():
 
         # Cube centre co-ordinates
         self.x, self.y  = 450, 300
+
+        # Background
+        image = pg.transform.scale(pg.image.load("Display/Textures/background.png"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
+        dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 1), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 1))
+        self.dims = dims
+
+        self.background = pg.Surface(dims)
+        for i in range(dims[0] // BG_IMAGE_SIZE):
+            for j in range(dims[1] // BG_IMAGE_SIZE):
+                self.background.blit(image, (i * BG_IMAGE_SIZE, j * BG_IMAGE_SIZE))
+
+        self.backgroundPosition = [dims[0] % BG_IMAGE_SIZE, dims[1] % BG_IMAGE_SIZE]
 
         # 3D Matrix of all verticies in a cube
         self.length = self.width / 5 if self.width <= self.height else self.height / 5
@@ -59,10 +72,9 @@ class Display():
         
         length = sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
         
-        angle = math.atan2(p2[0] - p1[0], p2[1] - p1[1])
+        angle = arctan2(p2[0] - p1[0], p2[1] - p1[1])
         cosAngle = cos(angle)
         sinAngle = sin(angle)
-        halfLength = length / 2
 
         sinHaldWidth = (width / 2) * sinAngle
         cosHalfWidth = (width / 2) * cosAngle
@@ -135,7 +147,11 @@ class Display():
                 pg.draw.circle(self.screen, (50, 50, 50), face[i], 4)
         
     def drawScreen(self, cube, cubeBobOffset):
+        # Draw the background of the screen
         self.screen.fill((100, 100, 100))
+        self.screen.blit(self.background, (self.backgroundPosition[0] - BG_IMAGE_SIZE, self.backgroundPosition[1] - BG_IMAGE_SIZE))
+
+        # Draw the cube onto the screen
         self.drawCube(cube, cubeBobOffset)
 
         for button in self.buttons:

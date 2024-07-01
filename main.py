@@ -10,6 +10,7 @@ from Assets.mergesort import mergeSort
 
 MAX_FPS = 400
 ROTATION_SPEED = 125
+BG_SPEED = 50
 
 WIDTH = 700
 HEIGHT = 700
@@ -300,9 +301,6 @@ class World:
         running = True
         self.clock.tick()
         while running:
-            # Draw the screen
-            cubeBobbingPhase = (cubeBobbingPhase + deltaTime / BOB_SPEED) % DOUBLE_PI
-            self.screen.drawScreen(self.cube.cube, BOB_STRENGTH * sin(cubeBobbingPhase))
             
             # Get and run input events (keys, buttons and others)
             running = self.doEvents()
@@ -315,10 +313,16 @@ class World:
             
             # Update aspects of the screen
             self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
+            # self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + deltaTime / BG_SPEED) % 120
+            # self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] - deltaTime / BG_SPEED) % 120
             
             iter += 1
             if iter % MAX_FPS == 0:
                 pg.display.set_caption(str(self.clock.get_fps()))
+            
+            # Draw the screen
+            cubeBobbingPhase = (cubeBobbingPhase + deltaTime / BOB_SPEED) % DOUBLE_PI
+            self.screen.drawScreen(self.cube.cube, BOB_STRENGTH * sin(cubeBobbingPhase))
 
             deltaTime = self.clock.tick(MAX_FPS)
         pg.quit()
