@@ -214,27 +214,32 @@ class World:
             else:
                 if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys():
                     self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
-                        
+                    
+        # Get any buttons that are pressed
         pressed = self.screen.getPressed()
         if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
-            
-            if pressed == 0 and not self.buttonDown:
-                solution = self.findPath(self.cube.cube)
-                if solution == False:
-                    print("No solution")
-                elif solution == []:
-                    print("Already Solved!")
-                else:
-                    print(", ".join(solution))
-                    for move in solution:
-                        self.moveQueue.enqueue(move)
-                self.clock.tick()
-
-            elif pressed == 1 and not self.buttonDown:
-                self.cube.scramble()
-            
-            elif pressed in BUTTON_KEYS.keys() and not self.buttonDown:
-                self.doMove(BUTTON_KEYS[pressed], False)
+            if not self.buttonDown:
+                
+                # Solve Button
+                if pressed == 0:
+                    solution = self.findPath(self.cube.cube)
+                    if solution == False:
+                        print("No solution")
+                    elif solution == []:
+                        print("Already Solved!")
+                    else:
+                        print(", ".join(solution))
+                        for move in solution:
+                            self.moveQueue.enqueue(move)
+                    self.clock.tick()
+                    
+                # Scramble Button
+                elif pressed == 1:
+                    self.cube.scramble()
+                
+                # Movement Buttons
+                elif pressed in BUTTON_KEYS.keys():
+                    self.doMove(BUTTON_KEYS[pressed], False)
                     
             self.buttonDown = True
 

@@ -21,13 +21,13 @@ Cube:
     Clean up thicker AAlines
     Draw Behind Cube
     Smooth Corners?
-    Bobbing
     Multiple Movements at once
     Smooth Turning (sinify it)
     Click and drag for cube movement?
     Spin Down Intro animation
     Reduce Lines Drawn
     Move Cube Drawing onto seperate surface?
+    Mini Cube when hovering over buttons
 
 Background:
     Back Texture
