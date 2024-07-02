@@ -1,6 +1,6 @@
 import random as rnd
 
-class Cube():
+class Cube_2():
     def __init__(self, cube = None):
         # Representation of cube as an array
         self.cube = cube if cube != None else [

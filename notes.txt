@@ -1,11 +1,1 @@
-alpha = 20 / 180 * np.pi
-theta = 30 / 180 * np.pi
-newAxis = [[np.cos(alpha), np.sin(theta) * np.sin(alpha), -np.cos(theta) * np.sin(alpha)],
-           [0, np.cos(theta), np.sin(theta)],
-           [np.sin(alpha), -np.sin(theta) * np.cos(alpha), np.cos(theta) * np.cos(alpha)]]
-
-
-
-
-
 14 move scramble: ["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"]

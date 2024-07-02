@@ -16,7 +16,7 @@ def depth(face):
     return face[4]
 
 class Display():
-    def __init__(self, width, height):
+    def __init__(self, width, height, bobStrength):
 
         # Setup the window
         self.width, self.height = width, height
@@ -30,7 +30,7 @@ class Display():
         self.cubeBob = 0
 
         # Background
-        image = pg.transform.scale(pg.image.load("Display/Textures/background.png"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
+        image = pg.transform.scale(pg.image.load("Display/Textures/James.jpg"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
         dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 2), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 2))
         self.dims = dims
 
@@ -38,8 +38,9 @@ class Display():
         for i in range(dims[0] // BG_IMAGE_SIZE):
             for j in range(dims[1] // BG_IMAGE_SIZE):
                 self.background.blit(image, (i * BG_IMAGE_SIZE, j * BG_IMAGE_SIZE))
-                
+        
 
+        self.bobStrength = bobStrength
         self.backgroundPosition = [-BG_IMAGE_SIZE, -BG_IMAGE_SIZE]
 
         # 3D Matrix of all verticies in a cube
@@ -148,13 +149,13 @@ class Display():
                 self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
                 pg.draw.circle(self.screen, (50, 50, 50), face[i], 4)
         
-    def drawScreen(self, cube, bobStrength):
+    def drawScreen(self, cube):
         # Draw the background of the screen
         self.screen.fill((100, 100, 100))
         self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
-        self.drawCube(cube, bobStrength * sin(self.cubeBob))
+        self.drawCube(cube, self.bobStrength * sin(self.cubeBob))
 
         for button in self.buttons:
             image = button.getImage()

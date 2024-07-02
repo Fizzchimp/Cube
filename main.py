@@ -2,13 +2,13 @@ import threading
 import pygame as pg
 from numpy import pi, sin
 from Display.display import Display
-from cube import Cube
+from two_cube.cube import Cube_2
 from Assets.cqueue import Queue
 from Assets.node import Node
 from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
-MAX_FPS = 1500
+MAX_FPS = 200
 ROTATION_SPEED = 125
 BG_SPEED = 50
 
@@ -44,7 +44,7 @@ BOB_STRENGTH = WIDTH * 0.02
 class World:
     def __init__(self):
         pg.init()
-        self.screen = Display(WIDTH, HEIGHT)
+        self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH)
         self.clock = pg.time.Clock()
         self.moveQueue = Queue(100)
         
@@ -70,6 +70,7 @@ class World:
         cENode = Node(self.normalisedSolved(startState))
 
         generation = 0
+        # List of visited nodes from the previous generation
         vENodes = []
         vSNodes = []
         
@@ -284,7 +285,7 @@ class World:
 
     def run(self):
         # Creating Cube object
-        self.cube = Cube(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        self.cube = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
         #self.cube = Cube()
         #self.cube.scramble()
 
@@ -323,7 +324,7 @@ class World:
                 pg.display.set_caption(str(self.clock.get_fps()))
             
             # Draw the screen
-            self.screen.drawScreen(self.cube.cube, BOB_STRENGTH)
+            self.screen.drawScreen(self.cube.cube)
 
             deltaTime = self.clock.tick(MAX_FPS)
         pg.quit()

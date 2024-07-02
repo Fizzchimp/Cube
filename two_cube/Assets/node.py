@@ -1,8 +1,8 @@
-from cube import Cube
+from cube import Cube_2
 
-class Node(Cube):
+class Node(Cube_2):
     def __init__(self, cube = None, parent = None, movement = None, generation = 0):
-        Cube.__init__(self, cube)
+        Cube_2.__init__(self, cube)
         self.parent = parent
         self.movement = movement
         self.generation = generation
