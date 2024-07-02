@@ -10,7 +10,7 @@ colours = {"W": (245, 245, 245),
            "B": (0, 0, 205),
            "O": (255, 140, 0)}
 
-BG_IMAGE_SIZE = 120
+BG_IMAGE_SIZE = 90
 
 def depth(face):
     return face[4]
@@ -27,18 +27,20 @@ class Display():
 
         # Cube centre co-ordinates
         self.x, self.y  = 450, 300
+        self.cubeBob = 0
 
         # Background
         image = pg.transform.scale(pg.image.load("Display/Textures/background.png"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
-        dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 1), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 1))
+        dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 2), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 2))
         self.dims = dims
 
         self.background = pg.Surface(dims)
         for i in range(dims[0] // BG_IMAGE_SIZE):
             for j in range(dims[1] // BG_IMAGE_SIZE):
                 self.background.blit(image, (i * BG_IMAGE_SIZE, j * BG_IMAGE_SIZE))
+                
 
-        self.backgroundPosition = [dims[0] % BG_IMAGE_SIZE, dims[1] % BG_IMAGE_SIZE]
+        self.backgroundPosition = [-BG_IMAGE_SIZE, -BG_IMAGE_SIZE]
 
         # 3D Matrix of all verticies in a cube
         self.length = self.width / 5 if self.width <= self.height else self.height / 5
@@ -146,13 +148,13 @@ class Display():
                 self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
                 pg.draw.circle(self.screen, (50, 50, 50), face[i], 4)
         
-    def drawScreen(self, cube, cubeBobOffset):
+    def drawScreen(self, cube, bobStrength):
         # Draw the background of the screen
         self.screen.fill((100, 100, 100))
-        self.screen.blit(self.background, (self.backgroundPosition[0] - BG_IMAGE_SIZE, self.backgroundPosition[1] - BG_IMAGE_SIZE))
-
+        self.screen.blit(self.background, (self.backgroundPosition))
+        
         # Draw the cube onto the screen
-        self.drawCube(cube, cubeBobOffset)
+        self.drawCube(cube, bobStrength * sin(self.cubeBob))
 
         for button in self.buttons:
             image = button.getImage()

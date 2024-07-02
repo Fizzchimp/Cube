@@ -8,7 +8,7 @@ from Assets.node import Node
 from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
-MAX_FPS = 400
+MAX_FPS = 1500
 ROTATION_SPEED = 125
 BG_SPEED = 50
 
@@ -313,16 +313,17 @@ class World:
             
             # Update aspects of the screen
             self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
-            # self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + deltaTime / BG_SPEED) % 120
-            # self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] - deltaTime / BG_SPEED) % 120
+            self.screen.cubeBob = (self.screen.cubeBob + deltaTime / BOB_SPEED) % DOUBLE_PI
+            
+            self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + deltaTime / BG_SPEED) % 90 - 90
+            self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] + deltaTime / BG_SPEED) % 90 - 90
             
             iter += 1
             if iter % MAX_FPS == 0:
                 pg.display.set_caption(str(self.clock.get_fps()))
             
             # Draw the screen
-            cubeBobbingPhase = (cubeBobbingPhase + deltaTime / BOB_SPEED) % DOUBLE_PI
-            self.screen.drawScreen(self.cube.cube, BOB_STRENGTH * sin(cubeBobbingPhase))
+            self.screen.drawScreen(self.cube.cube, BOB_STRENGTH)
 
             deltaTime = self.clock.tick(MAX_FPS)
         pg.quit()
