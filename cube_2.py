@@ -15,7 +15,7 @@ class Cube_2():
         
     
     def display(self):
-    # Display the cube in net form
+        # Display the cube in net form
         print(f"""
    |{self.cube[0][:2]}|
    |{self.cube[0][2:4]}|

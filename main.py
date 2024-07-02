@@ -1,10 +1,10 @@
 import threading
 import pygame as pg
-from numpy import pi, sin
+from numpy import pi
 from Display.display import Display
-from two_cube.cube import Cube_2
+from cube_2 import Cube_2
+from Assets.node_2 import Node
 from Assets.cqueue import Queue
-from Assets.node import Node
 from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 

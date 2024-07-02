@@ -1,6 +1,6 @@
 import pygame as pg
 from pygame import gfxdraw
-from Display.model import CubeModel
+from Display.model_2 import CubeModel
 from numpy import sin, cos, sqrt, arctan2
 
 colours = {"W": (245, 245, 245),
