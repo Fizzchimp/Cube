@@ -1,5 +1,5 @@
 import numpy as np
-from numpy import cos, sin, matmul, pi
+from numpy import cos, sin, pi, matmul
 
 alpha = pi / 9
 sinAlph = sin(alpha)
@@ -9,7 +9,7 @@ theta = pi / 6
 sinThet = sin(theta)
 cosThet = cos(theta)
 
-def rotationX(angle):
+def matrixX(angle):
     cosAngle = cos(angle)
     sinAngle = sin(angle)
     
@@ -26,7 +26,7 @@ def rotationX(angle):
             cosAngle + -cosThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle)]])
 
 
-def rotationY(angle):
+def matrixY(angle):
     cosAngle = cos(angle)
     sinAngle = sin(angle)
     
@@ -43,7 +43,7 @@ def rotationY(angle):
             cosAngle + sinThet * sinThet * (1 - cosAngle)]])
 
 
-def rotationZ(angle):
+def matrixZ(angle):
     cosAngle = cos(angle)
     sinAngle = sin(angle)
 
@@ -58,3 +58,26 @@ def rotationZ(angle):
              [sinAlph * cosThet * cosAlph * (1 - cosAngle) + sinThet * cosAlph * sinAngle,
              -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) + sinAlph * sinAngle,
              cosAngle + (cosThet * cosAlph) ** 2 * (1 - cosAngle)]])
+
+
+
+def rotateX(angle, points):
+    if angle == 0:
+        return points
+    
+    rotX = matrixX(angle)
+    return matmul(rotX, points)
+
+def rotateY(angle, points):
+    if angle == 0:
+        return points
+    
+    rotY = matrixY(angle)
+    return matmul(rotY, points)
+
+def rotateZ(angle, points):
+    if angle == 0:
+        return points
+
+    rotZ = matrixY(angle)
+    return matmul(rotZ, points)

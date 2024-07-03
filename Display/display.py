@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame import gfxdraw
-from Display.model_2 import CubeModel
+from Display.model_2 import Model_2
+from Display.model_3 import Model_3
 from numpy import sin, cos, sqrt, arctan2
 
 colours = {"W": (245, 245, 245),
@@ -24,11 +25,7 @@ class Display():
         image = pg.image.load("Display/Textures/01_icon.png")
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
-
-        # Cube centre co-ordinates
-        self.x, self.y  = 450, 300
-        self.cubeBob = 0
-
+    
         # Background
         image = pg.transform.scale(pg.image.load("Display/Textures/James.jpg"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
         dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 2), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 2))
@@ -38,14 +35,23 @@ class Display():
         for i in range(dims[0] // BG_IMAGE_SIZE):
             for j in range(dims[1] // BG_IMAGE_SIZE):
                 self.background.blit(image, (i * BG_IMAGE_SIZE, j * BG_IMAGE_SIZE))
-        
-
-        self.bobStrength = bobStrength
         self.backgroundPosition = [-BG_IMAGE_SIZE, -BG_IMAGE_SIZE]
 
-        # 3D Matrix of all verticies in a cube
+        ### Cube
+        # Cube centre co-ordinates
+        self.x, self.y  = 450, 300
         self.length = self.width / 5 if self.width <= self.height else self.height / 5
-        self.model = CubeModel()
+
+        self.cubeBob = 0
+        self.bobStrength = bobStrength
+
+        ### 2 by 2
+        # 3D Matrix of all verticies in a cube
+        # self.cubeType = 2
+        # self.model = Model_2()
+        
+        self.cubeType = 3
+        self.model = Model_3()
 
         # Buttons
         fontSize = 47
@@ -67,7 +73,6 @@ class Display():
                         Button((startX + intervalX, startY + intervalY * 4 + gap), "B'", fontSize),
                         Button((startX, startY + intervalY * 5 + gap), "L", fontSize),
                         Button((startX + intervalX, startY + intervalY * 5 + gap), "L'", fontSize)] 
-                        
         
     def drawLine(self, colour, p1, p2, width):
         centre = ((p1[0] + p2[0]) / 2,
@@ -99,47 +104,78 @@ class Display():
 
     def drawCube(self, cube, centreOffset = 0):
         x, y = self.x, self.y + centreOffset
-        quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
-                   [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
-                   [colours[cube[0][2]], colours[cube[2][0]], colours[cube[1][1]]],
-                   [colours[cube[0][3]], colours[cube[3][0]], colours[cube[2][1]]],
-
-                   [colours[cube[5][0]], colours[cube[1][3]], colours[cube[2][2]]],
-                   [colours[cube[5][1]], colours[cube[2][3]], colours[cube[3][2]]],
-                   [colours[cube[5][2]], colours[cube[4][3]], colours[cube[1][2]]],
-                   [colours[cube[5][3]], colours[cube[3][3]], colours[cube[4][2]]]]
-        
-        points = self.model.getPoints()
         faces = []
-        for i, quad in enumerate(points):
-            if quad[2][0] < 0:
-                shade = (2 - quad[2][0]) / 3
-                faces.append(([quad[0][0] * self.length + x, quad[1][0] * self.length + y], 
-                            [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
-                            [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
-                            [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
-                            (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
-                            (quadCol[i][0][0] * shade, quadCol[i][0][1] * shade, quadCol[i][0][2] * shade)))
-                
+        
 
-            if quad[2][4] < 0:
-                shade = (2 - quad[2][4]) / 3
-                faces.append(([quad[0][4] * self.length + x, quad[1][4] * self.length + y],
-                            [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
-                            [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
-                            [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
-                            (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
-                            (quadCol[i][1][0] * shade, quadCol[i][1][1] * shade, quadCol[i][1][2] * shade)))
-                
+        if self.cubeType == 2:
+            quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
+                    [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
+                    [colours[cube[0][2]], colours[cube[2][0]], colours[cube[1][1]]],
+                    [colours[cube[0][3]], colours[cube[3][0]], colours[cube[2][1]]],
 
-            if quad[2][6] < 0:   
-                shade = (2 - quad[2][6]) / 3
-                faces.append(([quad[0][6] * self.length + x, quad[1][6] * self.length + y],
-                            [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
-                            [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
-                            [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
-                            (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
-                            (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
+                    [colours[cube[5][0]], colours[cube[1][3]], colours[cube[2][2]]],
+                    [colours[cube[5][1]], colours[cube[2][3]], colours[cube[3][2]]],
+                    [colours[cube[5][2]], colours[cube[4][3]], colours[cube[1][2]]],
+                    [colours[cube[5][3]], colours[cube[3][3]], colours[cube[4][2]]]]
+            points = self.model.getPoints()
+            for i, quad in enumerate(points):
+                if quad[2][0] < 0:
+                    shade = (2 - quad[2][0]) / 3
+                    faces.append(([quad[0][0] * self.length + x, quad[1][0] * self.length + y], 
+                                [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
+                                [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                                [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
+                                (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
+                                (quadCol[i][0][0] * shade, quadCol[i][0][1] * shade, quadCol[i][0][2] * shade)))
+                    
+
+                if quad[2][4] < 0:
+                    shade = (2 - quad[2][4]) / 3
+                    faces.append(([quad[0][4] * self.length + x, quad[1][4] * self.length + y],
+                                [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
+                                [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                                [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
+                                (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
+                                (quadCol[i][1][0] * shade, quadCol[i][1][1] * shade, quadCol[i][1][2] * shade)))
+                    
+
+                if quad[2][6] < 0:   
+                    shade = (2 - quad[2][6]) / 3
+                    faces.append(([quad[0][6] * self.length + x, quad[1][6] * self.length + y],
+                                [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
+                                [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                                [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
+                                (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
+                                (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
+
+        if self.cubeType == 3:
+            corners = self.model.getPoints()
+            for i, quad in enumerate(corners):
+                if quad[2][-3] <= 0:
+                    faces.append(([quad[0][0] * self.length + x, quad[1][0] * self.length + y], 
+                                [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
+                                [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                                [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
+                                (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
+                                (150, 150, 150)))
+                
+                if quad[2][-2] <= 0:
+                    faces.append(([quad[0][4] * self.length + x, quad[1][4] * self.length + y],
+                                [quad[0][1] * self.length + x, quad[1][1] * self.length + y],
+                                [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                                [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
+                                (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
+                                (150, 150, 150)))
+                    
+                if quad[2][-1] <= 0:
+                    faces.append(([quad[0][6] * self.length + x, quad[1][6] * self.length + y],
+                                [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
+                                [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
+                                [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
+                                (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
+                                (150, 150, 150)))
+
+
 
 
         for face in sorted(faces, key = depth, reverse = True):

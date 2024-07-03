@@ -2,37 +2,8 @@ import numpy as np
 from numpy import cos, sin, pi, matmul
 from Display.matrices import *
 
-alpha = pi / 9
-sinAlph = sin(alpha)
-cosAlph = cos(alpha)
 
-theta = pi / 6
-sinThet = sin(theta)
-cosThet = cos(theta)
-
-def rotateX(angle, points):
-    if angle == 0:
-        return points
-    
-    rotX = rotationX(angle)
-    return matmul(rotX, points)
-
-def rotateY(angle, points):
-    if angle == 0:
-        return points
-    
-    rotY = rotationY(angle)
-    return matmul(rotY, points)
-
-def rotateZ(angle, points):
-    if angle == 0:
-        return points
-
-    rotZ = rotationZ(angle)
-    return matmul(rotZ, points)
-
-
-class CubeModel:
+class Model_2:
     def __init__(self):
         self.points = np.array([ 
                         ### Top Cubies
