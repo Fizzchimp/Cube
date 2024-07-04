@@ -79,5 +79,5 @@ def rotateZ(angle, points):
     if angle == 0:
         return points
 
-    rotZ = matrixY(angle)
+    rotZ = matrixZ(angle)
     return matmul(rotZ, points)

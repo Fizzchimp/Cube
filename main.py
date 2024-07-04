@@ -252,7 +252,7 @@ class World:
         return True
     
     def doMove(self, move, mod):
-        if mod in SHIFT: move += "'"
+        if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
         self.cube.move(move)
         
         if move == "U": self.screen.model.uPhase = -HALF_PI
@@ -281,7 +281,6 @@ class World:
             
         elif move == "Z": self.screen.model.zPhase = -HALF_PI
         elif move == "Z'": self.screen.model.zPhase = HALF_PI
-        self.moveTime = ROTATION_SPEED
 
     def run(self):
         # Creating Cube object
