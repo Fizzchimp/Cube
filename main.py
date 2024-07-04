@@ -10,7 +10,7 @@ from Assets.mergesort import mergeSort
 
 MAX_FPS = 200
 ROTATION_SPEED = 125
-BG_SPEED = 50
+BG_SPEED = 40
 
 WIDTH = 700
 HEIGHT = 700

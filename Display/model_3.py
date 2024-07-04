@@ -6,7 +6,8 @@ from Display.matrices import *
 class Model_3():
     def __init__(self):
         self.points = np.array([
-            ### Top Cubies
+            ### Corners
+                # Top corners
                 [  # Back Left                                 | Depth Points
                     [-1/3, -1  , -1  , -1/3, -1  , -1  , -1/3,    0, -1,  0],
                     [-1  , -1  , -1  , -1  , -1/3, -1/3, -1/3,   -1,  0,  0],
@@ -18,9 +19,20 @@ class Model_3():
                     [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,  1/3,    0,  1,  0]
                 ],
                 [ # Front Right
-                    [],
-                    [],
-                    []
+                    [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,  1/3,    0,  1,  0],
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3, -1/3,   -1,  0,  0],
+                    [-1/3, -1/3, -1  , -1  , -1/3, -1  , -1  ,    0,  0, -1]
+                ],
+                [ # Front Left
+                    [-1/3, -1/3, -1  , -1  , -1/3, -1  , -1  ,    0,  0, -1],
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3, -1/3,   -1,  0,  0],
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  , -1/3,    0, -1,  0]                  
+                ],
+                # Bottom corners
+                [ # Front Left
+                    [-1/3, -1/3, -1  , -1  , -1/3, -1  , -1  ,    0,  0, -1],
+                    [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,  1/3,    1,  0,  0],
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  , -1/3,    0, -1,  0]
                 ]
             ], dtype = "float64")
 
@@ -40,7 +52,7 @@ class Model_3():
         else: return False
 
     def getPoints(self):
-        if self.isMoving() == 0: return self.points
+        return self.points
 
     def phaseUpdate(self, thing):
         pass

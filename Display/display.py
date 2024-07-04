@@ -27,7 +27,7 @@ class Display():
         pg.display.set_caption("Cube")
     
         # Background
-        image = pg.transform.scale(pg.image.load("Display/Textures/James.jpg"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
+        image = pg.transform.scale(pg.image.load("Display/Textures/Background.png"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
         dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 2), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 2))
         self.dims = dims
 
@@ -50,6 +50,7 @@ class Display():
         # self.cubeType = 2
         # self.model = Model_2()
         
+        ### 3 by 2
         self.cubeType = 3
         self.model = Model_3()
 
