@@ -49,6 +49,8 @@ class Model_3():
                     [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,  1/3,    1,  0,  0],
                     [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,  1/3,    0,  1,  0]
                 ]
+            
+            ### Middle Peices
             ], dtype = "float64")
 
         for i, quad in enumerate(self.points):
