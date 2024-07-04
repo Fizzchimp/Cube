@@ -5,8 +5,7 @@ from Display.matrices import *
 
 class Model_3():
     def __init__(self):
-        self.points = np.array([
-            ### Corners
+        self.corners = np.array([
                 # Top corners
                 [  # Back Left                                 | Depth Points
                     [-1/3, -1  , -1  , -1/3, -1  , -1  , -1/3,    0, -1,  0],
@@ -49,13 +48,59 @@ class Model_3():
                     [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,  1/3,    1,  0,  0],
                     [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,  1/3,    0,  1,  0]
                 ]
-            
-            ### Middle Peices
             ], dtype = "float64")
 
-        for i, quad in enumerate(self.points):
-            self.points[i] = rotateX(theta, rotateY(alpha, quad))
+        for i, quad in enumerate(self.corners):
+            self.corners[i] = rotateX(theta, rotateY(alpha, quad))
 
+
+        self.sides = np.array([
+                ### Top sides
+                [ # Back                                 | Depth Points
+                    [-1/3, -1/3,  1/3,  1/3, -1/3,  1/3,    0,  0],
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3,   -1,  0],
+                    [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,    0,  1]
+                ],
+                [ # Left
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  ,    0, -1],
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3,   -1,  0],
+                    [-1/3, -1/3,  1/3,  1/3, -1/3,  1/3,    0,  0]
+                ],
+                [ # Right
+                    [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,    0,  1],
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3,   -1,  0],
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0]
+                ],
+                [ # Front
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3,   -1,  0],
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  ,    0, -1]
+                ],
+                ### Middle sides
+                [ # Back Left
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3,   -1,  0],
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,    0,  1]
+                ],
+                [ # Back Right
+                    [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,    0,  1],
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,    1,  0]
+                ],
+                [ # Front Left
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  ,    0, -1],
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [-1  , -1  , -1  , -1  , -1/3, -1/3,   -1,  0] 
+                ],
+                [ # Front Right
+                    [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,    1,  0],
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  ,    0, -1]
+                ]
+            ], dtype = "float64") 
+        
+        for i, quad in enumerate(self.sides):
+            self.sides[i] = rotateX(theta, rotateY(alpha, quad))
 
         self.xPhase = 0
         self.yPhase = 0
@@ -69,16 +114,18 @@ class Model_3():
         else: return False
 
     def getPoints(self):
-        corners = [rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[0]))),
-                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[1]))),
-                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[2]))),
-                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[3]))),
-                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[4]))),
-                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[5]))),
-                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[6]))),
-                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.points[7])))]
+        corners = [rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[0]))),
+                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[1]))),
+                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[2]))),
+                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[3]))),
+                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[4]))),
+                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[5]))),
+                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[6]))),
+                   rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, self.corners[7])))]
         
-        return corners
+        sides = [rotateX(self.xPhase, rotateY(self.yPhase, rotateZ(self.zPhase, quad))) for quad in self.sides]
+        
+        return corners, sides
 
     def phaseUpdate(self, increment):
         # Y Phase
