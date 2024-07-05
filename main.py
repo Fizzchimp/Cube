@@ -298,7 +298,8 @@ class World:
     def run(self):
         # Creating Cube object
         #self.cube = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
-        self.cube = Cube_3(["OBOYWOWBR",    "YBGROGYRY", "RWYWGWOGR", "BYGORBWYO", "WOBRBGBYR",    "GOBWYRGGW"])
+        #self.cube = Cube_3(["OBOYWOWBR",    "YBGROGYRY", "RWYWGWOGR", "BYGORBWYO", "WOBRBGBYR",    "GOBWYRGGW"])
+        self.cube = Cube_3()
         #gself.cube.scramble()
 
         iter = 0

@@ -94,6 +94,15 @@ class Cube_3():
                               
                 self[1][2] + self[1][5] + self[1][8] + self[1][1] + self[1][4] + self[1][7] + self[1][0] + self[1][3] + self[1][6],]
     
+
+    def U(self):
+        return [self[0][6] + self[0][3] + self[0][0] + self[0][7] + self[0][4] + self[0][1] + self[0][8] + self[0][5] + self[0][2],
+                
+                self[2][:3] + self[1][3:],
+                self[3][:3] + self[2][3:],
+                self[4][:3] + self[3][3:],
+                
+    
     def move(self, move):
         # Executes the moves on the cube
         if move == "X": self.cube = self.X()
@@ -106,4 +115,4 @@ class Cube_3():
         elif move == "Z'": self.cube = self.Z_Prime()
        
         else: print("Not a valid movement")
-           
+ 
