@@ -174,7 +174,16 @@ class Cube_3():
                 
                 self[1][2] + self[1][5] + self[1][8] + self[5][3:]]
 
-          
+
+    def S(self):
+        return [self[0][:3] + self[3][1] + self[3][4] + self[3][7] + self[0][6:],
+                
+                self[1][0] + self[0][5] + self[1][2:4] + self[0][4] + self[1][5:7] + self[0][3] + self[1][8],
+                self[2],
+                self[3][0] + self[5][5] + self[3][2:4] + self[5][4] + self[3][5:7] + self[5][3] + self[3][8],
+                self[4],
+                
+                self[5][:3] + self[1][1] + self[1][4] + self[1][7] + self[5][6:]]   
 
     def S_Prime(self):
         return [self[0][:3] + self[1][7] + self[1][4] + self[1][1] + self[0][6:],
@@ -187,6 +196,88 @@ class Cube_3():
                 self[5][:3] + self[3][1] + self[3][4] + self[3][7] + self[5][6:]]
                 
 
+    def B(self):
+        return [self[3][2] + self[3][5] + self[3][8] + self[0][3:],
+                
+                self[0][2] + self[1][1:3] + self[0][1] + self[1][4:6] + self[0][0] + self[1][7:],
+                self[2],
+                self[3][:2] + self[5][8] + self[3][3:5] + self[5][7] + self[3][6:8] + self[5][6],
+                self[4][6] + self[4][3] + self[4][0] + self[4][7] + self[4][4] + self[4][1] + self[4][8] + self[4][5] + self[4][2],
+                
+                self[5][:6] + self[1][0] + self[1][3] + self[1][6]]
+
+    def B_Prime(self):
+        return [self[1][6] + self[1][3] + self[1][0] + self[0][3:],
+                
+                self[5][6] + self[1][1:3] + self[5][7] + self[1][4:6] + self[5][8] + self[1][7:],
+                self[2],
+                self[3][:2] + self[0][0] + self[3][3:5] + self[0][1] + self[3][6:8] + self[0][2],
+                self[4][2] + self[4][5] + self[4][8] + self[4][1] + self[4][4] + self[4][7] + self[4][0] + self[4][3] + self[4][6],
+                
+                self[5][:6] + self[3][8] + self[3][5] + self[3][2]]
+
+
+    def R(self):
+        return [self[0][:2] + self[2][2] + self[0][3:5] + self[2][5] + self[0][6:8] + self[2][8],
+                
+                self[1],
+                self[2][:2] + self[5][2] + self[2][3:5] + self[5][5] + self[2][6:8] + self[5][8],
+                self[3][6] + self[3][3] + self[3][0] + self[3][7] + self[3][4] + self[3][1] + self[3][8] + self[3][5] + self[3][2],
+                self[0][8] + self[4][1:3] + self[0][5] + self[4][4:6] + self[0][2] + self[4][7:],
+                
+                self[5][:2] + self[4][6] + self[5][3:5] + self[4][3] + self[5][6:8] + self[4][0]]
+
+    def R_Prime(self):
+        return [self[0][:2] + self[4][6] + self[0][3:5] + self[4][3] + self[0][6:8] + self[4][0],
+                
+                self[1],
+                self[2][:2] + self[0][2] + self[2][3:5] + self[0][5] + self[2][6:8] + self[0][8],
+                self[3][2] + self[3][5] + self[3][8] + self[3][1] + self[3][4] + self[3][7] + self[3][0] + self[3][3] + self[3][6],
+                self[5][8] + self[4][1:3] + self[5][5] + self[4][4:6] + self[5][2] + self[4][7:],
+                
+                self[5][:2] + self[2][2] + self[5][3:5] + self[2][5] + self[5][6:8] + self[2][8]]
+    
+
+    def M(self):
+        return [self[0][0] + self[4][7] + self[0][2:4] + self[4][4] + self[0][5:7] + self[4][1] + self[0][8],
+                
+                self[1],
+                self[2][0] + self[0][1] + self[2][2:4] + self[0][4] + self[2][5:7] + self[0][7] + self[2][8],
+                self[3],
+                self[4][0] + self[5][7] + self[4][2:4] + self[5][4] + self[4][5:7] + self[5][1] + self[4][8],
+   
+                self[5][0] + self[2][1] + self[5][2:4] + self[2][4] + self[5][5:7] + self[2][7] + self[5][8]]
+    
+    def M_Prime(self):
+        return [self[0][0] + self[2][1] + self[0][2:4] + self[2][4] + self[0][5:7] + self[2][7] + self[0][8],
+                
+                self[1],
+                self[2][0] + self[5][1] + self[2][2:4] + self[5][4] + self[2][5:7] + self[5][7] + self[2][8],
+                self[3],
+                self[4][0] + self[0][7] + self[4][2:4] + self[0][4] + self[4][5:7] + self[0][1] + self[4][8],
+                
+                self[5][0] + self[4][7] + self[5][2:4] + self[4][4] + self[5][5:7] + self[4][1] + self[5][8]]
+
+
+    def L(self):
+        return [self[4][8] + self[0][1:3] + self[4][5] + self[0][4:6] + self[4][2] + self[0][7:],
+                
+                self[1][6] + self[1][3] + self[1][0] + self[1][7] + self[1][4] + self[1][1] + self[1][8] + self[1][5] + self[1][2],
+                self[0][0] + self[2][1:3] + self[0][3]+ self[2][4:6] + self[0][6] + self[2][7:],
+                self[3],
+                self[4][:2] + self[5][6] + self[4][3:5] + self[5][3] + self[4][6:8] + self[5][0],
+
+                self[2][0] + self[5][1:3] + self[2][3] + self[5][4:6] + self[2][6] + self[5][7:]]
+
+    def L_Prime(self):
+        return [self[2][0] + self[0][1:3] + self[2][3] + self[0][4:6] + self[2][6] + self[0][7:],
+                
+                self[1][2] + self[1][5] + self[1][8] + self[1][1] + self[1][4] + self[1][7] + self[1][0] + self[1][3] + self[1][6],
+                self[5][0] + self[2][1:3] + self[5][3]+ self[2][4:6] + self[5][6] + self[2][7:],
+                self[3],
+                self[4][:2] + self[0][6] + self[4][3:5] + self[0][3] + self[4][6:8] + self[0][0],
+
+                self[4][8] + self[5][1:3] + self[4][5] + self[5][4:6] + self[4][2] + self[5][7:]]
 
     def move(self, move):
         # Executes the moves on the cube
@@ -211,8 +302,22 @@ class Cube_3():
         elif move == "F": self.cube = self.F()
         elif move == "F'": self.cube = self.F_Prime()
         
+        elif move == "S": self.cube = self.S()
         elif move == "S'": self.cube = self.S_Prime()
-        
+
+        elif move == "B": self.cube = self.B()
+        elif move == "B'": self.cube = self.B_Prime()
+
+        elif move == "R": self.cube = self.R()
+        elif move == "R'": self.cube = self.R_Prime()
+
+        elif move == "M": self.cube = self.M()
+        elif move == "M'": self.cube = self.M_Prime()
+
+        elif move == "L": self.cube = self.L()
+        elif move == "L'": self.cube = self.L_Prime()
+
+
         else: print("Not a valid movement")
 
 
