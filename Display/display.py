@@ -151,15 +151,15 @@ class Display():
                                 (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
 
         if self.cubeType == 3:
-            cornerCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
-                        [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
-                        [colours[cube[0][2]], colours[cube[2][0]], colours[cube[1][1]]],
-                        [colours[cube[0][3]], colours[cube[3][0]], colours[cube[2][1]]],
-
-                        [colours[cube[5][0]], colours[cube[1][3]], colours[cube[2][2]]],
-                        [colours[cube[5][1]], colours[cube[2][3]], colours[cube[3][2]]],
-                        [colours[cube[5][2]], colours[cube[4][3]], colours[cube[1][2]]],
-                        [colours[cube[5][3]], colours[cube[3][3]], colours[cube[4][2]]]]
+            #cornerCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
+            #            [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
+             #           [colours[cube[0][2]], colours[cube[2][0]], colours[cube[1][1]]],
+              #          [colours[cube[0][3]], colours[cube[3][0]], colours[cube[2][1]]],
+              #
+            #            [colours[cube[5][0]], colours[cube[1][3]], colours[cube[2][2]]],
+             #           [colours[cube[5][1]], colours[cube[2][3]], colours[cube[3][2]]],
+              #          [colours[cube[5][2]], colours[cube[4][3]], colours[cube[1][2]]],
+               #         [colours[cube[5][3]], colours[cube[3][3]], colours[cube[4][2]]]]
             
             corners, sides, centres = self.model.getPoints()
             for i, quad in enumerate(corners):
@@ -171,7 +171,8 @@ class Display():
                                 [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
                                 [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
                                 (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
-                                (cornerCol[i][0][0] * shade, cornerCol[i][0][1] * shade, cornerCol[i][0][2] * shade)))
+                                (150, 150, 150)))
+                                #(cornerCol[i][0][0] * shade, cornerCol[i][0][1] * shade, cornerCol[i][0][2] * shade)))
                 
                 if quad[2][-2] <= 0:
                 #if True:
@@ -181,7 +182,8 @@ class Display():
                                 [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
                                 [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
                                 (quad[2][4] + quad[2][1] + quad[2][2] + quad[2][5]) / 4,
-                                (cornerCol[i][1][0] * shade, cornerCol[i][1][1] * shade, cornerCol[i][1][2] * shade)))
+                                (150, 150, 150)))
+                               # (cornerCol[i][1][0] * shade, cornerCol[i][1][1] * shade, cornerCol[i][1][2] * shade)))
                     
                 if quad[2][-1] <= 0:
                 #if True:
@@ -191,7 +193,8 @@ class Display():
                                 [quad[0][2] * self.length + x, quad[1][2] * self.length + y],
                                 [quad[0][5] * self.length + x, quad[1][5] * self.length + y],
                                 (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
-                                (cornerCol[i][2][0] * shade, cornerCol[i][2][1] * shade, cornerCol[i][2][2] * shade)))
+                                (150, 150, 150)))
+                                #(cornerCol[i][2][0] * shade, cornerCol[i][2][1] * shade, cornerCol[i][2][2] * shade)))
             
             for i, quad in enumerate(sides):
                 if quad[2][-2] <= 0:
