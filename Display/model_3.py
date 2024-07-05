@@ -5,6 +5,7 @@ from Display.matrices import *
 
 class Model_3():
     def __init__(self):
+        # 3D Matrix of all the corner cubies
         self.corners = np.array([
                 # Top corners
                 [  # Back Left                                 | Depth Points
@@ -53,7 +54,7 @@ class Model_3():
         for i, quad in enumerate(self.corners):
             self.corners[i] = rotateX(theta, rotateY(alpha, quad))
 
-
+        # 3D Matrix of all the side cubies
         self.sides = np.array([
                 ### Top sides
                 [ # Back                                 | Depth Points
@@ -95,6 +96,27 @@ class Model_3():
                 [ # Front Right
                     [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,    1,  0],
                     [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  ,    0, -1]
+                ],
+                # Bottom sides
+                [ # Back
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,    1,  0],
+                    [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,    0,  1]
+                ],
+                [ # Left
+                    [-1/3, -1  , -1  , -1/3, -1  , -1  ,    0, -1],
+                    [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,    1,  0],
+                    [-1/3, -1/3,  1/3,  1/3, -1/3,  1/3,    0,  0]
+                ],
+                [ # Right
+                    [ 1/3,  1  ,  1  ,  1/3,  1  ,  1  ,    0,  1],
+                    [ 1  ,  1  ,  1  ,  1  ,  1/3,  1/3,    1,  0],
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0]
+                ],
+                [ # Front
+                    [ 1/3,  1/3, -1/3, -1/3,  1/3, -1/3,    0,  0],
+                    [1  ,   1  ,  1  ,  1  ,  1/3,  1/3,    1,  0],
                     [-1/3, -1  , -1  , -1/3, -1  , -1  ,    0, -1]
                 ]
             ], dtype = "float64") 

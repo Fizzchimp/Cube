@@ -8,8 +8,8 @@ from Assets.cqueue import Queue
 from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
-MAX_FPS = 200
-ROTATION_SPEED = 500
+MAX_FPS = 300
+ROTATION_SPEED = 125
 BG_SPEED = 40
 
 WIDTH = 700
