@@ -94,7 +94,7 @@ class Cube_3():
                               
                 self[1][2] + self[1][5] + self[1][8] + self[1][1] + self[1][4] + self[1][7] + self[1][0] + self[1][3] + self[1][6],]
     
-    def doMove(self, move):
+    def move(self, move):
         # Executes the moves on the cube
         if move == "X": self.cube = self.X()
         elif move == "X'": self.cube = self.X_Prime()
@@ -106,17 +106,4 @@ class Cube_3():
         elif move == "Z'": self.cube = self.Z_Prime()
        
         else: print("Not a valid movement")
-            
-# cube = Cube_3()
-cube = Cube_3(["OWROWOBRB",
-               
-               "BBRWRGGBW",
-               "YYYYBGRYR",
-               "OWBRORYGG",
-               "WBWBGROGO", 
-
-               "GOGYYOYWW"])
-
-cube.cube = cube.Z_Prime()
-
-cube.display()
+           
