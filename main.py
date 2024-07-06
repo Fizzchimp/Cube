@@ -347,5 +347,3 @@ class World:
 
 world = World()
 world.run()
-#["F'", 'S', "M'", "D'", "S'", 'B', 'B', 'D', 'D', "S'",
-# s"D'", "F'", 'R', "B'", "M'", 'L', 'R', 'B', "S'", "E'"]
