@@ -1,4 +1,4 @@
-from numpy._typing import _128Bit
+import random as rnd
 
 
 class Cube_3():
@@ -193,7 +193,7 @@ class Cube_3():
                 self[3][0] + self[0][3] + self[3][2:4] + self[0][4] + self[3][5:7] + self[0][5] + self[3][8],
                 self[4],
                 
-                self[5][:3] + self[3][1] + self[3][4] + self[3][7] + self[5][6:]]
+                self[5][:3] + self[3][7] + self[3][4] + self[3][1] + self[5][6:]]
                 
 
     def B(self):
@@ -279,6 +279,8 @@ class Cube_3():
 
                 self[4][8] + self[5][1:3] + self[4][5] + self[5][4:6] + self[4][2] + self[5][7:]]
 
+
+
     def move(self, move):
         # Executes the moves on the cube
         if move == "X": self.cube = self.X()
@@ -320,7 +322,11 @@ class Cube_3():
 
         else: print("Not a valid movement")
 
-
-cube = Cube_3()
-cube.move("S'")
-cube.display()
+    def scramble(self, num = 20):
+        # Scrambles the cube to a random position
+        moves = []
+        for i in range(num):
+            move = rnd.choice(["U", "E", "D", "F", "S", "B", "R", "M", "L"]) + rnd.choice(["'", ""])
+            moves.append(move)
+            # self.move(move)
+        return moves  
