@@ -243,8 +243,6 @@ class World:
                 elif pressed == 1:
                     moves = self.cube.scramble()
                     print(moves)
-                    for move in moves:
-                        self.moveQueue.enqueue(move)
                 
                 # Movement Buttons
                 elif pressed in BUTTON_KEYS.keys():
