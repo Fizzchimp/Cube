@@ -5,10 +5,10 @@ from Display.model_3 import Model_3
 from numpy import sin, cos, sqrt, arctan2
 
 colours = {"W": (245, 245, 245),
-           "Y": (255, 255, 0),
+           "Y": (255, 255, 50),
            "G": (50, 205, 50),
-           "R": (220, 20, 60),
-           "B": (0, 0, 205),
+           "R": (220, 40, 60),
+           "B": (80, 80, 205),
            "O": (255, 140, 0)}
 
 BG_IMAGE_SIZE = 90
