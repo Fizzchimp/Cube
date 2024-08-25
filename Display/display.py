@@ -47,12 +47,12 @@ class Display():
 
         ### 2 by 2
         # 3D Matrix of all verticies in a cube
-        #self.cubeType = 2
-        #self.model = Model_2()
+        self.cubeType = 2
+        self.model = Model_2()
         
         ### 3 by 2
-        self.cubeType = 3
-        self.model = Model_3()
+        # self.cubeType = 3
+        # self.model = Model_3()
 
         # Buttons
         fontSize = 47

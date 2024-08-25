@@ -242,9 +242,6 @@ class World:
                 # Scramble Button
                 elif pressed == 1:
                     moves = self.cube.scramble()
-                    print(moves)
-                    for move in moves:
-                        self.moveQueue.enqueue(move)
                 
                 # Movement Buttons
                 elif pressed in BUTTON_KEYS.keys():
@@ -300,9 +297,9 @@ class World:
 
     def run(self):
         # Creating Cube object
-        #self.cube = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        self.cube = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
         # self.cube = Cube_3(["GYYGWGWOY",    "OYGRRYWWO", "RGRRBGGOB", "GROWOYRBB", "BBWOGWYRB",    "YBWOYWOBR"])
-        self.cube = Cube_3()
+        # self.cube = Cube_3()
         #gself.cube.scramble()
 
         iter = 0
