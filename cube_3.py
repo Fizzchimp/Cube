@@ -283,41 +283,41 @@ class Cube_3():
 
     def move(self, move):
         # Executes the moves on the cube
-        if move == "X": self = self.X()
-        elif move == "X'": self = self.X_Prime()
+        if move == "X": self.cube = self.X()
+        elif move == "X'": self.cube = self.X_Prime()
         
-        elif move == "Y": self = self.Y()
-        elif move == "Y'": self = self.Y_Prime()
+        elif move == "Y": self.cube = self.Y()
+        elif move == "Y'": self.cube = self.Y_Prime()
             
-        elif move == "Z": self = self.Z()
-        elif move == "Z'": self = self.Z_Prime()
+        elif move == "Z": self.cube = self.Z()
+        elif move == "Z'": self.cube = self.Z_Prime()
        
-        elif move == "U": self = self.U()
-        elif move == "U'": self = self.U_Prime()
+        elif move == "U": self.cube = self.U()
+        elif move == "U'": self.cube = self.U_Prime()
         
-        elif move == "E": self = self.E()
-        elif move == "E'": self = self.E_Prime()
+        elif move == "E": self.cube = self.E()
+        elif move == "E'": self.cube = self.E_Prime()
         
-        elif move == "D": self = self.D()
-        elif move == "D'": self = self.D_Prime()
+        elif move == "D": self.cube = self.D()
+        elif move == "D'": self.cube = self.D_Prime()
         
-        elif move == "F": self = self.F()
-        elif move == "F'": self = self.F_Prime()
+        elif move == "F": self.cube = self.F()
+        elif move == "F'": self.cube = self.F_Prime()
         
-        elif move == "S": self = self.S()
-        elif move == "S'": self = self.S_Prime()
+        elif move == "S": self.cube = self.S()
+        elif move == "S'": self.cube = self.S_Prime()
 
-        elif move == "B": self = self.B()
-        elif move == "B'": self = self.B_Prime()
+        elif move == "B": self.cube = self.B()
+        elif move == "B'": self.cube = self.B_Prime()
 
-        elif move == "R": self = self.R()
-        elif move == "R'": self = self.R_Prime()
+        elif move == "R": self.cube = self.R()
+        elif move == "R'": self.cube = self.R_Prime()
 
-        elif move == "M": self = self.M()
-        elif move == "M'": self = self.M_Prime()
+        elif move == "M": self.cube = self.M()
+        elif move == "M'": self.cube = self.M_Prime()
 
-        elif move == "L": self = self.L()
-        elif move == "L'": self = self.L_Prime()
+        elif move == "L": self.cube = self.L()
+        elif move == "L'": self.cube = self.L_Prime()
 
 
         else: print("Not a valid movement")
@@ -329,4 +329,4 @@ class Cube_3():
             move = rnd.choice(["U", "E", "D", "F", "S", "B", "R", "M", "L"]) + rnd.choice(["'", ""])
             moves.append(move)
             self.move(move)
-        return moves  
+        return moves

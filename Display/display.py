@@ -17,7 +17,8 @@ def depth(face):
     return face[4]
 
 class Display():
-    def __init__(self, width, height, bobStrength):
+    def __init__(self, width, height, bobStrength, cube_type):
+        self.cube_type = cube_type
 
         # Setup the window
         self.width, self.height = width, height
@@ -46,13 +47,13 @@ class Display():
         self.bobStrength = bobStrength
 
         ### 2 by 2
-        # 3D Matrix of all verticies in a cube
-        self.cubeType = 2
-        self.model = Model_2()
+        if self.cube_type == 2:
+            # 3D Matrix of all verticies in a cube
+            self.model = Model_2()
         
         ### 3 by 2
-        # self.cubeType = 3
-        # self.model = Model_3()
+        if self.cube_type == 3:
+            self.model = Model_3()
 
         # Buttons
         fontSize = 47
@@ -108,7 +109,7 @@ class Display():
         faces = []
         
 
-        if self.cubeType == 2:
+        if self.cube_type == 2:
             quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
                       [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
                       [colours[cube[0][2]], colours[cube[2][0]], colours[cube[1][1]]],
@@ -150,7 +151,7 @@ class Display():
                                 (quad[2][6] + quad[2][3] + quad[2][5] + quad[2][5]) / 4,
                                 (quadCol[i][2][0] * shade, quadCol[i][2][1] * shade, quadCol[i][2][2] * shade)))
 
-        if self.cubeType == 3:
+        if self.cube_type == 3:
             cornerCol = [(colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][2]]),
                          (colours[cube[0][2]], colours[cube[4][0]], colours[cube[3][2]]),
                          (colours[cube[0][6]], colours[cube[2][0]], colours[cube[1][2]]),

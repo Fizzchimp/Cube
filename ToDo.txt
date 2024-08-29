@@ -46,6 +46,7 @@ Cube Set Up UI:
     Paint Tool
     Easy to use colour keys
     tab key
+    End point setup
 
 
 =================
