@@ -4,165 +4,118 @@ from Assets.node_3 import Node
 from Assets.stack import Stack
 import time
 
-def side_check(startState):
+MOVE_KEYS = ("U", "D", "L", "R", "F", "B")
+
+def old_side_check(cube):
     ### Phase 1
     # Flip all side peices to be "good" (can be returned home without the use of an odd number of quater turns of U or D)    
     facePattern1 = (3, 7, 5, 1)
     facePattern2 = (3, 1, 5, 7)
 
-    side_faces = [startState[i + 1] for i in range(4)]
+    for i in range(4):
+        group_a = (cube[i + 1][4], cube[(i + 2) % 4 + 1][4])
+        group_b = (cube[(i + 1) % 4 + 1][4], cube[(i + 3) % 4 + 1][4])
 
-    good = 0
-    bad = 0
-
-    for i, face in enumerate(side_faces):
-        group_a = (side_faces[i][4], side_faces[(i + 2) % 4][4])
-        group_b = (side_faces[(i + 1) % 4][4], side_faces[(i + 3) % 4][4])
-
-        side_peices = ((face[1], startState[0][facePattern1[i]]),
-                       (face[3], side_faces[(i + 3) % 4][5]),
-                       (face[7], startState[5][facePattern2[i]]))
+        side_peices = ((cube[i + 1][1], cube[0][facePattern1[i]]),
+                       (cube[i + 1][3], cube[(i + 3) % 4 + 1][5]),
+                       (cube[i + 1][7], cube[5][facePattern2[i]]))
 
         # Decision tree for 'Good' and 'Bad' Peices
         for peice in side_peices:
-            if peice[0] in group_a: good += 1
-            elif peice[0] in group_b: bad += 1
-            else:
-                if peice[1] in group_a: bad += 1
-                elif peice[1] in group_b: good += 1
-                # else: print(peice)
-    
-    # print("Good: ", good, "\nBad: ", bad)
-    if bad > 0:
-        return False, good, bad
-    return True, good, bad
+            if peice[0] in group_b: return False
+            elif peice[1] in group_a: return False
+    return True
 
+def side_check(cube):
+    groups = ((cube[2][4], cube[4][4]), (cube[1][4], cube[3][4]))
+    for i in range(4):
+        if cube[i + 1][1] == groups[i % 2][0] or cube[i + 1][1] == groups[i % 2][1]: return False
+        if cube[i + 1][1] == groups[i % 2][0] or cube[i + 1][1] == groups[i % 2][1]: return False
             
-def phase_1(startState):
-    # BFS to Find path
-    node_queue = Queue(999999)
-
-    current_node = Node(startState)
-    while current_node.generation <= 7:
-        if current_node.movement == "U" or current_node.movement == "D" or current_node.movement == "U'" or current_node.movement == "D'":
-            if side_check(current_node)[0]:
-                return current_node
-        
-        next_generation = current_node.generation + 1
-
-        if current_node.movement != "U'": node_queue.enqueue(Node(current_node.U(), current_node, "U", next_generation))
-        if current_node.movement != "U": node_queue.enqueue(Node(current_node.U_Prime(), current_node, "U'", next_generation))
-
-        if current_node.movement != "D'": node_queue.enqueue(Node(current_node.D(), current_node, "D", next_generation))
-        if current_node.movement != "D": node_queue.enqueue(Node(current_node.D_Prime(), current_node, "D'", next_generation))
-        
-        if current_node.movement != "R'": node_queue.enqueue(Node(current_node.R(), current_node, "R", next_generation))
-        if current_node.movement != "R": node_queue.enqueue(Node(current_node.R_Prime(), current_node, "R'", next_generation))
-
-        if current_node.movement != "L'": node_queue.enqueue(Node(current_node.L(), current_node, "L", next_generation))
-        if current_node.movement != "L": node_queue.enqueue(Node(current_node.L_Prime(), current_node, "L'", next_generation))
-
-        if current_node.movement != "F'": node_queue.enqueue(Node(current_node.F(), current_node, "F", next_generation))
-        if current_node.movement != "F": node_queue.enqueue(Node(current_node.F_Prime(), current_node, "F'", next_generation))
-
-        if current_node.movement != "B'": node_queue.enqueue(Node(current_node.B(), current_node, "B", next_generation))
-        if current_node.movement != "B": node_queue.enqueue(Node(current_node.B_Prime(), current_node, "B'", next_generation))
-
-        current_node = node_queue.dequeue()
 
 
-def phase_1_IDDFS(start_state):
-    start_node = Node(start_state)
-    depth = 0
-    while depth <= 7:
-        result = IDDFS(start_node, depth)
-        if result != None: return result
-        depth += 1
+    return True
+    
 
+def get_node_move(parent, move_num):
+    if move_num == 0: return parent.U()
+    if move_num == 1: return parent.U_Prime()
+    if move_num == 2: return parent.D()
+    if move_num == 3: return parent.D_Prime()
+    if move_num == 4: return parent.L()
+    if move_num == 5: return parent.L_Prime()
+    if move_num == 6: return parent.R()
+    if move_num == 7: return parent.R_Prime()
+    if move_num == 8: return parent.F()
+    if move_num == 9: return parent.F_Prime()
+    if move_num == 10: return parent.B()
+    if move_num == 11: return parent.B_Prime()
+    else: raise Exception("Invalid Move!")
 
 def phase_1_iddfs(start_state):
-    parent = Node(start_state)
+    start_node = Node(start_state, -1)
 
-    node_stack = Stack(7)
-    node_stack.push(parent)
+    for i in range(7):
+        print("Depth:", i)
+        node_stack = Stack(i + 1)
+        node_stack.push(Node(start_node.U(), 0, start_node))
 
-    current_node = Node(parent.U(), parent, "U", 1)
+        exhausted = False
+        while not exhausted:
 
-    depth = 0
+            # Branch down to required depth
+            if not node_stack.is_full():
+                parent = node_stack.peek()
+                node_stack.push(Node(parent.U(), 0, parent))
 
-    while current_depth <= max_depth:
+            else:
+                # Retreive the youngest node
+                current_node = node_stack.pop()
+                current_movement = current_node.movement
 
-        if current_node.movement not in ("U", "U'", "D", "D'"):
-            check = side_check(current_node)
-            if check[0]:
-                return current_node
+                parent = current_node.parent
+
+                # Check if the current node is correct
+                if current_movement <= 3:
+                    if old_side_check(current_node):
+                        node_stack.push(current_node)
+                        return node_stack
+                
             
-        if current_node.movement == "U":
-            current_node = Node(parent.U_Prime(), parent, "U'")
-        
-        elif current_node.movement == "U'":
-            current_node = Node(parent.D(), parent, "D")
+                # Push adjacent node
+                if current_movement <= 2:
+                    node_stack.push(Node(get_node_move(parent, current_movement + 1), current_movement + 1, parent))
 
-        elif current_node.movement == "D":
-            current_node = Node(parent.D_Prime(), parent, "D'")
-
-        elif current_node.movement == "D'":
-            current_node = Node(parent.L(), parent, "L")
-        
-        elif current_node.movement == "L":
-            current_node = Node(parent.L_Prime(), parent, "L")
-        
-        elif current_node.movement == "L'":
-            current_node = Node(parent.R(), parent, "R")
-        
-        elif current_node.movement == "R":
-            current_node = Node(parent.R_Prime(), parent, "R'")
-
-        elif current_node.movement == "R'":
-            current_node = Node(parent.F(), parent, "F")
-        
-        elif current_node.movement == "F":
-            current_node = Node(parent.F_Prime(), parent, "F'")
-
-        elif current_node.movement == "F'":
-            current_node = Node(parent.B(), parent, "B")
-
-        elif current_node.movement == "B":
-            current_node = Node(parent.B_Prime(), parent, "B'")
-
-        elif current_node.movement == "B'":
-            # parent = current_node
-            # node_stack.push(parent)
-            # current_node = Node(parent.U(), parent, "U")
-            # current_depth += 1
- 
+                # If current branch exhausted remove node and change upper branch
+                else:
+                    top = True
+                    for j in range(i):
+                        parent = node_stack.pop()
+                        if parent.movement <= 10:
+                            top = False
+                            break
+                    if top:
+                        exhausted = True
+                    else:
+                        node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1), parent.movement + 1, parent.parent))
 
 
+def find_path(start_state):
+    node_stack = phase_1_iddfs(start_state)
+    path = []
+    while not node_stack.is_empty():
+        node = node_stack.pop()
+        move = MOVE_KEYS[node.movement // 2] + ("'" if node.movement % 2 == 1 else "")
+        path.append(move)
+    return path[::-1]
 
-# cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
-cube = Cube_3()
-cube.move("U")
+# Superflip:
+cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
+
+# cube = Cube_3()
 # cube.scramble()
-cube.display()
-print(side_check(cube))
+# cube.display()
 
-node = phase_1_IDDFS(cube)
-
-print(side_check(node))
-node.display()
-path = []
-if node == None:
-    print(None)
-
-else:
-    while node.parent != None:
-        path.append(node.movement)
-        node = node.parent
-    path = path[::-1]
-
-print(path)
-
-for move in path:
-    cube.move(move)
-
-print(side_check(cube))
+time1 = time.time()
+print(find_path(cube.cube))
+print("Time:", time.time() - time1)

@@ -39,6 +39,9 @@ class Stack():
 
 
     def __str__(self):
-        text = "|" + "|\n|".join(self.items[:self.front + 1]) + "|\n"
-        return text
-    
+        if not self.is_empty():
+            text = ""
+            for i in range(self.front + 1):
+                text += "|" + str(self.items[i]) + "|\n"
+            return text
+        else: return "STACK EMPTY!\n"
