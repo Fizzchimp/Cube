@@ -2,6 +2,10 @@ from cube_3 import Cube_3
 from Assets.node_3 import Node
 from Assets.stack import Stack
 
+with open("phase_2.txt", "w") as table_2:
+    table_2.write("Hello!")
+    
+
 def get_node_move(parent, move_num):
     if move_num == 0: return parent.U()
     if move_num == 1: return parent.U_Prime()
@@ -17,10 +21,11 @@ def get_node_move(parent, move_num):
     if move_num == 11: return parent.B_Prime()
     else: raise Exception("Invalid Move!")
 
+
 def find_states():
-    start_node = Node(["XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX"])
+    start_node = Node(["1-2---1-2", "0-0S-S0-0", "1-2S-S2-1", "0-0S-S0-0", "1-2S-S2-1", "1-2---1-2"])
     
-    print(branch(start_node, 4))
+    branch(start_node, 4)
     
 
 def branch(node, depth_left):
