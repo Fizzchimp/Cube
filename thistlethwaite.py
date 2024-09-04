@@ -6,37 +6,7 @@ import time
 
 MOVE_KEYS = ("U", "D", "L", "R", "F", "B")
 
-def old_side_check(cube):
-    ### Phase 1
-    # Flip all side peices to be "good" (can be returned home without the use of an odd number of quater turns of U or D)    
-    facePattern1 = (3, 7, 5, 1)
-    facePattern2 = (3, 1, 5, 7)
-
-    for i in range(4):
-        group_a = (cube[i + 1][4], cube[(i + 2) % 4 + 1][4])
-        group_b = (cube[(i + 1) % 4 + 1][4], cube[(i + 3) % 4 + 1][4])
-
-        side_peices = ((cube[i + 1][1], cube[0][facePattern1[i]]),
-                       (cube[i + 1][3], cube[(i + 3) % 4 + 1][5]),
-                       (cube[i + 1][7], cube[5][facePattern2[i]]))
-
-        # Decision tree for 'Good' and 'Bad' Peices
-        for peice in side_peices:
-            if peice[0] in group_b: return False
-            elif peice[1] in group_a: return False
-    return True
-
-def side_check(cube):
-    groups = ((cube[2][4], cube[4][4]), (cube[1][4], cube[3][4]))
-    for i in range(4):
-        if cube[i + 1][1] == groups[i % 2][0] or cube[i + 1][1] == groups[i % 2][1]: return False
-        if cube[i + 1][1] == groups[i % 2][0] or cube[i + 1][1] == groups[i % 2][1]: return False
-            
-
-
-    return True
-    
-
+# Return the state of a node after applied move
 def get_node_move(parent, move_num):
     if move_num == 0: return parent.U()
     if move_num == 1: return parent.U_Prime()
@@ -52,7 +22,26 @@ def get_node_move(parent, move_num):
     if move_num == 11: return parent.B_Prime()
     else: raise Exception("Invalid Move!")
 
+# Phase 1
+def side_check(cube):
+    # Flip all side peices to be "good" (can be returned home without the use of an odd number of quater turns of U or D)    
+    facePattern1 = (3, 7, 5, 1)
+    facePattern2 = (3, 1, 5, 7)
+    groups = ((cube[2][4], cube[4][4]), (cube[1][4], cube[3][4]))
+
+    for i in range(4):
+        side_peices = ((cube[i + 1][1], cube[0][facePattern1[i]]),
+                       (cube[i + 1][3], cube[(i + 3) % 4 + 1][5]),
+                       (cube[i + 1][7], cube[5][facePattern2[i]]))
+
+        # Decision tree for 'Good' and 'Bad' Peices
+        for peice in side_peices:
+            if peice[0] in groups[(i) % 2]: return False
+            elif peice[1] in groups[(i + 1) % 2]: return False
+    return True
+
 def phase_1_iddfs(start_state):
+    # IDDFS to get to G1
     start_node = Node(start_state, -1)
 
     for i in range(7):
@@ -76,15 +65,14 @@ def phase_1_iddfs(start_state):
                 parent = current_node.parent
 
                 # Check if the current node is correct
-                if current_movement <= 3:
-                    if old_side_check(current_node):
-                        node_stack.push(current_node)
-                        return node_stack
+                if side_check(current_node):
+                    node_stack.push(current_node)
+                    return node_stack
                 
             
-                # Push adjacent node
-                if current_movement <= 2:
-                    node_stack.push(Node(get_node_move(parent, current_movement + 1), current_movement + 1, parent))
+                # Push D movement (Last move can only be U or D)
+                if current_movement == 0:
+                    node_stack.push(Node(parent.D(), 2, parent))
 
                 # If current branch exhausted remove node and change upper branch
                 else:
@@ -100,6 +88,8 @@ def phase_1_iddfs(start_state):
                         node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1), parent.movement + 1, parent.parent))
 
 
+
+
 def find_path(start_state):
     node_stack = phase_1_iddfs(start_state)
     path = []
@@ -112,6 +102,7 @@ def find_path(start_state):
 # Superflip:
 cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
 
+# cube = Cube_3(["OGGWWWOYY", "GRGWGRYBW", "WOOYROORR", "BBRGBBWGG", "WWYROORYB", "BGBOYYRBY"])
 # cube = Cube_3()
 # cube.scramble()
 # cube.display()
