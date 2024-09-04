@@ -1,6 +1,5 @@
 from cube_3 import Cube_3
 from Assets.node_3 import Node
-from Assets.cqueue import Queue
 from Assets.stack import Stack
 
 def get_node_move(parent, move_num):
@@ -18,8 +17,22 @@ def get_node_move(parent, move_num):
     if move_num == 11: return parent.B_Prime()
     else: raise Exception("Invalid Move!")
 
-def branch_out():
+def find_states():
     start_node = Node(["XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX", "XXXXXXXXX"])
-    node_stack = Stack(9)
     
+    print(branch(start_node, 4))
     
+
+def branch(node, depth_left):
+    print(depth_left)
+    
+    if depth_left <= 0:
+        node.display()
+        return
+        
+    for move in range(12):
+        state = branch(Node(get_node_move(node, move), move), depth_left - 1)
+        
+
+
+find_states()
