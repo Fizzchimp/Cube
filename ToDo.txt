@@ -1,7 +1,7 @@
 =================
 Methods for cube:
 =================
-Set algorithms?
+Double Move algorithms for 3 by 3
 
 
 =================
@@ -18,7 +18,6 @@ Seperate Movement Detection
 =================
 Cube:
     Hidden surface removal
-    Clean up thicker AAlines
     Draw Behind Cube
     Smooth Corners?
     Multiple Movements at once

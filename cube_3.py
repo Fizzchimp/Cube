@@ -304,51 +304,8 @@ class Cube_3():
     def move(self, move):
         # Executes the moves on the cube
         move = move.replace("'", "_Prime").replace("2", "_2")
-        self.cube = getattr(self, move)()
-        return
-        if move == "X": self.cube = self.X()
-        elif move == "X'": self.cube = self.X_Prime()
-        
-        elif move == "Y": self.cube = self.Y()
-        elif move == "Y'": self.cube = self.Y_Prime()
-            
-        elif move == "Z": self.cube = self.Z()
-        elif move == "Z'": self.cube = self.Z_Prime()
-       
-        elif move == "U": self.cube = self.U()
-        elif move == "U'": self.cube = self.U_Prime()
-        elif move == "U2": self.cube = self.U_2()
-        
-        elif move == "E": self.cube = self.E()
-        elif move == "E'": self.cube = self.E_Prime()
-        
-        elif move == "D": self.cube = self.D()
-        elif move == "D'": self.cube = self.D_Prime()
-        elif move == "D2": self.cube = self.D_2()
-        
-        elif move == "F": self.cube = self.F()
-        elif move == "F'": self.cube = self.F_Prime()
-        elif move == "F2": self.cube = self.F_2()
-        
-        elif move == "S": self.cube = self.S()
-        elif move == "S'": self.cube = self.S_Prime()
-
-        elif move == "B": self.cube = self.B()
-        elif move == "B'": self.cube = self.B_Prime()
-        elif move == "B2": self.cube = self.B_2()
-
-        elif move == "R": self.cube = self.R()
-        elif move == "R'": self.cube = self.R_Prime()
-        elif move == "R2": self.cube = self.R_2()
-
-        elif move == "M": self.cube = self.M()
-        elif move == "M'": self.cube = self.M_Prime()
-
-        elif move == "L": self.cube = self.L()
-        elif move == "L'": self.cube = self.L_Prime()
-        elif move == "L2": self.cube = self.L_2()
-
-        else: print("Not a valid movement")
+        try: self.cube = getattr(self, move)()
+        except AttributeError: print("Not a valid movement")
 
     def scramble(self, num = 20):
         # Scrambles the cube to a random position
@@ -358,10 +315,3 @@ class Cube_3():
             moves.append(move)
             self.move(move)
         return moves
-    
-
-
-
-cube = Cube_3()
-cube.move("D2")
-cube.display()
