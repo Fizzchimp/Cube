@@ -194,6 +194,16 @@ class Cube_3():
                 
                 self[1][2] + self[1][5] + self[1][8] + self[5][3:]]
 
+    def F_2(self):
+        return [self[0][:6] + self[5][6:][::-1],
+                
+                self[1][:2] + self[3][6] + self[1][3:5] + self[3][3] + self[1][5:7] + self[3][0],
+                self[2][::-1],
+                self[1][8] + self[3][1:3] + self[1][5] + self[3][4:6] + self[1][2] + self[3][7:],
+                self[4],
+                
+                self[0][:3][::-1] + self[5][3:]]
+
 
     def S(self):
         return [self[0][:3] + self[3][1] + self[3][4] + self[3][7] + self[0][6:],
@@ -236,6 +246,17 @@ class Cube_3():
                 
                 self[5][:6] + self[3][8] + self[3][5] + self[3][2]]
 
+    def B_2(self):
+        return [self[5][6:][::-1] + self[0][3:], 
+                
+                self[3][8] + self[1][1:3] + self[3][5] + self[1][4:6] + self[3][2] + self[1][7:],
+                self[2],
+                self[3][:2] + self[1][8] + self[3][3:5] + self[1][5] + self[3][6:8] + self[1][2],
+                self[4][::-1],
+                
+                self[5][:6] + self[0][:3][::-1]]
+
+
 
     def R(self):
         return [self[0][:2] + self[2][2] + self[0][3:5] + self[2][5] + self[0][6:8] + self[2][8],
@@ -257,6 +278,18 @@ class Cube_3():
                 
                 self[5][:2] + self[2][2] + self[5][3:5] + self[2][5] + self[5][6:8] + self[2][8]]
     
+    def R_2(self):
+        return [self[0][:2] + self[5][2] + self[0][3:5] + self[5][5] + self[0][6:8] + self[5][8],
+                
+                self[1],
+                self[2][:2] + self[4][8] + self[2][3:5] + self[4][5] + self[2][6:8] + self[4][2],
+                self[3][::-1],
+                self[2][8] + self[4][1:3] + self[2][5] + self[4][4:6] + self[2][2] + self[4][7:],
+                
+                self[5][:2] + self
+                ]
+    
+
 
     def M(self):
         return [self[0][0] + self[4][7] + self[0][2:4] + self[4][4] + self[0][5:7] + self[4][1] + self[0][8],
@@ -315,3 +348,8 @@ class Cube_3():
             moves.append(move)
             self.move(move)
         return moves
+    
+
+cube = Cube_3()
+cube.move("B2")
+cube.display()
