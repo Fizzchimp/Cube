@@ -113,6 +113,7 @@ class World:
                 # Scramble Button
                 elif pressed == 1:
                     moves = self.cube.scramble()
+                    print(moves)
                 
                 # Movement Buttons
                 elif pressed in BUTTON_KEYS.keys():
