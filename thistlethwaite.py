@@ -125,4 +125,4 @@ cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", 
 #print(find_path(cube.cube))
 #print("Time:", time.time() - time1)
 
-test_table(1)
+test_table(6)
