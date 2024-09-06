@@ -23,7 +23,7 @@ def translate_table():
                 move_string = ""
 
                 for move in moves:
-                    move_string = " " + str(CONVERSION[int(move)]) + move_string
+                    move_string += " " + str(CONVERSION[int(move)])
                     node.cube = getattr(node, G_1[CONVERSION[int(move)]])()
 
                 facelets = node[1][0] + node[1][2] + node[1][6] + node[1][8] + node[3][0] + node[3][2] + node[3][6] + node[3][8] + " :"
