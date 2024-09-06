@@ -6,21 +6,26 @@ import time
 
 MOVE_KEYS = ("U", "D", "L", "R", "F", "B")
 
+
+# Moveset to get from G0 -> G1
+G_0 = ("U", "U_Prime", "D", "D_Prime",
+       "L", "L_Prime", "R", "R_Prime",
+       "F", "F_Prime", "B", "B_Prime")
+
+
+# Moveset to get from G1 -> G2
+G_1 = ("L", "L_Prime", "L_2",
+       "R", "R_Prime", "R_2", 
+       "F", "F_Prime", "F_2",
+       "B", "B_Prime", "B_2", 
+       "U_2", "D_2")
+
+
 # Return the state of a node after applied move
-def get_node_move(parent, move_num):
-    if move_num == 0: return parent.U()
-    if move_num == 1: return parent.U_Prime()
-    if move_num == 2: return parent.D()
-    if move_num == 3: return parent.D_Prime()
-    if move_num == 4: return parent.L()
-    if move_num == 5: return parent.L_Prime()
-    if move_num == 6: return parent.R()
-    if move_num == 7: return parent.R_Prime()
-    if move_num == 8: return parent.F()
-    if move_num == 9: return parent.F_Prime()
-    if move_num == 10: return parent.B()
-    if move_num == 11: return parent.B_Prime()
-    else: raise Exception("Invalid Move!")
+def get_node_move(parent, move_num, move_set):
+    try: return getattr(parent, move_set[move_num])()
+    except IndexError: raise Exception("Invalid Move!")
+
 
 # Phase 1
 def side_check(cube):
@@ -85,8 +90,17 @@ def phase_1_iddfs(start_state):
                     if top:
                         exhausted = True
                     else:
-                        node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1), parent.movement + 1, parent.parent))
+                        node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, G_1), parent.movement + 1, parent.parent))
 
+
+# Phase 2
+def test_table(table_num):
+    with open("Tables/phase_2.txt", "r") as table:
+        moves = table.readlines()[table_num][11:].strip("\n").split(" ")
+        print(moves)
+        for i, move in enumerate(moves):
+            moves[i] = G_1[int(move)]
+        print(moves)
 
 
 
@@ -107,6 +121,8 @@ cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", 
 # cube.scramble()
 # cube.display()
 
-time1 = time.time()
-print(find_path(cube.cube))
-print("Time:", time.time() - time1)
+#time1 = time.time()
+#print(find_path(cube.cube))
+#print("Time:", time.time() - time1)
+
+test_table(1)
