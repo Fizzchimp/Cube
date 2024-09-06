@@ -62,8 +62,8 @@ class Display():
         gap = 10
         self.buttons = [Large_Button((250, 600), "SOLVE", 35),
                         Large_Button((450, 600), "SCRAMBLE", 35),
-                        Button((startX, startY), "U", fontSize),
-                        Button((startX + intervalX, startY), "U'", fontSize),
+                        Button((startX, startY), "U2", fontSize),
+                        Button((startX + intervalX, startY), "D2", fontSize),
                         Button((startX, startY + intervalY), "F", fontSize),
                         Button((startX + intervalX, startY + intervalY), "F'", fontSize),
                         Button((startX, startY + intervalY * 2), "R", fontSize),

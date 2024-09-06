@@ -94,13 +94,20 @@ def phase_1_iddfs(start_state):
 
 
 # Phase 2
-def test_table(table_num):
+def test_table():
+    move_list = []
     with open("Tables/phase_2.txt", "r") as table:
-        moves = table.readlines()[table_num][11:].strip("\n").split(" ")
-        print(moves)
-        for i, move in enumerate(moves):
-            moves[i] = G_1[int(move)]
-        print(moves)
+        lines = table.readlines()
+        for table_num in [5, 6, 7, 8, 9, 36, 39, 42, 43, 48, 49, 64, 65, 80, 97, 99, 145, 148, 158, 173, 229, 240, 272]:
+            moves = lines[table_num][11:].strip("\n").split(" ")
+            if move_list == []:
+                for move in moves: move_list.append(move)
+            else:
+                for move in move_list:
+                    if move not in moves: move_list.remove(move)
+            for i, move in enumerate(moves):
+                moves[i] = G_1[int(move)]
+            print(moves)
 
 
 
@@ -125,4 +132,4 @@ cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", 
 #print(find_path(cube.cube))
 #print("Time:", time.time() - time1)
 
-test_table(6)
+test_table()

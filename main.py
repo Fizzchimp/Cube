@@ -35,7 +35,7 @@ MOVE_KEYS = {pg.K_u: "U",
              pg.K_DOWN: "X'",
              pg.K_z: "Z"}
 
-BUTTON_KEYS = {2: "U", 3: "U'",
+BUTTON_KEYS = {2: "U2", 3: "D2",
                4: "F", 5: "F'",
                6: "R", 7: "R'",
                8: "D", 9: "D'",

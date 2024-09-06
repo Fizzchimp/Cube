@@ -363,3 +363,6 @@ class Cube_3():
             moves.append(move)
             self.move(move)
         return moves
+
+
+
