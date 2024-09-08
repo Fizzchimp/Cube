@@ -1,3 +1,5 @@
 14 move scramble: ["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"]
 
 SuperFlip: Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
+
+Incorrect Move table entries: [6, 7, 8, 36, 39, 42, 43, 48, 49, 64, 65, 80, 97, 99, 145, 148, 158, 173, 229, 240, 272]
