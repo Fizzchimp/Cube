@@ -171,7 +171,7 @@ def test_table():
     move_list = []
     with open("Tables/phase_2.txt", "r") as table:
         lines = table.readlines()
-        for table_num in [43, 65, 229]:
+        for table_num in [431, 65, 229]:
             moves = lines[table_num][11:].strip("\n").split(" ")
             if move_list == []:
                 for move in moves: move_list.append(move)

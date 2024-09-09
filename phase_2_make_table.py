@@ -29,7 +29,7 @@ def translate_table():
                 move_string = ""
                 
                 if moves[0][0] == "1":
-                    node.move("F_Prime")
+                    node.move("F")
                     move_string += " 7"
                     
                 for move in moves:
