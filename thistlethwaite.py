@@ -1,3 +1,4 @@
+from tkinter import NO
 from cube_3 import Cube_3
 from Assets.cqueue import Queue
 from Assets.node_3 import Node
@@ -54,10 +55,9 @@ def side_check(cube):
             elif peice[1] in groups[(i + 1) % 2]: return False
     return True
 
-def phase_1_iddfs(start_state):
+def phase_1_iddfs(start_node):
     # IDDFS to get to G1
-    start_node = Node(start_state, -1)
-    if side_check(start_state): return start_node
+    if side_check(start_node): return start_node
 
     for i in range(7):
         print("Depth:", i)
@@ -111,7 +111,7 @@ def UD_side_check(cube):
 
 def get_UD_slice(start_node):
     # To get UD slice correct
-    for i in range(6):
+    for i in range(5):
         print("Depth:", i)
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.L(), 0, start_node))
@@ -144,7 +144,7 @@ def get_UD_slice(start_node):
                     top = True
                     for j in range(i):
                         parent = node_stack.pop()
-                        if parent.movement <= 10:
+                        if parent.movement <= 12:
                             top = False
                             break
                     if top:
@@ -164,14 +164,20 @@ def get_corners(node):
 
     return state
 
-
+def get_table_moves(corners):
+    with open("Tables/phase_2.txt") as table:
+        for line in table.readlines():
+            if line[:8] == corners:
+                return line[11:]
+        
+    
 
 
 def test_table():
     move_list = []
     with open("Tables/phase_2.txt", "r") as table:
         lines = table.readlines()
-        for table_num in [431, 65, 229]:
+        for table_num in []:
             moves = lines[table_num][11:].strip("\n").split(" ")
             if move_list == []:
                 for move in moves: move_list.append(move)
@@ -186,7 +192,8 @@ def test_table():
 
 def find_path(start_state):
     # Phase 1
-    node = phase_1_iddfs(start_state)
+    phase_1_node = phase_1_iddfs(Node(start_state))
+    node = phase_1_node
     if node == None: return "Cannot Solve!"
     path = []
     while node.parent != None:
@@ -197,7 +204,8 @@ def find_path(start_state):
     print("Phase one complete")
     
     # Phase 2
-    node = get_UD_slice(Node(start_state))
+    node = get_UD_slice(Node(phase_1_node.cube))
+    print(get_corners(node))
     if node == None: return "Cannot Solve!"
     path = []
     while node.parent != None:
@@ -210,7 +218,6 @@ def find_path(start_state):
 
 # Superflip:
 #cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
-#cube.move('U', 'L', 'D', "F'", "R'", "B'", 'U')
 
 # cube = Cube_3(["OGGWWWOYY", "GRGWGRYBW", "WOOYROORR", "BBRGBBWGG", "WWYROORYB", "BGBOYYRBY"])
 cube = Cube_3()
@@ -221,4 +228,5 @@ cube.scramble()
 #print(find_path(cube.cube))
 #print("Time:", time.time() - time1)
 
-test_table()
+corners = get_corners(Node(cube.cube))
+print(get_table_moves(corners))
