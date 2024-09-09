@@ -27,9 +27,15 @@ def translate_table():
                 moves = line[:26].split(" ")
                 node = Node(["1S2---2S1", "0-0---0-0", "1S2---2S1", "0-0---0-0", "1S2---2S1", "1S2---2S1"])
                 move_string = ""
+                
+                if moves[0][0] == "1":
+                    node.move("F_Prime")
+                    move_string += " 7"
+                    
                 for move in moves:
                     move_string = " " + str(INV_CONVERSION[int(move)]) + move_string
                     node.cube = getattr(node, G_1[CONVERSION[int(move)]])()
+                    
 
                 facelets = node[1][0] + node[1][2] + node[1][6] + node[1][8] + node[3][0] + node[3][2] + node[3][6] + node[3][8] + " :"
                 table_file.write(facelets + move_string + "\n")

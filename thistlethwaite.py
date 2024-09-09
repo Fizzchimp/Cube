@@ -111,7 +111,7 @@ def UD_side_check(cube):
 
 def get_UD_slice(start_node):
     # To get UD slice correct
-    for i in range(5):
+    for i in range(6):
         print("Depth:", i)
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.L(), 0, start_node))
@@ -171,7 +171,7 @@ def test_table():
     move_list = []
     with open("Tables/phase_2.txt", "r") as table:
         lines = table.readlines()
-        for table_num in [5, 6, 7, 8, 9, 36, 39, 42, 43, 48, 49, 64, 65, 80, 97, 99, 145, 148, 158, 173, 229, 240, 272]:
+        for table_num in [43, 65, 229]:
             moves = lines[table_num][11:].strip("\n").split(" ")
             if move_list == []:
                 for move in moves: move_list.append(move)
@@ -187,15 +187,18 @@ def test_table():
 def find_path(start_state):
     # Phase 1
     node = phase_1_iddfs(start_state)
+    if node == None: return "Cannot Solve!"
     path = []
     while node.parent != None:
         move = G_0[node.movement]
         path.append(move)
         node = node.parent
     phase_1 = path[::-1]
+    print("Phase one complete")
     
     # Phase 2
     node = get_UD_slice(Node(start_state))
+    if node == None: return "Cannot Solve!"
     path = []
     while node.parent != None:
         move = G_1[node.movement]
@@ -206,18 +209,16 @@ def find_path(start_state):
 
 
 # Superflip:
-cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
-cube.move('U', 'L', 'D', "F'", "R'", "B'", 'U')
+#cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
+#cube.move('U', 'L', 'D', "F'", "R'", "B'", 'U')
 
 # cube = Cube_3(["OGGWWWOYY", "GRGWGRYBW", "WOOYROORR", "BBRGBBWGG", "WWYROORYB", "BGBOYYRBY"])
-# cube = Cube_3()
-# cube.scramble()
+cube = Cube_3()
+cube.scramble()
 # cube.display()
 
-time1 = time.time()
-print(find_path(cube.cube))
-print("Time:", time.time() - time1)
+#time1 = time.time()
+#print(find_path(cube.cube))
+#print("Time:", time.time() - time1)
 
-# node = Node()
-# node.move("U")
-# print(get_corners(node))
+test_table()
