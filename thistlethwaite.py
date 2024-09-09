@@ -1,6 +1,4 @@
-from tkinter import NO
 from cube_3 import Cube_3
-from Assets.cqueue import Queue
 from Assets.node_3 import Node
 from Assets.stack import Stack
 import time
@@ -23,7 +21,7 @@ G_1 = ("L", "L_Prime", "L_2",
 CORNERS = (((1, 0), (4, 2), (0, 0)),
            ((1, 2), (0, 6), (2, 0)),
            ((1, 6), (5, 6), (4, 8)),
-           ((1, 8), (2, 6), (5, 1)),
+           ((1, 8), (2, 6), (5, 0)),
            
            ((3, 0), (2, 2), (0, 8)),
            ((3, 2), (0, 2), (4, 0)),
@@ -37,7 +35,7 @@ def get_node_move(parent, move_num, move_set):
     except IndexError: raise Exception("Invalid Move!")
 
 
-# Phase 1
+### Phase 1
 def side_check(cube):
     # Flip all side peices to be "good" (can be returned home without the use of an odd number of quater turns of U or D)    
     facePattern1 = (3, 7, 5, 1)
@@ -55,12 +53,11 @@ def side_check(cube):
             elif peice[1] in groups[(i + 1) % 2]: return False
     return True
 
-def phase_1_iddfs(start_node):
+def solve_sides(start_node):
     # IDDFS to get to G1
     if side_check(start_node): return start_node
 
     for i in range(7):
-        print("Depth:", i)
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.U(), 0, start_node))
 
@@ -102,8 +99,26 @@ def phase_1_iddfs(start_node):
                     else:
                         node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, G_0), parent.movement + 1, parent.parent))
 
+def phase_1(start_state):
+    start_time = time.time()
 
-# Phase 2
+    node = solve_sides(Node(start_state))
+    if node == None: return "Cannot Solve!"
+    end_state = node.cube
+
+    print(f"Phase 1 finished in {time.time() - start_time}s")
+
+    path = []
+    while node.parent != None:
+        move = G_0[node.movement]
+        path.append(move)
+        node = node.parent
+
+    return path[::-1], end_state
+    
+    
+
+### Phase 2
 def UD_side_check(cube):
     group_c = (cube[0][4], cube[5][4])
     if cube[1][3] in group_c and cube[1][5] in group_c and cube[3][3] in group_c and cube[3][5] in group_c: return True
@@ -164,12 +179,68 @@ def get_corners(node):
 
     return state
 
+# All the transformations for the corners
+def reflection_XY(corners):
+    return corners[1] + corners[0] + corners[3] + corners[2] + corners[5] + corners[4] + corners[7] + corners[6]
+
+def reflection_XZ(corners):
+    return corners[2] + corners[3] + corners[0] + corners[1] + corners[6] + corners[7] + corners[4] + corners[5]
+
+def reflection_YZ(corners):
+    return corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[2] + corners[3]
+
+def rotation_X(corners):
+    return corners[3] + corners[2] + corners[1] + corners[0] + corners[7] + corners[6] + corners[5] + corners[4]
+
+def rotation_Y(corners):
+    return corners[4:] + corners[:4]
+
+def rotation_Z(corners):
+    return corners[::-1]
+
 def get_table_moves(corners):
     with open("Tables/phase_2.txt") as table:
         for line in table.readlines():
             if line[:8] == corners:
-                return line[11:]
+                return line[11:].split(" ")
         
+def phase_2(start_state):
+    node = get_UD_slice(Node(start_state))
+    if node == None: return "Cannot Solve!"
+    end_state = node.cube
+
+    path = []
+    while node.parent != None:
+        move = G_1[node.movement]
+        path.append(move)
+        node = node.parent
+    path = path[::-1]  
+
+
+    corners = get_corners(end_state)
+
+    # Attempt with no transformations
+    moves = get_table_moves(corners)
+    if moves != None:
+        print("No transformation")
+        for move in moves:
+            path.append(G_1[int(move)])
+        return path
+
+    # Attempt with transformations
+    for transformation in (reflection_XY, reflection_XZ, reflection_YZ, rotation_X, rotation_Y, rotation_Z):
+        moves = get_table_moves(transformation(corners))
+        if moves != None:
+            print(transformation)
+            for move in moves:
+                path.append(G_1[int(move)])
+            return path
+
+    else: print("NOT FOUND")
+    return path
+        
+
+    
     
 
 
@@ -190,43 +261,23 @@ def test_table():
 
 
 
+# Function to organise solving the cube
 def find_path(start_state):
     # Phase 1
-    phase_1_node = phase_1_iddfs(Node(start_state))
-    node = phase_1_node
-    if node == None: return "Cannot Solve!"
-    path = []
-    while node.parent != None:
-        move = G_0[node.movement]
-        path.append(move)
-        node = node.parent
-    phase_1 = path[::-1]
-    print("Phase one complete")
+    phase_1_moves, next_state = phase_1(start_state)
     
     # Phase 2
-    node = get_UD_slice(Node(phase_1_node.cube))
-    print(get_corners(node))
-    if node == None: return "Cannot Solve!"
-    path = []
-    while node.parent != None:
-        move = G_1[node.movement]
-        path.append(move)
-        node = node.parent
-    phase_2 = path[::-1]
-    return phase_1, phase_2
+    phase_2_moves = phase_2(next_state)
+
+    return phase_1_moves, phase_2_moves
 
 
 # Superflip:
-#cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
+cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
 
-# cube = Cube_3(["OGGWWWOYY", "GRGWGRYBW", "WOOYROORR", "BBRGBBWGG", "WWYROORYB", "BGBOYYRBY"])
-cube = Cube_3()
-cube.scramble()
+# cube = Cube_3(["OGORWYGBG", "BBWBGBGYG", "OOOWROWRW", "YGBWBGBGB", "YOWWOYYRY", "RWROYRRYR"])
+# cube = Cube_3()
+# cube.scramble()
 # cube.display()
 
-#time1 = time.time()
-#print(find_path(cube.cube))
-#print("Time:", time.time() - time1)
-
-corners = get_corners(Node(cube.cube))
-print(get_table_moves(corners))
+print(find_path(cube.cube))
