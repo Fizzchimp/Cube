@@ -194,7 +194,8 @@ def rotation_X(corners):
 
 def rotation_Y(corners):
     return corners[4:] + corners[:4]
-ROT_Y = ()
+ROT_Y = (3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8, 12, 13)
+
 def rotation_Z(corners):
     return corners[::-1]
 
@@ -215,7 +216,6 @@ def phase_2(start_state):
         path.append(move)
         node = node.parent
     path = path[::-1]
-    print(path)
 
 
     corners = get_corners(end_state)
@@ -234,7 +234,7 @@ def phase_2(start_state):
         if moves != None:
             print(transformation)
             for move in moves:
-                path.append(G_1[int(move)])
+                path.append(G_1[ROT_Y[int(move)]])
             return path
 
     else: print("NOT FOUND")
