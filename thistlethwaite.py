@@ -151,7 +151,7 @@ def get_UD_slice(start_node):
                     return current_node
                 
             
-                if current_movement <= 12:
+                if current_movement <= 10:
                     node_stack.push(Node(get_node_move(parent, current_movement + 1, G_1), current_movement + 1, parent))
 
                 # If current branch exhausted remove node and change upper branch
@@ -194,7 +194,7 @@ def rotation_X(corners):
 
 def rotation_Y(corners):
     return corners[4:] + corners[:4]
-
+ROT_Y = ()
 def rotation_Z(corners):
     return corners[::-1]
 
@@ -214,7 +214,8 @@ def phase_2(start_state):
         move = G_1[node.movement]
         path.append(move)
         node = node.parent
-    path = path[::-1]  
+    path = path[::-1]
+    print(path)
 
 
     corners = get_corners(end_state)
@@ -275,9 +276,9 @@ def find_path(start_state):
 # Superflip:
 cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
 
-# cube = Cube_3(["OGORWYGBG", "BBWBGBGYG", "OOOWROWRW", "YGBWBGBGB", "YOWWOYYRY", "RWROYRRYR"])
-# cube = Cube_3()
-# cube.scramble()
+# cube = Cube_3(["BBWWWROGO", "RBGWGRRGY", "WYBGROOWO", "YYRYBGBRR", "BOYOOOBBW", "GRWWYBGYY"])
+#cube = Cube_3()
+#cube.scramble()
 # cube.display()
 
 print(find_path(cube.cube))
