@@ -93,7 +93,12 @@ class World:
                     self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
                     
         # Get any buttons that are pressed
-        pressed = self.screen.getPressed()
+        pressed = []
+        mousePos = pg.mouse.get_pos()
+        for i, button in enumerate(self.screen.buttons + self.screen.movement_buttons):
+            if button.get_state(mousePos) == 2:
+                pressed.append(i)
+                
         if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
             if not self.buttonDown:
                 
@@ -118,6 +123,7 @@ class World:
                 # Movement Buttons
                 elif pressed in BUTTON_KEYS.keys():
                     self.doMove(BUTTON_KEYS[pressed], False)
+                    
                     
             self.buttonDown = True
 

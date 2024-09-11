@@ -48,7 +48,6 @@ class Display():
 
         ### 2 by 2
         if self.cube_type == 2:
-            # 3D Matrix of all verticies in a cube
             self.model = Model_2()
         
         ### 3 by 2
@@ -60,21 +59,24 @@ class Display():
         startX, startY = 45, 30
         intervalX, intervalY = 80, 50
         gap = 10
-        self.buttons = [Large_Button((250, 600), "SOLVE", 35),
-                        Large_Button((450, 600), "SCRAMBLE", 35),
-                        Button((startX, startY), "U2", fontSize),
-                        Button((startX + intervalX, startY), "D2", fontSize),
-                        Button((startX, startY + intervalY), "F", fontSize),
-                        Button((startX + intervalX, startY + intervalY), "F'", fontSize),
-                        Button((startX, startY + intervalY * 2), "R", fontSize),
-                        Button((startX + intervalX, startY + intervalY * 2), "R'", fontSize),
-                        
-                        Button((startX, startY + intervalY * 3 + gap), "D", fontSize),
-                        Button((startX + intervalX, startY + intervalY * 3 + gap), "D'", fontSize),
-                        Button((startX, startY + intervalY * 4 + gap), "B", fontSize),
-                        Button((startX + intervalX, startY + intervalY * 4 + gap), "B'", fontSize),
-                        Button((startX, startY + intervalY * 5 + gap), "L", fontSize),
-                        Button((startX + intervalX, startY + intervalY * 5 + gap), "L'", fontSize)] 
+        self.buttons = [
+            Large_Button((250, 600), "SOLVE", 35),
+            Large_Button((450, 600), "SCRAMBLE", 35)]
+        
+        self.movement_buttons = [
+            Button((startX, startY), "U2", fontSize),
+            Button((startX + intervalX, startY), "D2", fontSize),
+            Button((startX, startY + intervalY), "F", fontSize),
+            Button((startX + intervalX, startY + intervalY), "F'", fontSize),
+            Button((startX, startY + intervalY * 2), "R", fontSize),
+            Button((startX + intervalX, startY + intervalY * 2), "R'", fontSize),
+                         
+            Button((startX, startY + intervalY * 3 + gap), "D", fontSize),
+            Button((startX + intervalX, startY + intervalY * 3 + gap), "D'", fontSize),
+            Button((startX, startY + intervalY * 4 + gap), "B", fontSize),
+            Button((startX + intervalX, startY + intervalY * 4 + gap), "B'", fontSize),
+            Button((startX, startY + intervalY * 5 + gap), "L", fontSize),
+            Button((startX + intervalX, startY + intervalY * 5 + gap), "L'", fontSize)]
         
     def drawLine(self, colour, p1, p2, width):
         centre = ((p1[0] + p2[0]) / 2,
@@ -259,17 +261,13 @@ class Display():
         # Draw the cube onto the screen
         self.drawCube(cube, self.bobStrength * sin(self.cubeBob))
 
-        for button in self.buttons:
+        for button in self.buttons + self.movement_buttons:
             image = button.getImage()
             self.screen.blit(image, button.drawPoint)
+            
         
         pg.display.flip()
     
-    def getPressed(self):
-        mousePos = pg.mouse.get_pos()
-        for i, button in enumerate(self.buttons):
-            if button.getState(mousePos) == 2:
-                return i
 
 class Button():
     def __init__(self, centre, text, fontSize):
@@ -302,7 +300,7 @@ class Button():
         elif self.state == 1: return self.imageHov
         else: return self.imageUp
         
-    def getState(self, mousePos):
+    def get_state(self, mousePos):
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
                 self.state = 2
@@ -342,7 +340,7 @@ class Large_Button():
         elif self.state == 1: return self.imageHov
         else: return self.imageUp
 
-    def getState(self, mousePos):
+    def get_state(self, mousePos):
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
                 self.state = 2
