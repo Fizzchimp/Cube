@@ -313,8 +313,7 @@ class Cube_3():
                 self[4][0] + self[0][7] + self[4][2:4] + self[0][4] + self[4][5:7] + self[0][1] + self[4][8],
                 
                 self[5][0] + self[4][7] + self[5][2:4] + self[4][4] + self[5][5:7] + self[4][1] + self[5][8]]
-
-
+    
     def L(self):
         return [self[4][8] + self[0][1:3] + self[4][5] + self[0][4:6] + self[4][2] + self[0][7:],
                 

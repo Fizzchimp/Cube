@@ -47,21 +47,21 @@ class Display():
         self.bobStrength = bobStrength
 
         ### 2 by 2
-        if self.cube_type == 2:
-            self.model = Model_2()
+        self.model_2 = Model_2()
         
         ### 3 by 2
-        if self.cube_type == 3:
-            self.model = Model_3()
-
+        self.model_3 = Model_3()
+       
         # Buttons
         fontSize = 47
         startX, startY = 45, 30
         intervalX, intervalY = 80, 50
         gap = 10
         self.buttons = [
-            Large_Button((250, 600), "SOLVE", 35),
-            Large_Button((450, 600), "SCRAMBLE", 35)]
+            Large_Button((200, 600), "SOLVE", 35),
+            Large_Button((400, 600), "SCRAMBLE", 35),
+            Large_Button((350, 40), "SWAP", 35),
+            Large_Button((600, 600), "EDIT", 35)]
         
         self.movement_buttons = [
             Button((startX, startY), "U2", fontSize),
@@ -122,7 +122,7 @@ class Display():
                       [colours[cube[5][2]], colours[cube[4][3]], colours[cube[1][2]]],
                       [colours[cube[5][3]], colours[cube[3][3]], colours[cube[4][2]]]]
             
-            points = self.model.getPoints()
+            points = self.model_2.getPoints()
             for i, quad in enumerate(points):
                 if quad[2][0] < 0:
                     shade = (2 - quad[2][0]) / 3
@@ -187,7 +187,7 @@ class Display():
                          colours[cube[5][4]]]
             
 
-            corners, sides, centres = self.model.getPoints()
+            corners, sides, centres = self.model_3.getPoints()
             
             for i, quad in enumerate(corners):
                 if quad[2][-3] <= 0:
@@ -256,21 +256,22 @@ class Display():
     def drawScreen(self, cube):
         # Draw the background of the screen
         self.screen.fill((200, 150, 100))
-        #self.screen.blit(self.background, (self.backgroundPosition))
+        # self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
         self.drawCube(cube, self.bobStrength * sin(self.cubeBob))
 
         for button in self.buttons + self.movement_buttons:
-            image = button.getImage()
-            self.screen.blit(image, button.drawPoint)
+            if not button.hidden:
+                image = button.getImage()
+                self.screen.blit(image, button.drawPoint)
             
         
         pg.display.flip()
     
 
 class Button():
-    def __init__(self, centre, text, fontSize):
+    def __init__(self, centre, text, fontSize, hidden = False):
         # Images for the different button states
         self.imageUp = pg.image.load("Display/Textures/Button_Up.png").convert_alpha()
         self.imageHov = pg.image.load("Display/Textures/Button_Hov.png").convert_alpha()
@@ -294,6 +295,9 @@ class Button():
         self.hitbox = ((centre[0] - 35, centre[1] - 20), (centre[0] + 35, centre[1] + 20))
         self.state = 0
 
+        # Tag to decide if the button is shown on screen
+        self.hidden = hidden
+        
 
     def getImage(self):
         if self.state == 2: return self.imageDown
@@ -311,7 +315,7 @@ class Button():
         return 0
      
 class Large_Button():
-    def __init__(self, centre, text, fontSize):
+    def __init__(self, centre, text, fontSize, hidden = False):
         # Images for the different button states
         self.imageUp = pg.image.load("Display/Textures/L_Button_Up.png").convert_alpha()
         self.imageHov = pg.image.load("Display/Textures/L_Button_Hov.png").convert_alpha()
@@ -334,6 +338,10 @@ class Large_Button():
         # Hitbox for detecting mouse
         self.hitbox = ((centre[0] - 75, centre[1] - 25), (centre[0] + 75, centre[1] + 25))
         self.state = 0
+
+        # Tag to decide if the button is shown on screen
+        self.hidden = hidden
+        
 
     def getImage(self):
         if self.state == 2: return self.imageDown

@@ -17,7 +17,6 @@ BG_SPEED = 40
 WIDTH = 700
 HEIGHT = 700
 
-CUBE_TYPE = 3
 
 SHIFT = (1, 2, 3)
 MOVE_KEYS = {pg.K_u: "U",
@@ -35,12 +34,12 @@ MOVE_KEYS = {pg.K_u: "U",
              pg.K_DOWN: "X'",
              pg.K_z: "Z"}
 
-BUTTON_KEYS = {2: "U2", 3: "D2",
-               4: "F", 5: "F'",
-               6: "R", 7: "R'",
-               8: "D", 9: "D'",
-               10: "B", 11: "B'",
-               12: "L", 13: "L'"}
+BUTTON_KEYS = {4: "U2", 5: "D2",
+               6: "F", 7: "F'",
+               8: "R", 9: "R'",
+               10: "D", 11: "D'",
+               12: "B", 13: "B'",
+               14: "L", 15: "L'"}
 
 HALF_PI = pi / 2
 DOUBLE_PI = pi * 2
@@ -51,17 +50,21 @@ BOB_STRENGTH = WIDTH * 0.02
 class World:
     def __init__(self):
         pg.init()
-        self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, CUBE_TYPE)
+        self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, 3)
         self.clock = pg.time.Clock()
         self.moveQueue = Queue(100)
         
-    
-               
+        # Creating Cube object
+        self.cube_type = 3
+        self.cube_2 = Cube_2()
+        self.cube_3 = Cube_3()
+        self.cube = self.cube_3
+                   
     def findPath(self, cube):
-        if CUBE_TYPE == 2:
+        if self.cube_type == 2:
             sNode, eNode = solve_2(cube)
         
-        elif CUBE_TYPE == 3:
+        elif self.cube_type == 3:
             sNode, eNode = solve_3(cube)
 
         path = []
@@ -78,6 +81,17 @@ class World:
 
         return path
     
+    def swap_cubes(self):
+        if self.cube_type == 2:
+            self.cube_type = 3
+            self.cube = self.cube_3
+            self.screen.cube_type = 3
+            
+        elif self.cube_type == 3:
+            self.cube_type = 2
+            self.cube = self.cube_2
+            self.screen.cube_type = 2
+            
     def doEvents(self):
         for event in pg.event.get():
                 if event.type == pg.QUIT: return False
@@ -93,11 +107,11 @@ class World:
                     self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
                     
         # Get any buttons that are pressed
-        pressed = []
+        pressed = None
         mousePos = pg.mouse.get_pos()
         for i, button in enumerate(self.screen.buttons + self.screen.movement_buttons):
-            if button.get_state(mousePos) == 2:
-                pressed.append(i)
+            if not button.hidden and button.get_state(mousePos) == 2:
+                pressed = i
                 
         if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
             if not self.buttonDown:
@@ -119,6 +133,9 @@ class World:
                 elif pressed == 1:
                     moves = self.cube.scramble()
                     print(moves)
+                    
+                elif pressed == 2:
+                    self.swap_cubes()
                 
                 # Movement Buttons
                 elif pressed in BUTTON_KEYS.keys():
@@ -174,18 +191,8 @@ class World:
         elif move == "Z'": self.screen.model.zPhase = HALF_PI
 
     def run(self):
-        # Creating Cube object
-        if CUBE_TYPE == 2:
-            self.cube = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
-
-        elif CUBE_TYPE == 3:
-            # self.cube = Cube_3(["GYYGWGWOY",    "OYGRRYWWO", "RGRRBGGOB", "GROWOYRBB", "BBWOGWYRB",    "YBWOYWOBR"])
-            self.cube = Cube_3()
-
-        # self.cube.scramble()
-
         iter = 0
-
+        
         # World loop
         self.keyDown = False
         self.key = None
@@ -197,6 +204,9 @@ class World:
         self.clock.tick()
         while running:
             
+            if self.cube_type == 2: self.screen.model = self.screen.model_2
+            elif self.cube_type == 3: self.screen.model = self.screen.model_3
+            
             # Get and run input events (keys, buttons and others)
             running = self.doEvents()
 
@@ -207,6 +217,7 @@ class World:
             
             
             # Update aspects of the screen
+            
             self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
             self.screen.cubeBob = (self.screen.cubeBob + deltaTime / BOB_SPEED) % DOUBLE_PI
             
