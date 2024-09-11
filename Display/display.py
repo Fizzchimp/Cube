@@ -54,9 +54,6 @@ class Display():
        
         # Buttons
         fontSize = 47
-        startX, startY = 45, 30
-        intervalX, intervalY = 80, 50
-        gap = 10
         self.buttons = [
             Large_Button((200, 600), "SOLVE", 35),
             Large_Button((400, 600), "SCRAMBLE", 35),
@@ -64,19 +61,26 @@ class Display():
             Large_Button((600, 600), "EDIT", 35)]
         
         self.movement_buttons = [
-            Button((startX, startY), "U2", fontSize),
-            Button((startX + intervalX, startY), "D2", fontSize),
-            Button((startX, startY + intervalY), "F", fontSize),
-            Button((startX + intervalX, startY + intervalY), "F'", fontSize),
-            Button((startX, startY + intervalY * 2), "R", fontSize),
-            Button((startX + intervalX, startY + intervalY * 2), "R'", fontSize),
+            Button((45, 30), "U", fontSize),
+            Button((125, 30), "U'", fontSize),
+            Button((45, 80), "F", fontSize),
+            Button((125, 80), "F'", fontSize),
+            Button((45, 130), "R", fontSize),
+            Button((125, 130), "R'", fontSize),
                          
-            Button((startX, startY + intervalY * 3 + gap), "D", fontSize),
-            Button((startX + intervalX, startY + intervalY * 3 + gap), "D'", fontSize),
-            Button((startX, startY + intervalY * 4 + gap), "B", fontSize),
-            Button((startX + intervalX, startY + intervalY * 4 + gap), "B'", fontSize),
-            Button((startX, startY + intervalY * 5 + gap), "L", fontSize),
-            Button((startX + intervalX, startY + intervalY * 5 + gap), "L'", fontSize)]
+            Button((45, 190), "D", fontSize),
+            Button((125, 190), "D'", fontSize),
+            Button((45, 240), "B", fontSize),
+            Button((125, 240), "B'", fontSize),
+            Button((45, 290), "L", fontSize),
+            Button((125, 290), "L'", fontSize),
+            
+            Button((45, 350), "E", fontSize),
+            Button((125, 350), "E'", fontSize),
+            Button((45, 400), "S", fontSize),
+            Button((125, 400), "S'", fontSize),
+            Button((45, 450), "M", fontSize),
+            Button((125, 450), "M'", fontSize)]
         
     def drawLine(self, colour, p1, p2, width):
         centre = ((p1[0] + p2[0]) / 2,
