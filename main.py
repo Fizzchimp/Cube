@@ -99,7 +99,13 @@ class World:
             self.screen.cube_type = 2
             for button in self.screen.movement_buttons[12:]:
                 button.hidden = True
-            
+    
+    def edit(self):
+        for button in self.screen.buttons + self.screen.movement_buttons:
+            button.hidden = True
+        
+        self.screen.buttons[4].hidden = False
+    
     def doEvents(self):
         for event in pg.event.get():
                 if event.type == pg.QUIT: return False
@@ -145,6 +151,10 @@ class World:
                 elif pressed == 2:
                     self.swap_cubes()
                 
+                elif pressed == 3:
+                    self.edit()
+                    
+
                 # Movement Buttons
                 elif pressed in BUTTON_KEYS.keys():
                     self.doMove(BUTTON_KEYS[pressed], False)
