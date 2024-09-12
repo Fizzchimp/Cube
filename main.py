@@ -153,9 +153,23 @@ class World:
             self.screen.buttons[4].hidden = False
             self.screen.buttons[5].hidden = False
             self.edit_pointer = 0
+
+    def is_editing(self):
+        if self.edit_pointer == -1:
+            return False
+        return True
     
+    def update_edit_pointer(self):
+        self.edit_pointer += 1
+
+        if self.edit_pointer == 4:
+            self.do_move("Y")
+            self.edit_pointer = 0
+
+
+
     # Executes a move on both cube data strucure and model
-    def do_move(self, move, mod):
+    def do_move(self, move, mod = None):
         if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
         self.cube.move(move)
         
@@ -196,7 +210,7 @@ class World:
         elif move == "Z'": self.screen.model.zPhase = HALF_PI
 
     # Handles all program events
-    def get_events(self):
+    def handle_events(self):
         for event in pg.event.get():
                 if event.type == pg.QUIT: return False
                 elif event.type == pg.KEYDOWN:
@@ -208,17 +222,17 @@ class World:
             if self.key == pg.K_ESCAPE: return False
                                    
             else:
-                if self.edit_pointer == -1:
+                if not self.is_editing():
                     if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys():
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                     
-                if self.edit_pointer != -1:
+                elif self.is_editing():
                     if not self.screen.model.isMoving() and self.key in EDITING_MOVES:
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
 
                     if self.key in EDITING_COLS.keys():
                         self.cube.cube[2] = self.cube[2][:self.edit_pointer] + EDITING_COLS[self.key] + self.cube[2][self.edit_pointer + 1:]
-                        self.edit_pointer = (self.edit_pointer + 1) % 4
+                        self.update_edit_pointer()
                         self.key = None
                 
         
@@ -296,7 +310,7 @@ class World:
             elif self.cube_type == 3: self.screen.model = self.screen.model_3
             
             # Get and run input events (keys, buttons and others)
-            running = self.get_events()
+            running = self.handle_events()
 
             # Get moves from the movement queue
             if not self.moveQueue.isEmpty() and not self.screen.model.isMoving():
