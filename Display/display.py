@@ -4,15 +4,18 @@ from Display.model_2 import Model_2
 from Display.model_3 import Model_3
 from numpy import sin, cos, sqrt, arctan2
 
-colours = {"W": (245, 245, 245),
-           "Y": (255, 255, 50),
-           "G": (50, 205, 50),
-           "R": (220, 40, 60),
-           "B": (80, 80, 205),
-           "O": (255, 140, 0)}
+colours = {
+    "W": (245, 245, 245),
+    "Y": (255, 255, 50),
+    "G": (50, 205, 50),
+    "R": (220, 40, 60),
+    "B": (80, 80, 205),
+    "O": (255, 140, 0),
+    "-": (150, 150, 150)}
 
 BG_IMAGE_SIZE = 90
 
+EDITING_FACES = (4, 7, 8, 9)
 def depth(face):
     return face[4]
 
@@ -59,7 +62,8 @@ class Display():
             Large_Button((400, 600), "SCRAMBLE", 35),
             Large_Button((350, 40), "SWAP", 35),
             Large_Button((600, 600), "EDIT", 35),
-            Large_Button((350, 600), "DONE", 35, True)]
+            Large_Button((450, 600), "DONE", 35, True),
+            Large_Button((250, 600), "CLEAR", 35, True)]
         
         self.movement_buttons = [
             Button((45, 30), "U", fontSize),
@@ -111,7 +115,7 @@ class Display():
         pg.gfxdraw.aapolygon(self.screen, (UL, UR, BR, BL), colour)
         pg.gfxdraw.filled_polygon(self.screen, (UL, UR, BR, BL), colour)
 
-    def drawCube(self, cube, centreOffset = 0):
+    def drawCube(self, cube, centreOffset = 0, edit_pointer = -1):
         x, y = self.x, self.y + centreOffset
         faces = []
         
@@ -250,21 +254,25 @@ class Display():
                                   [quad[0][3] * self.length + x, quad[1][3] * self.length + y],
                                   (quad[2][0] + quad[2][1] + quad[2][2] + quad[2][3]) / 4,
                                   (centreCol[i][0] * shade, centreCol[i][1] * shade, centreCol[i][2] * shade)))
-
+        
         for face in sorted(faces, key = depth, reverse = True):
             pg.gfxdraw.filled_polygon(self.screen, face[0:4], face[5])
                 
             for i in range(4):
                 self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
                 pg.draw.circle(self.screen, (50, 50, 50), face[i], 4)
+                
+        if edit_pointer >= 0:
+            points = faces[EDITING_FACES[edit_pointer]][:4]
+            pg.gfxdraw.filled_polygon(self.screen, points, (0, 0, 0))
         
-    def drawScreen(self, cube):
+    def drawScreen(self, cube, edit_pointer = -1):
         # Draw the background of the screen
         self.screen.fill((200, 150, 100))
         # self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
-        self.drawCube(cube, self.bobStrength * sin(self.cubeBob))
+        self.drawCube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
         for button in self.buttons + self.movement_buttons:
             if not button.hidden:

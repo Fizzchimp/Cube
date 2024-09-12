@@ -1,3 +1,4 @@
+from math import e
 import threading
 import pygame as pg
 from numpy import pi
@@ -34,6 +35,13 @@ MOVE_KEYS = {pg.K_u: "U",
              pg.K_DOWN: "X'",
              pg.K_z: "Z"}
 
+EDITING_MOVES = (
+    pg.K_LEFT,
+    pg.K_RIGHT,
+    pg.K_UP,
+    pg.K_DOWN,
+    pg.K_z)
+
 BUTTON_KEYS = (
     "U", "U'",
     "F", "F'",
@@ -53,20 +61,23 @@ BOB_STRENGTH = WIDTH * 0.02
 
 class World:
     def __init__(self):
+        # Creating Cube object
+        self.cube_type = 2
+        self.cube_2 = Cube_2()
+        self.cube_3 = Cube_3()
+        self.cube = getattr(self, f"cube_{self.cube_type}")
+        
+        # Initiating Pygame and display module
         pg.init()
-        self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, 3)
+        self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, self.cube_type)
         self.clock = pg.time.Clock()
         self.moveQueue = Queue(100)
         
-        # Creating Cube object
-        self.cube_type = 3
-        self.cube_2 = Cube_2()
-        self.cube_3 = Cube_3()
-        self.cube = self.cube_3
         
-        self.editing = False
-                   
-    def findPath(self, cube):
+        self.edit_pointer = -1
+           
+    # Organises Pathfinding for each cube
+    def find_path(self, cube):
         if self.cube_type == 2:
             sNode, eNode = solve_2(cube)
         
@@ -87,29 +98,41 @@ class World:
 
         return path
     
+    # Swap between 2 by 2 and 3 by 3
     def swap_cubes(self):
         if self.cube_type == 2:
             self.cube_type = 3
             self.cube = self.cube_3
             self.screen.cube_type = 3
-            for button in self.screen.movement_buttons[12:]:
-                button.hidden = False
+            if not self.editing:
+                for button in self.screen.movement_buttons[12:]:
+                    button.hidden = False
             
         elif self.cube_type == 3:
             self.cube_type = 2
             self.cube = self.cube_2
             self.screen.cube_type = 2
-            for button in self.screen.movement_buttons[12:]:
-                button.hidden = True
+            if not self.editing:
+                for button in self.screen.movement_buttons[12:]:
+                    button.hidden = True
     
     def swap_editing(self):
-        
-        if self.editing:
-            for button in self.screen.buttons + self.screen.movement_buttons:
+        for face in self.cube.cube:
+            if "-" in face:
+                print("Not finished editing!")
+                return
+            
+        if self.edit_pointer != -1:
+            for button in self.screen.buttons + self.screen.movement_buttons[:12]:
                 button.hidden = False
+            if self.cube_type == 3:
+                
+                for button in self.screen.movement_buttons[12:]:
+                    button.hidden = False
             
             self.screen.buttons[4].hidden = True
-            self.editing = False
+            self.screen.buttons[5].hidden = True
+            self.edit_pointer = -1
 
 
         else:
@@ -117,10 +140,10 @@ class World:
                 button.hidden = True
         
             self.screen.buttons[4].hidden = False
-            self.screen.buttons[2].hidden = False
-            self.editing = True
+            self.screen.buttons[5].hidden = False
+            self.edit_pointer = 0
     
-    def doEvents(self):
+    def get_events(self):
         for event in pg.event.get():
                 if event.type == pg.QUIT: return False
                 elif event.type == pg.KEYDOWN: self.keyDown, self.key = True, event.key
@@ -131,9 +154,18 @@ class World:
                 return False
                                    
             else:
-                if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys():
-                    self.doMove(MOVE_KEYS[self.key], pg.key.get_mods())
+                if self.edit_pointer == -1:
+                    if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys():
+                        self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                     
+                elif self.edit_pointer != -1:
+                    if not self.screen.model.isMoving and self.key in EDITING_MOVES:
+                        self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
+                        
+                    elif self.key.ascii in ("WGRBOY"):
+                        self.cube[2][self.edit_pointer] = self.key.ascii
+
+
         # Get any buttons that are pressed
         pressed = None
         mousePos = pg.mouse.get_pos()
@@ -146,7 +178,7 @@ class World:
                 
                 # Solve Button
                 if pressed == 0:
-                    solution = self.findPath(self.cube.cube)
+                    solution = self.find_path(self.cube.cube)
                     if solution == False:
                         print("No solution")
                     elif solution == []:
@@ -168,10 +200,14 @@ class World:
                 elif pressed == 3 or pressed == 4:
                     self.swap_editing()
                     
+                elif pressed == 5:
+                    if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
+                    elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
+                    
 
                 # Movement Buttons
                 elif 0 <= pressed - len(self.screen.buttons) <= 17:
-                    self.doMove(BUTTON_KEYS[pressed - len(self.screen.buttons)], False)
+                    self.do_move(BUTTON_KEYS[pressed - len(self.screen.buttons)], False)
                     
                     
             self.buttonDown = True
@@ -182,7 +218,7 @@ class World:
     
         return True
     
-    def doMove(self, move, mod):
+    def do_move(self, move, mod):
         if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
         self.cube.move(move)
         
@@ -230,7 +266,7 @@ class World:
         self.key = None
         self.buttonDown = False
 
-        deltaTime = 0
+        delta_time = 0
 
         running = True
         self.clock.tick()
@@ -240,30 +276,32 @@ class World:
             elif self.cube_type == 3: self.screen.model = self.screen.model_3
             
             # Get and run input events (keys, buttons and others)
-            running = self.doEvents()
+            running = self.get_events()
 
             # Get moves from the movement queue
             if not self.moveQueue.isEmpty() and not self.screen.model.isMoving():
                 move = self.moveQueue.dequeue()
-                self.doMove(move, False)
+                self.do_move(move, False)
             
-            
+                
             # Update aspects of the screen
             
-            self.screen.model.phaseUpdate((deltaTime / ROTATION_SPEED) * HALF_PI)
-            self.screen.cubeBob = (self.screen.cubeBob + deltaTime / BOB_SPEED) % DOUBLE_PI
+            self.screen.model.phaseUpdate((delta_time / ROTATION_SPEED) * HALF_PI)
+            self.screen.cubeBob = (self.screen.cubeBob + delta_time / BOB_SPEED) % DOUBLE_PI
             
-            self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + deltaTime / BG_SPEED) % 90 - 90
-            self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] + deltaTime / BG_SPEED) % 90 - 90
+            self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + delta_time / BG_SPEED) % 90 - 90
+            self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] + delta_time / BG_SPEED) % 90 - 90
             
             iter += 1
             if iter % MAX_FPS == 0:
                 pg.display.set_caption(str(self.clock.get_fps()))
             
             # Draw the screen
-            self.screen.drawScreen(self.cube.cube)
+            self.screen.drawScreen(self.cube.cube, self.edit_pointer)
 
-            deltaTime = self.clock.tick(MAX_FPS)
+            delta_time = self.clock.tick(MAX_FPS)
+            
+
         pg.quit()
 
 world = World()
