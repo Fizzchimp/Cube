@@ -33,6 +33,21 @@ class Cube_2():
             else: return False
         return True
 
+    def __getitem__(self, index):
+        return self.cube[index]
+    
+    def set_facelet(self, colour, index_1, index_2):
+        face = ""
+        for facelet in self[index_1][:index_2]:
+            face += facelet
+
+        face += colour
+
+        for facelet in self[index_1][index_2 + 1:]:
+            face += facelet
+        
+        self.cube[index_1] = face
+    
 
     def U(self):
         # Returns rotation U clockwise

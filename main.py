@@ -53,6 +53,16 @@ BUTTON_KEYS = (
     "S", "S'",
     "M", "M'")
 
+EDITING_COLS = {
+    pg.K_w: "W",
+    pg.K_g: "G",
+    pg.K_r: "R",
+    pg.K_b: "B",
+    pg.K_o: "O",
+    pg.K_y: "Y"}
+
+
+
 HALF_PI = pi / 2
 DOUBLE_PI = pi * 2
 
@@ -104,7 +114,7 @@ class World:
             self.cube_type = 3
             self.cube = self.cube_3
             self.screen.cube_type = 3
-            if not self.editing:
+            if self.edit_pointer != -1:
                 for button in self.screen.movement_buttons[12:]:
                     button.hidden = False
             
@@ -112,10 +122,11 @@ class World:
             self.cube_type = 2
             self.cube = self.cube_2
             self.screen.cube_type = 2
-            if not self.editing:
+            if self.edit_pointer != -1:
                 for button in self.screen.movement_buttons[12:]:
                     button.hidden = True
     
+    # Swaps between editing and solving
     def swap_editing(self):
         for face in self.cube.cube:
             if "-" in face:
@@ -143,27 +154,74 @@ class World:
             self.screen.buttons[5].hidden = False
             self.edit_pointer = 0
     
+    # Executes a move on both cube data strucure and model
+    def do_move(self, move, mod):
+        if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
+        self.cube.move(move)
+        
+        if move == "U": self.screen.model.uPhase = -HALF_PI
+        elif move == "U'": self.screen.model.uPhase = HALF_PI
+            
+        elif move == "R": self.screen.model.rPhase = HALF_PI
+        elif move == "R'": self.screen.model.rPhase = -HALF_PI
+            
+        elif move == "F": self.screen.model.fPhase = -HALF_PI
+        elif move == "F'": self.screen.model.fPhase = HALF_PI
+            
+        elif move == "D": self.screen.model.dPhase = HALF_PI
+        elif move == "D'": self.screen.model.dPhase = -HALF_PI
+            
+        elif move == "L": self.screen.model.lPhase = -HALF_PI
+        elif move == "L'": self.screen.model.lPhase = HALF_PI
+            
+        elif move == "B": self.screen.model.bPhase = HALF_PI
+        elif move == "B'": self.screen.model.bPhase = -HALF_PI
+        
+        elif move == "M": self.screen.model.mPhase = -HALF_PI
+        elif move == "M'": self.screen.model.mPhase = HALF_PI
+        
+        elif move == "S": self.screen.model.sPhase = HALF_PI
+        elif move == "S'": self.screen.model.sPhase = -HALF_PI
+        
+        elif move == "E": self.screen.model.ePhase = HALF_PI
+        elif move == "E'": self.screen.model.ePhase = -HALF_PI
+            
+        elif move == "X": self.screen.model.xPhase = HALF_PI
+        elif move == "X'": self.screen.model.xPhase = -HALF_PI
+            
+        elif move == "Y": self.screen.model.yPhase = -HALF_PI
+        elif move == "Y'": self.screen.model.yPhase = HALF_PI
+            
+        elif move == "Z": self.screen.model.zPhase = -HALF_PI
+        elif move == "Z'": self.screen.model.zPhase = HALF_PI
+
+    # Handles all program events
     def get_events(self):
         for event in pg.event.get():
                 if event.type == pg.QUIT: return False
-                elif event.type == pg.KEYDOWN: self.keyDown, self.key = True, event.key
+                elif event.type == pg.KEYDOWN:
+                    self.keyDown, self.key = True, event.key
                 elif event.type == pg.KEYUP: self.keyDown = False
-                
+      
+        
         if self.keyDown == True:
-            if self.key == pg.K_ESCAPE:
-                return False
+            if self.key == pg.K_ESCAPE: return False
                                    
             else:
                 if self.edit_pointer == -1:
                     if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys():
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                     
-                elif self.edit_pointer != -1:
-                    if not self.screen.model.isMoving and self.key in EDITING_MOVES:
+                if self.edit_pointer != -1:
+                    if not self.screen.model.isMoving() and self.key in EDITING_MOVES:
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
-                        
-                    elif self.key.ascii in ("WGRBOY"):
-                        self.cube[2][self.edit_pointer] = self.key.ascii
+
+                    if self.key in EDITING_COLS.keys():
+                        self.cube.cube[2] = self.cube[2][:self.edit_pointer] + EDITING_COLS[self.key] + self.cube[2][self.edit_pointer + 1:]
+                        self.edit_pointer = (self.edit_pointer + 1) % 4
+                        self.key = None
+                
+        
 
 
         # Get any buttons that are pressed
@@ -218,45 +276,7 @@ class World:
     
         return True
     
-    def do_move(self, move, mod):
-        if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
-        self.cube.move(move)
-        
-        if move == "U": self.screen.model.uPhase = -HALF_PI
-        elif move == "U'": self.screen.model.uPhase = HALF_PI
-            
-        elif move == "R": self.screen.model.rPhase = HALF_PI
-        elif move == "R'": self.screen.model.rPhase = -HALF_PI
-            
-        elif move == "F": self.screen.model.fPhase = -HALF_PI
-        elif move == "F'": self.screen.model.fPhase = HALF_PI
-            
-        elif move == "D": self.screen.model.dPhase = HALF_PI
-        elif move == "D'": self.screen.model.dPhase = -HALF_PI
-            
-        elif move == "L": self.screen.model.lPhase = -HALF_PI
-        elif move == "L'": self.screen.model.lPhase = HALF_PI
-            
-        elif move == "B": self.screen.model.bPhase = HALF_PI
-        elif move == "B'": self.screen.model.bPhase = -HALF_PI
-        
-        elif move == "M": self.screen.model.mPhase = -HALF_PI
-        elif move == "M'": self.screen.model.mPhase = HALF_PI
-        
-        elif move == "S": self.screen.model.sPhase = HALF_PI
-        elif move == "S'": self.screen.model.sPhase = -HALF_PI
-        
-        elif move == "E": self.screen.model.ePhase = HALF_PI
-        elif move == "E'": self.screen.model.ePhase = -HALF_PI
-            
-        elif move == "X": self.screen.model.xPhase = HALF_PI
-        elif move == "X'": self.screen.model.xPhase = -HALF_PI
-            
-        elif move == "Y": self.screen.model.yPhase = -HALF_PI
-        elif move == "Y'": self.screen.model.yPhase = HALF_PI
-            
-        elif move == "Z": self.screen.model.zPhase = -HALF_PI
-        elif move == "Z'": self.screen.model.zPhase = HALF_PI
+    
 
     def run(self):
         iter = 0
