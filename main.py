@@ -34,16 +34,16 @@ MOVE_KEYS = {pg.K_u: "U",
              pg.K_DOWN: "X'",
              pg.K_z: "Z"}
 
-BUTTON_KEYS = {
-    4: "U", 5: "U'",
-    6: "F", 7: "F'",
-    8: "R", 9: "R'",
-    10: "D", 11: "D'",
-    12: "B", 13: "B'",
-    14: "L", 15: "L'",
-    16: "E", 17: "E'",
-    18: "S", 19: "S'",
-    20: "M", 21: "M'"}
+BUTTON_KEYS = (
+    "U", "U'",
+    "F", "F'",
+    "R", "R'",
+    "D", "D'",
+    "B", "B'",
+    "L", "L'",
+    "E", "E'",
+    "S", "S'",
+    "M", "M'")
 
 HALF_PI = pi / 2
 DOUBLE_PI = pi * 2
@@ -63,6 +63,8 @@ class World:
         self.cube_2 = Cube_2()
         self.cube_3 = Cube_3()
         self.cube = self.cube_3
+        
+        self.editing = False
                    
     def findPath(self, cube):
         if self.cube_type == 2:
@@ -100,11 +102,23 @@ class World:
             for button in self.screen.movement_buttons[12:]:
                 button.hidden = True
     
-    def edit(self):
-        for button in self.screen.buttons + self.screen.movement_buttons:
-            button.hidden = True
+    def swap_editing(self):
         
-        self.screen.buttons[4].hidden = False
+        if self.editing:
+            for button in self.screen.buttons + self.screen.movement_buttons:
+                button.hidden = False
+            
+            self.screen.buttons[4].hidden = True
+            self.editing = False
+
+
+        else:
+            for button in self.screen.buttons + self.screen.movement_buttons:
+                button.hidden = True
+        
+            self.screen.buttons[4].hidden = False
+            self.screen.buttons[2].hidden = False
+            self.editing = True
     
     def doEvents(self):
         for event in pg.event.get():
@@ -151,13 +165,13 @@ class World:
                 elif pressed == 2:
                     self.swap_cubes()
                 
-                elif pressed == 3:
-                    self.edit()
+                elif pressed == 3 or pressed == 4:
+                    self.swap_editing()
                     
 
                 # Movement Buttons
-                elif pressed in BUTTON_KEYS.keys():
-                    self.doMove(BUTTON_KEYS[pressed], False)
+                elif 0 <= pressed - len(self.screen.buttons) <= 17:
+                    self.doMove(BUTTON_KEYS[pressed - len(self.screen.buttons)], False)
                     
                     
             self.buttonDown = True

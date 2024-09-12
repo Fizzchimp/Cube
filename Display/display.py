@@ -59,7 +59,7 @@ class Display():
             Large_Button((400, 600), "SCRAMBLE", 35),
             Large_Button((350, 40), "SWAP", 35),
             Large_Button((600, 600), "EDIT", 35),
-            Large_Button((600, 600), "DONE", 35, True)]
+            Large_Button((350, 600), "DONE", 35, True)]
         
         self.movement_buttons = [
             Button((45, 30), "U", fontSize),
