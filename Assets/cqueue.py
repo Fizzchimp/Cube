@@ -7,25 +7,25 @@ class Queue:
         self.queue = [None for i in range(size)]
 
 
-    def isFull(self):
+    def is_full(self):
         if self.rear == self.front + self.size - 1:
             return True
         return False
 
-    def isEmpty(self):
+    def is_empty(self):
         if self.rear == self.front - 1:
             return True
         return False
 
     def enqueue(self, item):
-        if not self.isFull():
+        if not self.is_full():
             self.rear += 1
             self.queue[self.rear % self.size] = item
         else:
             raise Exception("Queue is full! Cannot enqueue")
 
     def dequeue(self):
-        if not self.isEmpty():
+        if not self.is_empty():
             self.front += 1
             return self.queue[(self.front - 1) % self.size]
         else:
@@ -35,7 +35,7 @@ class Queue:
     def display(self):
         front, rear = self.front % self.size, self.rear % self.size
         print("==============")
-        if not self.isEmpty():
+        if not self.is_empty():
             print("[", end = "")
             for i in range(self.front, self.rear):
                 print(self.queue[i % self.size], end = ", ")

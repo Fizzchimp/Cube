@@ -1,4 +1,3 @@
-from math import e
 import threading
 import pygame as pg
 from numpy import pi
@@ -162,7 +161,7 @@ class World:
     def update_edit_pointer(self):
         self.edit_pointer += 1
 
-        if self.edit_pointer == 4:
+        if (self.cube_type == 2 and self.edit_pointer >= 4) or self.edit_pointer == 9:
             self.do_move("Y")
             self.edit_pointer = 0
 
@@ -245,7 +244,7 @@ class World:
             if not button.hidden and button.get_state(mousePos) == 2:
                 pressed = i
                 
-        if pressed != None and self.moveQueue.isEmpty() and not self.screen.model.isMoving():
+        if pressed != None and self.moveQueue.is_empty() and not self.screen.model.isMoving():
             if not self.buttonDown:
                 
                 # Solve Button
@@ -313,7 +312,7 @@ class World:
             running = self.handle_events()
 
             # Get moves from the movement queue
-            if not self.moveQueue.isEmpty() and not self.screen.model.isMoving():
+            if not self.moveQueue.is_empty() and not self.screen.model.isMoving():
                 move = self.moveQueue.dequeue()
                 self.do_move(move, False)
             
@@ -331,7 +330,7 @@ class World:
                 pg.display.set_caption(str(self.clock.get_fps()))
             
             # Draw the screen
-            self.screen.drawScreen(self.cube.cube, self.edit_pointer)
+            self.screen.drawScreen(self.cube.cube, delta_time, self.edit_pointer)
 
             delta_time = self.clock.tick(MAX_FPS)
             

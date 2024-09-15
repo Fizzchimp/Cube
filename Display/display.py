@@ -15,7 +15,9 @@ colours = {
 
 BG_IMAGE_SIZE = 90
 
-EDITING_FACES = (4, 7, 8, 9)
+EDITING_FACES = ((4, 7, 8, 9),
+                 (4, 17, 7, 19, 25, 21, 9, 23, 11))
+
 def depth(face):
     return face[4]
 
@@ -48,6 +50,8 @@ class Display():
 
         self.cubeBob = 0
         self.bobStrength = bobStrength
+
+        self.edit_phase = 0
 
         ### 2 by 2
         self.model_2 = Model_2()
@@ -130,6 +134,7 @@ class Display():
                       [colours[cube[5][1]], colours[cube[2][3]], colours[cube[3][2]]],
                       [colours[cube[5][2]], colours[cube[4][3]], colours[cube[1][2]]],
                       [colours[cube[5][3]], colours[cube[3][3]], colours[cube[4][2]]]]
+            
             
             points = self.model_2.getPoints()
             for i, quad in enumerate(points):
@@ -263,15 +268,16 @@ class Display():
                 pg.draw.circle(self.screen, (50, 50, 50), face[i], 4)
                 
         if edit_pointer >= 0:
-            points = faces[EDITING_FACES[edit_pointer]][:4]
-            pg.gfxdraw.filled_polygon(self.screen, points, (0, 0, 0))
+            points = faces[EDITING_FACES[self.cube_type - 2][edit_pointer]][:4]
+            pg.gfxdraw.filled_polygon(self.screen, points, (0, 0, 0, 100 + 40 * sin(self.edit_phase)))
         
-    def drawScreen(self, cube, edit_pointer = -1):
+    def drawScreen(self, cube, delta_time, edit_pointer = -1):
         # Draw the background of the screen
         self.screen.fill((200, 150, 100))
         # self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
+        if edit_pointer != -1: self.edit_phase += delta_time * 0.005
         self.drawCube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
         for button in self.buttons + self.movement_buttons:
