@@ -153,11 +153,13 @@ class World:
             self.screen.buttons[5].hidden = False
             self.edit_pointer = 0
 
+    # Method to check if the program is in editing state
     def is_editing(self):
         if self.edit_pointer == -1:
             return False
         return True
     
+    # Updates the edit pointer 
     def update_edit_pointer(self):
         self.edit_pointer += 1
 
