@@ -28,6 +28,7 @@ def solve_2(startState):
     cENode = Node(normalisedSolved(startState))
 
     generation = 0
+    
     # List of visited nodes from the previous generation
     vENodes = []
     vSNodes = []
