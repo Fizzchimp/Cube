@@ -186,6 +186,7 @@ def reflection_XY(corners):
 
 def reflection_XZ(corners):
     return corners[2] + corners[3] + corners[0] + corners[1] + corners[6] + corners[7] + corners[4] + corners[5]
+REF_XZ = (1, 0, 2, 4, 3, 5, 7, 6, 8, 10, 9, 11, 13, 12)
 
 def reflection_YZ(corners):
     return corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[3] + corners[2]
@@ -233,22 +234,25 @@ def phase_2(start_state):
         return path
 
     # Attempt with transformations
-    for transformation, moveset in ((reflection_XY, NO_MOVES), (reflection_XZ, NO_MOVES), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
+    for transformation, moveset in ((reflection_XY, NO_MOVES), (reflection_XZ, NO_MOVES), (reflection_YZ, NO_MOVES), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
         moves = get_table_moves(transformation(corners))
         if moves != None:
+            print(transformation(corners))
             print(transformation)
             for move in moves:
+                print(G_1[int(move)])
                 path.append(G_1[moveset[int(move)]])
             return path
 
     else: print("NOT FOUND")
+    print(path)
     return path
         
 
     
 
 # Function to organise solving the cube
-def thistle_solve(start_state):
+def thistle_solve(start_state):    
     # Phase 1
     phase_1_moves, next_state = phase_1(start_state)
     
