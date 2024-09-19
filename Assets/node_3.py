@@ -6,6 +6,3 @@ class Node(Cube_3):
         self.movement = movement
         self.generation = generation
         self.parent = parent
-
-    def __str__(self):
-        return "Node"

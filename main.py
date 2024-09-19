@@ -9,9 +9,10 @@ from cube_3 import Cube_3
 from Assets.solve_2 import solve_2
 from Assets.solve_3 import solve_3
 from Assets.cqueue import Queue
+from thistlethwaite import thistle_solve
 
 MAX_FPS = 200
-ROTATION_SPEED = 125
+ROTATION_SPEED = 50
 BG_SPEED = 40
 
 WIDTH = 700
@@ -71,9 +72,9 @@ BOB_STRENGTH = WIDTH * 0.02
 class World:
     def __init__(self):
         # Creating Cube object
-        self.cube_type = 2
+        self.cube_type = 3
         self.cube_2 = Cube_2()
-        self.cube_3 = Cube_3()
+        self.cube_3 = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
         self.cube = getattr(self, f"cube_{self.cube_type}")
         
         # Initiating Pygame and display module
@@ -89,23 +90,25 @@ class World:
     def find_path(self, cube):
         if self.cube_type == 2:
             sNode, eNode = solve_2(cube)
+            path = []
+            
+            if sNode == None:
+                return False
+            
+            while sNode.parent != None:
+                path.append(sNode.movement)
+                sNode = sNode.parent
+            path = path[::-1]
+
+            while eNode.parent != None:
+                path.append(eNode.movement)
+                eNode = eNode.parent
+
+            return path
         
         elif self.cube_type == 3:
-            sNode, eNode = solve_3(cube)
-
-        path = []
-        if sNode == None:
-            return False
-        while sNode.parent != None:
-            path.append(sNode.movement)
-            sNode = sNode.parent
-        path = path[::-1]
-
-        while eNode.parent != None:
-            path.append(eNode.movement)
-            eNode = eNode.parent
-
-        return path
+            moves = thistle_solve(cube)
+            return moves
     
     # Swap between 2 by 2 and 3 by 3
     def swap_cubes(self):
@@ -172,25 +175,32 @@ class World:
     # Executes a move on both cube data strucure and model
     def do_move(self, move, mod = None):
         if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
+        move = move.replace("_Prime", "'").replace("_2", "2")
         self.cube.move(move)
         
         if move == "U": self.screen.model.uPhase = -HALF_PI
         elif move == "U'": self.screen.model.uPhase = HALF_PI
+        elif move == "U2": self.screen.model.uPhase = -pi
             
         elif move == "R": self.screen.model.rPhase = HALF_PI
         elif move == "R'": self.screen.model.rPhase = -HALF_PI
+        elif move == "R2": self.screen.model.rPhase = pi
             
         elif move == "F": self.screen.model.fPhase = -HALF_PI
         elif move == "F'": self.screen.model.fPhase = HALF_PI
+        elif move == "F2": self.screen.model.fPhase = -pi
             
         elif move == "D": self.screen.model.dPhase = HALF_PI
         elif move == "D'": self.screen.model.dPhase = -HALF_PI
+        elif move == "D2": self.screen.model.dPhase = pi
             
         elif move == "L": self.screen.model.lPhase = -HALF_PI
         elif move == "L'": self.screen.model.lPhase = HALF_PI
+        elif move == "L2": self.screen.model.lPhase = -pi
             
         elif move == "B": self.screen.model.bPhase = HALF_PI
         elif move == "B'": self.screen.model.bPhase = -HALF_PI
+        elif move == "B2": self.screen.model.bPhase = -pi
         
         elif move == "M": self.screen.model.mPhase = -HALF_PI
         elif move == "M'": self.screen.model.mPhase = HALF_PI

@@ -17,6 +17,7 @@ G_1 = ("L", "L_Prime", "L_2",
        "B", "B_Prime", "B_2", 
        "U_2", "D_2")
 
+NO_MOVES = [i for i in range(14)]
 
 CORNERS = (((1, 0), (4, 2), (0, 0)),
            ((1, 2), (0, 6), (2, 0)),
@@ -187,10 +188,12 @@ def reflection_XZ(corners):
     return corners[2] + corners[3] + corners[0] + corners[1] + corners[6] + corners[7] + corners[4] + corners[5]
 
 def reflection_YZ(corners):
-    return corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[2] + corners[3]
+    return corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[3] + corners[2]
+REF_YZ = (4, 3, 5, 1, 0, 2, 7, 6, 8, 10, 9, 11, 12, 13)
 
 def rotation_X(corners):
     return corners[3] + corners[2] + corners[1] + corners[0] + corners[7] + corners[6] + corners[5] + corners[4]
+ROT_X = (0, 1, 2, 3, 4, 5, 9, 10, 11, 6, 7, 8, 13, 12)
 
 def rotation_Y(corners):
     return corners[4:] + corners[:4]
@@ -198,6 +201,7 @@ ROT_Y = (3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8, 12, 13)
 
 def rotation_Z(corners):
     return corners[::-1]
+ROT_Z = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 13, 12)
 
 def get_table_moves(corners):
     with open("Tables/phase_2.txt") as table:
@@ -229,12 +233,12 @@ def phase_2(start_state):
         return path
 
     # Attempt with transformations
-    for transformation in (reflection_XY, reflection_XZ, reflection_YZ, rotation_X, rotation_Y, rotation_Z):
+    for transformation, moveset in ((reflection_XY, NO_MOVES), (reflection_XZ, NO_MOVES), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
         moves = get_table_moves(transformation(corners))
         if moves != None:
             print(transformation)
             for move in moves:
-                path.append(G_1[ROT_Y[int(move)]])
+                path.append(G_1[moveset[int(move)]])
             return path
 
     else: print("NOT FOUND")
@@ -242,43 +246,13 @@ def phase_2(start_state):
         
 
     
-    
-
-
-def test_table():
-    move_list = []
-    with open("Tables/phase_2.txt", "r") as table:
-        lines = table.readlines()
-        for table_num in []:
-            moves = lines[table_num][11:].strip("\n").split(" ")
-            if move_list == []:
-                for move in moves: move_list.append(move)
-            else:
-                for move in move_list:
-                    if move not in moves: move_list.remove(move)
-            for i, move in enumerate(moves):
-                moves[i] = G_1[int(move)]
-            print(moves)
-
-
 
 # Function to organise solving the cube
-def find_path(start_state):
+def thistle_solve(start_state):
     # Phase 1
     phase_1_moves, next_state = phase_1(start_state)
     
     # Phase 2
     phase_2_moves = phase_2(next_state)
 
-    return phase_1_moves, phase_2_moves
-
-
-# Superflip:
-cube = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
-
-# cube = Cube_3(["BBWWWROGO", "RBGWGRRGY", "WYBGROOWO", "YYRYBGBRR", "BOYOOOBBW", "GRWWYBGYY"])
-#cube = Cube_3()
-#cube.scramble()
-# cube.display()
-
-print(find_path(cube.cube))
+    return phase_1_moves + phase_2_moves

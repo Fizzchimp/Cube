@@ -4,6 +4,14 @@ from Assets.binsearch import binSearch
 from Assets.mergesort import mergeSort
 
 
+MOVES = ("U", "U2", "U'",
+         "D", "D2", "D'",
+         "R", "R2", "R'",
+         "L", "L2", "L'",
+         "F", "F2", "F'",
+         "B", "B2", "B'")
+
+
 def normalisedSolved(state):
     return [
         state[0][4] * 9,
@@ -14,6 +22,41 @@ def normalisedSolved(state):
         state[5][4] * 9
     ]
 
+def enqueue_nodes(queue, parent, next_generation):
+    previous_move = parent.movement
+    
+    if previous_move // 3 != 0:
+        queue.enqueue(Node(parent.U(), parent, 0, next_generation))
+        queue.enqueue(Node(parent.U_2(), parent, 1, next_generation))
+        queue.enqueue(Node(parent.U_Prime(), parent, 2, next_generation))
+        
+    if previous_move // 3 != 1:
+        queue.enqueue(Node(parent.D(), parent, 3, next_generation))
+        queue.enqueue(Node(parent.D_2(), parent, 4, next_generation))
+        queue.enqueue(Node(parent.D_Prime(), parent, 5, next_generation))
+        
+    if previous_move // 3 != 2:
+        queue.enqueue(Node(parent.R(), parent, 6, next_generation))
+        queue.enqueue(Node(parent.R_2(), parent, 7, next_generation))
+        queue.enqueue(Node(parent.R_Prime(), parent, 8, next_generation))
+        
+    if previous_move // 3 != 3:
+        queue.enqueue(Node(parent.L(), parent, 9, next_generation))
+        queue.enqueue(Node(parent.L_2(), parent, 10, next_generation))
+        queue.enqueue(Node(parent.L_Prime(), parent, 11, next_generation))
+        
+    if previous_move // 3 != 4:
+        queue.enqueue(Node(parent.F(), parent, 12, next_generation))
+        queue.enqueue(Node(parent.F_2(), parent, 13, next_generation))
+        queue.enqueue(Node(parent.F_Prime(), parent, 14, next_generation))
+        
+    if previous_move // 3 != 5:
+        queue.enqueue(Node(parent.B(), parent, 15, next_generation))
+        queue.enqueue(Node(parent.B_2(), parent, 16, next_generation))
+        queue.enqueue(Node(parent.B_Prime(), parent, 17, next_generation))
+        
+
+    
 
 def solve_3(startState):
     # Queue for the current nodes
@@ -31,62 +74,19 @@ def solve_3(startState):
     while generation <= 6:
         # Start state tree
         vSNodes = []
-        nextGen = generation + 1
 
         while cSNode.generation == generation:
             
             check, node = binSearch(vENodes, cSNode)
-            if check == True:
+            if check:
+                print(cSNode)
                 return cSNode, node
             
             # Append current node to visited nodes
             vSNodes.append(cSNode)
 
             # Enqueue all adjacent nodes
-            if cSNode.movement != "M'": sNodeQ.enqueue(Node(cSNode.M(), cSNode, "M", nextGen))
-            if cSNode.movement != "M": sNodeQ.enqueue(Node(cSNode.M_Prime(), cSNode, "M'", nextGen))
-
-            if cSNode.movement != "U'":  
-                sNodeQ.enqueue(Node(cSNode.U(), cSNode, "U", nextGen))
-            if cSNode.movement != "U":   
-                sNodeQ.enqueue(Node(cSNode.U_Prime(), cSNode, "U'", nextGen))
-
-            if cSNode.movement != "E'":  
-                sNodeQ.enqueue(Node(cSNode.E(), cSNode, "E", nextGen))
-            if cSNode.movement != "E":   
-                sNodeQ.enqueue(Node(cSNode.E_Prime(), cSNode, "E'", nextGen))
-            
-            if cSNode.movement != "D'":
-                sNodeQ.enqueue(Node(cSNode.D(), cSNode, "D", nextGen))
-            if cSNode.movement != "D":
-                sNodeQ.enqueue(Node(cSNode.D_Prime(), cSNode, "D'", nextGen))
-
-
-            if cSNode.movement != "R'":  
-                sNodeQ.enqueue(Node(cSNode.R(), cSNode, "R", nextGen))
-            if cSNode.movement != "R":   
-                sNodeQ.enqueue(Node(cSNode.R_Prime(), cSNode, "R'", nextGen))
-
-            if cSNode.movement != "L'":  
-                sNodeQ.enqueue(Node(cSNode.L(), cSNode, "L", nextGen))
-            if cSNode.movement != "L":   
-                sNodeQ.enqueue(Node(cSNode.L_Prime(), cSNode, "L'", nextGen))
-            
-
-            if cSNode.movement != "F'":  
-                sNodeQ.enqueue(Node(cSNode.F(), cSNode, "F", nextGen))
-            if cSNode.movement != "F":   
-                sNodeQ.enqueue(Node(cSNode.F_Prime(), cSNode, "F'", nextGen))
-                               
-            if cSNode.movement != "S'": 
-                sNodeQ.enqueue(Node(cSNode.S(), cSNode, "S", nextGen))
-            if cSNode.movement != "S":   
-                sNodeQ.enqueue(Node(cSNode.S_Prime(), cSNode, "S'", nextGen))
-
-            if cSNode.movement != "B'":  
-                sNodeQ.enqueue(Node(cSNode.B(), cSNode, "B", nextGen))
-            if cSNode.movement != "B":   
-                sNodeQ.enqueue(Node(cSNode.B_Prime(), cSNode, "B'", nextGen))
+            enqueue_nodes(sNodeQ, cSNode, generation + 1)
 
             # Fetch the next node
             cSNode = sNodeQ.dequeue()
@@ -99,62 +99,13 @@ def solve_3(startState):
         while cENode.generation == generation:
 
             check, node = binSearch(vSNodes, cENode)
-            if check == True:
+            if check:
                 return node, cENode
 
             # Append current node to visited nodes
             vENodes.append(cENode)
 
             # Enqueue all adjacent nodes
-
-            if cENode.movement != "M'":
-                eNodeQ.enqueue(Node(cENode.M_Prime(), cENode, "M", nextGen))
-            if cENode.movement != "M":   
-                eNodeQ.enqueue(Node(cENode.M(), cENode, "M'", nextGen))
-
-
-            if cENode.movement != "U'":
-                eNodeQ.enqueue(Node(cENode.U_Prime(), cENode, "U", nextGen))
-            if cENode.movement != "U":   
-                eNodeQ.enqueue(Node(cENode.U(), cENode, "U'", nextGen))
-
-            if cENode.movement != "E'":
-                eNodeQ.enqueue(Node(cENode.E_Prime(), cENode, "E", nextGen))
-            if cENode.movement != "E":   
-                eNodeQ.enqueue(Node(cENode.E(), cENode, "E'", nextGen))
-
-            if cENode.movement != "D'":
-                eNodeQ.enqueue(Node(cENode.D_Prime(), cENode, "D", nextGen))
-            if cENode.movement != "D":   
-                eNodeQ.enqueue(Node(cENode.D(), cENode, "D'", nextGen))
-
-
-            if cENode.movement != "R'":  
-                eNodeQ.enqueue(Node(cENode.R_Prime(), cENode, "R", nextGen))
-            if cENode.movement != "R":   
-                eNodeQ.enqueue(Node(cENode.R(), cENode, "R'", nextGen))
-        
-
-            if cENode.movement != "L'":
-                eNodeQ.enqueue(Node(cENode.L_Prime(), cENode, "L", nextGen))
-            if cENode.movement != "L":   
-                eNodeQ.enqueue(Node(cENode.L(), cENode, "L'", nextGen))
-            
-
-            if cENode.movement != "F'":  
-                eNodeQ.enqueue(Node(cENode.F_Prime(), cENode, "F", nextGen))
-            if cENode.movement != "F":   
-                eNodeQ.enqueue(Node(cENode.F(), cENode, "F'", nextGen))
-
-            if cENode.movement != "S'":
-                eNodeQ.enqueue(Node(cENode.S_Prime(), cENode, "S", nextGen))
-            if cENode.movement != "S":   
-                eNodeQ.enqueue(Node(cENode.S(), cENode, "S'", nextGen))
-
-            if cENode.movement != "B'":
-                eNodeQ.enqueue(Node(cENode.B_Prime(), cENode, "B", nextGen))
-            if cENode.movement != "B":   
-                eNodeQ.enqueue(Node(cENode.B(), cENode, "B'", nextGen))
 
             # Fetch the next node
             cENode = eNodeQ.dequeue()
@@ -167,3 +118,4 @@ def solve_3(startState):
         generation += 1
 
     return None, None
+
