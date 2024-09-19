@@ -132,7 +132,6 @@ def solve_2(startState):
     vSNodes = mergeSort(vSNodes)
     
     # End tree
-    vENodes = []
     while True:
         try:
             check, node = binSearch(vSNodes, cENode)
