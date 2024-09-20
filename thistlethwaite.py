@@ -182,14 +182,15 @@ def get_corners(node):
 
 # All the transformations for the corners
 def reflection_XY(corners):
-    return corners[1] + corners[0] + corners[3] + corners[2] + corners[5] + corners[4] + corners[7] + corners[6]
+    return (corners[1] + corners[0] + corners[3] + corners[2] + corners[5] + corners[4] + corners[7] + corners[6]).replace("1", "x").replace("2", "1").replace("x", "2")
+REF_XY = (1, 0, 2, 4, 3, 5, 10, 9, 11, 7, 6, 8, 12, 13)
 
 def reflection_XZ(corners):
-    return corners[2] + corners[3] + corners[0] + corners[1] + corners[6] + corners[7] + corners[4] + corners[5]
+    return (corners[2] + corners[3] + corners[0] + corners[1] + corners[6] + corners[7] + corners[4] + corners[5]).replace("1", "x").replace("2", "1").replace("x", "2")
 REF_XZ = (1, 0, 2, 4, 3, 5, 7, 6, 8, 10, 9, 11, 13, 12)
 
 def reflection_YZ(corners):
-    return corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[3] + corners[2]
+    return (corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[3] + corners[2]).replace("1", "x").replace("2", "1").replace("x", "2")
 REF_YZ = (4, 3, 5, 1, 0, 2, 7, 6, 8, 10, 9, 11, 12, 13)
 
 def rotation_X(corners):
@@ -233,17 +234,25 @@ def phase_2(start_state):
             path.append(G_1[int(move)])
         return path
 
-    # Attempt with transformations
-    for transformation, moveset in ((reflection_XY, NO_MOVES), (reflection_XZ, NO_MOVES), (reflection_YZ, NO_MOVES), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
+    # Attempt with 1 transformation
+    for transformation, moveset in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
         moves = get_table_moves(transformation(corners))
         if moves != None:
-            print(transformation(corners))
             print(transformation)
             for move in moves:
-                print(G_1[int(move)])
                 path.append(G_1[moveset[int(move)]])
             return path
-
+        
+    # Attempt with 2 transformations
+    for transformation_1, moveset_1 in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
+        for transformation_2, moveset_2 in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
+                moves = get_table_moves(transformation_2(transformation_1(corners)))
+                if moves != None:
+                    print(transformation_1, "\n", transformation_2)
+                    for move in moves:
+                        path.append(G_1[moveset_2[moveset_1[int(move)]]])
+                    return path
+                
     else: print("NOT FOUND")
     print(path)
     return path
