@@ -211,10 +211,10 @@ def get_table_moves(corners):
             if line[:8] == corners:
                 return line[11:].split(" ")
         
-def phase_2(start_state):
-    node = get_UD_slice(Node(start_state))
+def phase_2(G_1_state):
+    node = get_UD_slice(Node(G_1_state))
     if node == None: return "Cannot Solve!"
-    end_state = node.cube
+    G_1_state = node.cube
 
     path = []
     while node.parent != None:
@@ -224,7 +224,8 @@ def phase_2(start_state):
     path = path[::-1]
 
 
-    corners = get_corners(end_state)
+    corners = get_corners(G_1_state)
+    node = Node(G_1_state)
 
     # Attempt with no transformations
     moves = get_table_moves(corners)
@@ -232,7 +233,8 @@ def phase_2(start_state):
         print("No transformation")
         for move in moves:
             path.append(G_1[int(move)])
-        return path
+            node.move(G_1[int(move)])
+        return path, node
 
     # Attempt with 1 transformation
     for transformation, moveset in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
@@ -241,7 +243,8 @@ def phase_2(start_state):
             print(transformation)
             for move in moves:
                 path.append(G_1[moveset[int(move)]])
-            return path
+                node.move(G_1[moveset[int(move)]])
+            return path, node
         
     # Attempt with 2 transformations
     for transformation_1, moveset_1 in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
@@ -251,21 +254,30 @@ def phase_2(start_state):
                     print(transformation_1, "\n", transformation_2)
                     for move in moves:
                         path.append(G_1[moveset_2[moveset_1[int(move)]]])
-                    return path
-                
+                        node.move(G_1[moveset_2[moveset_1[int(move)]]])
+                    return path, node
+
     else: print("NOT FOUND")
-    print(path)
-    return path
         
 
-    
+# Phase 3
+def get_orbits(G_2_state):
+    group_c = (G_2_state[0][4], G_2_state[5][4])
+
+    for i in (0, 5):
+        for j in (0, 2, 6, 8):
+            if G_2_state[i][j] not in group_c:
+                print(i, j)
+
 
 # Function to organise solving the cube
 def thistle_solve(start_state):    
     # Phase 1
-    phase_1_moves, next_state = phase_1(start_state)
+    phase_1_moves, G_1_state = phase_1(start_state)
     
     # Phase 2
-    phase_2_moves = phase_2(next_state)
+    phase_2_moves, G_2_state = phase_2(G_1_state)
 
+    G_2_state.display()
+    print(get_orbits(G_2_state))
     return phase_1_moves + phase_2_moves
