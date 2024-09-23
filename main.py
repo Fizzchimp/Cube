@@ -73,7 +73,8 @@ class World:
     def __init__(self):
         # Creating Cube object
         self.cube_type = 3
-        self.cube_2 = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        #self.cube_2 = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"] )
+        self.cube_2 = Cube_2()
         # self.cube_3 = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
         self.cube_3 = Cube_3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
         # self.cube_3 = Cube_3()

@@ -274,6 +274,7 @@ class Display():
     def drawScreen(self, cube, delta_time, edit_pointer = -1):
         # Draw the background of the screen
         self.screen.fill((200, 150, 100))
+        self.screen.fill((255, 255, 255))
         # self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
