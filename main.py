@@ -88,7 +88,6 @@ class World:
         self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, self.cube_type)
         self.clock = pg.time.Clock()
         self.move_queue = Queue(100)
-        self.move_queue = Queue(100)
         
         
         self.edit_pointer = -1
@@ -265,7 +264,6 @@ class World:
                 pressed = i
                 
         if pressed != None and self.move_queue.is_empty() and not self.screen.model.isMoving():
-        if pressed != None and self.move_queue.is_empty() and not self.screen.model.isMoving():
             if not self.buttonDown:
                 
                 # Solve Button
@@ -278,7 +276,6 @@ class World:
                     else:
                         print(", ".join(solution))
                         for move in solution:
-                            self.move_queue.enqueue(move)
                             self.move_queue.enqueue(move)
                     self.clock.tick()
                     
