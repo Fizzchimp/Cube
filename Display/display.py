@@ -282,8 +282,8 @@ class Display():
 
         for button in self.buttons + self.movement_buttons:
             if not button.hidden:
-                image = button.getImage()
-                self.screen.blit(image, button.drawPoint)
+                image = button.get_image()
+                self.screen.blit(image, button.draw_point)
             
         
         pg.display.flip()
@@ -292,12 +292,12 @@ class Display():
 class Button():
     def __init__(self, centre, text, fontSize, hidden = False):
         # Images for the different button states
-        self.imageUp = pg.image.load("Display/Textures/Button_Up.png").convert_alpha()
-        self.imageHov = pg.image.load("Display/Textures/Button_Hov.png").convert_alpha()
-        self.imageDown = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
+        self.image_up = pg.image.load("Display/Textures/Button_Up.png").convert_alpha()
+        self.image_hov = pg.image.load("Display/Textures/Button_Hov.png").convert_alpha()
+        self.image_down = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
 
         # Point where button is drawn
-        self.drawPoint = (centre[0] - 39, centre[1] - 20)
+        self.draw_point = (centre[0] - 39, centre[1] - 20)
         
         # Surface for text on the button
         font = pg.font.SysFont("Jhomuria", fontSize)
@@ -306,9 +306,9 @@ class Button():
         textPoint = (39 - dims[0] / 2, 22 - dims[1] / 2)
 
         # Rendering the text on each button image
-        self.imageUp.blit(textSurface, textPoint)
-        self.imageHov.blit(textSurface, textPoint)
-        self.imageDown.blit(textSurface, (textPoint[0], textPoint[1] + 4))
+        self.image_up.blit(textSurface, textPoint)
+        self.image_hov.blit(textSurface, textPoint)
+        self.image_down.blit(textSurface, (textPoint[0], textPoint[1] + 4))
 
         # Hitbox for detecting mouse
         self.hitbox = ((centre[0] - 35, centre[1] - 20), (centre[0] + 35, centre[1] + 20))
@@ -318,10 +318,10 @@ class Button():
         self.hidden = hidden
         
 
-    def getImage(self):
-        if self.state == 2: return self.imageDown
-        elif self.state == 1: return self.imageHov
-        else: return self.imageUp
+    def get_image(self):
+        if self.state == 2: return self.image_down
+        elif self.state == 1: return self.image_hov
+        else: return self.image_up
         
     def get_state(self, mousePos):
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
@@ -336,12 +336,12 @@ class Button():
 class Large_Button():
     def __init__(self, centre, text, fontSize, hidden = False):
         # Images for the different button states
-        self.imageUp = pg.image.load("Display/Textures/L_Button_Up.png").convert_alpha()
-        self.imageHov = pg.image.load("Display/Textures/L_Button_Hov.png").convert_alpha()
-        self.imageDown = pg.image.load("Display/Textures/L_Button_Down.png").convert_alpha()
+        self.image_up = pg.image.load("Display/Textures/L_Button_Up.png").convert_alpha()
+        self.image_hov = pg.image.load("Display/Textures/L_Button_Hov.png").convert_alpha()
+        self.image_down = pg.image.load("Display/Textures/L_Button_Down.png").convert_alpha()
 
         # Point where button is drawn
-        self.drawPoint = (centre[0] - 79, centre[1] - 25)
+        self.draw_point = (centre[0] - 79, centre[1] - 25)
         
         # Surface for text on the button
         font = pg.font.SysFont("Jhomuria", fontSize)
@@ -350,9 +350,9 @@ class Large_Button():
         textPoint = (79 - dims[0] / 2, 26 - dims[1] / 2)
         
         # Rendering the text on each button image
-        self.imageUp.blit(textSurface, textPoint)
-        self.imageHov.blit(textSurface, textPoint)
-        self.imageDown.blit(textSurface, (textPoint[0], textPoint[1] + 4))
+        self.image_up.blit(textSurface, textPoint)
+        self.image_hov.blit(textSurface, textPoint)
+        self.image_down.blit(textSurface, (textPoint[0], textPoint[1] + 4))
 
         # Hitbox for detecting mouse
         self.hitbox = ((centre[0] - 75, centre[1] - 25), (centre[0] + 75, centre[1] + 25))
@@ -362,10 +362,10 @@ class Large_Button():
         self.hidden = hidden
         
 
-    def getImage(self):
-        if self.state == 2: return self.imageDown
-        elif self.state == 1: return self.imageHov
-        else: return self.imageUp
+    def get_image(self):
+        if self.state == 2: return self.image_down
+        elif self.state == 1: return self.image_hov
+        else: return self.image_up
 
     def get_state(self, mousePos):
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:

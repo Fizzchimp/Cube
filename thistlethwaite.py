@@ -1,4 +1,4 @@
-from cube_3 import Cube_3
+from cube_3 import Cube3
 from Assets.node_3 import Node
 from Assets.stack import Stack
 import time

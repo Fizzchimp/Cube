@@ -1,6 +1,6 @@
 import random as rnd
 
-class Cube_2():
+class Cube2():
     def __init__(self, cube = None):
         # Representation of cube as an array
         self.cube = cube if cube != None else [
@@ -25,29 +25,9 @@ class Cube_2():
    |{self.cube[5][2:4]}|""")
    
 
-    def solved(self):
-        # Checks if the cube is solved
-        for face in self.cube:
-            if face[0] == face[1] == face[2] == face[3]:
-                continue
-            else: return False
-        return True
-
     def __getitem__(self, index):
         return self.cube[index]
-    
-    def set_facelet(self, colour, index_1, index_2):
-        face = ""
-        for facelet in self[index_1][:index_2]:
-            face += facelet
-
-        face += colour
-
-        for facelet in self[index_1][index_2 + 1:]:
-            face += facelet
         
-        self.cube[index_1] = face
-    
 
     def U(self):
         # Returns rotation U clockwise

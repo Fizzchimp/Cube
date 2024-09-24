@@ -3,8 +3,8 @@ import pygame as pg
 from numpy import pi
 
 from Display.display import Display
-from cube_2 import Cube_2
-from cube_3 import Cube_3
+from cube_2 import Cube2
+from cube_3 import Cube3
 
 from Assets.solve_2 import solve_2
 from Assets.solve_3 import solve_3
@@ -73,10 +73,10 @@ class World:
     def __init__(self):
         # Creating Cube object
         self.cube_type = 3
-        self.cube_2 = Cube_2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
-        # self.cube_3 = Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
-        self.cube_3 = Cube_3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
-        # self.cube_3 = Cube_3()
+        self.cube_2 = Cube2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        # self.cube_3 = Cube3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
+        self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
+        # self.cube_3 = Cube3()
         # L' U2 R' U2 D2 R2 D2 L' F2 L D2 L'
 
         self.cube_3.move("F", "L", "R'", "D2", "B2", "U")
@@ -87,7 +87,7 @@ class World:
         pg.init()
         self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, self.cube_type)
         self.clock = pg.time.Clock()
-        self.moveQueue = Queue(100)
+        self.move_queue = Queue(100)
         
         
         self.edit_pointer = -1
@@ -133,6 +133,7 @@ class World:
             if self.edit_pointer != -1:
                 for button in self.screen.movement_buttons[12:]:
                     button.hidden = True
+    
     
     # Swaps between editing and solving
     def swap_editing(self):
@@ -262,7 +263,7 @@ class World:
             if not button.hidden and button.get_state(mousePos) == 2:
                 pressed = i
                 
-        if pressed != None and self.moveQueue.is_empty() and not self.screen.model.isMoving():
+        if pressed != None and self.move_queue.is_empty() and not self.screen.model.isMoving():
             if not self.buttonDown:
                 
                 # Solve Button
@@ -275,7 +276,7 @@ class World:
                     else:
                         print(", ".join(solution))
                         for move in solution:
-                            self.moveQueue.enqueue(move)
+                            self.move_queue.enqueue(move)
                     self.clock.tick()
                     
                 # Scramble Button
@@ -330,8 +331,8 @@ class World:
             running = self.handle_events()
 
             # Get moves from the movement queue
-            if not self.moveQueue.is_empty() and not self.screen.model.isMoving():
-                move = self.moveQueue.dequeue()
+            if not self.move_queue.is_empty() and not self.screen.model.isMoving():
+                move = self.move_queue.dequeue()
                 self.do_move(move, False)
             
                 

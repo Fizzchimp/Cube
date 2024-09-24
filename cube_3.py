@@ -1,7 +1,7 @@
 import random as rnd
 
 
-class Cube_3():
+class Cube3():
     def __init__(self, cube = None):
         self.cube = cube if cube != None else [
             "WWWWWWWWW",
