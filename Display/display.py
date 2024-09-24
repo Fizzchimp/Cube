@@ -26,7 +26,6 @@ class Display():
         self.cube_type = cube_type
 
         # Setup the window
-        self.width, self.height = width, height
         self.screen = pg.display.set_mode([width, height])
         image = pg.image.load("Display/Textures/01_icon.png")
         pg.display.set_icon(image)
@@ -35,7 +34,6 @@ class Display():
         # Background
         image = pg.transform.scale(pg.image.load("Display/Textures/Background.png"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
         dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 2), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 2))
-        self.dims = dims
 
         self.background = pg.Surface(dims)
         for i in range(dims[0] // BG_IMAGE_SIZE):
@@ -45,8 +43,8 @@ class Display():
 
         ### Cube
         # Cube centre co-ordinates
-        self.x, self.y  = 450, 300
-        self.length = self.width / 5 if self.width <= self.height else self.height / 5
+        self.cube_centre  = (450, 300)
+        self.length = width / 5 if width <= height else height / 5
 
         self.cubeBob = 0
         self.bobStrength = bobStrength
@@ -120,7 +118,7 @@ class Display():
         pg.gfxdraw.filled_polygon(self.screen, (UL, UR, BR, BL), colour)
 
     def drawCube(self, cube, centreOffset = 0, edit_pointer = -1):
-        x, y = self.x, self.y + centreOffset
+        x, y = self.cube_centre[0], self.cube_centre[1] + centreOffset
         faces = []
         
 
@@ -274,6 +272,7 @@ class Display():
     def drawScreen(self, cube, delta_time, edit_pointer = -1):
         # Draw the background of the screen
         self.screen.fill((200, 150, 100))
+        self.screen.fill((255, 255, 255))
         # self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
@@ -376,4 +375,3 @@ class Large_Button():
             return 1
         self.state = 0
         return 0
-    

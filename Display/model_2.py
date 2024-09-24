@@ -6,50 +6,50 @@ from Display.matrices import *
 class Model_2:
     def __init__(self):
         self.points = np.array([ 
-                        ### Top Cubies
-                        [  # Back Left
-                            [ 0, -1, -1,  0, -1, -1,  0],
-                            [-1, -1, -1, -1,  0,  0,  0],
-                            [ 0,  0,  1,  1,  0,  1,  1]
-                        ],
-                        [ # Back Right
-                            [ 0,  0,  1,  1,  0,  1,  1],
-                            [-1, -1, -1, -1,  0,  0,  0],
-                            [ 0,  1,  1,  0,  1,  1,  0]
-                        ],
-                        [ # Front Left
-                            [ 0,  0, -1, -1,  0, -1, -1],
-                            [-1, -1, -1, -1,  0,  0,  0],
-                            [ 0, -1, -1,  0, -1, -1,  0]
-                        ],
-                        [ # Front Right
-                            [ 0,  1,  1,  0,  1,  1,  0],
-                            [-1, -1, -1, -1,  0,  0,  0],
-                            [ 0,  0, -1, -1,  0, -1, -1]
-                        ],
+            ### Top Cubies
+            [  # Back Left
+                [ 0, -1, -1,  0, -1, -1,  0],
+                [-1, -1, -1, -1,  0,  0,  0],
+                [ 0,  0,  1,  1,  0,  1,  1]
+            ],
+            [ # Back Right
+                [ 0,  0,  1,  1,  0,  1,  1],
+                [-1, -1, -1, -1,  0,  0,  0],
+                [ 0,  1,  1,  0,  1,  1,  0]
+            ],
+            [ # Front Left
+                [ 0,  0, -1, -1,  0, -1, -1],
+                [-1, -1, -1, -1,  0,  0,  0],
+                [ 0, -1, -1,  0, -1, -1,  0]
+            ],
+            [ # Front Right
+                [ 0,  1,  1,  0,  1,  1,  0],
+                [-1, -1, -1, -1,  0,  0,  0],
+                [ 0,  0, -1, -1,  0, -1, -1]
+            ],
 
-                        ### Bottom Cubies
-                        [ # Front Left
-                            [ 0, -1, -1,  0, -1, -1,  0],
-                            [ 1,  1,  1,  1,  0,  0,  0],
-                            [ 0,  0, -1, -1,  0, -1, -1]
-                        ],
-                        [ # Front Right
-                            [ 0,  0,  1,  1,  0,  1,  1],
-                            [ 1,  1,  1,  1,  0,  0,  0],
-                            [ 0, -1, -1,  0, -1, -1,  0]
-                        ],
-                        [ # Back Left
-                            [ 0,  0, -1, -1,  0, -1, -1],
-                            [ 1,  1,  1,  1,  0,  0,  0],
-                            [ 0,  1,  1,  0,  1,  1,  0]
-                        ],
-                        [ # Back Right
-                            [ 0,  1,  1,  0,  1,  1,  0],
-                            [ 1,  1,  1,  1,  0,  0,  0],
-                            [ 0,  0,  1,  1,  0,  1,  1]
-                        ]
-                    ], dtype = "float64")
+            ### Bottom Cubies
+            [ # Front Left
+                [ 0, -1, -1,  0, -1, -1,  0],
+                [ 1,  1,  1,  1,  0,  0,  0],
+                [ 0,  0, -1, -1,  0, -1, -1]
+            ],
+            [ # Front Right
+                [ 0,  0,  1,  1,  0,  1,  1],
+                [ 1,  1,  1,  1,  0,  0,  0],
+                [ 0, -1, -1,  0, -1, -1,  0]
+            ],
+            [ # Back Left
+                [ 0,  0, -1, -1,  0, -1, -1],
+                [ 1,  1,  1,  1,  0,  0,  0],
+                [ 0,  1,  1,  0,  1,  1,  0]
+            ],
+            [ # Back Right
+                [ 0,  1,  1,  0,  1,  1,  0],
+                [ 1,  1,  1,  1,  0,  0,  0],
+                [ 0,  0,  1,  1,  0,  1,  1]
+            ]
+        ], dtype = "float64")
 
         for i, quad in enumerate(self.points):
             self.points[i] = rotateX(theta, rotateY(alpha, quad))
@@ -66,8 +66,6 @@ class Model_2:
         self.rPhase = 0
         self.lPhase = 0
 
-    def __getitem__(self, index):
-        return self.points[index]
     
     def getPoints(self):
         return [rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.bPhase, self.points[0]))),
