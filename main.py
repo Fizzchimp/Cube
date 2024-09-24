@@ -88,7 +88,7 @@ class World:
         pg.init()
         self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, self.cube_type)
         self.clock = pg.time.Clock()
-        self.moveQueue = Queue(100)
+        self.move_queue = Queue(100)
         
         
         self.edit_pointer = -1
@@ -263,7 +263,7 @@ class World:
             if not button.hidden and button.get_state(mousePos) == 2:
                 pressed = i
                 
-        if pressed != None and self.moveQueue.is_empty() and not self.screen.model.isMoving():
+        if pressed != None and self.move_queue.is_empty() and not self.screen.model.isMoving():
             if not self.buttonDown:
                 
                 # Solve Button
@@ -276,7 +276,7 @@ class World:
                     else:
                         print(", ".join(solution))
                         for move in solution:
-                            self.moveQueue.enqueue(move)
+                            self.move_queue.enqueue(move)
                     self.clock.tick()
                     
                 # Scramble Button

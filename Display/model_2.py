@@ -66,8 +66,6 @@ class Model_2:
         self.rPhase = 0
         self.lPhase = 0
 
-    def __getitem__(self, index):
-        return self.points[index]
     
     def getPoints(self):
         return [rotateX(self.xPhase + self.lPhase, rotateY(self.yPhase + self.uPhase, rotateZ(self.zPhase + self.bPhase, self.points[0]))),
