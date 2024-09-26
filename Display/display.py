@@ -262,7 +262,7 @@ class Display():
                                   (centreCol[i][0] * shade, centreCol[i][1] * shade, centreCol[i][2] * shade)))
         
         for face in sorted(faces, key = depth, reverse = True):
-            pg.gfxdraw.filled_polygon(self.screen, face[0:4], face[5])
+            gfxdraw.filled_polygon(self.screen, face[0:4], face[5])
                 
             for i in range(4):
                 self.drawLine((50, 50, 50), face[i], face[(i + 1) % 4], 8)
@@ -270,7 +270,7 @@ class Display():
                 
         if edit_pointer >= 0:
             points = faces[EDITING_FACES[self.cube_type - 2][edit_pointer]][:4]
-            pg.gfxdraw.filled_polygon(self.screen, points, (0, 0, 0, 100 + 40 * sin(self.edit_phase)))
+            gfxdraw.filled_polygon(self.screen, points, (0, 0, 0, 100 + 40 * sin(self.edit_phase)))
         
     def drawScreen(self, cube, delta_time, edit_pointer = -1):
         # Draw the background of the screen
