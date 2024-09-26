@@ -23,7 +23,6 @@ def depth(face):
 
 class Display():
     def __init__(self, width, height, bobStrength, cube_type):
-        self.cube_type = cube_type
 
         # Setup the window
         self.screen = pg.display.set_mode([width, height])
@@ -50,13 +49,17 @@ class Display():
         self.bobStrength = bobStrength
 
         self.edit_phase = 0
-
+        
         ### 2 by 2
         self.model_2 = Model_2()
         
         ### 3 by 2
         self.model_3 = Model_3()
        
+        self.cube_type = cube_type
+        if cube_type == 2: self.model = self.model_2
+        elif cube_type == 3: self.model = self.model_3
+        
         # Buttons
         fontSize = 47
         self.buttons = [

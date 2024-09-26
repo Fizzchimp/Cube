@@ -122,6 +122,7 @@ class World:
             self.cube_type = 3
             self.cube = self.cube_3
             self.screen.cube_type = 3
+            self.screen.model = self.screen.model_3
             if self.edit_pointer != -1:
                 for button in self.screen.movement_buttons[12:]:
                     button.hidden = False
@@ -130,6 +131,7 @@ class World:
             self.cube_type = 2
             self.cube = self.cube_2
             self.screen.cube_type = 2
+            self.screen.model = self.screen.model_2
             if self.edit_pointer != -1:
                 for button in self.screen.movement_buttons[12:]:
                     button.hidden = True
@@ -323,9 +325,6 @@ class World:
         running = True
         self.clock.tick()
         while running:
-            
-            if self.cube_type == 2: self.screen.model = self.screen.model_2
-            elif self.cube_type == 3: self.screen.model = self.screen.model_3
             
             # Get and run input events (keys, buttons and others)
             running = self.handle_events()
