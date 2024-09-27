@@ -1,3 +1,4 @@
+from re import I
 import pygame as pg
 from pygame import gfxdraw
 from Display.model_2 import Model_2
@@ -63,34 +64,34 @@ class Display():
         # Buttons
         fontSize = 47
         self.buttons = [
-            Large_Button((200, 600), "SOLVE", 35),
-            Large_Button((400, 600), "SCRAMBLE", 35),
-            Large_Button((350, 40), "SWAP", 35),
-            Large_Button((600, 600), "EDIT", 35),
-            Large_Button((450, 600), "DONE", 35, True),
-            Large_Button((250, 600), "CLEAR", 35, True)]
+            Button((200, 600), 1 ,"SOLVE", 35),
+            Button((400, 600), 1 ,"SCRAMBLE", 35),
+            Button((350, 40), 1 ,"SWAP", 35),
+            Button((600, 600), 1 ,"EDIT", 35),
+            Button((450, 600), 1 ,"DONE", 35, True),
+            Button((250, 600), 1 ,"CLEAR", 35, True)]
         
         self.movement_buttons = [
-            Button((45, 30), "U", fontSize),
-            Button((125, 30), "U'", fontSize),
-            Button((45, 80), "F", fontSize),
-            Button((125, 80), "F'", fontSize),
-            Button((45, 130), "R", fontSize),
-            Button((125, 130), "R'", fontSize),
+            Button((45, 30), 0, "U", fontSize),
+            Button((125, 30), 0, "U'", fontSize),
+            Button((45, 80), 0, "F", fontSize),
+            Button((125, 80), 0, "F'", fontSize),
+            Button((45, 130), 0, "R", fontSize),
+            Button((125, 130), 0, "R'", fontSize),
                          
-            Button((45, 190), "D", fontSize),
-            Button((125, 190), "D'", fontSize),
-            Button((45, 240), "B", fontSize),
-            Button((125, 240), "B'", fontSize),
-            Button((45, 290), "L", fontSize),
-            Button((125, 290), "L'", fontSize),
+            Button((45, 190), 0, "D", fontSize),
+            Button((125, 190), 0, "D'", fontSize),
+            Button((45, 240), 0, "B", fontSize),
+            Button((125, 240), 0, "B'", fontSize),
+            Button((45, 290), 0, "L", fontSize),
+            Button((125, 290), 0, "L'", fontSize),
             
-            Button((45, 350), "E", fontSize),
-            Button((125, 350), "E'", fontSize),
-            Button((45, 400), "S", fontSize),
-            Button((125, 400), "S'", fontSize),
-            Button((45, 450), "M", fontSize),
-            Button((125, 450), "M'", fontSize)]
+            Button((45, 350), 0, "E", fontSize),
+            Button((125, 350), 0, "E'", fontSize),
+            Button((45, 400), 0, "S", fontSize),
+            Button((125, 400), 0, "S'", fontSize),
+            Button((45, 450), 0, "M", fontSize),
+            Button((125, 450), 0, "M'", fontSize)]
         
     def drawLine(self, colour, p1, p2, width):
         centre = ((p1[0] + p2[0]) / 2,
@@ -292,32 +293,59 @@ class Display():
     
 
 class Button():
-    def __init__(self, centre, text, fontSize, hidden = False):
-        # Images for the different button states
-        self.image_up = pg.image.load("Display/Textures/Button_Up.png").convert_alpha()
-        self.image_hov = pg.image.load("Display/Textures/Button_Hov.png").convert_alpha()
-        self.image_down = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
-
-        # Point where button is drawn
-        self.draw_point = (centre[0] - 39, centre[1] - 20)
-        
-        # Surface for text on the button
-        font = pg.font.SysFont("Jhomuria", fontSize)
-        textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
-        dims = textSurface.get_size()
-        textPoint = (39 - dims[0] / 2, 22 - dims[1] / 2)
-
-        # Rendering the text on each button image
-        self.image_up.blit(textSurface, textPoint)
-        self.image_hov.blit(textSurface, textPoint)
-        self.image_down.blit(textSurface, (textPoint[0], textPoint[1] + 4))
-
-        # Hitbox for detecting mouse
-        self.hitbox = ((centre[0] - 35, centre[1] - 20), (centre[0] + 35, centre[1] + 20))
+    def __init__(self, centre, size, text, fontSize, hidden = False):
+        # Tag stating the current state of the button
         self.state = 0
 
         # Tag to decide if the button is shown on screen
         self.hidden = hidden
+
+        if size == 0:
+            # Images for the different button states
+            self.image_up = pg.image.load("Display/Textures/Button_Up.png").convert_alpha()
+            self.image_hov = pg.image.load("Display/Textures/Button_Hov.png").convert_alpha()
+            self.image_down = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
+
+            # Point where button is drawn
+            self.draw_point = (centre[0] - 39, centre[1] - 20)
+        
+            # Surface for text on the button
+            font = pg.font.SysFont("Jhomuria", fontSize)
+            textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
+            dims = textSurface.get_size()
+            textPoint = (39 - dims[0] / 2, 22 - dims[1] / 2)
+
+            # Rendering the text on each button image
+            self.image_up.blit(textSurface, textPoint)
+            self.image_hov.blit(textSurface, textPoint)
+            self.image_down.blit(textSurface, (textPoint[0], textPoint[1] + 4))
+
+            # Hitbox for detecting mouse
+            self.hitbox = ((centre[0] - 35, centre[1] - 20), (centre[0] + 35, centre[1] + 20))
+        
+        elif size == 1:
+            # Images for the different button states
+            self.image_up = pg.image.load("Display/Textures/L_Button_Up.png").convert_alpha()
+            self.image_hov = pg.image.load("Display/Textures/L_Button_Hov.png").convert_alpha()
+            self.image_down = pg.image.load("Display/Textures/L_Button_Down.png").convert_alpha()
+
+            # Point where button is drawn
+            self.draw_point = (centre[0] - 79, centre[1] - 25)
+        
+            # Surface for text on the button
+            font = pg.font.SysFont("Jhomuria", fontSize)
+            textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
+            dims = textSurface.get_size()
+            textPoint = (79 - dims[0] / 2, 26 - dims[1] / 2)
+        
+            # Rendering the text on each button image
+            self.image_up.blit(textSurface, textPoint)
+            self.image_hov.blit(textSurface, textPoint)
+            self.image_down.blit(textSurface, (textPoint[0], textPoint[1] + 4))
+
+            # Hitbox for detecting mouse
+            self.hitbox = ((centre[0] - 75, centre[1] - 25), (centre[0] + 75, centre[1] + 25))
+
         
 
     def get_image(self):
@@ -325,50 +353,6 @@ class Button():
         elif self.state == 1: return self.image_hov
         else: return self.image_up
         
-    def get_state(self, mousePos):
-        if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
-            if pg.mouse.get_pressed()[0]:
-                self.state = 2
-                return 2
-            self.state = 1
-            return 1
-        self.state = 0
-        return 0
-     
-class Large_Button():
-    def __init__(self, centre, text, fontSize, hidden = False):
-        # Images for the different button states
-        self.image_up = pg.image.load("Display/Textures/L_Button_Up.png").convert_alpha()
-        self.image_hov = pg.image.load("Display/Textures/L_Button_Hov.png").convert_alpha()
-        self.image_down = pg.image.load("Display/Textures/L_Button_Down.png").convert_alpha()
-
-        # Point where button is drawn
-        self.draw_point = (centre[0] - 79, centre[1] - 25)
-        
-        # Surface for text on the button
-        font = pg.font.SysFont("Jhomuria", fontSize)
-        textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
-        dims = textSurface.get_size()
-        textPoint = (79 - dims[0] / 2, 26 - dims[1] / 2)
-        
-        # Rendering the text on each button image
-        self.image_up.blit(textSurface, textPoint)
-        self.image_hov.blit(textSurface, textPoint)
-        self.image_down.blit(textSurface, (textPoint[0], textPoint[1] + 4))
-
-        # Hitbox for detecting mouse
-        self.hitbox = ((centre[0] - 75, centre[1] - 25), (centre[0] + 75, centre[1] + 25))
-        self.state = 0
-
-        # Tag to decide if the button is shown on screen
-        self.hidden = hidden
-        
-
-    def get_image(self):
-        if self.state == 2: return self.image_down
-        elif self.state == 1: return self.image_hov
-        else: return self.image_up
-
     def get_state(self, mousePos):
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
