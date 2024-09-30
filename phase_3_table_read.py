@@ -22,14 +22,6 @@ def read_table(page_num, line_index):
             raise Exception
             
     return moves_1, moves_2
-
-
-def read_page_1(line_index):
-    with open("phase_3_page_1.txt", "r") as table:
-        line = table.readlines()[line_index]
-        moves1 = line[16:38].replace("  ", " ").split(" ")
-        moves2 = line[47:].replace("  ", " ").split(" ")
-        return moves1, moves2
         
 
 def read_line(page_num, line_index):
@@ -47,18 +39,21 @@ def read_line(page_num, line_index):
         else: moves_1 = line[0].strip("\n").strip(" ").replace("  ", " ").split(" ")
         try: moves_2 = line[1].strip("\n").strip(" ").replace("  ", " ").split(" ")
         except IndexError: moves_2 = []
-        print(line)      
+        print(moves_1, "\n", moves_2, sep = "")    
                 
     return moves_1, moves_2
 
 
 
 
-for i in range(7):
-    for j in range(69):
-        cube =  Cube3(["111111111", "---------", "000000000", "---------", "000000000", "111111111"])
-        moves_1, moves_2 = read_table(i + 1, j)
-        for move in moves_2:
-            cube.move(move)
-
+for j in range(69):
+    cube =  Cube3(["111111111", "---------", "000000000", "---------", "000000000", "111111111"])
+    moves_1, moves_2 = read_table(6, j)
+    for move in moves_1:
+        cube.move(move)
+    #face_1, face_2 = "1111", "1111"
+    #face_1, face_2 = "0011", "0011"
+    face_1, face_2 = "0101", "1111"
+    if cube[0][0] != face_1[0] or cube[0][2] != face_1[1] or cube[0][6] != face_1[2] or cube[0][8] != face_1[3] or cube[5][0] != face_2[0] or cube[5][2] != face_2[1] or cube[5][6] != face_2[2] or cube[5][8] != face_2[3]:
         cube.display()
+        raise Exception(f"UH OH: line {j + 1}")
