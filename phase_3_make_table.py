@@ -3,25 +3,8 @@ from cube_3 import Cube3
 MOVE_KEYS = ("L", "L2", "L'", "F2", "R", "R2", "R'", "B2", "U2", "D2")
 INVERSE_KEYS = ("L'", "L2", "L", "F2", "R'", "R2", "R", "B2", "U2", "D2")
 
-
-def read_table(page_num, line_index):
-    moves_1, moves_2 = read_line(page_num, line_index)
-    
-    for i, move in enumerate(moves_1):
-        try: moves_1[i] = MOVE_KEYS[int(move) - 1]
-        except: 
-            print("UNRECOGNISED MOVE", page_num, line_index, 1)
-            raise Exception
-            
-    for i, move in enumerate(moves_2):
-        try: moves_2[i] = MOVE_KEYS[int(move) - 1]
-        except:
-            print("UNRECOGNISED MOVE", page_num, line_index, 1)
-            raise Exception
-            
-    return moves_1, moves_2
         
-
+# Takes a line from an input table and converts it into two lists of moves
 def read_line(line):
     # Split string into 2 movesets
     line = line[4:].split("   ")
@@ -34,10 +17,9 @@ def read_line(line):
     else: moves_1 = line[0].strip("\n").strip(" ").replace("  ", " ").split(" ")
     try: moves_2 = line[1].strip("\n").strip(" ").replace("  ", " ").split(" ")
     except IndexError: moves_2 = []
-    print(moves_1, "\n", moves_2, "\n", sep = "")    
+    # print(moves_1, "\n", moves_2, "\n", sep = "")    
                 
     return moves_1, moves_2
-
 
 
 def test_input_tables():
@@ -65,25 +47,17 @@ def test_input_tables():
                     cube.display()
                     raise Exception(f"UH OH: page {i + 1}, line {j + 1}, moveset 2")
 
+# Splits each line in an input table and returns them as a list
 def get_table_text(table_num):
     with open(f"phase_3_page_{table_num}.txt", "r") as table:
         lines = table.readlines()
         for i, line in enumerate(lines):
             lines[i] = read_line(line)
-        print(lines)
+    return lines
 
-def write_tables():
-    
-    #for i in range(70):
-    i = 3
-    cube = Cube3(["-1-111-1-", "---------", "-0-000-0-", "---------", "-0-000-0-", "-1-111-1-"])
-    moves_1, moves_2 = read_line(1, i)
-    
-    inverse_moves = []
-    for move in moves_1:
-        cube.move(MOVE_KEYS[int(move) - 1])
-        inverse_moves.append(INVERSE_KEYS[int(move) - 1])
-        
+# Takes cube input and converts it to sides key to be written
+def get_sides_key(cube):
+
     sides_key = ""
     face = cube[0]
     for side in (1, 3, 5, 7):
@@ -103,8 +77,22 @@ def write_tables():
         if face[side] == face[4]: sides_key += "-"
         else: sides_key += "X"
     
-    cube.display()
-    print(sides_key + " : " + " ".join(inverse_moves))
+    return sides_key
+
+# Writes the new move tables
+def write_tables():
+    with open("Tables/phase_3_no_corners.txt", "w") as table:
+            lines = get_table_text(1)
+            for movesets in lines:
+                for j in range(2):
+                    cube = Cube3(["-1-111-1-", "---------", "-0-000-0-", "---------", "-0-000-0-", "-1-111-1-"])
+                    inverse_moves = []
+                    
+                    for move in movesets[j]:
+                        cube.move(MOVE_KEYS[int(move) - 1])
+                        inverse_moves.append(INVERSE_KEYS[int(move) - 1])
+
+                    sides_key = get_sides_key(cube)
+                    table.write(sides_key + " : " + " ".join(inverse_moves[::-1]) + "\n")
             
-##write_tables()
-get_table_text(1)
+write_tables()
