@@ -1,7 +1,7 @@
 from cube_3 import Cube3
 
 MOVE_KEYS = ("L", "L2", "L'", "F2", "R", "R2", "R'", "B2", "U2", "D2")
-
+INVERSE_KEYS = ("L'", "L2", "L", "F2", "R'", "R2", "R", "B2", "U2", "D2")
 
 
 def read_table(page_num, line_index):
@@ -22,22 +22,19 @@ def read_table(page_num, line_index):
     return moves_1, moves_2
         
 
-def read_line(page_num, line_index):
-    with open(f"phase_3_page_{page_num}.txt", "r") as table:
-        line = table.readlines()[line_index]
-        
-        # Split string into 2 movesets
-        line = line[4:].split("   ")
-        i = 0
-        while i < len(line):
-            if line[i] == "": line.pop(i)
-            else: i += 1
+def read_line(line):
+    # Split string into 2 movesets
+    line = line[4:].split("   ")
+    i = 0
+    while i < len(line):
+        if line[i] == "": line.pop(i)
+        else: i += 1
 
-        if line[0] == "-": moves_1 = []
-        else: moves_1 = line[0].strip("\n").strip(" ").replace("  ", " ").split(" ")
-        try: moves_2 = line[1].strip("\n").strip(" ").replace("  ", " ").split(" ")
-        except IndexError: moves_2 = []
-        print(moves_1, "\n", moves_2, "\n", sep = "")    
+    if line[0] == "-": moves_1 = []
+    else: moves_1 = line[0].strip("\n").strip(" ").replace("  ", " ").split(" ")
+    try: moves_2 = line[1].strip("\n").strip(" ").replace("  ", " ").split(" ")
+    except IndexError: moves_2 = []
+    print(moves_1, "\n", moves_2, "\n", sep = "")    
                 
     return moves_1, moves_2
 
@@ -67,31 +64,39 @@ def test_input_tables():
                 if cube[0][0] != face_1[0] or cube[0][2] != face_1[1] or cube[0][6] != face_1[2] or cube[0][8] != face_1[3] or cube[5][0] != face_2[0] or cube[5][2] != face_2[1] or cube[5][6] != face_2[2] or cube[5][8] != face_2[3]:
                     cube.display()
                     raise Exception(f"UH OH: page {i + 1}, line {j + 1}, moveset 2")
-        
+
+def get_table_text(table_num):
+    with open(f"phase_3_page_{table_num}.txt", "r") as table:
+        lines = table.readlines()
+        for i, line in enumerate(lines):
+            lines[i] = read_line(line)
+        print(lines)
 
 def write_tables():
     
     #for i in range(70):
     i = 3
     cube = Cube3(["-1-111-1-", "---------", "-0-000-0-", "---------", "-0-000-0-", "-1-111-1-"])
-    moves_1, moves_2 = read_table(1, i)
-        
+    moves_1, moves_2 = read_line(1, i)
+    
+    inverse_moves = []
     for move in moves_1:
-        cube.move(move)
+        cube.move(MOVE_KEYS[int(move) - 1])
+        inverse_moves.append(INVERSE_KEYS[int(move) - 1])
         
     sides_key = ""
     face = cube[0]
     for side in (1, 3, 5, 7):
         if face[side] == face[4]: sides_key += "-"
         else: sides_key += "X"
-    sides_key += "\n"
+    sides_key += "|"
     
     for face in (cube[2],  cube[4]):
         for side in (3, 5):
             if face[side] == face[4]: sides_key += "-"
             else: sides_key += "X"
             
-    sides_key += "\n"
+    sides_key += "|"
             
     face = cube[5]
     for side in (1, 3, 5, 7):
@@ -99,6 +104,7 @@ def write_tables():
         else: sides_key += "X"
     
     cube.display()
-    print(sides_key + " : " + " ".join(moves_1))
+    print(sides_key + " : " + " ".join(inverse_moves))
             
-write_tables()
+##write_tables()
+get_table_text(1)
