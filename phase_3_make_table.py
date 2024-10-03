@@ -82,7 +82,7 @@ def get_sides_key(cube):
 # Writes the new move tables
 def write_tables():
     with open("Tables/phase_3_no_corners.txt", "w") as table:
-            lines = get_table_text(1)
+            lines = get_table_text(1) + get_table_text(2)
             for movesets in lines:
                 for j in range(2):
                     cube = Cube3(["-1-111-1-", "---------", "-0-000-0-", "---------", "-0-000-0-", "-1-111-1-"])
@@ -94,5 +94,6 @@ def write_tables():
 
                     sides_key = get_sides_key(cube)
                     table.write(sides_key + " : " + " ".join(inverse_moves[::-1]) + "\n")
+                    
             
 write_tables()
