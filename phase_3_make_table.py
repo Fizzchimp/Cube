@@ -3,7 +3,8 @@ from cube_3 import Cube3
 MOVE_KEYS = ("L", "L2", "L'", "F2", "R", "R2", "R'", "B2", "U2", "D2")
 INVERSE_KEYS = ("L'", "L2", "L", "F2", "R'", "R2", "R", "B2", "U2", "D2")
 
-        
+def sort_key(line):
+    return line[:14]
 # Takes a line from an input table and converts it into two lists of moves
 def read_line(line):
     # Split string into 2 movesets
@@ -83,6 +84,7 @@ def get_sides_key(cube):
 def write_tables():
     with open("Tables/phase_3_no_corners.txt", "w") as table:
             lines = get_table_text(1) + get_table_text(2)
+            new_lines = []
             for movesets in lines:
                 for j in range(2):
                     cube = Cube3(["-1-111-1-", "---------", "-0-000-0-", "---------", "-0-000-0-", "-1-111-1-"])
@@ -93,7 +95,10 @@ def write_tables():
                         inverse_moves.append(INVERSE_KEYS[int(move) - 1])
 
                     sides_key = get_sides_key(cube)
-                    table.write(sides_key + " : " + " ".join(inverse_moves[::-1]) + "\n")
+                    new_lines.append(sides_key + " : " + " ".join(inverse_moves[::-1]) + "\n")
+            new_lines = sorted(new_lines, key = sort_key)
+            for line in new_lines:
+                table.write(line)
                     
             
 write_tables()

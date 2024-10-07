@@ -1,4 +1,3 @@
-from re import I
 import pygame as pg
 from pygame import gfxdraw
 from Display.model_2 import Model_2
