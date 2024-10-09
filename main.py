@@ -180,7 +180,6 @@ class World:
             self.edit_pointer = 0
 
 
-
     # Executes a move on both cube data strucure and model
     def do_move(self, move, mod = None):
         if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"

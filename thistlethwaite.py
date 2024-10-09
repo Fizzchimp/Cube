@@ -5,29 +5,36 @@ import time
 
 
 # Moveset to get from G0 -> G1
-G_0 = ("U", "U_Prime", "D", "D_Prime",
-       "L", "L_Prime", "R", "R_Prime",
-       "F", "F_Prime", "B", "B_Prime")
+G_0 = (
+    "U", "U_Prime", "D", "D_Prime",
+    "L", "L_Prime", "R", "R_Prime",
+    "F", "F_Prime", "B", "B_Prime")
 
 
 # Moveset to get from G1 -> G2
-G_1 = ("L", "L_Prime", "L_2",
-       "R", "R_Prime", "R_2", 
-       "F", "F_Prime", "F_2",
-       "B", "B_Prime", "B_2", 
-       "U_2", "D_2")
+G_1 = (
+    "L", "L_Prime", "L_2",
+    "R", "R_Prime", "R_2", 
+    "F", "F_Prime", "F_2",
+    "B", "B_Prime", "B_2", 
+    "U_2", "D_2")
 
-NO_MOVES = [i for i in range(14)]
+G_2 = (
+    "L", "L_Prime", "L_2",
+    "R", "R_Prime", "R_2",
+    "F2", "B2", "U2", "D2")
 
-CORNERS = (((1, 0), (4, 2), (0, 0)),
-           ((1, 2), (0, 6), (2, 0)),
-           ((1, 6), (5, 6), (4, 8)),
-           ((1, 8), (2, 6), (5, 0)),
-           
-           ((3, 0), (2, 2), (0, 8)),
-           ((3, 2), (0, 2), (4, 0)),
-           ((3, 6), (5, 2), (2, 8)),
-           ((3, 8), (4, 6), (5, 8)))
+
+CORNERS = (
+    ((1, 0), (4, 2), (0, 0)),
+    ((1, 2), (0, 6), (2, 0)),
+    ((1, 6), (5, 6), (4, 8)),
+    ((1, 8), (2, 6), (5, 0)),
+    
+    ((3, 0), (2, 2), (0, 8)),
+    ((3, 2), (0, 2), (4, 0)),
+    ((3, 6), (5, 2), (2, 8)),
+    ((3, 8), (4, 6), (5, 8)))
 
 
 # Return the state of a node after applied move
@@ -261,17 +268,65 @@ def phase_2(G_1_state):
         
 
 # Phase 3
-def get_orbits(G_2_state):
-    group_c = (G_2_state[0][4], G_2_state[5][4])
+# 1 = 0
+# 2 = 4
+# 3 = 7
+# 4 = 3
+# 5 = 2
+# 6 = 6
+# 7 = 5
+# 8 = 1
+ORBIT_MOVES = {
+    "10100000" : None,
+    "10000010" : None,
+    "11001100" : None,
+    "10000100" : ("F2"),
+    "11000000" : ("L2", "U2"),
+    "10110010" : ("L"),
+    "10101100" : ("L", "F2"),
+    "11101000" : ("L'", "U2"),
+    "11000011" : ("U2"),
+    "10100101" : ("R2", "F2"),
+    "11100001" : ("L", "U2"),
+    "10101111" : ("L"),
+    "11101101" : ("F2", "R"),
+    "11001111" : ("L", "R", "U2"),
+    "11111111" : ("L", "R")}
 
-    for i in (0, 5):
-        for j in (0, 2, 6, 8):
-            if G_2_state[i][j] not in group_c:
-                print(i, j)
+def get_orbits(state):
+    group_c = (state[0][4], state[5][4])
+    corners = ""
+
+    for face in (0, 5):
+        for index in (0, 2, 6, 8):
+            if state[face][index] not in group_c:
+                print(face, index)
+                corners += "1"
+            else: corners += "0"
+
+    return corners
+
+
+def fix_orbits(corners):
+    if corners in ORBIT_MOVES.keys():
+        return ORBIT_MOVES[corners]
+    
+    for transformation, move_keys in ():
+        transformed_corners = transformation(corners)
+        if transformed_corners in ORBIT_MOVES.keys():
+            return ORBIT_MOVES[corners]
+
+
+def phase_3(G_2_state):
+    corner_orbits = get_orbits(G_2_state)
+    print(corner_orbits)
+    orbit_moves = fix_orbits(corner_orbits)
+    print("Moves: ", orbit_moves)
 
 
 # Function to organise solving the cube
 def thistle_solve(start_state):    
+
     # Phase 1
     phase_1_moves, G_1_state = phase_1(start_state)
     
@@ -279,5 +334,6 @@ def thistle_solve(start_state):
     phase_2_moves, G_2_state = phase_2(G_1_state)
 
     G_2_state.display()
-    print(get_orbits(G_2_state))
+
+    phase_3(G_2_state)
     return phase_1_moves + phase_2_moves
