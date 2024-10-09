@@ -117,16 +117,21 @@ def test_corner_permutation(cube):
 
 moveset = ("U2", "D2", "F2", "B2", "L2", "R2")
 
-
-for i in range(1000):
+with open("Tables/phase_3_no_corners.txt", "r") as file:
+    movesets = []    
+    for moves in file.readlines()[1:4]:
+        movesets.append(moveset[17:])
+    print(movesets)
+        
+for i in range(1000):        
     cube = Cube3()
-    for i in range(20): 
+    for i in range(20):
         move = choice(moveset)
         cube.move(move)
         print(move, end = ", ")
 
-    cube.display()
+    #cube.display()
     test = test_corner_permutation(cube)
-    print(test)
-    if test == False: raise Exception("False")
+    #print(test)
+    #if test == False: raise Exception("False")
 #write_tables()
