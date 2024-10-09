@@ -1,10 +1,12 @@
 from cube_3 import Cube3
+from random import choice
 
 MOVE_KEYS = ("L", "L2", "L'", "F2", "R", "R2", "R'", "B2", "U2", "D2")
 INVERSE_KEYS = ("L'", "L2", "L", "F2", "R'", "R2", "R", "B2", "U2", "D2")
 
 def sort_key(line):
     return line[:14]
+
 # Takes a line from an input table and converts it into two lists of moves
 def read_line(line):
     # Split string into 2 movesets
@@ -100,5 +102,31 @@ def write_tables():
             for line in new_lines:
                 table.write(line)
                     
-            
-write_tables()
+
+def test_corner_permutation(cube):
+    face_pairs = ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4]))
+                  
+    for face_1, face_2 in face_pairs:
+        if face_1[0] == face_1[2] and face_2[0] != face_2[2]: return False
+        if face_1[0] == face_1[6] and face_2[0] != face_2[6]: return False
+        if face_1[0] == face_1[8] and face_2[0] != face_2[8]: return False
+        
+    return True
+
+
+
+moveset = ("U2", "D2", "F2", "B2", "L2", "R2")
+
+
+for i in range(1000):
+    cube = Cube3()
+    for i in range(20): 
+        move = choice(moveset)
+        cube.move(move)
+        print(move, end = ", ")
+
+    cube.display()
+    test = test_corner_permutation(cube)
+    print(test)
+    if test == False: raise Exception("False")
+#write_tables()
