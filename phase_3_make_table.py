@@ -107,9 +107,9 @@ def test_corner_permutation(cube):
     face_pairs = ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4]))
                   
     for face_1, face_2 in face_pairs:
-        if face_1[0] == face_1[2] and face_2[0] != face_2[2]: return False
-        if face_1[0] == face_1[6] and face_2[0] != face_2[6]: return False
-        if face_1[0] == face_1[8] and face_2[0] != face_2[8]: return False
+        if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
+        if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
+        if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
         
     return True
 
@@ -117,21 +117,19 @@ def test_corner_permutation(cube):
 
 moveset = ("U2", "D2", "F2", "B2", "L2", "R2")
 
-with open("Tables/phase_3_no_corners.txt", "r") as file:
-    movesets = []    
-    for moves in file.readlines()[1:4]:
-        movesets.append(moveset[17:])
-    print(movesets)
-        
-for i in range(1000):        
-    cube = Cube3()
-    for i in range(20):
-        move = choice(moveset)
-        cube.move(move)
-        print(move, end = ", ")
 
-    #cube.display()
+for i in range(10000):        
+    cube = Cube3()
+    #for i in range(20):
+    #    move = choice(moveset)
+    #    cube.move(move)
+    #    print(move, end = ", ")
+    moves = "R B2 L' B2 R' L' F2 L' F2 L'"
+    for move in moves.split(" ")[::-1]:
+        cube.move(move)
+   
+    cube.display()
     test = test_corner_permutation(cube)
-    #print(test)
-    #if test == False: raise Exception("False")
+    print(test)
+    if test == False: raise Exception("False")
 #write_tables()
