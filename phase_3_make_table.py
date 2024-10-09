@@ -117,19 +117,21 @@ def test_corner_permutation(cube):
 
 moveset = ("U2", "D2", "F2", "B2", "L2", "R2")
 
-
 for i in range(10000):        
     cube = Cube3()
-    #for i in range(20):
-    #    move = choice(moveset)
-    #    cube.move(move)
-    #    print(move, end = ", ")
-    moves = "R B2 L' B2 R' L' F2 L' F2 L'"
-    for move in moves.split(" ")[::-1]:
-        cube.move(move)
+    # cube.move("R", "L2", "D2" "F2" "R" "L'" "F2" "L'")
+    for i in range(20):
+       move = choice(moveset)
+       cube.move(move)
+       print(move, end = ", ")
+
+    # moves = "F2 R2 L' U2 L2 F2 L U2 L2 F2 L'"
+    # for move in moves.split(" ")[::-1]:
+    #     cube.move(move)
    
     cube.display()
     test = test_corner_permutation(cube)
     print(test)
     if test == False: raise Exception("False")
-#write_tables()
+
+
