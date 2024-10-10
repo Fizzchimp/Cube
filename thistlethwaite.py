@@ -108,13 +108,9 @@ def solve_sides(start_node):
                         node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, G_0), parent.movement + 1, parent.parent))
 
 def phase_1(start_state):
-    start_time = time.time()
-
     node = solve_sides(Node(start_state))
     if node == None: return "Cannot Solve!"
     end_state = node.cube
-
-    print(f"Phase 1 finished in {time.time() - start_time}s")
 
     path = []
     while node.parent != None:
@@ -135,7 +131,6 @@ def UD_side_check(cube):
 def get_UD_slice(start_node):
     # To get UD slice correct
     for i in range(5):
-        print("Depth:", i)
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.L(), 0, start_node))
 
@@ -237,7 +232,6 @@ def phase_2(G_1_state):
     # Attempt with no transformations
     moves = get_table_moves(corners)
     if moves != None:
-        print("No transformation")
         for move in moves:
             path.append(G_1[int(move)])
             node.move(G_1[int(move)])
@@ -247,7 +241,6 @@ def phase_2(G_1_state):
     for transformation, moveset in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
         moves = get_table_moves(transformation(corners))
         if moves != None:
-            print(transformation)
             for move in moves:
                 path.append(G_1[moveset[int(move)]])
                 node.move(G_1[moveset[int(move)]])
@@ -258,24 +251,13 @@ def phase_2(G_1_state):
         for transformation_2, moveset_2 in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
                 moves = get_table_moves(transformation_2(transformation_1(corners)))
                 if moves != None:
-                    print(transformation_1, "\n", transformation_2)
                     for move in moves:
                         path.append(G_1[moveset_2[moveset_1[int(move)]]])
                         node.move(G_1[moveset_2[moveset_1[int(move)]]])
                     return path, node
-
-    else: print("NOT FOUND")
         
 
 # Phase 3
-# 1 = 0
-# 2 = 4
-# 3 = 7
-# 4 = 3
-# 5 = 2
-# 6 = 6
-# 7 = 5
-# 8 = 1
 ORBIT_MOVES = {
     "10100000" : None,
     "10000010" : None,
@@ -292,20 +274,25 @@ ORBIT_MOVES = {
     "11101101" : ("F2", "R"),
     "11001111" : ("L", "R", "U2"),
     "11111111" : ("L", "R")}
+G_2 = (
+    "L", "L_Prime", "L_2",
+    "R", "R_Prime", "R_2",
+    "F2", "B2", "U2", "D2")
 
 TRANSFORMATIONS = (
-    # Corners  | Moves
-    ("10325476", "")
-    )
+    # Corners  |  Moves
+    ("10325476", "4351026789"), # Reflection YZ
+    ("23016745", "1024357689"), # Reflection XY
+    ("67452301", "1024356798"), # Reflection XZ
+    ("23456701", "0123458967")) # Rotation Z
+
 def get_orbits(state):
     group_c = (state[0][4], state[5][4])
     corners = ""
 
     for face in (0, 5):
         for index in (0, 2, 6, 8):
-            if state[face][index] not in group_c:
-                print(face, index)
-                corners += "1"
+            if state[face][index] not in group_c: corners += "1"
             else: corners += "0"
 
     return corners
@@ -313,12 +300,29 @@ def get_orbits(state):
 
 def fix_orbits(corners):
     if corners in ORBIT_MOVES.keys():
+        print("No Transformation")
         return ORBIT_MOVES[corners]
     
-    for transformation, move_keys in ():
-        transformed_corners = transformation(corners)
+    for transformation, move_keys in (TRANSFORMATIONS):
+        transformed_corners = transform_corners(corners, transformation[0])
         if transformed_corners in ORBIT_MOVES.keys():
-            return ORBIT_MOVES[corners]
+            new_moves = transform_moves(ORBIT_MOVES[transformed_corners], transformation[1])
+            print("Transformation: ", transformation)
+            return new_moves
+
+
+def transform_corners(corners, transformation):
+    new_corners = ""
+    for index in transformation:
+        new_corners += corners[int(index)]
+        
+    return new_corners
+
+def transform_moves(moves, transformation):
+    new_moves = []
+    for move in moves:
+        new_moves.append(G_2[int(transformation[move])])
+    
 
 
 def phase_3(G_2_state):
@@ -329,13 +333,19 @@ def phase_3(G_2_state):
 
 
 # Function to organise solving the cube
-def thistle_solve(start_state):    
-
-    # Phase 1
-    phase_1_moves, G_1_state = phase_1(start_state)
+def thistle_solve(start_state): 
     
+    # Phase 1
+    timer = time.time()
+    phase_1_moves, G_1_state = phase_1(start_state)
+    print(f"Phase 1 finished in {time.time() - timer}s")
+    
+
     # Phase 2
+    timer = time.time()
     phase_2_moves, G_2_state = phase_2(G_1_state)
+    print(f"Phase 2 finished in {time.time() - timer}s")
+    
 
     G_2_state.display()
 
