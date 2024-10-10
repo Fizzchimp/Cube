@@ -293,6 +293,10 @@ ORBIT_MOVES = {
     "11001111" : ("L", "R", "U2"),
     "11111111" : ("L", "R")}
 
+TRANSFORMATIONS = (
+    # Corners  | Moves
+    ("10325476", "")
+    )
 def get_orbits(state):
     group_c = (state[0][4], state[5][4])
     corners = ""
