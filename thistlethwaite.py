@@ -258,33 +258,29 @@ def phase_2(G_1_state):
         
 
 # Phase 3
-ORBIT_MOVES = {
-    "10100000" : None,
-    "10000010" : None,
-    "11001100" : None,
-    "10000100" : ("F2"),
-    "11000000" : ("L2", "U2"),
-    "10110010" : ("L"),
-    "10101100" : ("L", "F2"),
-    "11101000" : ("L'", "U2"),
-    "11000011" : ("U2"),
-    "10100101" : ("R2", "F2"),
-    "11100001" : ("L", "U2"),
-    "10101111" : ("L"),
-    "11101101" : ("F2", "R"),
-    "11001111" : ("L", "R", "U2"),
-    "11111111" : ("L", "R")}
 G_2 = (
     "L", "L_Prime", "L_2",
     "R", "R_Prime", "R_2",
-    "F2", "B2", "U2", "D2")
+    "F_2", "B_2", "U_2", "D_2")
 
-TRANSFORMATIONS = (
-    # Corners  |  Moves
-    ("10325476", "4351026789"), # Reflection YZ
-    ("23016745", "1024357689"), # Reflection XY
-    ("67452301", "1024356798"), # Reflection XZ
-    ("23456701", "0123458967")) # Rotation Z
+
+ORBIT_MOVES = {
+    "10100000" : (),
+    "10000010" : (),
+    "11001100" : (),
+    "10000100" : (6),
+    "11000000" : (2, 8),
+    "10110010" : (0),
+    "10101100" : (0, 6),
+    "11101000" : (1, 8),
+    "11000011" : (8),
+    "10100101" : (5, 6),
+    "11100001" : (0, 8),
+    "10101111" : (0),
+    "11101101" : (6, 3),
+    "11001111" : (0, 3, 8),
+    "11111111" : (0, 3)}
+
 
 def get_orbits(state):
     group_c = (state[0][4], state[5][4])
@@ -297,19 +293,16 @@ def get_orbits(state):
 
     return corners
 
-
-def fix_orbits(corners):
-    if corners in ORBIT_MOVES.keys():
-        print("No Transformation")
-        return ORBIT_MOVES[corners]
-    
-    for transformation, move_keys in (TRANSFORMATIONS):
-        transformed_corners = transform_corners(corners, transformation[0])
-        if transformed_corners in ORBIT_MOVES.keys():
-            new_moves = transform_moves(ORBIT_MOVES[transformed_corners], transformation[1])
-            print("Transformation: ", transformation)
-            return new_moves
-
+TRANSFORMATIONS = (
+    # Corners  |  Moves
+    ("10325476", "4351026789"), # Reflection YZ
+    ("23016745", "1024357689"), # Reflection XY
+    ("67452301", "1024356798"), # Reflection XZ
+    ("23456701", "0123458967"), # Rotation X Clockwise
+    ("67012345", "0123459867"), # Rotation X Anticlockwise
+    ("45670123", "0123457698"), # Rotation X 180
+    ("76543210", "3450126798"), # Rotation Z 180
+    ("32107654", "3450127689")) # Rotation Y 180
 
 def transform_corners(corners, transformation):
     new_corners = ""
@@ -318,16 +311,31 @@ def transform_corners(corners, transformation):
         
     return new_corners
 
-def transform_moves(moves, transformation):
+def transform_moves(moves, move_keys):
     new_moves = []
-    for move in moves:
-        new_moves.append(G_2[int(transformation[move])])
+    for move in list(moves):
+        if move not in G_2: print(move, moves)
+        new_moves.append(G_2[int(move_keys[G_2.index(move)])])
     
+    return new_moves
+
+
+def fix_orbits(corners):
+    if corners in ORBIT_MOVES.keys():
+        print("No Transformation")
+        return ORBIT_MOVES[corners]
+    
+    for index, (transformation, move_keys) in enumerate(TRANSFORMATIONS):
+        transformed_corners = transform_corners(corners, transformation)
+        if transformed_corners in ORBIT_MOVES.keys():
+            print("Transformation: ", index, transformed_corners)
+            return transform_moves(ORBIT_MOVES[transformed_corners], move_keys)
+
 
 
 def phase_3(G_2_state):
     corner_orbits = get_orbits(G_2_state)
-    print(corner_orbits)
+    print("Orbits: ", corner_orbits)
     orbit_moves = fix_orbits(corner_orbits)
     print("Moves: ", orbit_moves)
 
@@ -351,3 +359,9 @@ def thistle_solve(start_state):
 
     phase_3(G_2_state)
     return phase_1_moves + phase_2_moves
+
+
+cube = Cube3(["RYOYWORWW", "BBBGGBBBG", "WOORRRWRO", "GBBGBGGGG", "YRYOOYROO", "RWYWYWWYY"])
+cube.move("X")
+cube.display()
+phase_3(cube)
