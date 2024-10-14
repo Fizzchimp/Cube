@@ -1,3 +1,4 @@
+from calendar import c
 from cube_3 import Cube3
 from Assets.node_3 import Node
 from Assets.stack import Stack
@@ -255,6 +256,8 @@ def phase_2(G_1_state):
                         path.append(G_1[moveset_2[moveset_1[int(move)]]])
                         node.move(G_1[moveset_2[moveset_1[int(move)]]])
                     return path, node
+                
+    raise Exception("Phase 2 Broken")
         
 
 # Phase 3
@@ -265,17 +268,18 @@ G_2 = (
 
 
 ORBIT_MOVES = {
+    "00000000" : [],
     "10100000" : [],
     "10000010" : [],
     "11001100" : [],
     "10000100" : [6],
     "11000000" : [2, 8],
-    "10110010" : [0],
+    "10101010" : [0],
     "10101100" : [0, 6],
     "11101000" : [1, 8],
-    "11000011" : [8],
+    "11000011" : [9],
     "10100101" : [5, 6],
-    "11100001" : [0, 8],
+    "11100001" : [0, 9],
     "10101111" : [0],
     "11101101" : [6, 3],
     "11001111" : [0, 3, 8],
@@ -305,8 +309,12 @@ TRANSFORMATIONS = (
     ("32107654", "3450127689")) # Rotation Y 180
 
 def test_transformation():
-    for cnr in ORBIT_MOVES.keys():
-       face_1 = face_2 = [f"{cnr[0]}-{cnr[1]}-{cnr[2]}-{cnr[3]}"]
+    # "10110010"
+    cube = Cube3(["1-1---1-0", "---------", "1-1---1-1", "---------", "1-1---1-1", "0-0---0-0"])
+    for move in [0]:
+        cube.move(G_2[move])
+        print(G_2[move])
+    cube.display()
 
 def transform_corners(corners, transformation):
     new_corners = ""
@@ -317,8 +325,7 @@ def transform_corners(corners, transformation):
 
 def transform_moves(moves, move_keys):
     new_moves = []
-    for move in list(moves):
-        if move not in G_2: print(move, moves)
+    for move in moves:
         new_moves.append(int(move_keys[move]))
     
     return new_moves
@@ -353,11 +360,16 @@ def phase_3(G_2_state):
     corner_orbits = get_orbits(G_2_state)
     print("Orbits: ", corner_orbits)
     
+    cube = Cube3(G_2_state)
     orbit_moves = fix_orbits(corner_orbits)
     for i, move in enumerate(orbit_moves):
         orbit_moves[i] = G_2[move]
+        cube.move(G_2[move])
         
+    
     print("Moves: ", orbit_moves)
+    print(get_orbits(cube))
+    return orbit_moves
 
 
 # Function to organise solving the cube
@@ -375,20 +387,9 @@ def thistle_solve(start_state):
     print(f"Phase 2 finished in {time.time() - timer}s")
     
 
-    phase_3(G_2_state)
-    return phase_1_moves + phase_2_moves
+    phase_3_moves = phase_3(G_2_state)
+    return phase_1_moves + phase_2_moves + phase_3_moves
 
 
-#cube = Cube3(["RYOYWORWW", "BBBGGBBBG", "WOORRRWRO", "GBBGBGGGG", "YRYOOYROO", "RWYWYWWYY"])
-#cube.move("X")
-#cube.display()
-#phase_3(cube)
-
-#for i in range(0):
-#    cube.scramble()
-#    cube.display()
-#    thistle_solve(cube.cube)
-
-# "WRWYRRROR", "GBBGGGBGB", "WYWRYWYYO", "GBBBBBGGG", "OWOOWYRWY", "RRYOOWOOY"
-
-phase_3(["WRWYRRROR", "GBBGGGBGB", "WYWRYWYYO", "GBBBBBGGG", "OWOOWYRWY", "RRYOOWOOY"])
+for i in range(100):
+    cube = Cube3()
