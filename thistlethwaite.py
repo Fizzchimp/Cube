@@ -23,7 +23,7 @@ G_1 = (
 G_2 = (
     "L", "L_Prime", "L_2",
     "R", "R_Prime", "R_2",
-    "F2", "B2", "U2", "D2")
+    "F_2", "B_2", "U_2", "D_2")
 
 
 CORNERS = (
@@ -183,7 +183,7 @@ def get_corners(node):
 
     return state
 
-# All the transformations for the corners
+# All the transformations for the corner
 def reflection_XY(corners):
     return (corners[1] + corners[0] + corners[3] + corners[2] + corners[5] + corners[4] + corners[7] + corners[6]).replace("1", "x").replace("2", "1").replace("x", "2")
 REF_XY = (1, 0, 2, 4, 3, 5, 10, 9, 11, 7, 6, 8, 12, 13)
@@ -324,6 +324,7 @@ def transform_corners(corners, transformation):
     return new_corners
 
 def transform_moves(moves, move_keys):
+    print("Moves: ", moves)
     new_moves = []
     for move in moves:
         new_moves.append(int(move_keys[move]))
@@ -357,24 +358,26 @@ def fix_orbits(corners):
 
 
 def phase_3(G_2_state):
+    phase_3_moves = []
     corner_orbits = get_orbits(G_2_state)
     print("Orbits: ", corner_orbits)
     
     cube = Cube3(G_2_state)
     orbit_moves = fix_orbits(corner_orbits)
     for i, move in enumerate(orbit_moves):
-        orbit_moves[i] = G_2[move]
+        phase_3_moves.append(G_2[move])
         cube.move(G_2[move])
         
     
     print("Moves: ", orbit_moves)
     print(get_orbits(cube))
-    return orbit_moves
+    return phase_3_moves
 
 
 # Function to organise solving the cube
-def thistle_solve(start_state): 
-    
+def thistle_solve(start_state):
+    print(start_state)
+    Cube3(start_state).display()
     # Phase 1
     timer = time.time()
     phase_1_moves, G_1_state = phase_1(start_state) 
@@ -390,6 +393,7 @@ def thistle_solve(start_state):
     phase_3_moves = phase_3(G_2_state)
     return phase_1_moves + phase_2_moves + phase_3_moves
 
-
-for i in range(100):
-    cube = Cube3()
+cube = Cube3()
+for i in range(10000):
+    cube.scramble()
+    thistle_solve(cube.cube)

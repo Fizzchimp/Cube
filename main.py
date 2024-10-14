@@ -77,6 +77,7 @@ class World:
         # self.cube_3 = Cube3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
         #self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
         self.cube_3 = Cube3()
+        self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
         # L' U2 R' U2 D2 R2 D2 L' F2 L D2 L'
 
         #self.cube_3.move("F", "L", "R'", "D2", "B2", "U")
@@ -93,9 +94,9 @@ class World:
         self.edit_pointer = -1
            
     # Organises Pathfinding for each cube
-    def find_path(self, cube):
+    def find_path(self, cube_state):
         if self.cube_type == 2:
-            sNode, eNode = solve_2(cube)
+            sNode, eNode = solve_2(cube_state)
             path = []
             
             if sNode == None:
@@ -113,7 +114,7 @@ class World:
             return path
         
         elif self.cube_type == 3:
-            moves = thistle_solve(cube)
+            moves = thistle_solve(cube_state)
             return moves
     
     # Swap between 2 by 2 and 3 by 3
