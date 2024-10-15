@@ -339,25 +339,33 @@ def fix_orbits(corners):
             
     raise Exception("NOT SOLVED")
 
+FIXED_ORBITS = (
+    "00000000",
+    "10100000",
+    "10000010",
+    "11001100"
+    )
 
 def get_fixed_orbits(state):
     corners = get_orbits(state)
     # Try with no transformation
-    if corners in ORBIT_MOVES.keys()[:4]:
+    if corners in FIXED_ORBITS:
         return corners, None
     
     # Try with one transformation
     for transformation, moveset in TRANSFORMATIONS:
         transformed_corners = transform_corners(corners, transformation)
-        if transformed_corners in ORBIT_MOVES.keys()[:4]:
+        if transformed_corners in FIXED_ORBITS:
             return transformed_corners, moveset
         
-    # Try with two transformations
-    for transformation_1, moveset_1 in TRANSFORMATIONS:
-        for transformation_2, moveset_2 in TRANSFORMATIONS:
-            transformed_corners = transform_corners(transform_corners(corners, transformation_1), transformation_2)
-            if transformed_corners in ORBIT_MOVES.keys()[:4]:
-                return transformed_corners, (moveset_1, moveset_2)
+    # # Try with two transformations
+    # for transformation_1, moveset_1 in TRANSFORMATIONS:
+    #     for transformation_2, moveset_2 in TRANSFORMATIONS:
+    #         transformed_corners = transform_corners(transform_corners(corners, transformation_1), transformation_2)
+    #         if transformed_corners in FIXED_ORBITS:
+    #             return transformed_corners, (moveset_1, moveset_2)
+            
+    raise Exception("NO RESULTING ORBITS")
 
 
 
@@ -375,7 +383,8 @@ def phase_3(G_2_state):
     
     print("Moves: ", orbit_moves)
     
-    fixed_orbits = get_fixed_orbits(
+    fixed_orbits = get_fixed_orbits(cube)
+    print(fixed_orbits)
     return phase_3_moves
 
 
@@ -402,7 +411,7 @@ def thistle_solve(start_state):
     phase_3_moves = phase_3(G_2_state)
     return phase_1_moves + phase_2_moves + phase_3_moves
 
-#cube = Cube3()
-#for i in range(10000):
-#    cube.scramble()
-#    thistle_solve(cube.cube)
+cube = Cube3()
+for i in range(10000):
+   cube.scramble()
+   thistle_solve(cube.cube)
