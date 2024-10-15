@@ -261,12 +261,6 @@ def phase_2(G_1_state):
         
 
 # Phase 3
-G_2 = (
-    "L", "L_Prime", "L_2",
-    "R", "R_Prime", "R_2",
-    "F_2", "B_2", "U_2", "D_2")
-
-
 ORBIT_MOVES = {
     "00000000" : [],
     "10100000" : [],
@@ -284,7 +278,6 @@ ORBIT_MOVES = {
     "11101101" : [6, 3],
     "11001111" : [0, 3, 8],
     "11111111" : [0, 3]}
-
 
 def get_orbits(state):
     group_c = (state[0][4], state[5][4])
@@ -308,14 +301,6 @@ TRANSFORMATIONS = (
     ("76543210", "3450126798"), # Rotation Z 180
     ("32107654", "3450127689")) # Rotation Y 180
 
-def test_transformation():
-    # "10110010"
-    cube = Cube3(["1-1---1-0", "---------", "1-1---1-1", "---------", "1-1---1-1", "0-0---0-0"])
-    for move in [0]:
-        cube.move(G_2[move])
-        print(G_2[move])
-    cube.display()
-
 def transform_corners(corners, transformation):
     new_corners = ""
     for index in transformation:
@@ -330,7 +315,6 @@ def transform_moves(moves, move_keys):
         new_moves.append(int(move_keys[move]))
     
     return new_moves
-
 
 def fix_orbits(corners):
     # Try with no transformations
@@ -356,6 +340,26 @@ def fix_orbits(corners):
     raise Exception("NOT SOLVED")
 
 
+def get_fixed_orbits(state):
+    corners = get_orbits(state)
+    # Try with no transformation
+    if corners in ORBIT_MOVES.keys()[:4]:
+        return corners, None
+    
+    # Try with one transformation
+    for transformation, moveset in TRANSFORMATIONS:
+        transformed_corners = transform_corners(corners, transformation)
+        if transformed_corners in ORBIT_MOVES.keys()[:4]:
+            return transformed_corners, moveset
+        
+    # Try with two transformations
+    for transformation_1, moveset_1 in TRANSFORMATIONS:
+        for transformation_2, moveset_2 in TRANSFORMATIONS:
+            transformed_corners = transform_corners(transform_corners(corners, transformation_1), transformation_2)
+            if transformed_corners in ORBIT_MOVES.keys()[:4]:
+                return transformed_corners, (moveset_1, moveset_2)
+
+
 
 def phase_3(G_2_state):
     phase_3_moves = []
@@ -370,8 +374,13 @@ def phase_3(G_2_state):
         
     
     print("Moves: ", orbit_moves)
-    print(get_orbits(cube))
+    
+    fixed_orbits = get_fixed_orbits(
     return phase_3_moves
+
+
+
+
 
 
 # Function to organise solving the cube
