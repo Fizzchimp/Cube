@@ -393,7 +393,7 @@ def thistle_solve(start_state):
     phase_3_moves = phase_3(G_2_state)
     return phase_1_moves + phase_2_moves + phase_3_moves
 
-cube = Cube3()
-for i in range(10000):
-    cube.scramble()
-    thistle_solve(cube.cube)
+#cube = Cube3()
+#for i in range(10000):
+#    cube.scramble()
+#    thistle_solve(cube.cube)
