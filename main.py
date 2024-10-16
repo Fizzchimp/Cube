@@ -254,8 +254,8 @@ class World:
                         self.cube.cube[2] = self.cube[2][:self.edit_pointer] + EDITING_COLS[self.key] + self.cube[2][self.edit_pointer + 1:]
                         self.update_edit_pointer()
                         self.key = None
-                
         
+
 
 
         # Get any buttons that are pressed

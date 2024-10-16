@@ -346,6 +346,40 @@ class Cube3():
                 self[0][0] + self[5][1:3] + self[0][3] + self[5][4:6] + self[0][6] + self[5][7:]]
 
 
+    def reflect_XY(self):
+        return [
+            self[0][6] + self[0][7] + self[0][8] + self[0][3] + self[0][4] + self[0][5] + self[0][0] + self[0][1] + self[0][2],
+
+            self[1][2] + self[1][1] + self[1][0] + self[1][5] + self[1][4] + self[1][3] + self[1][8] + self[1][7] + self[1][6],
+            self[4][2] + self[4][1] + self[4][0] + self[4][5] + self[4][4] + self[4][3] + self[4][8] + self[4][7] + self[4][6],
+            self[3][2] + self[3][1] + self[3][0] + self[3][5] + self[3][4] + self[3][3] + self[3][8] + self[3][7] + self[3][6],
+            self[2][2] + self[2][1] + self[2][0] + self[2][5] + self[2][4] + self[2][3] + self[2][8] + self[2][7] + self[2][6],
+
+            self[5][6] + self[5][7] + self[5][8] + self[5][3] + self[5][4] + self[5][5] + self[5][0] + self[5][1] + self[5][2]]
+    
+    def reflect_XZ(self):
+        return [
+            self[5][6] + self[5][7] + self[5][8] + self[5][3] + self[5][4] + self[5][5] + self[5][0] + self[5][1] + self[5][2],
+            
+            self[1][6] + self[1][7] + self[1][8] + self[1][3] + self[1][4] + self[1][5] + self[1][0] + self[1][1] + self[1][2],
+            self[2][6] + self[2][7] + self[2][8] + self[2][3] + self[2][4] + self[2][5] + self[2][0] + self[2][1] + self[2][2],
+            self[3][6] + self[3][7] + self[3][8] + self[3][3] + self[3][4] + self[3][5] + self[3][0] + self[3][1] + self[3][2],
+            self[4][6] + self[4][7] + self[4][8] + self[4][3] + self[4][4] + self[4][5] + self[4][0] + self[4][1] + self[4][2],
+
+            self[0][6] + self[0][7] + self[0][8] + self[0][3] + self[0][4] + self[0][5] + self[0][0] + self[0][1] + self[0][2]]
+
+    def reflect_YZ(self):
+        return [
+            self[0][2] + self[0][1] + self[0][0] + self[0][5] + self[0][4] + self[0][3] + self[0][8] + self[0][7] + self[0][6],
+
+            self[3][2] + self[3][1] + self[3][0] + self[3][5] + self[3][4] + self[3][3] + self[3][8] + self[3][7] + self[3][6],
+            self[2][2] + self[2][1] + self[2][0] + self[2][5] + self[2][4] + self[2][3] + self[2][8] + self[2][7] + self[2][6],
+            self[1][2] + self[1][1] + self[1][0] + self[1][5] + self[1][4] + self[1][3] + self[1][8] + self[1][7] + self[1][6],
+            self[4][2] + self[4][1] + self[4][0] + self[4][5] + self[4][4] + self[4][3] + self[4][8] + self[4][7] + self[4][6],
+
+            self[5][2] + self[5][1] + self[5][0] + self[5][5] + self[5][4] + self[5][3] + self[5][8] + self[5][7] + self[5][6]]
+
+
 
     def move(self, *moves):
         for move in moves:

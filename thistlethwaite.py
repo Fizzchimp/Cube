@@ -350,7 +350,7 @@ FIXED_ORBITS = (
 def get_fixed_orbits(state):
     corners = get_orbits(state)
     # Try with no transformation
-    if corners in FIXED_ORBITS:
+    if corners in list(ORBIT_MOVES.keys())[:3]:
         return corners, None
     
     # Try with one transformation
@@ -358,7 +358,7 @@ def get_fixed_orbits(state):
         transformed_corners = transform_corners(corners, transformation)
         if transformed_corners in FIXED_ORBITS:
             return transformed_corners, moveset
-        
+
     # # Try with two transformations
     # for transformation_1, moveset_1 in TRANSFORMATIONS:
     #     for transformation_2, moveset_2 in TRANSFORMATIONS:
@@ -367,6 +367,8 @@ def get_fixed_orbits(state):
     #             return transformed_corners, (moveset_1, moveset_2)
             
     raise Exception("NO RESULTING ORBITS. TRY WITH 2 TRANSFORMATIONS?")
+
+
 
 
 def phase_3_sides_key(cube):
@@ -472,8 +474,7 @@ def thistle_solve(start_state):
     phase_3_moves = phase_3(G_2_state)
     return phase_1_moves + phase_2_moves + phase_3_moves
 
-
-get_table_3_moves(Cube3(), 0)
+# get_table_3_moves(Cube3(), 0)
 #cube = Cube3()
 #for i in range(10000):
 #   cube.scramble()
