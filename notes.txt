@@ -4,3 +4,5 @@ SuperFlip: Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOY
 
 
 umm just check this move ['L2', 'L', 'B2', 'B2', 'U', 'F', "F'", "D'", "U'", 'D', "R'", "L'", 'D2', 'L', 'D2', 'F2', 'R2', 'D', 'L2', "R'"] for 3 by 3
+
+uhhh phase 2 broken ['WRYGWBYGB', 'GYORGYGOB', 'BWOORYRWR', 'WRBBBGGGR', 'RWOROYYBO', 'WBWWYOYOG']

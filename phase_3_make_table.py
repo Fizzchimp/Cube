@@ -34,27 +34,20 @@ def get_table_text(table_num):
 
 # Takes cube input and converts it to sides key to be written
 def get_sides_key(cube):
-
-    sides_key = ""
-    face = cube[0]
-    for side in (1, 3, 5, 7):
-        if face[side] == face[4]: sides_key += "-"
-        else: sides_key += "X"
-    sides_key += "|"
+    U_D_faces = ""
+    side_faces = ""
+    
+    for face in (cube[0], cube[5]):
+        for side in (1, 3, 5, 7):
+            if face[side] == face[4]: U_D_faces += "-"
+            else: U_D_faces += "X"
     
     for face in (cube[2],  cube[4]):
         for side in (3, 5):
-            if face[side] == face[4]: sides_key += "-"
-            else: sides_key += "X"
-            
-    sides_key += "|"
-            
-    face = cube[5]
-    for side in (1, 3, 5, 7):
-        if face[side] == face[4]: sides_key += "-"
-        else: sides_key += "X"
+            if face[side] == face[4]: side_faces += "-"
+            else: side_faces += "X"
     
-    return sides_key
+    return U_D_faces[:4] + "|" + side_faces + "|" + U_D_faces[4:]
 
 
 
@@ -103,5 +96,5 @@ def test_corner_permutation(cube):
     return True
 
 
-write_tables()
+#write_tables()
 
