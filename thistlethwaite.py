@@ -409,18 +409,21 @@ def read_table_3(file_name):
         return table.readlines()
         
 def get_table_3_moves(cube, orbits):
+    sides = phase_3_sides_key(cube)
+    if sides == "----|----|----": return [], cube
+    
     if orbits == 0: table = read_table_3("Tables/phase_3_no_corners.txt")
     if orbits == 2: table = read_table_3("Tables/phase_3_two_corners.txt")    
     if orbits == 4: table = read_table_3("Tables/phase_3_four_corners.txt")
     
-    sides = phase_3_sides_key(cube)
     for line in table:
         print(line)
         if sides == line[:14]:
             test_cube = Cube3(cube.cube)
             moves = line[17:].split(" ")
+            print(moves)
             for move in moves:
-                cube.move(move)
+                test_cube.move(move)
                 
             if test_corner_permutation(test_cube):
                 return moves, test_cube
@@ -442,7 +445,7 @@ def phase_3(G_2_state):
     print("Moves: ", orbit_moves)
     
     fixed_orbits = get_fixed_orbits(cube)
-    print(fixed_orbits)
+    if fixed_orbits == "----|----|----": print("No problems")
     return phase_3_moves
 
 
