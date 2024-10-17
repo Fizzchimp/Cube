@@ -1,6 +1,7 @@
 from cube_3 import Cube3
 from Assets.node_3 import Node
 from Assets.stack import Stack
+from transformations import *
 import time
 
 
@@ -185,27 +186,35 @@ def get_corners(node):
 # All the transformations for the corner
 def reflection_XY(corners):
     return (corners[1] + corners[0] + corners[3] + corners[2] + corners[5] + corners[4] + corners[7] + corners[6]).replace("1", "x").replace("2", "1").replace("x", "2")
-REF_XY = (1, 0, 2, 4, 3, 5, 10, 9, 11, 7, 6, 8, 12, 13)
+REF_XY_P2 = (1, 0, 2, 4, 3, 5, 10, 9, 11, 7, 6, 8, 12, 13)
 
 def reflection_XZ(corners):
     return (corners[2] + corners[3] + corners[0] + corners[1] + corners[6] + corners[7] + corners[4] + corners[5]).replace("1", "x").replace("2", "1").replace("x", "2")
-REF_XZ = (1, 0, 2, 4, 3, 5, 7, 6, 8, 10, 9, 11, 13, 12)
+REF_XZ_P2 = (1, 0, 2, 4, 3, 5, 7, 6, 8, 10, 9, 11, 13, 12)
 
 def reflection_YZ(corners):
     return (corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[3] + corners[2]).replace("1", "x").replace("2", "1").replace("x", "2")
-REF_YZ = (4, 3, 5, 1, 0, 2, 7, 6, 8, 10, 9, 11, 12, 13)
+REF_YZ_P2 = (4, 3, 5, 1, 0, 2, 7, 6, 8, 10, 9, 11, 12, 13)
 
 def rotation_X(corners):
     return corners[3] + corners[2] + corners[1] + corners[0] + corners[7] + corners[6] + corners[5] + corners[4]
-ROT_X = (0, 1, 2, 3, 4, 5, 9, 10, 11, 6, 7, 8, 13, 12)
+ROT_X_P2 = (0, 1, 2, 3, 4, 5, 9, 10, 11, 6, 7, 8, 13, 12)
 
 def rotation_Y(corners):
     return corners[4:] + corners[:4]
-ROT_Y = (3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8, 12, 13)
+ROT_Y_P2 = (3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8, 12, 13)
 
 def rotation_Z(corners):
     return corners[::-1]
-ROT_Z = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 13, 12)
+ROT_Z_P2 = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 13, 12)
+
+TRANSFORMATION_LIST = (
+    (reflection_XY, REF_XY_P2),
+    (reflection_XZ, REF_XZ_P2),
+    (reflection_YZ, REF_YZ_P2),
+    (rotation_X, ROT_X_P2),
+    (rotation_Y, ROT_Y_P2),
+    (rotation_Z, ROT_Z_P2))
 
 def get_table_2_moves(corners):
     with open("Tables/phase_2.txt") as table:
@@ -238,7 +247,7 @@ def phase_2(G_1_state):
         return path, node
 
     # Attempt with 1 transformation
-    for transformation, moveset in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
+    for transformation, moveset in TRANSFORMATION_LIST:
         moves = get_table_2_moves(transformation(corners))
         if moves != None:
             for move in moves:
@@ -247,8 +256,8 @@ def phase_2(G_1_state):
             return path, node
         
     # Attempt with 2 transformations
-    for transformation_1, moveset_1 in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
-        for transformation_2, moveset_2 in ((reflection_XY, REF_XY), (reflection_XZ, REF_XZ), (reflection_YZ, REF_YZ), (rotation_X, ROT_X), (rotation_Y, ROT_Y), (rotation_Z, ROT_Z)):
+    for transformation_1, moveset_1 in TRANSFORMATION_LIST:
+        for transformation_2, moveset_2 in TRANSFORMATION_LIST:
                 moves = get_table_2_moves(transformation_2(transformation_1(corners)))
                 if moves != None:
                     for move in moves:
@@ -259,7 +268,8 @@ def phase_2(G_1_state):
     raise Exception("Phase 2 Broken")
         
 
-# Phase 3
+### Phase 3
+## Fix corner orbits
 ORBIT_MOVES = {
     "00000000" : [],
     "10100000" : [],
@@ -278,18 +288,18 @@ ORBIT_MOVES = {
     "11001111" : [0, 3, 8],
     "11111111" : [0, 3]}
 
-def get_orbits(state):
-    group_c = (state[0][4], state[5][4])
+def get_orbits(cube):
+    group_c = (cube[0][4], cube[5][4])
     corners = ""
 
     for face in (0, 5):
         for index in (0, 2, 6, 8):
-            if state[face][index] not in group_c: corners += "1"
+            if cube[face][index] not in group_c: corners += "1"
             else: corners += "0"
 
     return corners
 
-
+# Transformations used in phase 2
 TRANSFORMATIONS = (
     # Corners  |  Moves
     ("10325476", "4351026789"), # Reflection YZ
@@ -309,7 +319,6 @@ def transform_corners(corners, transformation):
     return new_corners
 
 def transform_moves(moves, move_keys):
-    print("Moves: ", moves)
     new_moves = []
     for move in moves:
         new_moves.append(int(move_keys[move]))
@@ -340,37 +349,32 @@ def fix_orbits(corners):
     raise Exception("NOT SOLVED")
 
 
-FIXED_ORBITS = (
-    "00000000",
-    "10100000",
-    "10000010",
-    "11001100"
-    )
 
-def get_fixed_orbits(state):
-    corners = get_orbits(state)
+## Fixes sides and remaining corners
+
+ALLOWED_ORBITS = list(ORBIT_MOVES.keys())[:3]
+# Decides which table to use and which transformations are applied
+def get_fixed_orbits(cube):
+    transformed_cube = Cube3()
+    
     # Try with no transformation
-    if corners in list(ORBIT_MOVES.keys())[:3]:
-        return corners, None
+    orbits = get_orbits(cube)
+    if orbits in ALLOWED_ORBITS:
+        return cube, ALLOWED_ORBITS.index(orbits), -1
     
     # Try with one transformation
-    for transformation, moveset in TRANSFORMATIONS:
-        transformed_corners = transform_corners(corners, transformation)
-        if transformed_corners in FIXED_ORBITS:
-            return transformed_corners, moveset
-
-    # # Try with two transformations
-    # for transformation_1, moveset_1 in TRANSFORMATIONS:
-    #     for transformation_2, moveset_2 in TRANSFORMATIONS:
-    #         transformed_corners = transform_corners(transform_corners(corners, transformation_1), transformation_2)
-    #         if transformed_corners in FIXED_ORBITS:
-    #             return transformed_corners, (moveset_1, moveset_2)
+    for index, transformation in enumerate(("reflect_XY", "reflect_XZ", "reflect_YZ", "X", "X_Prime", "Y", "Z")):
+        transformed_cube.cube = getattr(cube, transformation)()
+        orbits = get_orbits(transformed_cube)
+        
+        if orbits in ALLOWED_ORBITS:
+            return transformed_cube, ALLOWED_ORBITS.index(orbits), index
             
     raise Exception("NO RESULTING ORBITS. TRY WITH 2 TRANSFORMATIONS?")
 
 
 
-
+# Get the key for table moves
 def phase_3_sides_key(cube):
     U_D_faces = ""
     side_faces = ""
@@ -387,50 +391,40 @@ def phase_3_sides_key(cube):
     
     return U_D_faces[:4] + "|" + side_faces + "|" + U_D_faces[4:]
 
+# Returns the table from a file
+def read_table_3(file_name):
+    with open(file_name, "r") as table:
+        return table.readlines()
 
-def fix_cube_sides(cube, moves):
-    for move in moves:
-        cube.move(move)
-        
-    if test_corner_permutation(cube):
-        return True, cube
-    return False, None
-        
+# Finds moveset from table
+def get_table_3_moves(cube, table_num):
+    sides = phase_3_sides_key(cube)
+    if sides == "----|----|----": return []
     
+    if table_num == 0: table = read_table_3("Tables/phase_3_no_corners.txt")
+    elif table_num == 1: table = read_table_3("Tables/phase_3_two_corners.txt")    
+    elif table_num == 2: table = read_table_3("Tables/phase_3_four_corners.txt")
+    
+    for line in table:
+        if sides == line[:14]:
+            test_cube = Cube3(cube.cube)
+            moves = line[17:].strip("\n").split(" ")
+            for move in moves:
+                test_cube.move(move)
+                
+            if test_corner_permutation(test_cube):
+                return moves
+
+    raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
+
 def test_corner_permutation(cube):
-    face_pairs = ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4]))
-                  
-    for face_1, face_2 in face_pairs:
+    for face_1, face_2 in ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4])):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
     return True
 
-def read_table_3(file_name):
-    with open(file_name, "r") as table:
-        return table.readlines()
-        
-def get_table_3_moves(cube, orbits):
-    sides = phase_3_sides_key(cube)
-    if sides == "----|----|----": return [], cube
-    
-    if orbits == 0: table = read_table_3("Tables/phase_3_no_corners.txt")
-    if orbits == 2: table = read_table_3("Tables/phase_3_two_corners.txt")    
-    if orbits == 4: table = read_table_3("Tables/phase_3_four_corners.txt")
-    
-    for line in table:
-        print(line)
-        if sides == line[:14]:
-            test_cube = Cube3(cube.cube)
-            moves = line[17:].split(" ")
-            print(moves)
-            for move in moves:
-                test_cube.move(move)
-                
-            if test_corner_permutation(test_cube):
-                return moves, test_cube
-           
-    
+
 
 def phase_3(G_2_state):
     phase_3_moves = []
@@ -446,8 +440,10 @@ def phase_3(G_2_state):
     
     print("Moves: ", orbit_moves)
     
-    fixed_orbits = get_fixed_orbits(cube)
-    if fixed_orbits == "----|----|----": print("No problems")
+    transformed_cube, table_num, transformation = get_fixed_orbits(cube)
+    moves = get_table_3_moves(transformed_cube, table_num)
+    print("Table moves:", moves)
+    
     return phase_3_moves
 
 
@@ -474,8 +470,12 @@ def thistle_solve(start_state):
     phase_3_moves = phase_3(G_2_state)
     return phase_1_moves + phase_2_moves + phase_3_moves
 
-# get_table_3_moves(Cube3(), 0)
-#cube = Cube3()
+
+cube = Cube3()
+cube.move("R")
+cube.display()
+phase_3(cube)
+
 #for i in range(10000):
 #   cube.scramble()
 #   thistle_solve(cube.cube)
