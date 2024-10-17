@@ -328,14 +328,14 @@ def transform_moves(moves, move_keys):
 def fix_orbits(corners):
     # Try with no transformations
     if corners in ORBIT_MOVES.keys():
-        print("No Transformation")
+        # print("No Transformation")
         return ORBIT_MOVES[corners]
     
     # Try with one transformation
     for index, (transformation, move_keys) in enumerate(TRANSFORMATIONS):
         transformed_corners = transform_corners(corners, transformation)
         if transformed_corners in ORBIT_MOVES.keys():
-            print("Transformation: ", index, transformed_corners)
+            # print("Transformation: ", index, transformed_corners)
             return transform_moves(ORBIT_MOVES[transformed_corners], move_keys)
        
     # Try with two transformations
@@ -343,7 +343,7 @@ def fix_orbits(corners):
         for index_2, (transformation_2, move_keys_2) in enumerate(TRANSFORMATIONS):
             transformed_corners = transform_corners(transform_corners(corners, transformation_1), transformation_2)
             if transformed_corners in ORBIT_MOVES.keys():
-                print("Transformation: ", index_1, index_2, transformed_corners)
+                # print("Transformation: ", index_1, index_2, transformed_corners)
                 return transform_moves(transform_moves(ORBIT_MOVES[transformed_corners], move_keys_1), move_keys_2)
             
     raise Exception("NOT SOLVED")
@@ -390,6 +390,7 @@ def phase_3_sides_key(cube):
             else: side_faces += "X"
     
     return U_D_faces[:4] + "|" + side_faces + "|" + U_D_faces[4:]
+    # THIS IS WRONG NEEDS FIXING
 
 # Returns the table from a file
 def read_table_3(file_name):
@@ -405,6 +406,7 @@ def get_table_3_moves(cube, table_num):
     elif table_num == 1: table = read_table_3("Tables/phase_3_two_corners.txt")    
     elif table_num == 2: table = read_table_3("Tables/phase_3_four_corners.txt")
     
+    print(sides, table[0][:14])
     for line in table:
         if sides == line[:14]:
             test_cube = Cube3(cube.cube)
@@ -429,7 +431,7 @@ def test_corner_permutation(cube):
 def phase_3(G_2_state):
     phase_3_moves = []
     corner_orbits = get_orbits(G_2_state)
-    print("Orbits: ", corner_orbits)
+    # print("Orbits: ", corner_orbits)
     
     cube = Cube3(G_2_state)
     orbit_moves = fix_orbits(corner_orbits)
@@ -438,9 +440,11 @@ def phase_3(G_2_state):
         cube.move(G_2[move])
         
     
-    print("Moves: ", orbit_moves)
+    print("Moves: ", phase_3_moves)
     
     transformed_cube, table_num, transformation = get_fixed_orbits(cube)
+    print(table_num)
+    transformed_cube.display()
     moves = get_table_3_moves(transformed_cube, table_num)
     print("Table moves:", moves)
     
@@ -471,10 +475,9 @@ def thistle_solve(start_state):
     return phase_1_moves + phase_2_moves + phase_3_moves
 
 
-cube = Cube3()
-cube.move("R")
+cube = Cube3(["RYOYWORWW", "BBBGGBBBG", "WOORRRWRO", "GBBGBGGGG", "YRYOOYROO", "RWYWYWWYY"])
 cube.display()
-phase_3(cube)
+# phase_3(cube)
 
 #for i in range(10000):
 #   cube.scramble()

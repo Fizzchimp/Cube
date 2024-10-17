@@ -34,20 +34,23 @@ def get_table_text(table_num):
 
 # Takes cube input and converts it to sides key to be written
 def get_sides_key(cube):
-    U_D_faces = ""
-    side_faces = ""
-    
-    for face in (cube[0], cube[5]):
-        for side in (1, 3, 5, 7):
-            if face[side] == face[4]: U_D_faces += "-"
-            else: U_D_faces += "X"
-    
-    for face in (cube[2],  cube[4]):
-        for side in (3, 5):
-            if face[side] == face[4]: side_faces += "-"
-            else: side_faces += "X"
-    
-    return U_D_faces[:4] + "|" + side_faces + "|" + U_D_faces[4:]
+    sides_key = ""
+    group_a = (cube[1][4], cube[3][4])
+    group_b = (cube[2][4], cube[4][4])
+
+    print(group_a, group_b)
+    for i in range(4):
+        for edge in (1, 5, 7):
+            print(cube[i + 1][edge])
+            if i % 2 == 0 and cube[i + 1][edge] in group_a: sides_key += "-"
+            elif i % 2 == 1 and cube[i + 1][edge] in group_b: sides_key += "-"
+            else: sides_key += "X"
+
+        if i < 3: sides_key += "|"
+
+    return sides_key
+    # STILL WRONG NEEDS FIXING
+            
 
 
 
@@ -71,16 +74,15 @@ def translate_moves(lines):
 
 # Writes the new move tables
 def write_tables():
-    with open("Tables/phase_3_no_corners.txt", "w") as table:
-        table.write("----|----|---- : \n")    
+    with open("Tables/phase_3_no_corners.txt", "w") as table:   
         for line in translate_moves(get_table_text(1) + get_table_text(2)):
             table.write(line)
     
-    with open("Tables/phase_3_two_corners.txt", "w") as table:
+    with open("Tables/phase_3_four_corners.txt", "w") as table:
         for line in translate_moves(get_table_text(3) + get_table_text(4)):
             table.write(line)
            
-    with open("Tables/phase_3_four_corners.txt", "w") as table:
+    with open("Tables/phase_3_two_corners.txt", "w") as table:
         for line in translate_moves(get_table_text(5) + get_table_text(6) + get_table_text(7)):
             table.write(line)
                     
@@ -96,5 +98,7 @@ def test_corner_permutation(cube):
     return True
 
 
-#write_tables()
+# write_tables()
 
+cube = Cube3(["RYOYWORWW", "BBBGGBBBG", "WOORRRWRO", "GBBGBGGGG", "YRYOOYROO", "RWYWYWWYY"])
+print(get_sides_key(cube))

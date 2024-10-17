@@ -74,14 +74,16 @@ class World:
         # Creating Cube object
         self.cube_type = 3
         self.cube_2 = Cube2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+
+
         # self.cube_3 = Cube3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
-        #self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
-        self.cube_3 = Cube3()
-        self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
+        self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
+        # self.cube_3 = Cube3()
+        # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
         # L' U2 R' U2 D2 R2 D2 L' F2 L D2 L'
 
-        #self.cube_3.move("F", "L", "R'", "D2", "B2", "U")
-        #self.cube_3.move("F2", "D2", "L", "R'", "F", "R2", "F", "B2", "R", "B'", "R2", "B", "R", "B")
+        self.cube_3.move("F", "L", "R'", "D2", "B2", "U")
+        self.cube_3.move("F2", "D2", "L", "R'", "F", "R2", "F", "B2", "R", "B'", "R2", "B", "R", "B")
         self.cube = getattr(self, f"cube_{self.cube_type}")
         
         # Initiating Pygame and display module
