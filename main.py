@@ -78,7 +78,7 @@ class World:
 
         # self.cube_3 = Cube3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
         #self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
-        self.cube_3 = Cube3(["RWRWWWWYY", "GBBBGGGGB", "OOORRYYOW", "BGGGBBBGG", "YRWOORORO", "RWROYYYYW"])
+        self.cube_3 = Cube3(["BGGGGGBBB", "YYYYYWROO", "ORORRRWWR", "WYYYWWWRY", "ROROOOOWW", "GBBBBGGGG"])
         #self.cube_3 = Cube3(["YYWWWWWYW", "GGGGGBGBB", "RROORRORR", "GBBBBGBGB", "OOROORROO", "YWYYYYYWW"])
         # self.cube_3 = Cube3()
         # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])

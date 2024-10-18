@@ -360,10 +360,10 @@ def get_fixed_orbits(cube):
     # Try with no transformation
     orbits = get_orbits(cube)
     if orbits in ALLOWED_ORBITS:
-        return cube, ALLOWED_ORBITS.index(orbits), -1
+        return cube, ALLOWED_ORBITS.index(orbits), None
     
     # Try with one transformation
-    for index, transformation in enumerate(("reflect_XY", "reflect_XZ", "reflect_YZ", "X", "X_Prime", "Y", "Z")):
+    for index, transformation in enumerate(("reflect_XY", "reflect_XZ", "reflect_YZ", "X", "X_Prime", "Y_2", "Z_2")):
         transformed_cube.cube = getattr(cube, transformation)()
         orbits = get_orbits(transformed_cube)
         
@@ -474,6 +474,8 @@ def phase_3(G_2_state):
             if move in transformation.keys(): phase_3_moves.append(transformation[move])
             else: phase_3_moves.append(move)
             
+    else: phase_3_moves += moves
+    
     print("Phase 3 moves:", phase_3_moves)
     
     return phase_3_moves
@@ -502,5 +504,6 @@ def thistle_solve(start_state):
     return phase_1_moves + phase_2_moves + phase_3_moves
 
 
-cube = Cube3(["RWRWWWWYY", "GBBBGGGGB", "OOORRYYOW", "BGGGBBBGG", "YRWOORORO", "RWROYYYYW"])
-phase_3(cube)
+cube = Cube3(["RWWYWOOWY", "GGGGBGBBG", "YORYROROO", "BBGGGBBGB", "ORYWOWORR", "WYYRYRWYW"])
+try: phase_3(cube)
+except: print("NO MOVES FOUND")
