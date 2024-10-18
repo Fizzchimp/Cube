@@ -437,9 +437,6 @@ def test_corner_permutation(cube):
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
     return True
 
-def test_new_corner_permutation(cube):
-    for face in cube:
-        return
     
 
 
@@ -453,7 +450,7 @@ def phase_3(G_2_state):
     
     cube = Cube3(G_2_state)
     orbit_moves = fix_orbits(corner_orbits)
-    for i, move in enumerate(orbit_moves):
+    for move in orbit_moves:
         phase_3_moves.append(G_2[move])
         cube.move(G_2[move])
         
@@ -462,10 +459,12 @@ def phase_3(G_2_state):
     
     transformed_cube, table_num, transformation_index = get_fixed_orbits(cube)
     transformed_cube.display()
-    moves = get_table_3_moves(transformed_cube, table_num)
+    print("Transformation:", transformation_index)
     
-    print(transformation_index)
+
+    moves = get_table_3_moves(transformed_cube, table_num)
     print("Untransformed moves:", moves)
+    
     
     if transformation_index != None:
         transformation = PHASE_3_TRANSFORMATIONS[transformation_index]
