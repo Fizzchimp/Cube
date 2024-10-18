@@ -400,13 +400,12 @@ def read_table_3(file_name):
 # Finds moveset from table
 def get_table_3_moves(cube, table_num):
     sides = phase_3_sides_key(cube)
-    if sides == "----|----|----": return []
+    print("Table:", table_num, "| Sides:", sides)
     
     if table_num == 0: table = read_table_3("Tables/phase_3_no_corners.txt")
     elif table_num == 1: table = read_table_3("Tables/phase_3_two_corners.txt")    
     elif table_num == 2: table = read_table_3("Tables/phase_3_four_corners.txt")
     
-    print(sides, table[0][:14])
     for line in table:
         if sides == line[:14]:
             test_cube = Cube3(cube.cube)
@@ -415,10 +414,8 @@ def get_table_3_moves(cube, table_num):
                 test_cube.move(move)
                 
             if test_corner_permutation(test_cube) == True:
-                print("attempt success")
                 test_cube.display()
                 return moves
-            print("attempt failed")
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
 
 def test_corner_permutation(cube):
@@ -426,7 +423,25 @@ def test_corner_permutation(cube):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
+    
+    cube.move("X")
+    for face_1, face_2 in ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4])):
+        if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
+        if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
+        if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
+        
+    cube.move("Z")
+    for face_1, face_2 in ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4])):
+        if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
+        if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
+        if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
     return True
+
+def test_new_corner_permutation(cube):
+    for face in cube:
+        return
+    
+
 
 PHASE_3_TRANSFORMATIONS = (REF_XY, REF_XZ, REF_YZ, ROT_X_PRIME, ROT_X, ROT_Y_2, ROT_Z_2)
 
@@ -446,10 +461,10 @@ def phase_3(G_2_state):
     print("Moves: ", phase_3_moves)
     
     transformed_cube, table_num, transformation_index = get_fixed_orbits(cube)
-    print(transformation_index)
     transformed_cube.display()
     moves = get_table_3_moves(transformed_cube, table_num)
     
+    print(transformation_index)
     print("Untransformed moves:", moves)
     
     if transformation_index != None:
@@ -470,7 +485,6 @@ def phase_3(G_2_state):
 
 # Function to organise solving the cube
 def thistle_solve(start_state):
-    print(start_state)
     Cube3(start_state).display()
     # Phase 1
     timer = time.time()
@@ -488,14 +502,5 @@ def thistle_solve(start_state):
     return phase_1_moves + phase_2_moves + phase_3_moves
 
 
-cube = Cube3(["RYOYWORWW", "BBBGGBBBG", "WOORRRWRO", "GBBGBGGGG", "YRYOOYROO", "RWYWYWWYY"])
-cube.display()
+cube = Cube3(["RWRWWWWYY", "GBBBGGGGB", "OOORRYYOW", "BGGGBBBGG", "YRWOORORO", "RWROYYYYW"])
 phase_3(cube)
-
-cube = Cube3(["YYWWWWWYW", "GGGGGBGBB", "RROORRORR", "GBBBBGBGB", "OOROORROO", "YWYYYYYWW"])
-cube.move("X")
-cube.display()
-print(test_corner_permutation(cube))
-#for i in range(10000):
-#   cube.scramble()
-#   thistle_solve(cube.cube)
