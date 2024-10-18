@@ -34,22 +34,22 @@ def get_table_text(table_num):
 
 # Takes cube input and converts it to sides key to be written
 def get_sides_key(cube):
-    sides_key = ""
-    group_a = (cube[1][4], cube[3][4])
-    group_b = (cube[2][4], cube[4][4])
+    sides_key = ["", "", ""]
+    group_UD = (cube[0][4], cube[5][4])
+    group_FB = (cube[2][4], cube[4][4])
 
-    print(group_a, group_b)
-    for i in range(4):
-        for edge in (1, 5, 7):
-            print(cube[i + 1][edge])
-            if i % 2 == 0 and cube[i + 1][edge] in group_a: sides_key += "-"
-            elif i % 2 == 1 and cube[i + 1][edge] in group_b: sides_key += "-"
-            else: sides_key += "X"
-
-        if i < 3: sides_key += "|"
-
-    return sides_key
-    # STILL WRONG NEEDS FIXING
+    for i, face in enumerate((cube[0], cube[5])):
+        for edge in (1, 3, 5, 7):
+            if face[edge] in group_UD:
+                sides_key[i * 2] += "-"
+            else: sides_key[i * 2] += "X"
+    
+    for i, face in enumerate((cube[2], cube[4])):
+        for edge in (3, 5):
+            if face[edge] in group_FB: sides_key[1] += "-"
+            else: sides_key[1] += "X"
+    
+    return "|".join(sides_key)
             
 
 
@@ -98,7 +98,8 @@ def test_corner_permutation(cube):
     return True
 
 
-# write_tables()
+write_tables()
 
-cube = Cube3(["RYOYWORWW", "BBBGGBBBG", "WOORRRWRO", "GBBGBGGGG", "YRYOOYROO", "RWYWYWWYY"])
-print(get_sides_key(cube))
+#cube = Cube3(["RYOYWORWW", "BBBGGBBBG", "WOORRRWRO", "GBBGBGGGG", "YRYOOYROO", "RWYWYWWYY"]) # Start of phase 3
+
+#print(get_sides_key(cube))
