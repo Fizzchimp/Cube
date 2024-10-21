@@ -525,6 +525,7 @@ def phase_3(G_2_state):
 ### Phase 4
 # Fix corners
 def corners_iddfs(cube):
+    cube.display()
     start_node = Node(cube.cube)
     if corner_check(start_node): return node_stack. Cube3(current_node.cube)
     
@@ -534,7 +535,7 @@ def corners_iddfs(cube):
         
         exhausted = False
         while not exhausted:
-            
+            print("1")
             # Branch down to required depth
             if not node_stack.is_full():
                 parent = node_stack.peek()
