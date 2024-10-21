@@ -5,14 +5,14 @@ from transformations import *
 import time
 
 
-# Moveset to get from G0 -> G1
+# Phase 1 Moveset
 G_0 = (
     "U", "U_Prime", "D", "D_Prime",
     "L", "L_Prime", "R", "R_Prime",
     "F", "F_Prime", "B", "B_Prime")
 
 
-# Moveset to get from G1 -> G2
+# Phase 2 Moveset
 G_1 = (
     "L", "L_Prime", "L_2",
     "R", "R_Prime", "R_2", 
@@ -20,10 +20,18 @@ G_1 = (
     "B", "B_Prime", "B_2", 
     "U_2", "D_2")
 
+# Phase 3 Moveset
 G_2 = (
     "L", "L_Prime", "L_2",
     "R", "R_Prime", "R_2",
     "F_2", "B_2", "U_2", "D_2")
+
+# Phase 4 moveset
+G_3 = (
+    "L2", "R2",
+    "F2", "B2",
+    "U2", "D2")
+
 
 
 CORNERS = (
@@ -399,13 +407,22 @@ def read_table_3(file_name):
 
 # Finds moveset from table
 def get_table_3_moves(cube, table_num):
+    print("Table:", table_num)
+    
+    if table_num == 0:
+        table = read_table_3("Tables/phase_3_no_corners.txt")
+        transformations = [("reflect_YZ", REF_YZ)]
+        
+    elif table_num == 1:
+        table = read_table_3("Tables/phase_3_two_corners.txt")    
+        transformations = [("reflect_YZ", REF_YZ)]
+        
+    elif table_num == 2:
+        table = read_table_3("Tables/phase_3_four_corners.txt")
+        transformations = [("reflect_YZ", REF_YZ)]
+    
+    # Try with no transformations
     sides = phase_3_sides_key(cube)
-    print("Table:", table_num, "| Sides:", sides)
-    
-    if table_num == 0: table = read_table_3("Tables/phase_3_no_corners.txt")
-    elif table_num == 1: table = read_table_3("Tables/phase_3_two_corners.txt")    
-    elif table_num == 2: table = read_table_3("Tables/phase_3_four_corners.txt")
-    
     for line in table:
         if sides == line[:14]:
             test_cube = Cube3(cube.cube)
@@ -416,6 +433,24 @@ def get_table_3_moves(cube, table_num):
             if test_corner_permutation(test_cube) == True:
                 test_cube.display()
                 return moves
+            
+    # Try with transformations
+    for transformation, moveset in transformations:
+       transformed_cube = Cube3(getattr(cube, transformation)())
+       sides = phase_3_sides_key(transformed_cube)
+       for line in table:
+           if sides == line[:14]:
+            test_cube = Cube3(transformed_cube.cube)
+            moves = line[17:].strip("\n").split(" ")
+            for move in moves:
+                test_cube.move(move)
+                
+            if test_corner_permutation(test_cube) == True:
+                test_cube.display()
+                return moves
+
+
+
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
 
 def test_corner_permutation(cube):
@@ -482,8 +517,35 @@ def phase_3(G_2_state):
 
 
 
+### Phase 4
+# Fix corners
+def corners_iddfs(cube):
+    if corner_check(cube): return cube, []
+    for i in range(4):
+        node_stack = Stack(i + 1)
+        node_stack.push(Node(cube.L_2(), 0, None))
+        
+
+        exhausted = False
+        while not exhausted:
+            
+            # Branch down to required depth
+            if not node_stack.is_full():
+                parent = node_stack.peek()
+                node_stack.push(Node(parent.L_2(), 0, parent))
+    
 
 
+# Check if all the corners are home
+def corner_check(cube):
+    for face in cube.cube:
+        if not (face[4] == face[0] == face[2] == face[6] == face[8]):
+            return False
+    return True
+
+
+
+    
 # Function to organise solving the cube
 def thistle_solve(start_state):
     Cube3(start_state).display()
@@ -498,11 +560,11 @@ def thistle_solve(start_state):
     phase_2_moves, G_2_state = phase_2(G_1_state)
     print(f"Phase 2 finished in {time.time() - timer}s")
     
-
+    timer = time.time()
     phase_3_moves = phase_3(G_2_state)
+    print(f"Phase 3 finished in {time.time() - timer}s")
     return phase_1_moves + phase_2_moves + phase_3_moves
 
 
-cube = Cube3(["RWWYWOOWY", "GGGGBGBBG", "YORYROROO", "BBGGGBBGB", "ORYWOWORR", "WYYRYRWYW"])
-try: phase_3(cube)
-except: print("NO MOVES FOUND")
+#cube = Cube3(["RWWYWOOWY", "GGGGBGBBG", "YORYROROO", "BBGGGBBGB", "ORYWOWORR", "WYYRYRWYW"])
+#phase_3(cube)
