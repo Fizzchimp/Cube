@@ -3,16 +3,17 @@ from Assets.node_3 import Node
 from Assets.stack import Stack
 from transformations import *
 import time
+import random
 
 
-# Moveset to get from G0 -> G1
+# Phase 1 Moveset
 G_0 = (
     "U", "U_Prime", "D", "D_Prime",
     "L", "L_Prime", "R", "R_Prime",
     "F", "F_Prime", "B", "B_Prime")
 
 
-# Moveset to get from G1 -> G2
+# Phase 2 Moveset
 G_1 = (
     "L", "L_Prime", "L_2",
     "R", "R_Prime", "R_2", 
@@ -20,10 +21,18 @@ G_1 = (
     "B", "B_Prime", "B_2", 
     "U_2", "D_2")
 
+# Phase 3 Moveset
 G_2 = (
     "L", "L_Prime", "L_2",
     "R", "R_Prime", "R_2",
     "F_2", "B_2", "U_2", "D_2")
+
+# Phase 4 moveset
+G_3 = (
+    "L_2", "R_2",
+    "F_2", "B_2",
+    "U_2", "D_2")
+
 
 
 CORNERS = (
@@ -416,6 +425,22 @@ def get_table_3_moves(cube, table_num):
     # Try with no transformations
     sides = phase_3_sides_key(cube)
     print("Origional sides:", sides)
+=======
+    if table_num == 0:
+        table = read_table_3("Tables/phase_3_no_corners.txt")
+        transformations = [("reflect_YZ", REF_YZ)]
+        
+    elif table_num == 1:
+        table = read_table_3("Tables/phase_3_two_corners.txt")    
+        transformations = [("reflect_YZ", REF_YZ)]
+        
+    elif table_num == 2:
+        table = read_table_3("Tables/phase_3_four_corners.txt")
+        transformations = [("reflect_YZ", REF_YZ)]
+    
+    # Try with no transformations
+    sides = phase_3_sides_key(cube)
+>>>>>>> 0817ac5a77cc574559fbe6038dbc8376d08181a6
     for line in table:
         if sides == line[:14]:
             test_cube = Cube3(cube.cube)
@@ -444,6 +469,24 @@ def get_table_3_moves(cube, table_num):
     #             if test_corner_permutation(test_cube) == True:
     #                 test_cube.display()
     #                 return moves
+=======
+            
+    # Try with transformations
+    for transformation, moveset in transformations:
+       transformed_cube = Cube3(getattr(cube, transformation)())
+       sides = phase_3_sides_key(transformed_cube)
+       for line in table:
+           if sides == line[:14]:
+            test_cube = Cube3(transformed_cube.cube)
+            moves = line[17:].strip("\n").split(" ")
+            for move in moves:
+                test_cube.move(move)
+                
+            if test_corner_permutation(test_cube) == True:
+                return moves
+
+
+>>>>>>> 0817ac5a77cc574559fbe6038dbc8376d08181a6
 
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
 
@@ -487,7 +530,6 @@ def phase_3(G_2_state):
     print("Moves: ", phase_3_moves)
     
     transformed_cube, table_num, transformation_index = get_fixed_orbits(cube)
-    transformed_cube.display()
     print("Transformation:", transformation_index)
     
 
@@ -499,20 +541,95 @@ def phase_3(G_2_state):
         transformation = PHASE_3_TRANSFORMATIONS[transformation_index]
         
         for move in moves:
-            if move in transformation.keys(): phase_3_moves.append(transformation[move])
-            else: phase_3_moves.append(move)
+            if move in transformation.keys():
+                phase_3_moves.append(transformation[move])
+                cube.move(transformation[move])
+            else: 
+                phase_3_moves.append(move)
+                cube.move(move)
             
-    else: phase_3_moves += moves
+    else:
+        for move in moves:
+            phase_3_moves.append(move)
+            cube.move(move)
     
     print("Phase 3 moves:", phase_3_moves)
     
-    return phase_3_moves
+    return phase_3_moves, cube
 
 
 
 
+### Phase 4
+# Fix corners
+def corners_iddfs(cube):
+    start_node = Node(cube.cube)
+    if corner_check(start_node): return Stack(0), Cube3(start_node.cube)
+    
+    for i in range(4):
+        node_stack = Stack(i + 1)
+        node_stack.push(Node(start_node.L_2(), 0, start_node))
+        
+        exhausted = False
+        while not exhausted:
+            # Branch down to required depth
+            if not node_stack.is_full():
+                parent = node_stack.peek()
+                node_stack.push(Node(parent.L_2(), 0, parent))
+                
+            else:
+                # Retreive youngest node
+                current_node = node_stack.pop()
+                current_movement = current_node.movement
+                
+                parent = current_node.parent
+                
+                # Check if the current node is correct
+                if corner_check(current_node):
+                    node_stack.push(current_node)
+                    return node_stack, Cube3(current_node.cube)
+                
+                # Push next_movement
+                if current_movement < 5:
+                    node_stack.push(Node(getattr(parent, G_3[current_movement + 1])(), current_movement + 1, parent))
+                    
+                # If current branch exhausted remove node and change upper branch
+                else:
+                    top = True
+                    for j in range(i):
+                        node = node_stack.pop()
+                        if node.movement < 5:
+                            top = False
+                            break
+                    if top: exhausted = True
+                    else: node_stack.push(Node(getattr(node.parent, G_3[node.movement + 1])(), node.movement + 1, node.parent))
+                        
+
+    print("Searh exhausted!")
+                        
+
+# Check if all the corners are home
+def corner_check(node):
+    for face in node.cube:
+        if not (face[4] == face[0] == face[2] == face[6] == face[8]):
+            return False
+    return True
 
 
+def phase_4(cube):
+    corner_moves = []
+    # Get moves to fix the corners
+    node_stack, cube = corners_iddfs(cube)
+
+    while not node_stack.is_empty():
+        node = node_stack.pop()
+        corner_moves.append(G_3[node.movement])
+        
+    corner_moves = corner_moves[::-1]
+        
+    return corner_moves
+
+    
 # Function to organise solving the cube
 def thistle_solve(start_state):
     Cube3(start_state).display()
@@ -527,10 +644,21 @@ def thistle_solve(start_state):
     phase_2_moves, G_2_state = phase_2(G_1_state)
     print(f"Phase 2 finished in {time.time() - timer}s")
     
+    timer = time.time()
+    phase_3_moves, G_3_cube = phase_3(G_2_state)
+    print(f"Phase 3 finished in {time.time() - timer}s")
+    print("Phase 3 cube:")
+    G_3_cube.display()
 
+<<<<<<< HEAD
     phase_3_moves = phase_3(G_2_state)
     return phase_1_moves + phase_2_moves + phase_3_moves
 
 
 cube = Cube3(["RYORWYYYW", "BGGBGGGGB", "OROWRWWRY", "GBBBBBGGB", "YOYOORROR", "OWRYYOWWW"])
 # phase_3(cube)
+=======
+    phase_4_moves = phase_4(G_3_cube)
+    print("Phase 4 moves:", phase_4_moves)
+    return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
+>>>>>>> 0817ac5a77cc574559fbe6038dbc8376d08181a6
