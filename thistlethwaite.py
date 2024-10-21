@@ -28,9 +28,9 @@ G_2 = (
 
 # Phase 4 moveset
 G_3 = (
-    "L2", "R2",
-    "F2", "B2",
-    "U2", "D2")
+    "L_2", "R_2",
+    "F_2", "B_2",
+    "U_2", "D_2")
 
 
 
@@ -505,14 +505,19 @@ def phase_3(G_2_state):
         transformation = PHASE_3_TRANSFORMATIONS[transformation_index]
         
         for move in moves:
-            if move in transformation.keys(): phase_3_moves.append(transformation[move])
-            else: phase_3_moves.append(move)
+            if move in transformation.keys():
+                phase_3_moves.append(transformation[move])
+                cube.move(transformation[move])
+            else: 
+                phase_3_moves.append(move)
+                cube.move(move)
             
     else: phase_3_moves += moves
     
     print("Phase 3 moves:", phase_3_moves)
     
-    return phase_3_moves
+    cube.display()
+    return phase_3_moves, cube
 
 
 
@@ -520,12 +525,13 @@ def phase_3(G_2_state):
 ### Phase 4
 # Fix corners
 def corners_iddfs(cube):
-    if corner_check(cube): return cube, []
-    for i in range(4):
+    start_node = Node(cube.cube)
+    if corner_check(start_node): return node_stack. Cube3(current_node.cube)
+    
+    for i in range(1):
         node_stack = Stack(i + 1)
-        node_stack.push(Node(cube.L_2(), 0, None))
+        node_stack.push(Node(start_node.L_2(), 0, start_node))
         
-
         exhausted = False
         while not exhausted:
             
@@ -533,17 +539,64 @@ def corners_iddfs(cube):
             if not node_stack.is_full():
                 parent = node_stack.peek()
                 node_stack.push(Node(parent.L_2(), 0, parent))
-    
+                
+            else:
+                # Retreive youngest node
+                current_node = node_stack.pop()
+                current_movement = current_node.movement
+                
+                parent = current_node.parent
+                
+                if current_movement == 4:
+                    print("Y not here?")
+                    current_node.display()
+                    parent.display()
+                # Check if the current node is correct
+                if corner_check(current_node):
+                    node_stack.push(current_node)
+                    return node_stack, Cube3(current_node.cube)
+                
+                # Push next_movement
+                if current_movement < 5:
+                    node_stack.push(Node(getattr(parent, G_3[current_movement + 1])(), current_movement + 1, current_node))
+                    
+                # If current branch exhausted remove node and change upper branch
+                else:
+                    top = True
+                    for j in range(i):
+                        node = node_stack.pop()
+                        if node.movement < 5:
+                            top = False
+                            break
+                    if top: exhausted = True
+                    else: node_stack.push(Node(getattr(node.parent, G_3[node.movement + 1])(), node.movement + 1, node.parent))
+                        
 
+    print("Searh exhausted!")
+                        
 
 # Check if all the corners are home
-def corner_check(cube):
-    for face in cube.cube:
+def corner_check(node):
+    for face in node.cube:
         if not (face[4] == face[0] == face[2] == face[6] == face[8]):
             return False
     return True
 
 
+def phase_4(cube):
+    corner_moves = []
+    # Get moves to fix the corners
+    node_stack, cube = corners_iddfs(cube)
+
+    while not node_stack.is_empty():
+        node = node_stack.pop()
+        node.display()
+        corner_moves.append(G_3[node.movement])
+        
+    cube.display()
+    corner_moves = corner_moves[::-1]
+        
+    return corner_moves
 
     
 # Function to organise solving the cube
@@ -561,10 +614,17 @@ def thistle_solve(start_state):
     print(f"Phase 2 finished in {time.time() - timer}s")
     
     timer = time.time()
-    phase_3_moves = phase_3(G_2_state)
+    phase_3_moves, G_3_cube = phase_3(G_2_state)
     print(f"Phase 3 finished in {time.time() - timer}s")
+    
+
+    print(phase_4(G_3_cube))
     return phase_1_moves + phase_2_moves + phase_3_moves
 
 
 #cube = Cube3(["RWWYWOOWY", "GGGGBGBBG", "YORYROROO", "BBGGGBBGB", "ORYWOWORR", "WYYRYRWYW"])
 #phase_3(cube)
+
+cube = Cube3()
+cube.move("U2")
+print(phase_4(cube))
