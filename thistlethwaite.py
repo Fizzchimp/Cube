@@ -3,6 +3,7 @@ from Assets.node_3 import Node
 from Assets.stack import Stack
 from transformations import *
 import time
+import random
 
 
 # Phase 1 Moveset
@@ -446,7 +447,6 @@ def get_table_3_moves(cube, table_num):
                 test_cube.move(move)
                 
             if test_corner_permutation(test_cube) == True:
-                test_cube.display()
                 return moves
 
 
@@ -493,7 +493,6 @@ def phase_3(G_2_state):
     print("Moves: ", phase_3_moves)
     
     transformed_cube, table_num, transformation_index = get_fixed_orbits(cube)
-    transformed_cube.display()
     print("Transformation:", transformation_index)
     
 
@@ -512,11 +511,13 @@ def phase_3(G_2_state):
                 phase_3_moves.append(move)
                 cube.move(move)
             
-    else: phase_3_moves += moves
+    else:
+        for move in moves:
+            phase_3_moves.append(move)
+            cube.move(move)
     
     print("Phase 3 moves:", phase_3_moves)
     
-    cube.display()
     return phase_3_moves, cube
 
 
@@ -525,17 +526,15 @@ def phase_3(G_2_state):
 ### Phase 4
 # Fix corners
 def corners_iddfs(cube):
-    cube.display()
     start_node = Node(cube.cube)
-    if corner_check(start_node): return node_stack. Cube3(current_node.cube)
+    if corner_check(start_node): return Stack(0), Cube3(start_node.cube)
     
-    for i in range(1):
+    for i in range(4):
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.L_2(), 0, start_node))
         
         exhausted = False
         while not exhausted:
-            print("1")
             # Branch down to required depth
             if not node_stack.is_full():
                 parent = node_stack.peek()
@@ -548,10 +547,6 @@ def corners_iddfs(cube):
                 
                 parent = current_node.parent
                 
-                if current_movement == 4:
-                    print("Y not here?")
-                    current_node.display()
-                    parent.display()
                 # Check if the current node is correct
                 if corner_check(current_node):
                     node_stack.push(current_node)
@@ -559,7 +554,7 @@ def corners_iddfs(cube):
                 
                 # Push next_movement
                 if current_movement < 5:
-                    node_stack.push(Node(getattr(parent, G_3[current_movement + 1])(), current_movement + 1, current_node))
+                    node_stack.push(Node(getattr(parent, G_3[current_movement + 1])(), current_movement + 1, parent))
                     
                 # If current branch exhausted remove node and change upper branch
                 else:
@@ -591,10 +586,8 @@ def phase_4(cube):
 
     while not node_stack.is_empty():
         node = node_stack.pop()
-        node.display()
         corner_moves.append(G_3[node.movement])
         
-    cube.display()
     corner_moves = corner_moves[::-1]
         
     return corner_moves
@@ -617,15 +610,9 @@ def thistle_solve(start_state):
     timer = time.time()
     phase_3_moves, G_3_cube = phase_3(G_2_state)
     print(f"Phase 3 finished in {time.time() - timer}s")
-    
+    print("Phase 3 cube:")
+    G_3_cube.display()
 
-    print(phase_4(G_3_cube))
-    return phase_1_moves + phase_2_moves + phase_3_moves
-
-
-#cube = Cube3(["RWWYWOOWY", "GGGGBGBBG", "YORYROROO", "BBGGGBBGB", "ORYWOWORR", "WYYRYRWYW"])
-#phase_3(cube)
-
-cube = Cube3()
-cube.move("U2")
-print(phase_4(cube))
+    phase_4_moves = phase_4(G_3_cube)
+    print("Phase 4 moves:", phase_4_moves)
+    return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
