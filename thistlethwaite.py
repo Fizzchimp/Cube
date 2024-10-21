@@ -399,13 +399,23 @@ def read_table_3(file_name):
 
 # Finds moveset from table
 def get_table_3_moves(cube, table_num):
+    print("Table:", table_num)
+    
+    if table_num == 0: 
+        table = read_table_3("Tables/phase_3_no_corners.txt")
+        # second_transformations = [("reflect_XY", REF_XY), ("reflect_XZ", REF_XZ), ("reflect_YZ", REF_YZ)]
+
+    elif table_num == 1: 
+        table = read_table_3("Tables/phase_3_two_corners.txt")
+        # second_transformations = [("reflect_YZ", REF_YZ)]
+
+    elif table_num == 2:
+        table = read_table_3("Tables/phase_3_four_corners.txt")
+        # second_transformations = [("reflect_YZ", REF_YZ)]
+    
+    # Try with no transformations
     sides = phase_3_sides_key(cube)
-    print("Table:", table_num, "| Sides:", sides)
-    
-    if table_num == 0: table = read_table_3("Tables/phase_3_no_corners.txt")
-    elif table_num == 1: table = read_table_3("Tables/phase_3_two_corners.txt")    
-    elif table_num == 2: table = read_table_3("Tables/phase_3_four_corners.txt")
-    
+    print("Origional sides:", sides)
     for line in table:
         if sides == line[:14]:
             test_cube = Cube3(cube.cube)
@@ -416,6 +426,25 @@ def get_table_3_moves(cube, table_num):
             if test_corner_permutation(test_cube) == True:
                 test_cube.display()
                 return moves
+
+    # # Try with transformations
+    # transformed_cube = Cube3(cube.cube)
+
+    # for transformation, moveset in second_transformations:
+    #     transformed_cube.cube = getattr(cube, transformation)()
+    #     sides = phase_3_sides_key(transformed_cube)
+    #     print("Transformed_sides:", sides)
+    #     for line in table:
+    #         if sides == line[:14]:
+    #             test_cube = Cube3(transformed_cube.cube)
+    #             moves = line[17:].strip("\n").split(" ")
+    #             for move in moves:
+    #                 test_cube.move(move)
+                    
+    #             if test_corner_permutation(test_cube) == True:
+    #                 test_cube.display()
+    #                 return moves
+
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
 
 def test_corner_permutation(cube):
@@ -503,6 +532,5 @@ def thistle_solve(start_state):
     return phase_1_moves + phase_2_moves + phase_3_moves
 
 
-cube = Cube3(["RWWYWOOWY", "GGGGBGBBG", "YORYROROO", "BBGGGBBGB", "ORYWOWORR", "WYYRYRWYW"])
-try: phase_3(cube)
-except: print("NO MOVES FOUND")
+cube = Cube3(["RYORWYYYW", "BGGBGGGGB", "OROWRWWRY", "GBBBBBGGB", "YOYOORROR", "OWRYYOWWW"])
+# phase_3(cube)

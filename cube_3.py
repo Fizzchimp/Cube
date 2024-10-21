@@ -379,7 +379,16 @@ class Cube3():
 
             self[5][2] + self[5][1] + self[5][0] + self[5][5] + self[5][4] + self[5][3] + self[5][8] + self[5][7] + self[5][6]]
 
+    def Y_2(self):
+        cube = Cube3()
+        cube.move("Y")
+        return cube.Y()
 
+    def Z_2(self):
+        cube = Cube3()
+        cube.move("Z")
+        return cube.Z()
+    
 
     def move(self, *moves):
         for move in moves:
