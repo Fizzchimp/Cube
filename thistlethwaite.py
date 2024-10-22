@@ -553,7 +553,7 @@ def corners_iddfs(cube):
                     node_stack.push(current_node)
                     return node_stack, Cube3(current_node.cube)
                 
-                # Push next_movement
+                # Push next movement
                 if current_movement < 5:
                     node_stack.push(Node(getattr(parent, G_3[current_movement + 1])(), current_movement + 1, parent))
                     
@@ -592,7 +592,7 @@ def sides_iddfs(cube):
     
     for i in range(12):
         node_stack = Stack(i + 1)
-        node_stack.push(Node(start_node.L2(), 0, start_node))
+        node_stack.push(Node(start_node.L_2(), 0, start_node))
         
         exhausted = False
         while not exhausted:
@@ -613,7 +613,20 @@ def sides_iddfs(cube):
                     node_stack.push(current_node)
                     return node_stack
                 
-
+                # Push next movement
+                if current_movement < 5 and current_movement + 1 != parent.movement:node_stack.push(Node(getattr(parent, G_3[current_movement + 1])(), current_movement + 1, parent))
+                elif current_movement < 4 and current_movement + 1 == parent.movement: node_stack.push(Node(getattr(parent, G_3[current_movement + 2])(), current_movement + 2, parent))
+                
+                # If current branch exhausted remove node and change upper branch
+                else:
+                    top = True
+                    for j in range(i):
+                        node = node_stack.pop()
+                        if node.movement < 5:
+                            top = False
+                            break
+                    if top: exhausted = True
+                    else: node_stack.push(Node(getattr(node.parent, G_3[node.movement + 1])(), node.movement + 1, node.parent))
 
     print("Side search exhausted!")
 
@@ -666,14 +679,19 @@ def phase_4(cube):
     side_moves = read_table_4(cube)
     
     # Try with one transformation
+    
     if side_moves == None:
+        print("Trying 1 transformation")
         for transformation, moveset in PHASE_4_TRANSFORMATIONS:
             side_moves = read_table_4(getattr(cube, transformation)())
             if side_moves != None:
+                for i, move in enumerate(side_moves):
+                    side_moves[i] = moveset[int(move)]
                 break
 
     # Try with two transformations
     if side_moves == None:
+        print("Trying 2 transformations")
         for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
             for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
                 side_moves = read_table_4(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)())
@@ -681,14 +699,33 @@ def phase_4(cube):
                     for i, move in enumerate(side_moves):
                         side_moves[i] = moveset_2[moveset_1[int(move)]]
                     break
+    
+    # Try with three transformations
+    if side_moves == None:
+        print("Trying 3 transformations")
+        for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
+            for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
+                for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
+                    side_moves = read_table_4(getattr(Cube3(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)()), transformation_3)())
+                    if side_moves != None:
+                        for i, move in enumerate(side_moves):
+                            side_moves[i] = moveset_3[moveset_2[moveset_1[int(move)]]]
+                            break
                 
-
-
     print("Side moves:", side_moves)
     if side_moves == None:
         print("No phase 4 table moves found")
         side_moves = []
-    return corner_moves + side_moves
+
+
+    # node_stack = sides_iddfs(cube)
+    # side_moves = []
+    # while not node_stack.is_empty():
+    #     node = node_stack.pop()
+    #     side_moves.append(G_3[node.movement])
+
+
+    return corner_moves + side_moves[::-1]
 
     
 # Function to organise solving the cube
@@ -720,8 +757,3 @@ def thistle_solve(start_state):
     phase_4_moves = phase_4(G_3_cube)
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
-
-cube = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"])
-# print(thistle_solve(cube))
-
-
