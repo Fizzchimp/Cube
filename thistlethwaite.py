@@ -526,8 +526,9 @@ def phase_3(G_2_state):
 
 ## Fix corners
 def corners_iddfs(cube):
+
     start_node = Node(cube.cube)
-    if corner_check(start_node): return Stack(0), Cube3(start_node.cube)
+    if check_corners(start_node): return Stack(0), Cube3(start_node.cube)
     
     for i in range(4):
         node_stack = Stack(i + 1)
@@ -541,14 +542,14 @@ def corners_iddfs(cube):
                 node_stack.push(Node(parent.L_2(), 0, parent))
                 
             else:
-                # Retreive youngest node
+                # Retrieve youngest node
                 current_node = node_stack.pop()
                 current_movement = current_node.movement
                 
                 parent = current_node.parent
                 
                 # Check if the current node is correct
-                if corner_check(current_node):
+                if check_corners(current_node):
                     node_stack.push(current_node)
                     return node_stack, Cube3(current_node.cube)
                 
@@ -568,15 +569,53 @@ def corners_iddfs(cube):
                     else: node_stack.push(Node(getattr(node.parent, G_3[node.movement + 1])(), node.movement + 1, node.parent))
                         
 
-    print("Searh exhausted!")
+    print("Corner search exhausted!")
                         
 # Check if all the corners are home
-def corner_check(node):
+def check_corners(node):
     for face in node.cube:
         if not (face[4] == face[0] == face[2] == face[6] == face[8]):
             return False
     return True
 
+def check_solved(cube):
+    for face in cube.cube:
+        for peice in face:
+            if peice != face[4]: return False
+            
+    return True
+
+
+def sides_iddfs(cube):
+    start_node = Node(cube.cube)
+    if check_solved(start_node): return Stack(0)
+    
+    for i in range(12):
+        node_stack = Stack(i + 1)
+        node_stack.push(Node(start_node.L2(), 0, start_node))
+        
+        exhausted = False
+        while not exhausted:
+            # Branch down to required depth
+            if not node_stack.is_full():
+                parent = node_stack.peek()
+                node_stack.push(Node(parent.L_2(), 0, parent))
+             
+            else:
+                # Retrieve youngest node
+                current_node = node_stack.pop()
+                current_movement  = current_node.movement
+                
+                parent = current_node.parent
+                
+                # Check if the current node is correct
+                if check_solved(current_node):
+                    node_stack.push(current_node)
+                    return node_stack
+                
+
+
+    print("Side search exhausted!")
 
 ## Fix sides
 def phase_4_side_key(state):
@@ -589,9 +628,9 @@ def phase_4_side_key(state):
     return key[:-1]
 
 
-def read_table_4(cube):
-    key = phase_4_side_key(cube.cube)
-    print(key)
+def read_table_4(state):
+    key = phase_4_side_key(state)
+    if key == "----|----|----|----|----|----": return []
     with open("Tables/phase_4.txt", "r") as table:
         table = table.readlines()
     
@@ -599,6 +638,16 @@ def read_table_4(cube):
         if line[:29] == key:
             moves = line[32:].strip("\n").split(" ")
             return moves
+
+
+PHASE_4_TRANSFORMATIONS = [
+    ("reflect_XY", REF_XY),
+    ("reflect_XZ", REF_XZ),
+    ("reflect_YZ", REF_YZ),
+    ("X", ROT_X_PRIME),
+    ("X_Prime", ROT_X),
+    ("Y_2", ROT_Y_2),
+    ("Z_2", ROT_Z_2)]
 
 
 def phase_4(cube):
@@ -613,8 +662,32 @@ def phase_4(cube):
         
     corner_moves = corner_moves[::-1]
     
+    # Try with no transformations
     side_moves = read_table_4(cube)
-    if side_moves == None: side_moves = []
+    
+    # Try with one transformation
+    if side_moves == None:
+        for transformation, moveset in PHASE_4_TRANSFORMATIONS:
+            side_moves = read_table_4(getattr(cube, transformation)())
+            if side_moves != None:
+                break
+
+    # Try with two transformations
+    if side_moves == None:
+        for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
+            for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
+                side_moves = read_table_4(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)())
+                if side_moves != None:
+                    for i, move in enumerate(side_moves):
+                        side_moves[i] = moveset_2[moveset_1[int(move)]]
+                    break
+                
+
+
+    print("Side moves:", side_moves)
+    if side_moves == None:
+        print("No phase 4 table moves found")
+        side_moves = []
     return corner_moves + side_moves
 
     
@@ -650,3 +723,5 @@ def thistle_solve(start_state):
 
 cube = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"])
 # print(thistle_solve(cube))
+
+
