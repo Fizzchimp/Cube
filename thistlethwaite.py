@@ -409,7 +409,7 @@ def read_table_3(file_name):
 # Finds moveset from table
 def get_table_3_moves(cube, table_num):
     print("Table:", table_num)
-    
+
     if table_num == 0:
         table = read_table_3("Tables/phase_3_no_corners.txt")
         transformations = [("reflect_YZ", REF_YZ)]
@@ -448,8 +448,7 @@ def get_table_3_moves(cube, table_num):
                 
             if test_corner_permutation(test_cube) == True:
                 return moves
-
-
+            
 
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
 
@@ -524,7 +523,8 @@ def phase_3(G_2_state):
 
 
 ### Phase 4
-# Fix corners
+
+## Fix corners
 def corners_iddfs(cube):
     start_node = Node(cube.cube)
     if corner_check(start_node): return Stack(0), Cube3(start_node.cube)
@@ -570,7 +570,6 @@ def corners_iddfs(cube):
 
     print("Searh exhausted!")
                         
-
 # Check if all the corners are home
 def corner_check(node):
     for face in node.cube:
@@ -579,7 +578,31 @@ def corner_check(node):
     return True
 
 
+## Fix sides
+def phase_4_side_key(state):
+    key = ""
+    for face in state:
+        for side in (1, 3, 5, 7):
+            if face[side] == face[4]: key += "-"
+            else: key += "X"
+        key += "|"
+    return key[:-1]
+
+
+def read_table_4(cube):
+    key = phase_4_side_key(cube.cube)
+    print(key)
+    with open("Tables/phase_4.txt", "r") as table:
+        table = table.readlines()
+    
+    for line in table:
+        if line[:29] == key:
+            moves = line[32:].strip("\n").split(" ")
+            return moves
+
+
 def phase_4(cube):
+    cube.display()
     corner_moves = []
     ## Get moves to fix the corners
     node_stack, cube = corners_iddfs(cube)
@@ -589,8 +612,10 @@ def phase_4(cube):
         corner_moves.append(G_3[node.movement])
         
     corner_moves = corner_moves[::-1]
-        
-    return corner_moves
+    
+    side_moves = read_table_4(cube)
+    if side_moves == None: side_moves = []
+    return corner_moves + side_moves
 
     
 # Function to organise solving the cube
@@ -600,13 +625,19 @@ def thistle_solve(start_state):
     timer = time.time()
     phase_1_moves, G_1_state = phase_1(start_state) 
     print(f"Phase 1 finished in {time.time() - timer}s")
+    print(phase_1_moves)
+    Cube3(G_1_state).display()
     
 
     # Phase 2
     timer = time.time()
     phase_2_moves, G_2_state = phase_2(G_1_state)
     print(f"Phase 2 finished in {time.time() - timer}s")
-    
+    print(phase_2_moves)
+    Cube3(G_2_state).display()
+
+
+
     timer = time.time()
     phase_3_moves, G_3_cube = phase_3(G_2_state)
     print(f"Phase 3 finished in {time.time() - timer}s")
@@ -616,3 +647,6 @@ def thistle_solve(start_state):
     phase_4_moves = phase_4(G_3_cube)
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
+
+cube = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"])
+# print(thistle_solve(cube))
