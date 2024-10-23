@@ -745,7 +745,7 @@ def phase_4(cube):
     
 # Function to organise solving the cube
 def thistle_solve(start_cube):
-    print(start_cube.cube)
+    # print(start_cube.cube)
     # Phase 1
     timer = time.time()
     phase_1_moves, G_1_state = phase_1(start_cube) 
@@ -773,5 +773,5 @@ def thistle_solve(start_cube):
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
-cube = Cube3(['GWBYWOWOW', 'OGBBGGGBB', 'OYGRROOOY', 'RBWGBWORR', 'RRWGOWBBY', 'YWGRYYRYY'])
-print(thistle_solve(cube))
+# cube = Cube3(['GWBYWOWOW', 'OGBBGGGBB', 'OYGRROOOY', 'RBWGBWORR', 'RRWGOWBBY', 'YWGRYYRYY'])
+# print(thistle_solve(cube))
