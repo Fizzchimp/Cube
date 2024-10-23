@@ -9,3 +9,5 @@ uhhh phase 2 broken ['WRYGWBYGB', 'GYORGYGOB', 'BWOORYRWR', 'WRBBBGGGR', 'RWOROY
 
 
 phase 3 orbits broken (["YYWYWWYYO", "BGBBBGGGG", "ORWRROORW", "GBBGGBBGG", "ROROORYOW", "YWOYYWRWR"]) at phase 3
+
+something funky (i think its the orbits again) ['GWYYWYYBY', 'WBORGRRGB', 'BOGBRGRWW', 'OORRBGGOO', 'GGROOYBBY', 'WROYYWBWW']

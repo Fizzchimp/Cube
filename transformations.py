@@ -32,7 +32,7 @@ REF_XZ = {
 REF_YZ = {
     "L" : "R_Prime",
     "L_Prime" : "R",
-    "L2" : "R2",
+    "L_2" : "R_2",
     
     "R" : "L_Prime",
     "R_Prime" : "L",
@@ -60,11 +60,11 @@ ROT_X = {
 ROT_X_PRIME = {
     "F" : "D",
     "F_Prime" : "D_Prime",
-    "F2" : "D2",
+    "F_2" : "D_2",
     
     "B" : "U",
     "B_Prime" : "U_Prime",
-    "B2" : "U2",
+    "B_2" : "U_2",
     
     "U_2" : "F_2",
     "D_2" : "B_2"}
@@ -139,14 +139,38 @@ ROT_Y_2 = {
     "B_2" : "F_2"}
 
 
+ROT_Z = {
+    "L" : "U",
+    "L_Prime" : "U_Prime",
+    "L_2" : "U_2",
+    
+    "R" : "D",
+    "R_Prime" : "D_Prime",
+    "R_2" : "D_2",
+    
+    "U_2" : "R_2",
+    "D_2" : "L_2"}
+
+ROT_Z_PRIME = {
+    "L" : "D",
+    "L_Prime" : "D_Prime",
+    "L_2" : "D_2",
+    
+    "R" : "U",
+    "R_Prime" : "U_Prime",
+    "R_2" : "U_2",
+    
+    "U_2" : "L_2",
+    "D_2" : "R_2"}
+
 ROT_Z_2 = {
     "L" : "R",
     "L_Prime" : "R_Prime",
-    "L2" : "R2",
+    "L_2" : "R_2",
     
     "R" : "L",
     "R_Prime" : "L_Prime",
-    "R2" : "L2",
+    "R_2" : "L_2",
     
-    "U2" : "D2",
-    "D2" : "U2"}
+    "U_2" : "D_2",
+    "D_2" : "U_2"}

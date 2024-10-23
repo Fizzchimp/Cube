@@ -643,7 +643,6 @@ def phase_4_side_key(state):
 
 def read_table_4(state):
     key = phase_4_side_key(state)
-    print(key)
     if key == "----|----|----|----|----|----": return []
     with open("Tables/phase_4.txt", "r") as table:
         table = table.readlines()
@@ -664,7 +663,75 @@ PHASE_4_TRANSFORMATIONS = [
     ("Y", ROT_Y_PRIME),
     ("Y_Prime", ROT_Y),
     ("Y_2", ROT_Y_2),
+    ("Z", ROT_Z_PRIME),
+    ("Z_Prime", ROT_Z),
     ("Z_2", ROT_Z_2)]
+
+def try_transformations(cube):
+    
+    # Try with no transformation
+    print("Trying no transformation")
+    side_moves = read_table_4(cube)
+    if side_moves != None:
+        return side_moves
+    
+    # Try with one transformation
+    print("Trying 1 transformation")
+    for transformation, moveset in PHASE_4_TRANSFORMATIONS:
+        side_moves = read_table_4(getattr(cube, transformation)())
+        if side_moves != None:
+            for i, move in enumerate(side_moves):
+                if move in moveset.keys(): side_moves[i] = moveset[move]
+            print(transformation)
+            return side_moves
+    
+    # Try with two transformations
+    print("Trying 2 transformations")
+    for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
+            for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
+                side_moves = read_table_4(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)())
+                if side_moves != None:
+                    for i, move in enumerate(side_moves):
+                        
+                        if move in moveset_2.keys(): transformed_1 = moveset_2[move]
+                        else: transformed_1 = move
+                        
+                        if transformed_1 in moveset_1.keys(): transformed_2 = moveset_1[transformed_1]
+                        else: transformed_2 = transformed_1
+                        
+                        side_moves[i] = transformed_2
+                    print(transformation_1, transformation_2)
+                    return side_moves
+    
+
+    # Try with three transformations
+    print("Trying 3 transformations")
+    for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
+        for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
+            for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
+                side_moves = read_table_4(getattr(Cube3(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)()), transformation_3)())
+                if side_moves != None:
+                    for i, move in enumerate(side_moves):
+                        
+                        if move in moveset_3.keys(): transformed_1 = moveset_3[move]
+                        else: transformed_1 = move
+                        
+                        if transformed_1 in moveset_2.keys(): transformed_2 = moveset_2[transformed_1]
+                        else: transformed_2 = transformed_1
+                        
+                        if transformed_2 in moveset_1.keys(): transformed_3 = moveset_1[transformed_2]
+                        else: transformed_3 = transformed_2
+                        
+                        side_moves[i] = transformed_3
+                    print(transformation_1, transformation_2, transformation_3)
+                    return side_moves
+
+                
+    raise Exception("No phase 4 table moves found")
+
+
+
+
 
 
 def phase_4(cube):
@@ -679,59 +746,11 @@ def phase_4(cube):
         
     corner_moves = corner_moves[::-1]
     print("corner moves:", corner_moves)
-    # Try with no transformations
-    print("Trying no transformations")
-    side_moves = read_table_4(cube)
     
-    # Try with one transformation
-    
-    if side_moves == None:
-        print("Trying 1 transformation")
-        for transformation, moveset in PHASE_4_TRANSFORMATIONS:
-            side_moves = read_table_4(getattr(cube, transformation)())
-            if side_moves != None:
-                for i, move in enumerate(side_moves):
-                    try: side_moves[i] = moveset[move]
-                    except: pass
-                    print(move, side_moves[i])
-                print(transformation)
-                break
-
-    # Try with two transformations
-    if side_moves == None:
-        print("Trying 2 transformations")
-        for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
-            for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
-                side_moves = read_table_4(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)())
-                if side_moves != None:
-                    for i, move in enumerate(side_moves):
-                        side_moves[i] = moveset_2[moveset_1[move]]
-    
-    # Try with three transformations
-    if side_moves == None:
-        print("Trying 3 transformations")
-        for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
-            for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
-                for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
-                    side_moves = read_table_4(getattr(Cube3(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)()), transformation_3)())
-                    if side_moves != None:
-                        for i, move in enumerate(side_moves):
-                            side_moves[i] = moveset_3[moveset_2[moveset_1[int(move)]]]
-                            break
+    side_moves = try_transformations(cube)
                 
-    print("Side moves:", side_moves)
-    if side_moves == None:
-        print("No phase 4 table moves found")
-        raise Exception("No phase 4 table moves found")
-        side_moves = []
-
-
-    # node_stack = sides_iddfs(cube)
-    # side_moves = []
-    # while not node_stack.is_empty():
-    #     node = node_stack.pop()
-    #     side_moves.append(G_3[node.movement])
-
+    
+    
 
     return corner_moves + side_moves
 
@@ -767,7 +786,7 @@ def thistle_solve(start_state):
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
 cube = Cube3()
-for i in range(100):
+for i in range(1):
     print("==========\nSTARTING\n==========")
     cube.scramble()
     print(cube.cube)
