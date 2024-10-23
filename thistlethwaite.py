@@ -661,6 +661,8 @@ PHASE_4_TRANSFORMATIONS = [
     ("X", ROT_X_PRIME),
     ("X_Prime", ROT_X),
     ("X_2", ROT_X_2),
+    ("Y", ROT_Y_PRIME),
+    ("Y_Prime", ROT_Y),
     ("Y_2", ROT_Y_2),
     ("Z_2", ROT_Z_2)]
 
@@ -765,7 +767,7 @@ def thistle_solve(start_state):
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
 cube = Cube3()
-for i in range(1):
+for i in range(100):
     print("==========\nSTARTING\n==========")
     cube.scramble()
     print(cube.cube)
@@ -773,3 +775,5 @@ for i in range(1):
         print(thistle_solve(cube))
         break
     except: print("Error")
+    
+print(i)
