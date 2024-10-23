@@ -726,7 +726,12 @@ def try_transformations(cube):
                     print(transformation_1, transformation_2, transformation_3)
                     return side_moves
 
-                
+    # Try with four transformations
+    print("Trying 4 transformations")
+    for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
+        for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
+            for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
+                for transformation_4, moveset_4 in PHASE_4_TRANSFORMATIONS:
     raise Exception("No phase 4 table moves found")
 
 
