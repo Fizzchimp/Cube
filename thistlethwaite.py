@@ -282,7 +282,7 @@ def phase_2(G_1_state):
 ORBIT_MOVES = {
     "00000000" : [],
     "10100000" : [],
-#    "10000010" : [],
+    "10000010" : [],
     "11001100" : [],
     "10000100" : [6],
     "11000000" : [2, 8],
@@ -412,7 +412,19 @@ def get_table_3_moves(cube, table_num):
 
     if table_num == 0:
         table = read_table_3("Tables/phase_3_no_corners.txt")
-        transformations = [("reflect_YZ", REF_YZ)]
+        transformations = [
+    ("reflect_XY", REF_XY),
+    ("reflect_XZ", REF_XZ),
+    ("reflect_YZ", REF_YZ),
+    ("X", ROT_X_PRIME),
+    ("X_Prime", ROT_X),
+    ("X_2", ROT_X_2),
+    ("Y", ROT_Y_PRIME),
+    ("Y_Prime", ROT_Y),
+    ("Y_2", ROT_Y_2),
+    ("Z", ROT_Z_PRIME),
+    ("Z_Prime", ROT_Z),
+    ("Z_2", ROT_Z_2)]
         
     elif table_num == 1:
         table = read_table_3("Tables/phase_3_two_corners.txt")    
@@ -420,7 +432,10 @@ def get_table_3_moves(cube, table_num):
         
     elif table_num == 2:
         table = read_table_3("Tables/phase_3_four_corners.txt")
-        transformations = [("reflect_YZ", REF_YZ)]
+        transformations = [
+            ("reflect_YZ", REF_YZ),
+            ("X_2", ROT_X_2)
+                           ]
     
     # Try with no transformations
     sides = phase_3_sides_key(cube)
@@ -436,6 +451,7 @@ def get_table_3_moves(cube, table_num):
                 return moves
             
     # Try with transformations
+    print("Trying with transformations")
     for transformation, moveset in transformations:
        transformed_cube = Cube3(getattr(cube, transformation)())
        sides = phase_3_sides_key(transformed_cube)
@@ -578,59 +594,7 @@ def check_corners(node):
             return False
     return True
 
-def check_solved(cube):
-    for face in cube.cube:
-        for peice in face:
-            if peice != face[4]: return False
-            
-    return True
 
-
-def sides_iddfs(cube):
-    start_node = Node(cube.cube)
-    if check_solved(start_node): return Stack(0)
-    
-    for i in range(12):
-        node_stack = Stack(i + 1)
-        node_stack.push(Node(start_node.L_2(), 0, start_node))
-        
-        exhausted = False
-        while not exhausted:
-            # Branch down to required depth
-            if not node_stack.is_full():
-                parent = node_stack.peek()
-                node_stack.push(Node(parent.L_2(), 0, parent))
-             
-            else:
-                # Retrieve youngest node
-                current_node = node_stack.pop()
-                current_movement  = current_node.movement
-                
-                parent = current_node.parent
-                
-                # Check if the current node is correct
-                if check_solved(current_node):
-                    node_stack.push(current_node)
-                    return node_stack
-                
-                # Push next movement
-                if current_movement < 5 and current_movement + 1 != parent.movement:node_stack.push(Node(getattr(parent, G_3[current_movement + 1])(), current_movement + 1, parent))
-                elif current_movement < 4 and current_movement + 1 == parent.movement: node_stack.push(Node(getattr(parent, G_3[current_movement + 2])(), current_movement + 2, parent))
-                
-                # If current branch exhausted remove node and change upper branch
-                else:
-                    top = True
-                    for j in range(i):
-                        node = node_stack.pop()
-                        if node.movement < 5:
-                            top = False
-                            break
-                    if top: exhausted = True
-                    else: node_stack.push(Node(getattr(node.parent, G_3[node.movement + 1])(), node.movement + 1, node.parent))
-
-    print("Side search exhausted!")
-
-## Fix sides
 def phase_4_side_key(state):
     key = ""
     for face in state:
@@ -639,7 +603,6 @@ def phase_4_side_key(state):
             else: key += "X"
         key += "|"
     return key[:-1]
-
 
 def read_table_4(state):
     key = phase_4_side_key(state)
@@ -732,6 +695,26 @@ def try_transformations(cube):
         for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
             for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
                 for transformation_4, moveset_4 in PHASE_4_TRANSFORMATIONS:
+                    side_moves = read_table_4(getattr(Cube3(getattr(Cube3(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)()), transformation_3)()), transformation_4)())
+                    if side_moves != None:
+                        for i, move in enumerate(side_moves):
+                            
+                            if move in moveset_4.keys(): transformed_1 = moveset_4[move]
+                            else: transformed_1 = move
+                    
+                            if transformed_1 in moveset_3.keys(): transformed_2 = moveset_3[transformed_1]
+                            else: transformed_2 = transformed_1
+                            
+                            if transformed_2 in moveset_2.keys(): transformed_3 = moveset_2[transformed_2]
+                            else: transformed_3 = transformed_2
+                            
+                            if transformed_3 in moveset_1.keys(): transformed_4 = moveset_1[transformed_3]
+                            else: transformed_4 = transformed_2
+                            
+                            side_moves[i] = transformed_4
+                           
+                        print(transformation_1, transformation_2, transformation_3, transformation_4)
+                        return side_moves
     raise Exception("No phase 4 table moves found")
 
 
