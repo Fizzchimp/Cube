@@ -1,97 +1,114 @@
 REF_XY = {
-    "L" : "L'",
-    "L'" : "L",
+    "L" : "L_Prime",
+    "L_Prime" : "L",
 
-    "R" : "R'",
-    "R'" : "R",
+    "R" : "R_Prime",
+    "R_Prime" : "R",
 
-    "F" : "B'",
-    "F'" : "B",
-    "F2" : "B2",
+    "F" : "B_Prime",
+    "F_Prime" : "B",
+    "F_2" : "B_2",
 
-    "B" : "F'",
-    "B'" : "F",
-    "B2" : "F2"}
+    "B" : "F_Prime",
+    "B_Prime" : "F",
+    "B_2" : "F_2"}
 
 REF_XZ = {
-    "L" : "L'",
-    "L'" : "L",
+    "L" : "L_Prime",
+    "L_Prime" : "L",
 
-    "R" : "R'",
-    "R'" : "R",
+    "R" : "R_Prime",
+    "R_Prime" : "R",
     
-    "F" : "F'",
-    "F'" : "F",
+    "F" : "F_Prime",
+    "F_Prime" : "F",
     
-    "B" : "B'",
-    "B'" : "B",
+    "B" : "B_Prime",
+    "B_Prime" : "B",
     
-    "U2" : "D2",
-    "D2" : "U2"}
+    "U_2" : "D_2",
+    "D_2" : "U_2"}
 
 REF_YZ = {
-    "L" : "R'",
-    "L'" : "R",
+    "L" : "R_Prime",
+    "L_Prime" : "R",
     "L2" : "R2",
     
-    "R" : "L'",
-    "R'" : "L",
-    "R2" : "L2",
+    "R" : "L_Prime",
+    "R_Prime" : "L",
+    "R_2" : "L_2",
     
-    "F" : "F'",
-    "F'" : "F",
+    "F" : "F_Prime",
+    "F_Prime" : "F",
     
-    "B" : "B'",
-    "B'" : "B"}
+    "B" : "B_Prime",
+    "B_Prime" : "B"}
 
 ROT_X = {   
     "F" : "U",
-    "F'" : "U'",
-    "F2" : "U2",
+    "F_Prime" : "U_Prime",
+    "F_2" : "U_2",
     
     "B" : "D",
-    "B'" : "D'",
-    "B2" : "D2",
+    "B_Prime" : "D_Prime",
+    "B_2" : "D_2",
     
-    "U2" : "B2",
-    "D2" : "F2"}
+    "U_2" : "B_2",
+    "D_2" : "F_2"}
 
 ROT_X_PRIME = {
     "F" : "D",
-    "F'" : "D'",
+    "F_Prime" : "D_Prime",
     "F2" : "D2",
     
     "B" : "U",
-    "B'" : "U'",
+    "B_Prime" : "U_Prime",
     "B2" : "U2",
     
-    "U2" : "F2",
-    "D2" : "B2"}
+    "U_2" : "F_2",
+    "D_2" : "B_2"}
+
+ROT_X_2 = {
+    "F" : "B",
+    "F_Prime" : "B_Prime",
+    "F_2" : "B_2",
+    
+    "B" : "F",
+    "B_Prime" : "F_Prime",
+    "B_2" : "F_2",
+    
+    "U" : "D",
+    "U_Prime" : "D_Prime",
+    "U_2" : "D_2",
+    
+    "D" : "U",
+    "D_Prime" : "U_Prime",
+    "D_2" : "U_2"}
 
 ROT_Y_2 = {
     "L" : "R",
-    "L'" : "R'",
-    "L2" : "R2",
+    "L_Prime" : "R_Prime",
+    "L_2" : "R_2",
     
     "R" : "L",
-    "R'" : "L'",
-    "R2" : "L2",
+    "R_Prime" : "L_Prime",
+    "R_2" : "L_2",
     
     "F" : "B",
-    "F'" : "B'",
-    "F2" : "B2",
+    "F_Prime" : "B_Prime",
+    "F_2" : "B_2",
     
     "B" : "F",
-    "B'" : "F'",
-    "B2" : "F2"}
+    "B_Prime" : "F_Prime",
+    "B_2" : "F_2"}
 
 ROT_Z_2 = {
     "L" : "R",
-    "L'" : "R'",
+    "L_Prime" : "R_Prime",
     "L2" : "R2",
     
     "R" : "L",
-    "R'" : "L'",
+    "R_Prime" : "L_Prime",
     "R2" : "L2",
     
     "U2" : "D2",

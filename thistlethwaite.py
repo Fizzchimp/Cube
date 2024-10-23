@@ -643,6 +643,7 @@ def phase_4_side_key(state):
 
 def read_table_4(state):
     key = phase_4_side_key(state)
+    print(key)
     if key == "----|----|----|----|----|----": return []
     with open("Tables/phase_4.txt", "r") as table:
         table = table.readlines()
@@ -659,6 +660,7 @@ PHASE_4_TRANSFORMATIONS = [
     ("reflect_YZ", REF_YZ),
     ("X", ROT_X_PRIME),
     ("X_Prime", ROT_X),
+    ("X_2", ROT_X_2),
     ("Y_2", ROT_Y_2),
     ("Z_2", ROT_Z_2)]
 
@@ -674,8 +676,9 @@ def phase_4(cube):
         corner_moves.append(G_3[node.movement])
         
     corner_moves = corner_moves[::-1]
-    
+    print("corner moves:", corner_moves)
     # Try with no transformations
+    print("Trying no transformations")
     side_moves = read_table_4(cube)
     
     # Try with one transformation
@@ -686,7 +689,10 @@ def phase_4(cube):
             side_moves = read_table_4(getattr(cube, transformation)())
             if side_moves != None:
                 for i, move in enumerate(side_moves):
-                    side_moves[i] = moveset[int(move)]
+                    try: side_moves[i] = moveset[move]
+                    except: pass
+                    print(move, side_moves[i])
+                print(transformation)
                 break
 
     # Try with two transformations
@@ -697,8 +703,7 @@ def phase_4(cube):
                 side_moves = read_table_4(getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)())
                 if side_moves != None:
                     for i, move in enumerate(side_moves):
-                        side_moves[i] = moveset_2[moveset_1[int(move)]]
-                    break
+                        side_moves[i] = moveset_2[moveset_1[move]]
     
     # Try with three transformations
     if side_moves == None:
@@ -715,6 +720,7 @@ def phase_4(cube):
     print("Side moves:", side_moves)
     if side_moves == None:
         print("No phase 4 table moves found")
+        raise Exception("No phase 4 table moves found")
         side_moves = []
 
 
@@ -725,7 +731,7 @@ def phase_4(cube):
     #     side_moves.append(G_3[node.movement])
 
 
-    return corner_moves + side_moves[::-1]
+    return corner_moves + side_moves
 
     
 # Function to organise solving the cube
@@ -757,3 +763,13 @@ def thistle_solve(start_state):
     phase_4_moves = phase_4(G_3_cube)
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
+
+cube = Cube3()
+for i in range(1):
+    print("==========\nSTARTING\n==========")
+    cube.scramble()
+    print(cube.cube)
+    try:
+        print(thistle_solve(cube))
+        break
+    except: print("Error")

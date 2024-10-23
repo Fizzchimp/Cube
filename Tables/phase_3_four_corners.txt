@@ -1,280 +1,280 @@
-----|----|---- : L' F2 L F2 U2 F2 L' F2 L'
-----|----|---- : L' F2 L U2 L2 D2 B2 L F2 L'
-----|----|---- : U2 L F2 L' F2 L' F2 L' F2 L'
-----|----|---- : U2 L F2 L2 U2 L' U2 F2 L'
-----|---X|--X- : L U2 L B2 D2 F2 L' F2 L'
-----|---X|--X- : L' B2 R B2 L' U2 L U2 L U2 L
-----|---X|--X- : D2 L' L2 B2 U2 F2 L' F2 L'
-----|---X|--X- : D2 R2 L' D2 L2 F2 L' F2 L'
-----|---X|-X-- : L' F2 L B2 F2 R2 L' F2 L'
-----|---X|-X-- : L' F2 L U2 F2 L2 F2 L F2 L'
-----|---X|-X-- : U2 L' L2 F2 U2 B2 L' F2 L'
-----|---X|-X-- : U2 L' F2 L2 F2 U2 L' F2 L'
-----|--X-|--X- : L' B2 L D2 U2 R2 L' F2 L'
-----|--X-|--X- : R' B2 U2 R' B2 L2 U2 L F2 L'
-----|--X-|--X- : R2 F2 U2 L' B2 F2 L' F2 L'
-----|--X-|--X- : U2 R U2 F2 R2 B2 L F2 L'
-----|--X-|-X-- : R' D2 F2 U2 F2 R' L' F2 L'
-----|--X-|-X-- : L' B2 L U2 B2 L2 F2 L F2 L'
-----|--X-|-X-- : B2 L' F2 R2 L2 F2 L' F2 L'
-----|--X-|-X-- : D2 R' B2 U2 L2 D2 L' F2 L'
-----|--XX|-XX- : B2 F2 L' L2 F2 R' L' F2 L'
-----|--XX|-XX- : R D2 L' F2 R' L' F2 L F2 L'
-----|--XX|-XX- : B2 L2 F2 L2 U2 R' L' F2 L'
-----|--XX|-XX- : D2 L U2 R2 F2 L' U2 F2 L'
-----|-X--|--X- : R' F2 U2 L' B2 F2 L' F2 L'
-----|-X--|--X- : L' F2 L D2 B2 L2 B2 L F2 L'
-----|-X--|--X- : U2 B2 R D2 U2 R2 L' F2 L'
-----|-X--|--X- : B2 U2 R D2 R2 B2 L' F2 L'
-----|-X--|-X-- : R D2 F2 U2 F2 R' L' F2 L'
-----|-X--|-X-- : R U2 R U2 B2 L2 F2 L F2 L'
-----|-X--|-X-- : L2 F2 D2 L' B2 F2 L' F2 L'
-----|-X--|-X-- : D2 R' U2 B2 L2 B2 L' F2 L'
-----|-X-X|-XX- : R2 L' F2 L2 F2 R L' F2 L'
-----|-X-X|-XX- : R' U2 L U2 B2 L2 B2 L F2 L'
-----|-X-X|-XX- : B2 R' F2 L' L F2 L' F2 L'
-----|-X-X|-XX- : R2 D2 R U2 L2 F2 L' F2 L'
-----|-XX-|-XX- : R' L2 F2 L' B2 F2 L' F2 L'
-----|-XX-|-XX- : R' B2 D2 R' B2 L2 U2 L F2 L'
-----|-XX-|-XX- : D2 F2 U2 F2 U2 R' L' F2 L'
-----|-XX-|-XX- : D2 R' U2 F2 R2 F2 L' F2 L'
-----|X---|--X- : L' U2 L B2 D2 F2 L' F2 L'
-----|X---|--X- : L B2 R B2 L' U2 L U2 L U2 L
-----|X---|--X- : L2 D2 L B2 U2 F2 L' F2 L'
-----|X---|--X- : R2 U2 L D2 L2 F2 L' F2 L'
-----|X---|-X-- : L' U2 L F2 U2 B2 L' F2 L'
-----|X---|-X-- : L' F2 L F2 U2 L2 D2 L F2 L'
-----|X---|-X-- : B2 R2 L' B2 F2 R2 L' F2 L'
-----|X---|-X-- : U2 L' D2 L2 D2 F2 L' F2 L'
-----|X--X|-XX- : L' D2 L B2 U2 F2 L' F2 L'
-----|X--X|-XX- : L' B2 R F2 L2 U2 R2 L F2 L'
-----|X--X|-XX- : U2 L' L2 B2 D2 F2 L' F2 L'
-----|X--X|-XX- : D2 L U2 R2 B2 L' U2 R2 L'
-----|X-X-|-XX- : R L2 F2 L2 F2 R L' F2 L'
-----|X-X-|-XX- : L B2 L D2 L2 D2 F2 L F2 L'
-----|X-X-|-XX- : U2 B2 L B2 D2 F2 L' F2 L'
-----|X-X-|-XX- : B2 U2 L D2 R2 F2 L' F2 L'
-----|XX--|-XX- : L2 B2 F2 L' F2 R' L' F2 L'
-----|XX--|-XX- : R B2 U2 L' D2 L2 F2 L F2 L'
-----|XX--|-XX- : B2 L2 B2 L2 U2 R' L' F2 L'
-----|XX--|-XX- : U2 R D2 R2 F2 L' U2 F2 L'
---X-|---X|---- : L F2 L D2 R' U2 L U2 L U2 L
---X-|---X|---- : L' U2 F2 U2 L2 U2 L2 F2 L'
---X-|---X|---- : R2 D2 L B2 U2 F2 L' F2 L'
---X-|---X|---- : L2 U2 L D2 L2 F2 L' F2 L'
---X-|--X-|---- : R F2 U2 L' B2 F2 L' F2 L'
---X-|--X-|---- : R D2 R D2 B2 L2 B2 L F2 L'
---X-|--X-|---- : D2 R' B2 D2 B2 R2 L' F2 L'
---X-|--X-|---- : F2 D2 R U2 L2 B2 L' F2 L'
---X-|--XX|--X- : R' D2 L B2 U2 F2 L' F2 L'
---X-|--XX|--X- : L' F2 R U2 L2 U2 F2 L F2 L'
---X-|--XX|--X- : B2 R' L2 B2 D2 F2 L' F2 L'
---X-|--XX|--X- : L2 B2 U2 L' D2 R2 U2 F2 L' F2 L'
---X-|--XX|-X-- : L L2 F2 L2 F2 R L' F2 L'
---X-|--XX|-X-- : R U2 L U2 B2 L2 B2 L F2 L'
---X-|--XX|-X-- : L D2 U2 L' F2 R' L' F2 L'
---X-|--XX|-X-- : D2 L F2 R L F2 L' F2 L'
---X-|-X--|---- : R U2 R D2 U2 R2 L' F2 L'
---X-|-X--|---- : L' U2 F2 L' B2 L2 U2 L F2 L'
---X-|-X--|---- : L2 F2 U2 L' B2 F2 L' F2 L'
---X-|-X--|---- : D2 R D2 B2 L2 B2 L F2 L'
---X-|-X-X|--X- : R D2 L B2 U2 F2 L' F2 L'
---X-|-X-X|--X- : R D2 L D2 R2 U2 F2 L F2 L'
---X-|-X-X|--X- : D2 B2 R F2 U2 F2 L' F2 L'
---X-|-X-X|--X- : F2 D2 L' U2 L2 U2 F2 L' F2 L'
---X-|-X-X|-X-- : D2 U2 R L2 F2 R' L' F2 L'
---X-|-X-X|-X-- : R' D2 L' F2 R' L' F2 L F2 L'
---X-|-X-X|-X-- : L2 U2 R' L' F2 R L' F2 L'
---X-|-X-X|-X-- : U2 L' D2 B2 L2 B2 L' F2 L'
---X-|-XX-|--X- : D2 U2 R U2 R' U2 F2 U2 R D2 R
---X-|-XX-|--X- : R' U2 L F2 L2 U2 L' U2 F2 L'
---X-|-XX-|--X- : F2 R' D2 U2 B2 F2 L' F2 L'
---X-|-XX-|--X- : D2 R U2 L2 D2 B2 L F2 L'
---X-|-XX-|-X-- : R L2 F2 L' B2 F2 L' F2 L'
---X-|-XX-|-X-- : L U2 B2 L' B2 L2 U2 L F2 L'
---X-|-XX-|-X-- : R2 D2 F2 U2 F2 R' L' F2 L'
---X-|-XX-|-X-- : L2 D2 R D2 L2 B2 L' F2 L'
---X-|-XXX|-XX- : R' U2 L F2 U2 B2 L' F2 L'
---X-|-XXX|-XX- : L U2 B2 L' D2 L2 B2 L F2 L'
---X-|-XXX|-XX- : D2 B2 R B2 F2 R2 L' F2 L'
---X-|-XXX|-XX- : B2 D2 R B2 R2 U2 L' F2 L'
---X-|X---|---- : L' F2 L D2 R' U2 L U2 L U2 L
---X-|X---|---- : R F2 R B2 D2 F2 L' F2 L'
---X-|X---|---- : D2 U2 B2 L' B2 F2 L' F2 L'
---X-|X---|---- : U2 R F2 R' L' F2 L' F2 L'
---X-|X--X|--X- : L' B2 D2 L B2 F2 L U2 F2 L'
---X-|X--X|--X- : R' U2 L D2 F2 L2 F2 L F2 L'
---X-|X--X|--X- : D2 L D2 U2 B2 F2 L F2 L'
---X-|X--X|--X- : U2 L D2 F2 L2 F2 L F2 L'
---X-|X--X|-X-- : R B2 R B2 U2 F2 L' F2 L'
---X-|X--X|-X-- : R U2 L B2 R2 U2 R2 L F2 L'
---X-|X--X|-X-- : F2 U2 L F2 U2 F2 L' F2 L'
---X-|X--X|-X-- : D2 R B2 R2 D2 L' U2 F2 L'
---X-|X-X-|--X- : R F2 R U2 B2 D2 L' F2 L'
---X-|X-X-|--X- : R U2 L U2 L2 U2 F2 L F2 L'
---X-|X-X-|--X- : D2 F2 R F2 U2 F2 L' F2 L'
---X-|X-X-|--X- : B2 U2 L' D2 R2 U2 F2 L' F2 L'
---X-|X-X-|-X-- : D2 U2 L L2 F2 R' L' F2 L'
---X-|X-X-|-X-- : R' B2 U2 L' D2 L2 F2 L F2 L'
---X-|X-X-|-X-- : D2 R' B2 D2 U2 F2 L' F2 L'
---X-|X-X-|-X-- : D2 R' D2 R2 U2 F2 L' F2 L'
---X-|X-XX|-XX- : R' U2 L B2 D2 F2 L' F2 L'
---X-|X-XX|-XX- : L B2 L F2 L2 D2 L' U2 F2 L'
---X-|X-XX|-XX- : R2 B2 R B2 U2 F2 L' F2 L'
---X-|X-XX|-XX- : R2 U2 L B2 L2 D2 L' F2 L'
---X-|XX--|--X- : L' B2 R B2 U2 F2 L' F2 L'
---X-|XX--|--X- : R' U2 L U2 L2 U2 F2 L F2 L'
---X-|XX--|--X- : B2 D2 F2 R2 F2 R' L' F2 L'
---X-|XX--|--X- : L2 F2 D2 L' U2 L2 U2 F2 L' F2 L'
---X-|XX--|-X-- : L U2 R' L' F2 R L' F2 L'
---X-|XX--|-X-- : L' F2 L U2 R2 D2 F2 L F2 L'
---X-|XX--|-X-- : U2 R' D2 R L' F2 L' F2 L'
---X-|XX--|-X-- : F2 U2 L D2 L2 B2 L' F2 L'
---X-|XX-X|-XX- : R U2 L B2 D2 F2 L' F2 L'
---X-|XX-X|-XX- : L' F2 L B2 R2 D2 L' U2 F2 L'
---X-|XX-X|-XX- : B2 F2 D2 R' B2 F2 L' F2 L'
---X-|XX-X|-XX- : U2 L' D2 F2 R2 F2 L' F2 L'
---X-|XXX-|-XX- : L' D2 R B2 F2 R2 L' F2 L'
---X-|XXX-|-XX- : R' U2 L' D2 L2 D2 F2 L' F2 L'
---X-|XXX-|-XX- : B2 U2 L F2 D2 F2 L' F2 L'
---X-|XXX-|-XX- : D2 R F2 U2 L2 D2 L F2 L'
--X--|---X|---- : L U2 L F2 U2 B2 L' F2 L'
--X--|---X|---- : L F2 L F2 U2 L2 D2 L F2 L'
--X--|---X|---- : F2 L' L2 B2 F2 R2 L' F2 L'
--X--|---X|---- : D2 L' U2 R2 D2 F2 L' F2 L'
--X--|--X-|---- : R U2 B2 U2 L2 U2 L2 F2 L'
--X--|--X-|---- : L B2 L U2 B2 L2 F2 L F2 L'
--X--|--X-|---- : R2 F2 D2 L' B2 F2 L' F2 L'
--X--|--X-|---- : F2 U2 R U2 L2 B2 L' F2 L'
--X--|--XX|--X- : R F2 U2 L2 F2 R L' F2 L'
--X--|--XX|--X- : L' B2 L D2 L2 D2 F2 L F2 L'
--X--|--XX|--X- : D2 L' B2 R2 L2 F2 L' F2 L'
--X--|--XX|--X- : B2 D2 L U2 R2 B2 L' F2 L'
--X--|--XX|-X-- : R2 L' F2 L' B2 F2 L' F2 L'
--X--|--XX|-X-- : R' B2 U2 R' U2 L2 F2 L F2 L'
--X--|--XX|-X-- : B2 D2 F2 L2 F2 R' L' F2 L'
--X--|--XX|-X-- : L2 D2 R' D2 L F2 L' F2 L' F2 L'
--X--|-X--|---- : L' F2 U2 F2 U2 F2 L2 F2 L'
--X--|-X--|---- : L' F2 L D2 F2 R2 F2 L F2 L'
--X--|-X--|---- : F2 R' U2 R L' F2 L' F2 L'
--X--|-X--|---- : U2 R' F2 D2 R2 D2 L' F2 L'
--X--|-X-X|--X- : B2 F2 L L2 F2 R' L' F2 L'
--X--|-X-X|--X- : R' F2 U2 L' U2 R2 F2 L F2 L'
--X--|-X-X|--X- : R2 F2 U2 L2 F2 R L' F2 L'
--X--|-X-X|--X- : U2 R' U2 L2 U2 F2 L' F2 L'
--X--|-X-X|-X-- : L L2 F2 L' B2 F2 L' F2 L'
--X--|-X-X|-X-- : L U2 F2 L' U2 L2 F2 L F2 L'
--X--|-X-X|-X-- : U2 B2 R B2 U2 B2 L' F2 L'
--X--|-X-X|-X-- : U2 L' B2 R F2 L' F2 L' F2 L'
--X--|-XX-|--X- : R' F2 D2 L' B2 F2 L' F2 L'
--X--|-XX-|--X- : L D2 F2 L' F2 R2 U2 L F2 L'
--X--|-XX-|--X- : L2 D2 F2 U2 F2 R' L' F2 L'
--X--|-XX-|--X- : R2 D2 R D2 L2 B2 L' F2 L'
--X--|-XX-|-X-- : L' B2 L B2 U2 B2 L' F2 L'
--X--|-XX-|-X-- : R' D2 L' D2 L2 D2 B2 R' F2 L'
--X--|-XX-|-X-- : F2 L' B2 U2 B2 R2 L' F2 L'
--X--|-XX-|-X-- : D2 R' D2 L2 U2 B2 L' F2 L'
--X--|-XXX|-XX- : L D2 F2 U2 F2 R' L' F2 L'
--X--|-XXX|-XX- : L' D2 F2 L B2 R2 F2 U2 L U2 L
--X--|-XXX|-XX- : R' L' F2 L' B2 F2 L' F2 L'
--X--|-XXX|-XX- : B2 U2 R B2 R2 U2 L' F2 L'
--X--|X---|---- : L F2 L B2 F2 R2 L' F2 L'
--X--|X---|---- : L F2 L U2 F2 L2 F2 L F2 L'
--X--|X---|---- : U2 F2 R F2 D2 F2 L' F2 L'
--X--|X---|---- : D2 L' B2 R2 F2 U2 L' F2 L'
--X--|X--X|--X- : L D2 L B2 U2 F2 L' F2 L'
--X--|X--X|--X- : R D2 L F2 L2 U2 R2 L F2 L'
--X--|X--X|--X- : F2 D2 L F2 U2 F2 L' F2 L'
--X--|X--X|--X- : U2 R F2 L2 D2 L' U2 F2 L'
--X--|X--X|-X-- : D2 U2 L' U2 L U2 F2 U2 L' D2 L'
--X--|X--X|-X-- : R' U2 L B2 L2 D2 L' U2 F2 L'
--X--|X--X|-X-- : D2 L' D2 U2 B2 F2 L' F2 L'
--X--|X--X|-X-- : U2 L' U2 F2 L2 F2 L' F2 L'
--X--|X-X-|--X- : L B2 F2 L2 F2 R' L' F2 L'
--X--|X-X-|--X- : L L2 B2 L' D2 L2 F2 L F2 L'
--X--|X-X-|--X- : B2 L' B2 D2 U2 F2 L' F2 L'
--X--|X-X-|--X- : D2 L' U2 F2 R2 B2 L' F2 L'
--X--|X-X-|-X-- : R2 L F2 L' B2 F2 L' F2 L'
--X--|X-X-|-X-- : L D2 B2 L' D2 R2 F2 L F2 L'
--X--|X-X-|-X-- : U2 F2 R B2 U2 B2 L' F2 L'
--X--|X-X-|-X-- : D2 R' D2 L F2 L' F2 L' F2 L'
--X--|X-XX|-XX- : R' U2 B2 R' B2 F2 L' F2 L'
--X--|X-XX|-XX- : R' B2 U2 R' F2 L2 D2 L F2 L'
--X--|X-XX|-XX- : B2 L' B2 D2 B2 R2 L' F2 L'
--X--|X-XX|-XX- : D2 L' F2 L2 D2 R2 L' F2 L'
--X--|XX--|--X- : R' U2 R' L' F2 R L' F2 L'
--X--|XX--|--X- : R D2 L D2 F2 R2 B2 L F2 L'
--X--|XX--|--X- : F2 U2 R B2 D2 F2 L' F2 L'
--X--|XX--|--X- : U2 L B2 R' L' F2 L' F2 L'
--X--|XX--|-X-- : L' L2 F2 L' B2 F2 L' F2 L'
--X--|XX--|-X-- : L' U2 F2 L' U2 L2 F2 L F2 L'
--X--|XX--|-X-- : B2 U2 F2 R2 F2 R' L' F2 L'
--X--|XX--|-X-- : L2 U2 L' B2 R F2 L' F2 L' F2 L'
--X--|XX-X|-XX- : R B2 L D2 U2 R2 L' F2 L'
--X--|XX-X|-XX- : R D2 L D2 B2 L2 F2 L F2 L'
--X--|XX-X|-XX- : U2 B2 F2 R' B2 F2 L' F2 L'
--X--|XX-X|-XX- : B2 U2 R U2 R2 F2 L' F2 L'
--X--|XXX-|-XX- : L' D2 F2 U2 F2 R' L' F2 L'
--X--|XXX-|-XX- : L D2 F2 L B2 R2 F2 U2 L U2 L
--X--|XXX-|-XX- : U2 R' B2 L' L F2 L' F2 L'
--X--|XXX-|-XX- : U2 R' U2 B2 R2 F2 L' F2 L'
--XX-|--XX|---- : R2 B2 F2 L' F2 R' L' F2 L'
--XX-|--XX|---- : L D2 F2 R' D2 L2 F2 L F2 L'
--XX-|--XX|---- : F2 R2 B2 L2 U2 R' L' F2 L'
--XX-|--XX|---- : D2 R U2 L2 F2 L' U2 F2 L'
--XX-|-X-X|---- : L' U2 R' L' F2 R L' F2 L'
--XX-|-X-X|---- : R U2 R D2 L2 D2 F2 L F2 L'
--XX-|-X-X|---- : R B2 F2 L' F2 R' L' F2 L'
--XX-|-X-X|---- : F2 U2 L U2 L2 F2 L' F2 L'
--XX-|-XX-|---- : R F2 D2 L' B2 F2 L' F2 L'
--XX-|-XX-|---- : L' U2 B2 L' B2 L2 U2 L F2 L'
--XX-|-XX-|---- : U2 F2 U2 F2 R L' L2 F2 L'
--XX-|-XX-|---- : U2 R' D2 B2 L2 F2 L' F2 L'
--XX-|-XXX|--X- : R' F2 L B2 F2 R2 L' F2 L'
--XX-|-XXX|--X- : L B2 L' B2 R' L' F2 L F2 L'
--XX-|-XXX|--X- : B2 R' L2 F2 U2 B2 L' F2 L'
--XX-|-XXX|--X- : U2 R B2 D2 R2 D2 L F2 L'
--XX-|-XXX|-X-- : L' U2 B2 U2 L2 U2 L2 F2 L'
--XX-|-XXX|-X-- : L U2 B2 L F2 L2 F2 U2 L U2 L
--XX-|-XXX|-X-- : D2 L' U2 R L' F2 L' F2 L'
--XX-|-XXX|-X-- : D2 R' D2 F2 L2 F2 L' F2 L'
--XX-|X--X|---- : L' F2 R U2 B2 D2 L' F2 L'
--XX-|X--X|---- : R' D2 L F2 L2 U2 R2 L F2 L'
--XX-|X--X|---- : D2 R2 L' B2 D2 F2 L' F2 L'
--XX-|X--X|---- : U2 L D2 L2 B2 L' U2 R2 L'
--XX-|X-X-|---- : R U2 R' L' F2 R L' F2 L'
--XX-|X-X-|---- : L' F2 R U2 B2 L2 B2 L F2 L'
--XX-|X-X-|---- : F2 L' D2 R L' F2 L' F2 L'
--XX-|X-X-|---- : L2 D2 R U2 L2 F2 L' F2 L'
--XX-|X-X-|---- : L2 D2 R U2 L2 F2 L' F2 L'
--XX-|X-XX|--X- : R U2 F2 U2 L2 U2 L2 F2 L'
--XX-|X-XX|--X- : L' B2 L F2 L2 D2 L' U2 F2 L'
--XX-|X-XX|--X- : F2 R' L2 B2 U2 F2 L' F2 L'
--XX-|X-XX|--X- : D2 L' U2 B2 L2 F2 L' F2 L'
--XX-|X-XX|-X-- : R' B2 L D2 U2 R2 L' F2 L'
--XX-|X-XX|-X-- : R' D2 L D2 B2 L2 F2 L F2 L'
--XX-|X-XX|-X-- : D2 F2 R L2 B2 F2 L' F2 L'
--XX-|XX--|---- : B2 F2 R2 L' F2 R' L' F2 L'
--XX-|XX--|---- : L F2 R' F2 R' L' F2 L F2 L'
--XX-|XX--|---- : F2 R2 F2 L2 U2 R' L' F2 L'
--XX-|XX--|---- : U2 L D2 L2 F2 L' U2 F2 L'
--XX-|XX-X|--X- : L' F2 R B2 D2 F2 L' F2 L'
--XX-|XX-X|--X- : R U2 R F2 L2 D2 L' U2 F2 L'
--XX-|XX-X|--X- : L2 B2 R B2 U2 F2 L' F2 L'
--XX-|XX-X|--X- : L2 U2 L B2 L2 D2 L' F2 L'
--XX-|XX-X|-X-- : L' F2 U2 L' B2 F2 L' F2 L'
--XX-|XX-X|-X-- : L' U2 F2 L' F2 L2 D2 L F2 L'
--XX-|XX-X|-X-- : F2 R2 L' D2 U2 R2 L' F2 L'
--XX-|XX-X|-X-- : U2 L' B2 R2 D2 R2 L' F2 L'
--XX-|XXX-|--X- : L' F2 R F2 U2 B2 L' F2 L'
--XX-|XXX-|--X- : L' U2 B2 L' D2 L2 B2 L F2 L'
--XX-|XXX-|--X- : U2 R' L2 B2 F2 R2 L' F2 L'
--XX-|XXX-|--X- : F2 U2 R F2 L2 U2 L' F2 L'
--XX-|XXX-|-X-- : R F2 U2 F2 U2 F2 L2 F2 L'
--XX-|XXX-|-X-- : L' U2 B2 L F2 L2 F2 U2 L U2 L
--XX-|XXX-|-X-- : R L F2 L' B2 F2 L' F2 L'
--XX-|XXX-|-X-- : F2 D2 R F2 L2 U2 L' F2 L'
--XX-|XXXX|-XX- : R' F2 L F2 U2 F2 L' F2 L'
--XX-|XXXX|-XX- : L' F2 L' U2 B2 L2 F2 R' F2 L'
--XX-|XXXX|-XX- : F2 R F2 L' F2 L' F2 L' F2 L'
--XX-|XXXX|-XX- : U2 L B2 L2 D2 L' U2 F2 L'
+----|----|---- : L_Prime F_2 L F_2 U_2 F_2 L_Prime F_2 L_Prime
+----|----|---- : L_Prime F_2 L U_2 L_2 D_2 B_2 L F_2 L_Prime
+----|----|---- : U_2 L F_2 L_Prime F_2 L_Prime F_2 L_Prime F_2 L_Prime
+----|----|---- : U_2 L F_2 L_2 U_2 L_Prime U_2 F_2 L_Prime
+----|---X|--X- : L U_2 L B_2 D_2 F_2 L_Prime F_2 L_Prime
+----|---X|--X- : L_Prime B_2 R B_2 L_Prime U_2 L U_2 L U_2 L
+----|---X|--X- : D_2 L_Prime L_2 B_2 U_2 F_2 L_Prime F_2 L_Prime
+----|---X|--X- : D_2 R_2 L_Prime D_2 L_2 F_2 L_Prime F_2 L_Prime
+----|---X|-X-- : L_Prime F_2 L B_2 F_2 R_2 L_Prime F_2 L_Prime
+----|---X|-X-- : L_Prime F_2 L U_2 F_2 L_2 F_2 L F_2 L_Prime
+----|---X|-X-- : U_2 L_Prime L_2 F_2 U_2 B_2 L_Prime F_2 L_Prime
+----|---X|-X-- : U_2 L_Prime F_2 L_2 F_2 U_2 L_Prime F_2 L_Prime
+----|--X-|--X- : L_Prime B_2 L D_2 U_2 R_2 L_Prime F_2 L_Prime
+----|--X-|--X- : R_Prime B_2 U_2 R_Prime B_2 L_2 U_2 L F_2 L_Prime
+----|--X-|--X- : R_2 F_2 U_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+----|--X-|--X- : U_2 R U_2 F_2 R_2 B_2 L F_2 L_Prime
+----|--X-|-X-- : R_Prime D_2 F_2 U_2 F_2 R_Prime L_Prime F_2 L_Prime
+----|--X-|-X-- : L_Prime B_2 L U_2 B_2 L_2 F_2 L F_2 L_Prime
+----|--X-|-X-- : B_2 L_Prime F_2 R_2 L_2 F_2 L_Prime F_2 L_Prime
+----|--X-|-X-- : D_2 R_Prime B_2 U_2 L_2 D_2 L_Prime F_2 L_Prime
+----|--XX|-XX- : B_2 F_2 L_Prime L_2 F_2 R_Prime L_Prime F_2 L_Prime
+----|--XX|-XX- : R D_2 L_Prime F_2 R_Prime L_Prime F_2 L F_2 L_Prime
+----|--XX|-XX- : B_2 L_2 F_2 L_2 U_2 R_Prime L_Prime F_2 L_Prime
+----|--XX|-XX- : D_2 L U_2 R_2 F_2 L_Prime U_2 F_2 L_Prime
+----|-X--|--X- : R_Prime F_2 U_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+----|-X--|--X- : L_Prime F_2 L D_2 B_2 L_2 B_2 L F_2 L_Prime
+----|-X--|--X- : U_2 B_2 R D_2 U_2 R_2 L_Prime F_2 L_Prime
+----|-X--|--X- : B_2 U_2 R D_2 R_2 B_2 L_Prime F_2 L_Prime
+----|-X--|-X-- : R D_2 F_2 U_2 F_2 R_Prime L_Prime F_2 L_Prime
+----|-X--|-X-- : R U_2 R U_2 B_2 L_2 F_2 L F_2 L_Prime
+----|-X--|-X-- : L_2 F_2 D_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+----|-X--|-X-- : D_2 R_Prime U_2 B_2 L_2 B_2 L_Prime F_2 L_Prime
+----|-X-X|-XX- : R_2 L_Prime F_2 L_2 F_2 R L_Prime F_2 L_Prime
+----|-X-X|-XX- : R_Prime U_2 L U_2 B_2 L_2 B_2 L F_2 L_Prime
+----|-X-X|-XX- : B_2 R_Prime F_2 L_Prime L F_2 L_Prime F_2 L_Prime
+----|-X-X|-XX- : R_2 D_2 R U_2 L_2 F_2 L_Prime F_2 L_Prime
+----|-XX-|-XX- : R_Prime L_2 F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+----|-XX-|-XX- : R_Prime B_2 D_2 R_Prime B_2 L_2 U_2 L F_2 L_Prime
+----|-XX-|-XX- : D_2 F_2 U_2 F_2 U_2 R_Prime L_Prime F_2 L_Prime
+----|-XX-|-XX- : D_2 R_Prime U_2 F_2 R_2 F_2 L_Prime F_2 L_Prime
+----|X---|--X- : L_Prime U_2 L B_2 D_2 F_2 L_Prime F_2 L_Prime
+----|X---|--X- : L B_2 R B_2 L_Prime U_2 L U_2 L U_2 L
+----|X---|--X- : L_2 D_2 L B_2 U_2 F_2 L_Prime F_2 L_Prime
+----|X---|--X- : R_2 U_2 L D_2 L_2 F_2 L_Prime F_2 L_Prime
+----|X---|-X-- : L_Prime U_2 L F_2 U_2 B_2 L_Prime F_2 L_Prime
+----|X---|-X-- : L_Prime F_2 L F_2 U_2 L_2 D_2 L F_2 L_Prime
+----|X---|-X-- : B_2 R_2 L_Prime B_2 F_2 R_2 L_Prime F_2 L_Prime
+----|X---|-X-- : U_2 L_Prime D_2 L_2 D_2 F_2 L_Prime F_2 L_Prime
+----|X--X|-XX- : L_Prime D_2 L B_2 U_2 F_2 L_Prime F_2 L_Prime
+----|X--X|-XX- : L_Prime B_2 R F_2 L_2 U_2 R_2 L F_2 L_Prime
+----|X--X|-XX- : U_2 L_Prime L_2 B_2 D_2 F_2 L_Prime F_2 L_Prime
+----|X--X|-XX- : D_2 L U_2 R_2 B_2 L_Prime U_2 R_2 L_Prime
+----|X-X-|-XX- : R L_2 F_2 L_2 F_2 R L_Prime F_2 L_Prime
+----|X-X-|-XX- : L B_2 L D_2 L_2 D_2 F_2 L F_2 L_Prime
+----|X-X-|-XX- : U_2 B_2 L B_2 D_2 F_2 L_Prime F_2 L_Prime
+----|X-X-|-XX- : B_2 U_2 L D_2 R_2 F_2 L_Prime F_2 L_Prime
+----|XX--|-XX- : L_2 B_2 F_2 L_Prime F_2 R_Prime L_Prime F_2 L_Prime
+----|XX--|-XX- : R B_2 U_2 L_Prime D_2 L_2 F_2 L F_2 L_Prime
+----|XX--|-XX- : B_2 L_2 B_2 L_2 U_2 R_Prime L_Prime F_2 L_Prime
+----|XX--|-XX- : U_2 R D_2 R_2 F_2 L_Prime U_2 F_2 L_Prime
+--X-|---X|---- : L F_2 L D_2 R_Prime U_2 L U_2 L U_2 L
+--X-|---X|---- : L_Prime U_2 F_2 U_2 L_2 U_2 L_2 F_2 L_Prime
+--X-|---X|---- : R_2 D_2 L B_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|---X|---- : L_2 U_2 L D_2 L_2 F_2 L_Prime F_2 L_Prime
+--X-|--X-|---- : R F_2 U_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+--X-|--X-|---- : R D_2 R D_2 B_2 L_2 B_2 L F_2 L_Prime
+--X-|--X-|---- : D_2 R_Prime B_2 D_2 B_2 R_2 L_Prime F_2 L_Prime
+--X-|--X-|---- : F_2 D_2 R U_2 L_2 B_2 L_Prime F_2 L_Prime
+--X-|--XX|--X- : R_Prime D_2 L B_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|--XX|--X- : L_Prime F_2 R U_2 L_2 U_2 F_2 L F_2 L_Prime
+--X-|--XX|--X- : B_2 R_Prime L_2 B_2 D_2 F_2 L_Prime F_2 L_Prime
+--X-|--XX|--X- : L_2 B_2 U_2 L_Prime D_2 R_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|--XX|-X-- : L L_2 F_2 L_2 F_2 R L_Prime F_2 L_Prime
+--X-|--XX|-X-- : R U_2 L U_2 B_2 L_2 B_2 L F_2 L_Prime
+--X-|--XX|-X-- : L D_2 U_2 L_Prime F_2 R_Prime L_Prime F_2 L_Prime
+--X-|--XX|-X-- : D_2 L F_2 R L F_2 L_Prime F_2 L_Prime
+--X-|-X--|---- : R U_2 R D_2 U_2 R_2 L_Prime F_2 L_Prime
+--X-|-X--|---- : L_Prime U_2 F_2 L_Prime B_2 L_2 U_2 L F_2 L_Prime
+--X-|-X--|---- : L_2 F_2 U_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+--X-|-X--|---- : D_2 R D_2 B_2 L_2 B_2 L F_2 L_Prime
+--X-|-X-X|--X- : R D_2 L B_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|-X-X|--X- : R D_2 L D_2 R_2 U_2 F_2 L F_2 L_Prime
+--X-|-X-X|--X- : D_2 B_2 R F_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|-X-X|--X- : F_2 D_2 L_Prime U_2 L_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|-X-X|-X-- : D_2 U_2 R L_2 F_2 R_Prime L_Prime F_2 L_Prime
+--X-|-X-X|-X-- : R_Prime D_2 L_Prime F_2 R_Prime L_Prime F_2 L F_2 L_Prime
+--X-|-X-X|-X-- : L_2 U_2 R_Prime L_Prime F_2 R L_Prime F_2 L_Prime
+--X-|-X-X|-X-- : U_2 L_Prime D_2 B_2 L_2 B_2 L_Prime F_2 L_Prime
+--X-|-XX-|--X- : D_2 U_2 R U_2 R_Prime U_2 F_2 U_2 R D_2 R
+--X-|-XX-|--X- : R_Prime U_2 L F_2 L_2 U_2 L_Prime U_2 F_2 L_Prime
+--X-|-XX-|--X- : F_2 R_Prime D_2 U_2 B_2 F_2 L_Prime F_2 L_Prime
+--X-|-XX-|--X- : D_2 R U_2 L_2 D_2 B_2 L F_2 L_Prime
+--X-|-XX-|-X-- : R L_2 F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+--X-|-XX-|-X-- : L U_2 B_2 L_Prime B_2 L_2 U_2 L F_2 L_Prime
+--X-|-XX-|-X-- : R_2 D_2 F_2 U_2 F_2 R_Prime L_Prime F_2 L_Prime
+--X-|-XX-|-X-- : L_2 D_2 R D_2 L_2 B_2 L_Prime F_2 L_Prime
+--X-|-XXX|-XX- : R_Prime U_2 L F_2 U_2 B_2 L_Prime F_2 L_Prime
+--X-|-XXX|-XX- : L U_2 B_2 L_Prime D_2 L_2 B_2 L F_2 L_Prime
+--X-|-XXX|-XX- : D_2 B_2 R B_2 F_2 R_2 L_Prime F_2 L_Prime
+--X-|-XXX|-XX- : B_2 D_2 R B_2 R_2 U_2 L_Prime F_2 L_Prime
+--X-|X---|---- : L_Prime F_2 L D_2 R_Prime U_2 L U_2 L U_2 L
+--X-|X---|---- : R F_2 R B_2 D_2 F_2 L_Prime F_2 L_Prime
+--X-|X---|---- : D_2 U_2 B_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+--X-|X---|---- : U_2 R F_2 R_Prime L_Prime F_2 L_Prime F_2 L_Prime
+--X-|X--X|--X- : L_Prime B_2 D_2 L B_2 F_2 L U_2 F_2 L_Prime
+--X-|X--X|--X- : R_Prime U_2 L D_2 F_2 L_2 F_2 L F_2 L_Prime
+--X-|X--X|--X- : D_2 L D_2 U_2 B_2 F_2 L F_2 L_Prime
+--X-|X--X|--X- : U_2 L D_2 F_2 L_2 F_2 L F_2 L_Prime
+--X-|X--X|-X-- : R B_2 R B_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|X--X|-X-- : R U_2 L B_2 R_2 U_2 R_2 L F_2 L_Prime
+--X-|X--X|-X-- : F_2 U_2 L F_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|X--X|-X-- : D_2 R B_2 R_2 D_2 L_Prime U_2 F_2 L_Prime
+--X-|X-X-|--X- : R F_2 R U_2 B_2 D_2 L_Prime F_2 L_Prime
+--X-|X-X-|--X- : R U_2 L U_2 L_2 U_2 F_2 L F_2 L_Prime
+--X-|X-X-|--X- : D_2 F_2 R F_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|X-X-|--X- : B_2 U_2 L_Prime D_2 R_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|X-X-|-X-- : D_2 U_2 L L_2 F_2 R_Prime L_Prime F_2 L_Prime
+--X-|X-X-|-X-- : R_Prime B_2 U_2 L_Prime D_2 L_2 F_2 L F_2 L_Prime
+--X-|X-X-|-X-- : D_2 R_Prime B_2 D_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|X-X-|-X-- : D_2 R_Prime D_2 R_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|X-XX|-XX- : R_Prime U_2 L B_2 D_2 F_2 L_Prime F_2 L_Prime
+--X-|X-XX|-XX- : L B_2 L F_2 L_2 D_2 L_Prime U_2 F_2 L_Prime
+--X-|X-XX|-XX- : R_2 B_2 R B_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|X-XX|-XX- : R_2 U_2 L B_2 L_2 D_2 L_Prime F_2 L_Prime
+--X-|XX--|--X- : L_Prime B_2 R B_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|XX--|--X- : R_Prime U_2 L U_2 L_2 U_2 F_2 L F_2 L_Prime
+--X-|XX--|--X- : B_2 D_2 F_2 R_2 F_2 R_Prime L_Prime F_2 L_Prime
+--X-|XX--|--X- : L_2 F_2 D_2 L_Prime U_2 L_2 U_2 F_2 L_Prime F_2 L_Prime
+--X-|XX--|-X-- : L U_2 R_Prime L_Prime F_2 R L_Prime F_2 L_Prime
+--X-|XX--|-X-- : L_Prime F_2 L U_2 R_2 D_2 F_2 L F_2 L_Prime
+--X-|XX--|-X-- : U_2 R_Prime D_2 R L_Prime F_2 L_Prime F_2 L_Prime
+--X-|XX--|-X-- : F_2 U_2 L D_2 L_2 B_2 L_Prime F_2 L_Prime
+--X-|XX-X|-XX- : R U_2 L B_2 D_2 F_2 L_Prime F_2 L_Prime
+--X-|XX-X|-XX- : L_Prime F_2 L B_2 R_2 D_2 L_Prime U_2 F_2 L_Prime
+--X-|XX-X|-XX- : B_2 F_2 D_2 R_Prime B_2 F_2 L_Prime F_2 L_Prime
+--X-|XX-X|-XX- : U_2 L_Prime D_2 F_2 R_2 F_2 L_Prime F_2 L_Prime
+--X-|XXX-|-XX- : L_Prime D_2 R B_2 F_2 R_2 L_Prime F_2 L_Prime
+--X-|XXX-|-XX- : R_Prime U_2 L_Prime D_2 L_2 D_2 F_2 L_Prime F_2 L_Prime
+--X-|XXX-|-XX- : B_2 U_2 L F_2 D_2 F_2 L_Prime F_2 L_Prime
+--X-|XXX-|-XX- : D_2 R F_2 U_2 L_2 D_2 L F_2 L_Prime
+-X--|---X|---- : L U_2 L F_2 U_2 B_2 L_Prime F_2 L_Prime
+-X--|---X|---- : L F_2 L F_2 U_2 L_2 D_2 L F_2 L_Prime
+-X--|---X|---- : F_2 L_Prime L_2 B_2 F_2 R_2 L_Prime F_2 L_Prime
+-X--|---X|---- : D_2 L_Prime U_2 R_2 D_2 F_2 L_Prime F_2 L_Prime
+-X--|--X-|---- : R U_2 B_2 U_2 L_2 U_2 L_2 F_2 L_Prime
+-X--|--X-|---- : L B_2 L U_2 B_2 L_2 F_2 L F_2 L_Prime
+-X--|--X-|---- : R_2 F_2 D_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|--X-|---- : F_2 U_2 R U_2 L_2 B_2 L_Prime F_2 L_Prime
+-X--|--XX|--X- : R F_2 U_2 L_2 F_2 R L_Prime F_2 L_Prime
+-X--|--XX|--X- : L_Prime B_2 L D_2 L_2 D_2 F_2 L F_2 L_Prime
+-X--|--XX|--X- : D_2 L_Prime B_2 R_2 L_2 F_2 L_Prime F_2 L_Prime
+-X--|--XX|--X- : B_2 D_2 L U_2 R_2 B_2 L_Prime F_2 L_Prime
+-X--|--XX|-X-- : R_2 L_Prime F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|--XX|-X-- : R_Prime B_2 U_2 R_Prime U_2 L_2 F_2 L F_2 L_Prime
+-X--|--XX|-X-- : B_2 D_2 F_2 L_2 F_2 R_Prime L_Prime F_2 L_Prime
+-X--|--XX|-X-- : L_2 D_2 R_Prime D_2 L F_2 L_Prime F_2 L_Prime F_2 L_Prime
+-X--|-X--|---- : L_Prime F_2 U_2 F_2 U_2 F_2 L_2 F_2 L_Prime
+-X--|-X--|---- : L_Prime F_2 L D_2 F_2 R_2 F_2 L F_2 L_Prime
+-X--|-X--|---- : F_2 R_Prime U_2 R L_Prime F_2 L_Prime F_2 L_Prime
+-X--|-X--|---- : U_2 R_Prime F_2 D_2 R_2 D_2 L_Prime F_2 L_Prime
+-X--|-X-X|--X- : B_2 F_2 L L_2 F_2 R_Prime L_Prime F_2 L_Prime
+-X--|-X-X|--X- : R_Prime F_2 U_2 L_Prime U_2 R_2 F_2 L F_2 L_Prime
+-X--|-X-X|--X- : R_2 F_2 U_2 L_2 F_2 R L_Prime F_2 L_Prime
+-X--|-X-X|--X- : U_2 R_Prime U_2 L_2 U_2 F_2 L_Prime F_2 L_Prime
+-X--|-X-X|-X-- : L L_2 F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|-X-X|-X-- : L U_2 F_2 L_Prime U_2 L_2 F_2 L F_2 L_Prime
+-X--|-X-X|-X-- : U_2 B_2 R B_2 U_2 B_2 L_Prime F_2 L_Prime
+-X--|-X-X|-X-- : U_2 L_Prime B_2 R F_2 L_Prime F_2 L_Prime F_2 L_Prime
+-X--|-XX-|--X- : R_Prime F_2 D_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|-XX-|--X- : L D_2 F_2 L_Prime F_2 R_2 U_2 L F_2 L_Prime
+-X--|-XX-|--X- : L_2 D_2 F_2 U_2 F_2 R_Prime L_Prime F_2 L_Prime
+-X--|-XX-|--X- : R_2 D_2 R D_2 L_2 B_2 L_Prime F_2 L_Prime
+-X--|-XX-|-X-- : L_Prime B_2 L B_2 U_2 B_2 L_Prime F_2 L_Prime
+-X--|-XX-|-X-- : R_Prime D_2 L_Prime D_2 L_2 D_2 B_2 R_Prime F_2 L_Prime
+-X--|-XX-|-X-- : F_2 L_Prime B_2 U_2 B_2 R_2 L_Prime F_2 L_Prime
+-X--|-XX-|-X-- : D_2 R_Prime D_2 L_2 U_2 B_2 L_Prime F_2 L_Prime
+-X--|-XXX|-XX- : L D_2 F_2 U_2 F_2 R_Prime L_Prime F_2 L_Prime
+-X--|-XXX|-XX- : L_Prime D_2 F_2 L B_2 R_2 F_2 U_2 L U_2 L
+-X--|-XXX|-XX- : R_Prime L_Prime F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|-XXX|-XX- : B_2 U_2 R B_2 R_2 U_2 L_Prime F_2 L_Prime
+-X--|X---|---- : L F_2 L B_2 F_2 R_2 L_Prime F_2 L_Prime
+-X--|X---|---- : L F_2 L U_2 F_2 L_2 F_2 L F_2 L_Prime
+-X--|X---|---- : U_2 F_2 R F_2 D_2 F_2 L_Prime F_2 L_Prime
+-X--|X---|---- : D_2 L_Prime B_2 R_2 F_2 U_2 L_Prime F_2 L_Prime
+-X--|X--X|--X- : L D_2 L B_2 U_2 F_2 L_Prime F_2 L_Prime
+-X--|X--X|--X- : R D_2 L F_2 L_2 U_2 R_2 L F_2 L_Prime
+-X--|X--X|--X- : F_2 D_2 L F_2 U_2 F_2 L_Prime F_2 L_Prime
+-X--|X--X|--X- : U_2 R F_2 L_2 D_2 L_Prime U_2 F_2 L_Prime
+-X--|X--X|-X-- : D_2 U_2 L_Prime U_2 L U_2 F_2 U_2 L_Prime D_2 L_Prime
+-X--|X--X|-X-- : R_Prime U_2 L B_2 L_2 D_2 L_Prime U_2 F_2 L_Prime
+-X--|X--X|-X-- : D_2 L_Prime D_2 U_2 B_2 F_2 L_Prime F_2 L_Prime
+-X--|X--X|-X-- : U_2 L_Prime U_2 F_2 L_2 F_2 L_Prime F_2 L_Prime
+-X--|X-X-|--X- : L B_2 F_2 L_2 F_2 R_Prime L_Prime F_2 L_Prime
+-X--|X-X-|--X- : L L_2 B_2 L_Prime D_2 L_2 F_2 L F_2 L_Prime
+-X--|X-X-|--X- : B_2 L_Prime B_2 D_2 U_2 F_2 L_Prime F_2 L_Prime
+-X--|X-X-|--X- : D_2 L_Prime U_2 F_2 R_2 B_2 L_Prime F_2 L_Prime
+-X--|X-X-|-X-- : R_2 L F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|X-X-|-X-- : L D_2 B_2 L_Prime D_2 R_2 F_2 L F_2 L_Prime
+-X--|X-X-|-X-- : U_2 F_2 R B_2 U_2 B_2 L_Prime F_2 L_Prime
+-X--|X-X-|-X-- : D_2 R_Prime D_2 L F_2 L_Prime F_2 L_Prime F_2 L_Prime
+-X--|X-XX|-XX- : R_Prime U_2 B_2 R_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|X-XX|-XX- : R_Prime B_2 U_2 R_Prime F_2 L_2 D_2 L F_2 L_Prime
+-X--|X-XX|-XX- : B_2 L_Prime B_2 D_2 B_2 R_2 L_Prime F_2 L_Prime
+-X--|X-XX|-XX- : D_2 L_Prime F_2 L_2 D_2 R_2 L_Prime F_2 L_Prime
+-X--|XX--|--X- : R_Prime U_2 R_Prime L_Prime F_2 R L_Prime F_2 L_Prime
+-X--|XX--|--X- : R D_2 L D_2 F_2 R_2 B_2 L F_2 L_Prime
+-X--|XX--|--X- : F_2 U_2 R B_2 D_2 F_2 L_Prime F_2 L_Prime
+-X--|XX--|--X- : U_2 L B_2 R_Prime L_Prime F_2 L_Prime F_2 L_Prime
+-X--|XX--|-X-- : L_Prime L_2 F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|XX--|-X-- : L_Prime U_2 F_2 L_Prime U_2 L_2 F_2 L F_2 L_Prime
+-X--|XX--|-X-- : B_2 U_2 F_2 R_2 F_2 R_Prime L_Prime F_2 L_Prime
+-X--|XX--|-X-- : L_2 U_2 L_Prime B_2 R F_2 L_Prime F_2 L_Prime F_2 L_Prime
+-X--|XX-X|-XX- : R B_2 L D_2 U_2 R_2 L_Prime F_2 L_Prime
+-X--|XX-X|-XX- : R D_2 L D_2 B_2 L_2 F_2 L F_2 L_Prime
+-X--|XX-X|-XX- : U_2 B_2 F_2 R_Prime B_2 F_2 L_Prime F_2 L_Prime
+-X--|XX-X|-XX- : B_2 U_2 R U_2 R_2 F_2 L_Prime F_2 L_Prime
+-X--|XXX-|-XX- : L_Prime D_2 F_2 U_2 F_2 R_Prime L_Prime F_2 L_Prime
+-X--|XXX-|-XX- : L D_2 F_2 L B_2 R_2 F_2 U_2 L U_2 L
+-X--|XXX-|-XX- : U_2 R_Prime B_2 L_Prime L F_2 L_Prime F_2 L_Prime
+-X--|XXX-|-XX- : U_2 R_Prime U_2 B_2 R_2 F_2 L_Prime F_2 L_Prime
+-XX-|--XX|---- : R_2 B_2 F_2 L_Prime F_2 R_Prime L_Prime F_2 L_Prime
+-XX-|--XX|---- : L D_2 F_2 R_Prime D_2 L_2 F_2 L F_2 L_Prime
+-XX-|--XX|---- : F_2 R_2 B_2 L_2 U_2 R_Prime L_Prime F_2 L_Prime
+-XX-|--XX|---- : D_2 R U_2 L_2 F_2 L_Prime U_2 F_2 L_Prime
+-XX-|-X-X|---- : L_Prime U_2 R_Prime L_Prime F_2 R L_Prime F_2 L_Prime
+-XX-|-X-X|---- : R U_2 R D_2 L_2 D_2 F_2 L F_2 L_Prime
+-XX-|-X-X|---- : R B_2 F_2 L_Prime F_2 R_Prime L_Prime F_2 L_Prime
+-XX-|-X-X|---- : F_2 U_2 L U_2 L_2 F_2 L_Prime F_2 L_Prime
+-XX-|-XX-|---- : R F_2 D_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-XX-|-XX-|---- : L_Prime U_2 B_2 L_Prime B_2 L_2 U_2 L F_2 L_Prime
+-XX-|-XX-|---- : U_2 F_2 U_2 F_2 R L_Prime L_2 F_2 L_Prime
+-XX-|-XX-|---- : U_2 R_Prime D_2 B_2 L_2 F_2 L_Prime F_2 L_Prime
+-XX-|-XXX|--X- : R_Prime F_2 L B_2 F_2 R_2 L_Prime F_2 L_Prime
+-XX-|-XXX|--X- : L B_2 L_Prime B_2 R_Prime L_Prime F_2 L F_2 L_Prime
+-XX-|-XXX|--X- : B_2 R_Prime L_2 F_2 U_2 B_2 L_Prime F_2 L_Prime
+-XX-|-XXX|--X- : U_2 R B_2 D_2 R_2 D_2 L F_2 L_Prime
+-XX-|-XXX|-X-- : L_Prime U_2 B_2 U_2 L_2 U_2 L_2 F_2 L_Prime
+-XX-|-XXX|-X-- : L U_2 B_2 L F_2 L_2 F_2 U_2 L U_2 L
+-XX-|-XXX|-X-- : D_2 L_Prime U_2 R L_Prime F_2 L_Prime F_2 L_Prime
+-XX-|-XXX|-X-- : D_2 R_Prime D_2 F_2 L_2 F_2 L_Prime F_2 L_Prime
+-XX-|X--X|---- : L_Prime F_2 R U_2 B_2 D_2 L_Prime F_2 L_Prime
+-XX-|X--X|---- : R_Prime D_2 L F_2 L_2 U_2 R_2 L F_2 L_Prime
+-XX-|X--X|---- : D_2 R_2 L_Prime B_2 D_2 F_2 L_Prime F_2 L_Prime
+-XX-|X--X|---- : U_2 L D_2 L_2 B_2 L_Prime U_2 R_2 L_Prime
+-XX-|X-X-|---- : R U_2 R_Prime L_Prime F_2 R L_Prime F_2 L_Prime
+-XX-|X-X-|---- : L_Prime F_2 R U_2 B_2 L_2 B_2 L F_2 L_Prime
+-XX-|X-X-|---- : F_2 L_Prime D_2 R L_Prime F_2 L_Prime F_2 L_Prime
+-XX-|X-X-|---- : L_2 D_2 R U_2 L_2 F_2 L_Prime F_2 L_Prime
+-XX-|X-X-|---- : L_2 D_2 R U_2 L_2 F_2 L_Prime F_2 L_Prime
+-XX-|X-XX|--X- : R U_2 F_2 U_2 L_2 U_2 L_2 F_2 L_Prime
+-XX-|X-XX|--X- : L_Prime B_2 L F_2 L_2 D_2 L_Prime U_2 F_2 L_Prime
+-XX-|X-XX|--X- : F_2 R_Prime L_2 B_2 U_2 F_2 L_Prime F_2 L_Prime
+-XX-|X-XX|--X- : D_2 L_Prime U_2 B_2 L_2 F_2 L_Prime F_2 L_Prime
+-XX-|X-XX|-X-- : R_Prime B_2 L D_2 U_2 R_2 L_Prime F_2 L_Prime
+-XX-|X-XX|-X-- : R_Prime D_2 L D_2 B_2 L_2 F_2 L F_2 L_Prime
+-XX-|X-XX|-X-- : D_2 F_2 R L_2 B_2 F_2 L_Prime F_2 L_Prime
+-XX-|XX--|---- : B_2 F_2 R_2 L_Prime F_2 R_Prime L_Prime F_2 L_Prime
+-XX-|XX--|---- : L F_2 R_Prime F_2 R_Prime L_Prime F_2 L F_2 L_Prime
+-XX-|XX--|---- : F_2 R_2 F_2 L_2 U_2 R_Prime L_Prime F_2 L_Prime
+-XX-|XX--|---- : U_2 L D_2 L_2 F_2 L_Prime U_2 F_2 L_Prime
+-XX-|XX-X|--X- : L_Prime F_2 R B_2 D_2 F_2 L_Prime F_2 L_Prime
+-XX-|XX-X|--X- : R U_2 R F_2 L_2 D_2 L_Prime U_2 F_2 L_Prime
+-XX-|XX-X|--X- : L_2 B_2 R B_2 U_2 F_2 L_Prime F_2 L_Prime
+-XX-|XX-X|--X- : L_2 U_2 L B_2 L_2 D_2 L_Prime F_2 L_Prime
+-XX-|XX-X|-X-- : L_Prime F_2 U_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-XX-|XX-X|-X-- : L_Prime U_2 F_2 L_Prime F_2 L_2 D_2 L F_2 L_Prime
+-XX-|XX-X|-X-- : F_2 R_2 L_Prime D_2 U_2 R_2 L_Prime F_2 L_Prime
+-XX-|XX-X|-X-- : U_2 L_Prime B_2 R_2 D_2 R_2 L_Prime F_2 L_Prime
+-XX-|XXX-|--X- : L_Prime F_2 R F_2 U_2 B_2 L_Prime F_2 L_Prime
+-XX-|XXX-|--X- : L_Prime U_2 B_2 L_Prime D_2 L_2 B_2 L F_2 L_Prime
+-XX-|XXX-|--X- : U_2 R_Prime L_2 B_2 F_2 R_2 L_Prime F_2 L_Prime
+-XX-|XXX-|--X- : F_2 U_2 R F_2 L_2 U_2 L_Prime F_2 L_Prime
+-XX-|XXX-|-X-- : R F_2 U_2 F_2 U_2 F_2 L_2 F_2 L_Prime
+-XX-|XXX-|-X-- : L_Prime U_2 B_2 L F_2 L_2 F_2 U_2 L U_2 L
+-XX-|XXX-|-X-- : R L F_2 L_Prime B_2 F_2 L_Prime F_2 L_Prime
+-XX-|XXX-|-X-- : F_2 D_2 R F_2 L_2 U_2 L_Prime F_2 L_Prime
+-XX-|XXXX|-XX- : R_Prime F_2 L F_2 U_2 F_2 L_Prime F_2 L_Prime
+-XX-|XXXX|-XX- : L_Prime F_2 L_Prime U_2 B_2 L_2 F_2 R_Prime F_2 L_Prime
+-XX-|XXXX|-XX- : F_2 R F_2 L_Prime F_2 L_Prime F_2 L_Prime F_2 L_Prime
+-XX-|XXXX|-XX- : U_2 L B_2 L_2 D_2 L_Prime U_2 F_2 L_Prime

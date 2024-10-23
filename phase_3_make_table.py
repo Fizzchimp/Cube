@@ -1,8 +1,8 @@
 from cube_3 import Cube3
 from random import choice
 
-MOVE_KEYS = ("L", "L2", "L'", "F2", "R", "R2", "R'", "B2", "U2", "D2")
-INVERSE_KEYS = ("L'", "L2", "L", "F2", "R'", "R2", "R", "B2", "U2", "D2")
+MOVE_KEYS = ("L", "L_2", "L_Prime", "F_2", "R", "R_2", "R_Prime", "B_2", "U_2", "D_2")
+INVERSE_KEYS = ("L_Prime", "L_2", "L", "F_2", "R_Prime", "R_2", "R", "B_2", "U_2", "D_2")
 
 def sort_key(line):
     return line[:14]
