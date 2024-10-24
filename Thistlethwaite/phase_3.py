@@ -292,3 +292,7 @@ def phase_3(G_2_state):
     print("Phase 3 moves:", phase_3_moves)
     
     return phase_3_moves, cube
+
+
+node = Node(['OWRYWOWYO', 'GBGGGGBGB', 'RRWYRRYOY', 'BBBBBBGGG', 'WRYWOOOOY', 'RYRRYWOWW'])
+phase_3(node)
