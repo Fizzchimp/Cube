@@ -1,9 +1,11 @@
 from cube_3 import Cube3
 from Assets.node_3 import Node
 from Assets.stack import Stack
-from transformations import *
+from Thistlethwaite.transformations import *
 import time
 import random
+
+from Thistlethwaite.phase_1 import phase_1
 
 
 # Phase 1 Moveset
@@ -226,7 +228,7 @@ TRANSFORMATION_LIST = (
     (rotation_Z, ROT_Z_P2))
 
 def get_table_2_moves(corners):
-    with open("Tables/phase_2.txt") as table:
+    with open("Thistlethwaite/Tables/phase_2.txt") as table:
         for line in table.readlines():
             if line[:8] == corners:
                 return line[11:].split(" ")
@@ -362,22 +364,42 @@ def fix_orbits(corners):
 ## Fixes sides and remaining corners
 
 ALLOWED_ORBITS = list(ORBIT_MOVES.keys())[:3]
+
+FIXED_ORBITS_TRANSFORMATIONS = [
+    "reflect_XY",
+    "reflect_XZ",
+    "reflect_YZ",
+    "X",
+    "X_Prime",
+    "Y_2",
+    "Z_2"]
+
 # Decides which table to use and which transformations are applied
 def get_fixed_orbits(cube):
-    transformed_cube = Cube3()
     
     # Try with no transformation
     orbits = get_orbits(cube)
     if orbits in ALLOWED_ORBITS:
         return cube, ALLOWED_ORBITS.index(orbits), None
     
+    transformed_cube = Cube3()
+    
     # Try with one transformation
-    for index, transformation in enumerate(("reflect_XY", "reflect_XZ", "reflect_YZ", "X", "X_Prime", "Y_2", "Z_2")):
+    for i, transformation in enumerate(FIXED_ORBITS_TRANSFORMATIONS):
         transformed_cube.cube = getattr(cube, transformation)()
         orbits = get_orbits(transformed_cube)
         
         if orbits in ALLOWED_ORBITS:
-            return transformed_cube, ALLOWED_ORBITS.index(orbits), index
+            return transformed_cube, ALLOWED_ORBITS.index(orbits), (i, -1)
+    
+    # Try with two transformations
+    for i, transformation_1 in enumerate(FIXED_ORBITS_TRANSFORMATIONS):
+        for j, transformation_2 in enumerate(FIXED_ORBITS_TRANSFORMATIONS):
+            transformed_cube.cube = getattr(Cube3(getattr(cube, transformation_1)()), transformation_2)()
+            orbits = get_orbits(transformed_cube)
+            
+            if orbits in ALLOWED_ORBITS:
+               return transformed_cube, ALLOWED_ORBITS.index(orbits), (i, j)
             
     raise Exception("NO RESULTING ORBITS. TRY WITH 2 TRANSFORMATIONS?")
 
@@ -411,7 +433,7 @@ def get_table_3_moves(cube, table_num):
     print("Table:", table_num)
 
     if table_num == 0:
-        table = read_table_3("Tables/phase_3_no_corners.txt")
+        table = read_table_3("Thistlethwaite/Tables/phase_3_no_corners.txt")
         transformations = [
     ("reflect_XY", REF_XY),
     ("reflect_XZ", REF_XZ),
@@ -427,11 +449,11 @@ def get_table_3_moves(cube, table_num):
     ("Z_2", ROT_Z_2)]
         
     elif table_num == 1:
-        table = read_table_3("Tables/phase_3_two_corners.txt")    
+        table = read_table_3("Thistlethwaite/Tables/phase_3_two_corners.txt")    
         transformations = [("reflect_YZ", REF_YZ)]
         
     elif table_num == 2:
-        table = read_table_3("Tables/phase_3_four_corners.txt")
+        table = read_table_3("Thistlethwaite/Tables/phase_3_four_corners.txt")
         transformations = [
             ("reflect_YZ", REF_YZ),
             ("X_2", ROT_X_2)
@@ -490,7 +512,15 @@ def test_corner_permutation(cube):
     
 
 
-PHASE_3_TRANSFORMATIONS = (REF_XY, REF_XZ, REF_YZ, ROT_X_PRIME, ROT_X, ROT_Y_2, ROT_Z_2)
+PHASE_3_TRANSFORMATIONS = (
+    REF_XY,
+    REF_XZ,
+    REF_YZ,
+    ROT_X_PRIME,
+    ROT_X,
+    ROT_Y_2,
+    ROT_Z_2,
+    {None : None})
 
 
 def phase_3(G_2_state):
@@ -507,25 +537,24 @@ def phase_3(G_2_state):
     
     print("Moves: ", phase_3_moves)
     
-    transformed_cube, table_num, transformation_index = get_fixed_orbits(cube)
-    print("Transformation:", transformation_index)
+    transformed_cube, table_num, transformation_indexes = get_fixed_orbits(cube)
+    print("Transformations:", transformation_indexes)
     
 
     moves = get_table_3_moves(transformed_cube, table_num)
     print("Untransformed moves:", moves)
     
     
-    if transformation_index != None:
-        transformation = PHASE_3_TRANSFORMATIONS[transformation_index]
+    if transformation_indexes != None:
+        transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
+        transformation_2 = PHASE_3_TRANSFORMATIONS[transformation_indexes[1]]
         
         for move in moves:
-            if move in transformation.keys():
-                phase_3_moves.append(transformation[move])
-                cube.move(transformation[move])
-            else: 
-                phase_3_moves.append(move)
-                cube.move(move)
-            
+            if move in transformation_2.keys(): move = transformation_2[move]
+            if move in transformation_1.keys(): move = transformation_1[move]
+             
+            phase_3_moves.append(move)
+            cube.move(move)   
     else:
         for move in moves:
             phase_3_moves.append(move)
@@ -607,7 +636,7 @@ def phase_4_side_key(state):
 def read_table_4(state):
     key = phase_4_side_key(state)
     if key == "----|----|----|----|----|----": return []
-    with open("Tables/phase_4.txt", "r") as table:
+    with open("Thistlethwaite/Tables/phase_4.txt", "r") as table:
         table = table.readlines()
     
     for line in table:
@@ -745,7 +774,7 @@ def phase_4(cube):
     
 # Function to organise solving the cube
 def thistle_solve(start_cube):
-    # print(start_cube.cube)
+    print(start_cube.cube)
     # Phase 1
     timer = time.time()
     phase_1_moves, G_1_state = phase_1(start_cube) 
@@ -773,5 +802,5 @@ def thistle_solve(start_cube):
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
-# cube = Cube3(['GWBYWOWOW', 'OGBBGGGBB', 'OYGRROOOY', 'RBWGBWORR', 'RRWGOWBBY', 'YWGRYYRYY'])
-# print(thistle_solve(cube))
+cube = Cube3(['WWBGWRRBR', 'GWWBGWBRR', 'GRBBRYYBB', 'WGRGBOOOO', 'YROGOOGOO', 'GYYYYWWYY'])
+#print(thistle_solve(cube))

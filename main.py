@@ -10,9 +10,10 @@ from Assets.solve_2 import solve_2
 from Assets.solve_3 import solve_3
 from Assets.cqueue import Queue
 from thistlethwaite import thistle_solve
+from Thistlethwaite.phase_1 import phase_1
 
 MAX_FPS = 200
-ROTATION_SPEED = 125
+ROTATION_SPEED = 12
 BG_SPEED = 40
 
 WIDTH = 700
@@ -81,6 +82,7 @@ class World:
         # self.cube_3 = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"]) # Phase 3 works but is wrong
         self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
         #self.cube_3 = Cube3(['RYOYWBBBR', 'WGOBGORWY', 'WWGWRYRRG', 'YOYRBGOYO', 'GBBOORYWW', 'BGWRYOGGB'])# Solution Works!
+        self.cube_3 = Cube3(['WWBGWRRBR', 'GWWBGWBRR', 'GRBBRYYBB', 'WGRGBOOOO', 'YROGOOGOO', 'GYYYYWWYY'])
         #self.cube_3 = Cube3(["YYWWWWWYW", "GGGGGBGBB", "RROORRORR", "GBBBBGBGB", "OOROORROO", "YWYYYYYWW"])
         # self.cube_3 = Cube3()
         # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
@@ -100,9 +102,9 @@ class World:
         self.edit_pointer = -1
            
     # Organises Pathfinding for each cube
-    def find_path(self, cube_state):
+    def find_path(self):
         if self.cube_type == 2:
-            sNode, eNode = solve_2(cube_state)
+            sNode, eNode = solve_2(self.cube)
             path = []
             
             if sNode == None:
@@ -120,7 +122,7 @@ class World:
             return path
         
         elif self.cube_type == 3:
-            moves = thistle_solve(cube_state)
+            moves = thistle_solve(self.cube)
             return moves
     
     # Swap between 2 by 2 and 3 by 3
@@ -276,7 +278,7 @@ class World:
                 
                 # Solve Button
                 if pressed == 0:
-                    solution = self.find_path(self.cube.cube)
+                    solution = self.find_path()
                     if solution == False:
                         print("No solution")
                     elif solution == []:
