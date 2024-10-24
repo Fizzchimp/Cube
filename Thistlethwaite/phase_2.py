@@ -121,13 +121,13 @@ TRANSFORMATION_LIST = (
     (rotation_Z, ROT_Z_P2))
 
 def get_table_2_moves(corners):
-    with open("Tables/phase_2.txt") as table:
+    with open("Thistlethwaite/Tables/phase_2.txt") as table:
         for line in table.readlines():
             if line[:8] == corners:
                 return line[11:].split(" ")
         
 def phase_2(G_1_state):
-    node = get_UD_slice(Node(G_1_state))
+    node = get_UD_slice_iddfs(Node(G_1_state))
     if node == None: return "Cannot Solve!"
     G_1_state = node.cube
 

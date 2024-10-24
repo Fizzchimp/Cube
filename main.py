@@ -10,7 +10,6 @@ from Assets.solve_2 import solve_2
 from Assets.solve_3 import solve_3
 from Assets.cqueue import Queue
 from thistlethwaite import thistle_solve
-from Thistlethwaite.phase_1 import phase_1
 
 MAX_FPS = 200
 ROTATION_SPEED = 12

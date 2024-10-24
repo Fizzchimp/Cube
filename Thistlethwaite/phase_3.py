@@ -92,7 +92,8 @@ def fix_orbits(corners):
 
 ## Fixes sides and remaining corners
 
-ALLOWED_ORBITS = list(ORBIT_MOVES.keys())[:3]
+ALLOWED_ORBITS = list(ORBIT_MOVES.keys())[:-12]
+print(ALLOWED_ORBITS)
 
 FIXED_ORBITS_TRANSFORMATIONS = [
     "reflect_XY",
@@ -162,31 +163,30 @@ def get_table_3_moves(cube, table_num):
     print("Table:", table_num)
 
     if table_num == 0:
-        table = read_table_3("Tables/phase_3_no_corners.txt")
+        table = read_table_3("Thistlethwaite/Tables/phase_3_no_corners.txt")
         transformations = [
-    ("reflect_XY", REF_XY),
-    ("reflect_XZ", REF_XZ),
-    ("reflect_YZ", REF_YZ),
-    ("X", ROT_X_PRIME),
-    ("X_Prime", ROT_X),
-    ("X_2", ROT_X_2),
-    ("Y", ROT_Y_PRIME),
-    ("Y_Prime", ROT_Y),
-    ("Y_2", ROT_Y_2),
-    ("Z", ROT_Z_PRIME),
-    ("Z_Prime", ROT_Z),
-    ("Z_2", ROT_Z_2)]
+            ("reflect_XY", REF_XY),
+            ("reflect_XZ", REF_XZ),
+            ("reflect_YZ", REF_YZ),
+            ("X", ROT_X_PRIME),
+            ("X_Prime", ROT_X),
+            ("X_2", ROT_X_2),
+            ("Y", ROT_Y_PRIME),
+            ("Y_Prime", ROT_Y),
+            ("Y_2", ROT_Y_2),
+            ("Z", ROT_Z_PRIME),
+            ("Z_Prime", ROT_Z),
+            ("Z_2", ROT_Z_2)]
         
     elif table_num == 1:
-        table = read_table_3("Tables/phase_3_two_corners.txt")    
+        table = read_table_3("Thistlethwaite/Tables/phase_3_two_corners.txt")    
         transformations = [("reflect_YZ", REF_YZ)]
         
     elif table_num == 2:
-        table = read_table_3("Tables/phase_3_four_corners.txt")
+        table = read_table_3("Thistlethwaite/Tables/phase_3_four_corners.txt")
         transformations = [
             ("reflect_YZ", REF_YZ),
-            ("X_2", ROT_X_2)
-                           ]
+            ("X_2", ROT_X_2)]
     
     # Try with no transformations
     sides = phase_3_sides_key(cube)
