@@ -37,4 +37,4 @@ def thistle_solve(start_cube):
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
 cube = Cube3(['WWBGWRRBR', 'GWWBGWBRR', 'GRBBRYYBB', 'WGRGBOOOO', 'YROGOOGOO', 'GYYYYWWYY'])
-print(thistle_solve(cube))
+#print(thistle_solve(cube))

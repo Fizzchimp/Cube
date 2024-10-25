@@ -174,3 +174,28 @@ ROT_Z_2 = {
     
     "U_2" : "D_2",
     "D_2" : "U_2"}
+
+ROT_X_PRIME_Y_2 = {
+    "L" : "R",
+    "L_Prime" : "R_Prime",
+    "L_2" : "R_2",
+    
+    "R" : "L",
+    "R_Prime" : "L_Prime",
+    "R_2" : "L_2",
+    
+    "F" : "D",
+    "F_Prime" : "D_Prime",
+    "F_2" : "D_2",
+    
+    "B" : "U",
+    "B_Prime" : "U_Prime",
+    "B_2" : "U_2",
+    
+    "U" : "B",
+    "U_Prime" : "B_Prime",
+    "U_2" : "B_2",
+    
+    "D" : "F",
+    "D_Prime" : "F_Prime",
+    "D_2" :  "F_2"}

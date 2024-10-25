@@ -395,6 +395,11 @@ class Cube3():
         cube.move("Z")
         return cube.Z()
     
+    def Y_2_X(self):
+        cube = Cube3(self.cube)
+        cube.move("Y", "Y")
+        return cube.X()
+    
 
     def move(self, *moves):
         for move in moves:
