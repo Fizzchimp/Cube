@@ -80,7 +80,7 @@ class World:
         #self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
         # self.cube_3 = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"]) # Phase 3 works but is wrong
         self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
-        self.cube_3 = Cube3(['YYWRWOOYW', 'GBBGGGGGG', 'YORWRWWOW', 'BBBBBGGBB', 'ORROOYYRO', 'RWORYYYWR'])
+        self.cube_3 = Cube3(['YGOGWBBYR', 'GWORGWWBB', 'WGYORBROW', 'BRBOBWGWG', 'YORROGYRG', 'WYOYYBRYO'])
         #self.cube_3 = Cube3(["YYWWWWWYW", "GGGGGBGBB", "RROORRORR", "GBBBBGBGB", "OOROORROO", "YWYYYYYWW"])
         # self.cube_3 = Cube3()
         # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])

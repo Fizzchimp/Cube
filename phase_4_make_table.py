@@ -49,4 +49,4 @@ def make_table():
             table.write(line)
 
 
-make_table()
+# make_table()
