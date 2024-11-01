@@ -12,7 +12,7 @@ from Assets.cqueue import Queue
 from thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 12
+ROTATION_SPEED = 125
 BG_SPEED = 40
 
 WIDTH = 700
@@ -80,7 +80,7 @@ class World:
         #self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
         # self.cube_3 = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"]) # Phase 3 works but is wrong
         self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
-        self.cube_3 = Cube3(['YGOGWBBYR', 'GWORGWWBB', 'WGYORBROW', 'BRBOBWGWG', 'YORROGYRG', 'WYOYYBRYO'])
+        self.cube_3 = Cube3(['WWWWWYYWY', 'GBGGGGBBB', 'ORRRROORR', 'GGGBBBBGB', 'ROOROOROO', 'YYYYYWWYW'])
         #self.cube_3 = Cube3(["YYWWWWWYW", "GGGGGBGBB", "RROORRORR", "GBBBBGBGB", "OOROORROO", "YWYYYYYWW"])
         # self.cube_3 = Cube3()
         # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
@@ -193,47 +193,47 @@ class World:
         move = move.replace("_Prime", "'").replace("_2", "2")
         self.cube.move(move)
         
-        if move == "U": self.screen.model.uPhase = -HALF_PI
-        elif move == "U'": self.screen.model.uPhase = HALF_PI
-        elif move == "U2": self.screen.model.uPhase = -pi
+        if move == "U": self.screen.model.u_phase = -HALF_PI
+        elif move == "U'": self.screen.model.u_phase = HALF_PI
+        elif move == "U2": self.screen.model.u_phase = -pi
             
-        elif move == "R": self.screen.model.rPhase = HALF_PI
-        elif move == "R'": self.screen.model.rPhase = -HALF_PI
-        elif move == "R2": self.screen.model.rPhase = pi
+        elif move == "R": self.screen.model.r_phase = HALF_PI
+        elif move == "R'": self.screen.model.r_phase = -HALF_PI
+        elif move == "R2": self.screen.model.r_phase = pi
             
-        elif move == "F": self.screen.model.fPhase = -HALF_PI
-        elif move == "F'": self.screen.model.fPhase = HALF_PI
-        elif move == "F2": self.screen.model.fPhase = -pi
+        elif move == "F": self.screen.model.f_phase = -HALF_PI
+        elif move == "F'": self.screen.model.f_phase = HALF_PI
+        elif move == "F2": self.screen.model.f_phase = -pi
             
-        elif move == "D": self.screen.model.dPhase = HALF_PI
-        elif move == "D'": self.screen.model.dPhase = -HALF_PI
-        elif move == "D2": self.screen.model.dPhase = pi
+        elif move == "D": self.screen.model.d_phase = HALF_PI
+        elif move == "D'": self.screen.model.d_phase = -HALF_PI
+        elif move == "D2": self.screen.model.d_phase = pi
             
-        elif move == "L": self.screen.model.lPhase = -HALF_PI
-        elif move == "L'": self.screen.model.lPhase = HALF_PI
-        elif move == "L2": self.screen.model.lPhase = -pi
+        elif move == "L": self.screen.model.l_phase = -HALF_PI
+        elif move == "L'": self.screen.model.l_phase = HALF_PI
+        elif move == "L2": self.screen.model.l_phase = -pi
             
-        elif move == "B": self.screen.model.bPhase = HALF_PI
-        elif move == "B'": self.screen.model.bPhase = -HALF_PI
-        elif move == "B2": self.screen.model.bPhase = -pi
+        elif move == "B": self.screen.model.b_phase = HALF_PI
+        elif move == "B'": self.screen.model.b_phase = -HALF_PI
+        elif move == "B2": self.screen.model.b_phase = -pi
         
-        elif move == "M": self.screen.model.mPhase = -HALF_PI
-        elif move == "M'": self.screen.model.mPhase = HALF_PI
+        elif move == "M": self.screen.model.m_phase = -HALF_PI
+        elif move == "M'": self.screen.model.m_phase = HALF_PI
         
-        elif move == "S": self.screen.model.sPhase = HALF_PI
-        elif move == "S'": self.screen.model.sPhase = -HALF_PI
+        elif move == "S": self.screen.model.s_phase = HALF_PI
+        elif move == "S'": self.screen.model.s_phase = -HALF_PI
         
-        elif move == "E": self.screen.model.ePhase = HALF_PI
-        elif move == "E'": self.screen.model.ePhase = -HALF_PI
+        elif move == "E": self.screen.model.e_phase = HALF_PI
+        elif move == "E'": self.screen.model.e_phase = -HALF_PI
             
-        elif move == "X": self.screen.model.xPhase = HALF_PI
-        elif move == "X'": self.screen.model.xPhase = -HALF_PI
+        elif move == "X": self.screen.model.x_phase = HALF_PI
+        elif move == "X'": self.screen.model.x_phase = -HALF_PI
             
-        elif move == "Y": self.screen.model.yPhase = -HALF_PI
-        elif move == "Y'": self.screen.model.yPhase = HALF_PI
+        elif move == "Y": self.screen.model.y_phase = -HALF_PI
+        elif move == "Y'": self.screen.model.y_phase = HALF_PI
             
-        elif move == "Z": self.screen.model.zPhase = -HALF_PI
-        elif move == "Z'": self.screen.model.zPhase = HALF_PI
+        elif move == "Z": self.screen.model.z_phase = -HALF_PI
+        elif move == "Z'": self.screen.model.z_phase = HALF_PI
 
     # Handles all program events
     def handle_events(self):
@@ -249,11 +249,11 @@ class World:
                                    
             else:
                 if not self.is_editing():
-                    if not self.screen.model.isMoving() and self.key in MOVE_KEYS.keys():
+                    if not self.screen.model.is_moving() and self.key in MOVE_KEYS.keys():
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                     
                 elif self.is_editing():
-                    if not self.screen.model.isMoving() and self.key in EDITING_MOVES:
+                    if not self.screen.model.is_moving() and self.key in EDITING_MOVES:
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
 
                     if self.key in EDITING_COLS.keys():
@@ -271,7 +271,7 @@ class World:
             if not button.hidden and button.get_state(mousePos) == 2:
                 pressed = i
                 
-        if pressed != None and self.move_queue.is_empty() and not self.screen.model.isMoving():
+        if pressed != None and self.move_queue.is_empty() and not self.screen.model.is_moving():
             if not self.buttonDown:
                 
                 # Solve Button
@@ -335,14 +335,14 @@ class World:
             running = self.handle_events()
 
             # Get moves from the movement queue
-            if not self.move_queue.is_empty() and not self.screen.model.isMoving():
+            if not self.move_queue.is_empty() and not self.screen.model.is_moving():
                 move = self.move_queue.dequeue()
                 self.do_move(move, False)
             
                 
             # Update aspects of the screen
             
-            self.screen.model.phaseUpdate((delta_time / ROTATION_SPEED) * HALF_PI)
+            self.screen.model.update_phase((delta_time / ROTATION_SPEED) * HALF_PI)
             self.screen.cubeBob = (self.screen.cubeBob + delta_time / BOB_SPEED) % DOUBLE_PI
             
             self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + delta_time / BG_SPEED) % 90 - 90

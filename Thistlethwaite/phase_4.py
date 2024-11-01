@@ -184,8 +184,7 @@ def try_transformations(cube):
     #                       
     #                    print(transformation_1, transformation_2, transformation_3, transformation_4)
     #                    return side_moves
-    #raise Exception("No phase 4 table moves found")
-    return []            
+    raise Exception("No phase 4 table moves found")           
 
 
 

@@ -1,10 +1,12 @@
 import pygame as pg
 from pygame import gfxdraw
 from Display.model_2 import Model_2
-from Display.model_3 import Model_3
+from Display.old_model_3 import Model_3
+from Display.model_3 import Model3
 from numpy import sin, cos, sqrt, arctan2
+import numpy as np
 
-colours = {
+colour_keys = {
     "W": (245, 245, 245),
     "Y": (255, 255, 50),
     "G": (50, 205, 50),
@@ -19,7 +21,7 @@ EDITING_FACES = ((4, 7, 8, 9),
                  (4, 17, 7, 19, 25, 21, 9, 23, 11))
 
 def depth(face):
-    return face[4]
+    return face[-2]
 
 class Display():
     def __init__(self, width, height, bobStrength, cube_type):
@@ -54,7 +56,7 @@ class Display():
         self.model_2 = Model_2()
         
         ### 3 by 2
-        self.model_3 = Model_3()
+        self.model_3 = Model3()
        
         self.cube_type = cube_type
         if cube_type == 2: self.model = self.model_2
@@ -124,7 +126,6 @@ class Display():
         x, y = self.cube_centre[0], self.cube_centre[1] + centreOffset
         faces = []
         
-
         if self.cube_type == 2:
             quadCol = [[colours[cube[0][0]], colours[cube[1][0]], colours[cube[4][1]]],
                       [colours[cube[0][1]], colours[cube[4][0]], colours[cube[3][1]]],
@@ -274,13 +275,12 @@ class Display():
         
     def drawScreen(self, cube, delta_time, edit_pointer = -1):
         # Draw the background of the screen
-        self.screen.fill((200, 150, 100))
         self.screen.fill((255, 255, 255))
         # self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
         if edit_pointer != -1: self.edit_phase += delta_time * 0.005
-        self.drawCube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
+        self.new_draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
         for button in self.buttons + self.movement_buttons:
             if not button.hidden:
@@ -290,6 +290,30 @@ class Display():
         
         pg.display.flip()
     
+
+    def new_draw_cube(self, cube, centre_offset = 0, edit_pointer = -1):
+        x, y, = self.cube_centre[0], self.cube_centre[1] + centre_offset
+
+        draw_list = []
+        for i, face in enumerate(self.model_3.get_points()):
+            for j, facelet in enumerate(face):
+                if facelet[2][-1] <= 0:
+                    draw_list.append(((
+                            (facelet[0][0] * self.length + x, facelet[1][0] * self.length + y),
+                            (facelet[0][1] * self.length + x, facelet[1][1] * self.length + y),
+                            (facelet[0][2] * self.length + x, facelet[1][2] * self.length + y),
+                            (facelet[0][3] * self.length + x, facelet[1][3] * self.length + y)),
+                        sum(facelet[2]) / 4,    
+                        colour_keys[cube[i][j]]))
+            
+
+
+        for face in sorted(draw_list, key = depth, reverse = True):
+            gfxdraw.filled_polygon(self.screen, face[0], face[-1])
+
+            for i in range(4):
+                self.drawLine((50, 50, 50), face[0][i], face[0][(i + 1) % 4], 8)
+                pg.draw.circle(self.screen, (50, 50, 50), face[0][i], 4)
 
 class Button():
     def __init__(self, centre, size, text, fontSize, hidden = False):
