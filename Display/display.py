@@ -17,8 +17,6 @@ colour_keys = {
 
 BG_IMAGE_SIZE = 90
 
-EDITING_FACES = ((4, 7, 8, 9),
-                 (4, 17, 7, 19, 25, 21, 9, 23, 11))
 
 def depth(face):
     return face[-2]
@@ -294,8 +292,10 @@ class Display():
     def new_draw_cube(self, cube, centre_offset = 0, edit_pointer = -1):
         x, y, = self.cube_centre[0], self.cube_centre[1] + centre_offset
 
+        # Get a list of faces to be drawn and assign colours
+        model_points = self.model_3.get_points()
         draw_list = []
-        for i, face in enumerate(self.model_3.get_points()):
+        for i, face in enumerate(model_points):
             for j, facelet in enumerate(face):
                 if facelet[2][-1] <= 0:
                     draw_list.append(((
@@ -307,13 +307,24 @@ class Display():
                         colour_keys[cube[i][j]]))
             
 
-
+        # Draw the faces
         for face in sorted(draw_list, key = depth, reverse = True):
             gfxdraw.filled_polygon(self.screen, face[0], face[-1])
 
             for i in range(4):
                 self.drawLine((50, 50, 50), face[0][i], face[0][(i + 1) % 4], 8)
                 pg.draw.circle(self.screen, (50, 50, 50), face[0][i], 4)
+
+        # Draw polygon for editing the cube
+        if edit_pointer != -1:
+            facelet = model_points[edit_pointer // 9][edit_pointer % 9]
+
+            edit_points = []
+            for i in range(4):
+                edit_points.append((facelet[0][i] * self.length + x, facelet[1][i] * self.length + y))
+
+            gfxdraw.filled_polygon(self.screen, edit_points, (0, 0, 0, 100 + 40 * sin(self.edit_phase)))
+
 
 class Button():
     def __init__(self, centre, size, text, fontSize, hidden = False):
