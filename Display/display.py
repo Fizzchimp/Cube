@@ -1,7 +1,6 @@
 import pygame as pg
 from pygame import gfxdraw
-from Display.model_2 import Model_2
-from Display.old_model_3 import Model_3
+from Display.model_2 import Model2
 from Display.model_3 import Model3
 from numpy import sin, cos, sqrt, arctan2
 import numpy as np
@@ -51,7 +50,7 @@ class Display():
         self.edit_phase = 0
         
         ### 2 by 2
-        self.model_2 = Model_2()
+        self.model_2 = Model2()
         
         ### 3 by 2
         self.model_3 = Model3()
@@ -288,12 +287,11 @@ class Display():
         
         pg.display.flip()
     
-
     def new_draw_cube(self, cube, centre_offset = 0, edit_pointer = -1):
         x, y, = self.cube_centre[0], self.cube_centre[1] + centre_offset
 
         # Get a list of faces to be drawn and assign colours
-        model_points = self.model_3.get_points()
+        model_points = self.model.get_points()
         draw_list = []
         for i, face in enumerate(model_points):
             for j, facelet in enumerate(face):
@@ -317,7 +315,7 @@ class Display():
 
         # Draw polygon for editing the cube
         if edit_pointer != -1:
-            facelet = model_points[edit_pointer // 9][edit_pointer % 9]
+            facelet = model_points[edit_pointer // (self.cube_type ** 2)][edit_pointer % (self.cube_type ** 2)]
 
             edit_points = []
             for i in range(4):

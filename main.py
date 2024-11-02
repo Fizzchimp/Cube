@@ -186,7 +186,15 @@ class World:
             self.do_move("Y")
             self.edit_pointer = self.cube_type ** 2 * 2
 
+    # Edits the facelet of one colour
+    def edit_cube_colour(self, colour):
+        editing_face = self.cube[self.edit_pointer // (self.cube_type ** 2)]
+        first_half = editing_face[self.edit_pointer % (self.cube_type ** 2) - 1:]
+        second_half = editing_face[:self.edit_pointer % (self.cube_type ** 2)]
 
+        editing_face = first_half + colour + second_half
+    
+    
     # Executes a move on both cube data strucure and model
     def do_move(self, move, mod = None):
         if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
@@ -257,7 +265,7 @@ class World:
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
 
                     if self.key in EDITING_COLS.keys():
-                        self.cube.cube[2] = self.cube[2][:self.edit_pointer] + EDITING_COLS[self.key] + self.cube[2][self.edit_pointer + 1:]
+                        self.edit_cube_colour(EDITING_COLS[self.key])
                         print(EDITING_COLS[self.key])
                         self.update_edit_pointer()
                         self.key = None
