@@ -82,7 +82,7 @@ class World:
         self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
         self.cube_3 = Cube3(['WWWWWYYWY', 'GBGGGGBBB', 'ORRRROORR', 'GGGBBBBGB', 'ROOROOROO', 'YYYYYWWYW'])
         #self.cube_3 = Cube3(["YYWWWWWYW", "GGGGGBGBB", "RROORRORR", "GBBBBGBGB", "OOROORROO", "YWYYYYYWW"])
-        # self.cube_3 = Cube3()
+        self.cube_3 = Cube3()
         # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
         # L' U2 R' U2 D2 R2 D2 L' F2 L D2 L'
 
@@ -189,10 +189,13 @@ class World:
     # Edits the facelet of one colour
     def edit_cube_colour(self, colour):
         editing_face = self.cube[self.edit_pointer // (self.cube_type ** 2)]
-        first_half = editing_face[self.edit_pointer % (self.cube_type ** 2) - 1:]
-        second_half = editing_face[:self.edit_pointer % (self.cube_type ** 2)]
 
-        editing_face = first_half + colour + second_half
+        facelet_pointer = self.edit_pointer % (self.cube_type ** 2)
+
+        first_half = editing_face[:facelet_pointer]
+        second_half = editing_face[facelet_pointer + 1:]
+
+        self.cube.cube[self.edit_pointer // (self.cube_type ** 2)] = first_half + colour + second_half
     
     
     # Executes a move on both cube data strucure and model
