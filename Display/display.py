@@ -15,7 +15,7 @@ colour_keys = {
     "-": (150, 150, 150)}
 
 BG_IMAGE_SIZE = 90
-
+CUBE_MOVE_COEFFICIENT = 0.02
 
 def depth(face):
     return face[-2]
@@ -40,8 +40,10 @@ class Display():
         self.backgroundPosition = [-BG_IMAGE_SIZE, -BG_IMAGE_SIZE]
 
         ### Cube
-        # Cube centre co-ordinates
-        self.cube_centre  = [450, 300]
+
+        self.cube_target = 450
+
+        # Dimensions for the cube
         self.length = width / 5 if width <= height else height / 5
 
         self.cubeBob = 0
@@ -50,10 +52,10 @@ class Display():
         self.edit_phase = 0
         
         ### 2 by 2
-        self.model_2 = Model2()
+        self.model_2 = Model2([250, 300])
         
         ### 3 by 2
-        self.model_3 = Model3()
+        self.model_3 = Model3([450, 300])
        
         self.cube_type = cube_type
         if cube_type == 2: self.model = self.model_2
@@ -102,7 +104,7 @@ class Display():
             for button in self.movement_buttons:
                 button.set_position((button.centre[0] - 530, button.centre[1]))
 
-            self.cube_centre[0] = 450
+            self.cube_target = 450
         
         elif self.cube_type == 3:
             self.cube_type = 2
@@ -112,7 +114,12 @@ class Display():
             for button in self.movement_buttons:
                 button.set_position((button.centre[0] + 530, button.centre[1]))
 
-            self.cube_centre[0] = 250
+            self.cube_target = 250
+
+    def update_cube_centre(self, delta_time):
+        print(self.cube_centre, delta_time)
+        self.cube_centre[0] = np.round(self.cube_centre[0] + (self.cube_target - self.cube_centre[0]) * CUBE_MOVE_COEFFICIENT * delta_time, 2)
+
 
 
     # Draws an antialiased line with given thickness
@@ -146,7 +153,7 @@ class Display():
 
     # Draws the current cube
     def draw_cube(self, cube, centre_offset = 0, edit_pointer = -1):
-        x, y, = self.cube_centre[0], self.cube_centre[1] + centre_offset
+        x, y, = self.model.centre[0], self.model.centre[1] + centre_offset
 
         # Get a list of faces to be drawn and assign colours
         model_points = self.model.get_points()

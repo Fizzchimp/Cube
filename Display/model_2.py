@@ -4,7 +4,7 @@ from Display.matrices import *
 
 
 class Model2():
-    def __init__(self):
+    def __init__(self, centre):
         self.faces = self.generate_model()
 
         self.x_phase = 0
@@ -19,6 +19,8 @@ class Model2():
         
         self.f_phase = 0
         self.b_phase = 0
+
+        self.centre = centre
         
 
     def generate_model(self):

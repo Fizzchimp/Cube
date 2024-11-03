@@ -3,7 +3,7 @@ from numpy import pi
 from Display.matrices import *
 
 class Model3():
-    def __init__(self):
+    def __init__(self, centre):
         # 3D Matrix of all cube facelets
         self.faces = self.generate_model()
 
@@ -23,6 +23,7 @@ class Model3():
         self.s_phase = 0
         self.b_phase = 0
 
+        self.centre = centre
 
 
     def generate_model(self):

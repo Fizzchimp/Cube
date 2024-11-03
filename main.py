@@ -66,8 +66,8 @@ EDITING_COLS = {
 HALF_PI = pi / 2
 DOUBLE_PI = pi * 2
 
-BOB_SPEED = 500
-BOB_STRENGTH = WIDTH * 0.02
+BOB_SPEED = 600
+BOB_STRENGTH = WIDTH * 0.015
 
 class World:
     def __init__(self):
@@ -340,7 +340,7 @@ class World:
             
                 
             # Update aspects of the screen
-            
+            # self.screen.update_cube_centre(delta_time)
             self.screen.model.update_phase((delta_time / ROTATION_SPEED) * HALF_PI)
             self.screen.cubeBob = (self.screen.cubeBob + delta_time / BOB_SPEED) % DOUBLE_PI
             
