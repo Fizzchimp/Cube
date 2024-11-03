@@ -1,5 +1,6 @@
 from Assets.node_3 import Node
 from Thistlethwaite.transformations import *
+from Thistlethwaite.phase_4 import phase_4
 
 
 # Phase 3 Moveset
@@ -93,7 +94,6 @@ def fix_orbits(corners):
 ## Fixes sides and remaining corners
 
 ALLOWED_ORBITS = list(ORBIT_MOVES.keys())[:-12]
-print(ALLOWED_ORBITS)
 
 FIXED_ORBITS_TRANSFORMATIONS = [
     "reflect_XY",
@@ -199,15 +199,15 @@ def phase_3(node):
         node.move(G_2[move])
         
     
-    print("Corner moves: ", phase_3_moves)
+    # print("Corner moves: ", phase_3_moves)
     
     # Transform node to be used in table
     transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
-    print("Transformations:", transformation_indexes)
+    # print("Transformations:", transformation_indexes)
     
     # Get the moves to fix the transformed node
     moves = get_side_moves(transformed_node, table_num)
-    print("Untransformed moves:", moves)
+    # print("Untransformed moves:", moves)
     
     # Transform moves to work on origional node
     transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
@@ -252,12 +252,12 @@ def get_side_moves(node, table_num):
     transformations = (NO_CORNER_TRANSFORMATIONS, TWO_CORNER_TRANSFORMATIONS, FOUR_CORNER_TRANSFORMATIONS)[table_num]
     
     # Try with no transformations
-    print("TRYING NO TRANSFORMATIONS")
+    # print("TRYING NO TRANSFORMATIONS")
     moves = check_table(table, node)
     if moves != False: return moves
     
     # Try with 1 transformation
-    print("TRYING UNO TRANSFORMATION")
+    # print("TRYING UNO TRANSFORMATION")
     for transformation, moveset in transformations:
         transformed_node = Node(getattr(node, transformation)())
         moves = check_table(table, transformed_node)
@@ -269,7 +269,7 @@ def get_side_moves(node, table_num):
             return moves
     
     # Try with two transformations
-    print("TRYING DOS TRANSFORMAITONS")    
+    # print("TRYING DOS TRANSFORMAITONS")    
     for transformation_1, moveset_1 in transformations:
         for transformation_2, moveset_2 in transformations:
             transformed_node = Node(getattr(Node(getattr(node, transformation_1)()), transformation_2)())
@@ -316,7 +316,11 @@ def check_table(table, node):
             
             # Checks if the solution is in G_3
             if test_corner_permutation(test_node):
+                # try:
+                #     phase_4(test_node)
                 return moves
+                
+                # except: pass
             
     # If no solution is found, return false        
     return False

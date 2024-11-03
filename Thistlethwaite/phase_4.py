@@ -189,20 +189,20 @@ def try_transformations(cube):
 
 
 
-def phase_4(node):
+def phase_4(start_node):
     corner_moves = []
     ## Get moves to fix the corners
-    node_stack, node = corners_iddfs(node)
+    node_stack, corner_node = corners_iddfs(start_node)
 
     while not node_stack.is_empty():
-        node = node_stack.pop()
-        corner_moves.append(G_3[node.movement])
+        stack_node = node_stack.pop()
+        corner_moves.append(G_3[stack_node.movement])
         
     corner_moves = corner_moves[::-1]
     print("corner moves:", corner_moves)
     
-    print(node.cube)
-    side_moves = try_transformations(node)
+    print("Fixed corners:", corner_node.cube)
+    side_moves = try_transformations(corner_node)
     print(side_moves)
                 
     

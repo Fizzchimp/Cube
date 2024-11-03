@@ -12,7 +12,7 @@ from Assets.cqueue import Queue
 from thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 125
+ROTATION_SPEED = 12
 BG_SPEED = 40
 
 WIDTH = 700
@@ -79,10 +79,10 @@ class World:
         # self.cube_3 = Cube3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
         #self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
         # self.cube_3 = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"]) # Phase 3 works but is wrong
-        self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
-        self.cube_3 = Cube3(['WWWWWYYWY', 'GBGGGGBBB', 'ORRRROORR', 'GGGBBBBGB', 'ROOROOROO', 'YYYYYWWYW'])
-        #self.cube_3 = Cube3(["YYWWWWWYW", "GGGGGBGBB", "RROORRORR", "GBBBBGBGB", "OOROORROO", "YWYYYYYWW"])
-        self.cube_3 = Cube3()
+        # self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
+        self.cube_3 = Cube3(['BOYGWGWYW', 'YOGBGRWBO', 'ROBGRRGWB', 'OYOYBRRGG', 'BWRBOORWO', 'YBWYYWGRY'])
+        self.cube_3 = Cube3(['WWWYWWYWY', 'GGGGGBBBB', 'OOORROROR', 'BGBBBGGBG', 'OROROORRR', 'WYWWYYYYY'])
+        # self.cube_3 = Cube3()
         # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
         # L' U2 R' U2 D2 R2 D2 L' F2 L D2 L'
 
