@@ -12,7 +12,7 @@ from Assets.cqueue import Queue
 from thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 12
+ROTATION_SPEED = 125
 BG_SPEED = 40
 
 WIDTH = 700
@@ -73,18 +73,14 @@ class World:
     def __init__(self):
         # Creating Cube object
         self.cube_type = 3
-        self.cube_2 = Cube2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        # self.cube_2 = Cube2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"]) # 14 move scramble
+        self.cube_2 = Cube2()
 
 
-        # self.cube_3 = Cube3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
-        #self.cube_3 = Cube3(["GWBWWWGWB", "OGROGRGGG", "WRWGRBRRR", "RBORBOBBB", "WOWBOGOOO", "YYYYYYYYY"])
+
         # self.cube_3 = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"]) # Phase 3 works but is wrong
         # self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
-        self.cube_3 = Cube3(['BOYGWGWYW', 'YOGBGRWBO', 'ROBGRRGWB', 'OYOYBRRGG', 'BWRBOORWO', 'YBWYYWGRY'])
-        self.cube_3 = Cube3(['WWWYWWYWY', 'GGGGGBBBB', 'OOORROROR', 'BGBBBGGBG', 'OROROORRR', 'WYWWYYYYY'])
-        # self.cube_3 = Cube3()
-        # self.cube_3 = Cube3(["YRBOWYYWO", "RGOYGOGOO", "BOGBRBBBY", "WGWYBGORR", "RBBRORYWR", "WWGYYWWGG"])
-        # L' U2 R' U2 D2 R2 D2 L' F2 L D2 L'
+        self.cube_3 = Cube3()
 
         #self.cube_3.move("F", "L", "R'", "D2", "B2", "U")
         #self.cube_3.move("F2", "D2", "L", "R'", "F", "R2", "F", "B2", "R", "B'", "R2", "B", "R", "B")
@@ -123,26 +119,17 @@ class World:
             moves = thistle_solve(self.cube)
             return moves
     
-    # Swap between 2 by 2 and 3 by 3
+    # Swaps between 2x2 and 3x3
     def swap_cubes(self):
         if self.cube_type == 2:
             self.cube_type = 3
             self.cube = self.cube_3
-            self.screen.cube_type = 3
-            self.screen.model = self.screen.model_3
-            if self.edit_pointer != -1:
-                for button in self.screen.movement_buttons[12:]:
-                    button.hidden = False
-            
+
         elif self.cube_type == 3:
             self.cube_type = 2
             self.cube = self.cube_2
-            self.screen.cube_type = 2
-            self.screen.model = self.screen.model_2
-            if self.edit_pointer != -1:
-                for button in self.screen.movement_buttons[12:]:
-                    button.hidden = True
-    
+        
+        self.screen.swap_cubes()
     
     # Swaps between editing and solving
     def swap_editing(self):
@@ -365,7 +352,7 @@ class World:
                 pg.display.set_caption(str(self.clock.get_fps()))
             
             # Draw the screen
-            self.screen.drawScreen(self.cube.cube, delta_time, self.edit_pointer)
+            self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer)
 
             delta_time = self.clock.tick(MAX_FPS)
             
