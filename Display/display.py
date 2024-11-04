@@ -188,6 +188,15 @@ class Display():
 
             gfxdraw.filled_polygon(self.screen, edit_points, (0, 0, 0, 100 + 40 * sin(self.edit_phase)))
 
+    def draw_net(self, start_pos, cube):
+        difference = 24
+        width = 22
+        for j, face in enumerate(cube[1:5]):
+            for i, facelet in enumerate(face):
+                draw_x, draw_y = start_pos[0] + difference * (i % 3) + j * (difference * 3 + 2), start_pos[0] + difference * (i // 3)
+                pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, width, width))
+
+
     # Organises drawing all elements on screen
     def draw_screen(self, cube, delta_time, edit_pointer = -1):
         # Draw the background of the screen
@@ -195,7 +204,9 @@ class Display():
         # self.screen.blit(self.background, (self.backgroundPosition))
         
         # Draw the cube onto the screen
-        if edit_pointer != -1: self.edit_phase += delta_time * 0.005
+        if edit_pointer != -1:
+            self.edit_phase += delta_time * 0.005
+            self.draw_net((100, 100), cube)
         self.draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
         for button in self.buttons + self.movement_buttons:

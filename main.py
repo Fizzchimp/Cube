@@ -149,6 +149,7 @@ class World:
             self.screen.buttons[4].hidden = True
             self.screen.buttons[5].hidden = True
             self.edit_pointer = -1
+            self.screen.model.centre = [200 * self.cube_type - 150, 300]
 
 
         else:
@@ -157,6 +158,7 @@ class World:
         
             self.screen.buttons[4].hidden = False
             self.screen.buttons[5].hidden = False
+            self.screen.model.centre = [450, 250]
             self.edit_pointer = self.cube_type ** 2 * 2
 
     # Method to check if the program is in editing state
@@ -254,9 +256,9 @@ class World:
                     if not self.screen.model.is_moving() and self.key in EDITING_MOVES:
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
 
+                    # Editing events
                     if self.key in EDITING_COLS.keys():
                         self.edit_cube_colour(EDITING_COLS[self.key])
-                        print(EDITING_COLS[self.key])
                         self.update_edit_pointer()
                         self.key = None
         
