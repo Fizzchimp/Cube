@@ -68,8 +68,8 @@ class Display():
             Button((400, 600), 1 ,"SCRAMBLE", 35),
             Button((350, 40), 1 ,"SWAP", 35),
             Button((600, 600), 1 ,"EDIT", 35),
-            Button((450, 600), 1 ,"DONE", 35, True),
-            Button((250, 600), 1 ,"CLEAR", 35, True)]
+            Button((550, 550), 1 ,"DONE", 35, True),
+            Button((550, 630), 1 ,"CLEAR", 35, True)]
         
         self.movement_buttons = [
             Button((45, 30), 0, "U", fontSize),
@@ -188,13 +188,29 @@ class Display():
 
             gfxdraw.filled_polygon(self.screen, edit_points, (0, 0, 0, 100 + 40 * sin(self.edit_phase)))
 
+    # Draws the cube in net form
     def draw_net(self, start_pos, cube):
-        difference = 24
         width = 22
+        difference = width + 2
+        
+        # Draw face U
+        for i, facelet in enumerate(cube[0]):
+            draw_x = start_pos[0] + difference * (i % 3) + (difference * 3 + 2)
+            draw_y = start_pos[1] + difference * (i // 3)
+            pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, width, width))
+
+        # Draw faces L, F, R and B
         for j, face in enumerate(cube[1:5]):
             for i, facelet in enumerate(face):
-                draw_x, draw_y = start_pos[0] + difference * (i % 3) + j * (difference * 3 + 2), start_pos[0] + difference * (i // 3)
+                draw_x = start_pos[0] + difference * (i % 3) + j * (difference * 3 + 2)
+                draw_y = start_pos[1] + difference * (i // 3 + 3) + 2
                 pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, width, width))
+        
+        # Draw D face
+        for i, facelet in enumerate(cube[5]):
+            draw_x = start_pos[0] + difference * (i % 3) + (difference * 3 + 2)
+            draw_y = start_pos[1] + difference * (i // 3 + 6) + 4
+            pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, width, width))
 
 
     # Organises drawing all elements on screen
@@ -206,7 +222,7 @@ class Display():
         # Draw the cube onto the screen
         if edit_pointer != -1:
             self.edit_phase += delta_time * 0.005
-            self.draw_net((100, 100), cube)
+            self.draw_net((50, 460), cube)
         self.draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
         for button in self.buttons + self.movement_buttons:
