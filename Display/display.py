@@ -14,6 +14,7 @@ colour_keys = {
     "O": (255, 140, 0),
     "-": (150, 150, 150)}
 
+
 BG_IMAGE_SIZE = 90
 CUBE_MOVE_COEFFICIENT = 0.02
 
@@ -190,28 +191,36 @@ class Display():
 
     # Draws the cube in net form
     def draw_net(self, start_pos, cube):
-        width = 22
-        difference = width + 2
+        face_width = 66
+        facelet_width = face_width // self.cube_type
+        difference = facelet_width + 2
         
         # Draw face U
         for i, facelet in enumerate(cube[0]):
-            draw_x = start_pos[0] + difference * (i % 3) + (difference * 3 + 2)
-            draw_y = start_pos[1] + difference * (i // 3)
-            pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, width, width))
+            draw_x = start_pos[0] + difference * (i % self.cube_type) + (difference * self.cube_type + 2)
+            draw_y = start_pos[1] + difference * (i // self.cube_type)
+            pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, facelet_width, facelet_width))
+        
 
         # Draw faces L, F, R and B
         for j, face in enumerate(cube[1:5]):
             for i, facelet in enumerate(face):
-                draw_x = start_pos[0] + difference * (i % 3) + j * (difference * 3 + 2)
-                draw_y = start_pos[1] + difference * (i // 3 + 3) + 2
-                pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, width, width))
+                draw_x = start_pos[0] + difference * (i % self.cube_type) + j * (difference * self.cube_type + 2)
+                draw_y = start_pos[1] + difference * (i // self.cube_type + self.cube_type) + 2
+                pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, facelet_width, facelet_width))
         
         # Draw D face
         for i, facelet in enumerate(cube[5]):
-            draw_x = start_pos[0] + difference * (i % 3) + (difference * 3 + 2)
-            draw_y = start_pos[1] + difference * (i // 3 + 6) + 4
-            pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, width, width))
+            draw_x = start_pos[0] + difference * (i % self.cube_type) + (difference * self.cube_type + 2)
+            draw_y = start_pos[1] + difference * (i // self.cube_type + self.cube_type * 2) + 4
+            pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, facelet_width, facelet_width))
 
+        # Draw outlines
+        for i in range(2):
+            # Draw long horizontal lines
+            pos_1 = (start_pos[0] - 3, start_pos[1] + facelet_width * self.cube_type + 6)
+            pos_2 = (start_pos[0] + face_width * 4 + 6, start_pos[1] + facelet_width * self.cube_type + 6)
+            self.draw_line((50, 50, 50), pos_1, pos_2, 4)
 
     # Organises drawing all elements on screen
     def draw_screen(self, cube, delta_time, edit_pointer = -1):
