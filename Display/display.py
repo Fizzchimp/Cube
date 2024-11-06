@@ -117,6 +117,7 @@ class Display():
 
             self.cube_target = 250
 
+    
     def update_cube_centre(self, delta_time):
         print(self.cube_centre, delta_time)
         self.cube_centre[0] = np.round(self.cube_centre[0] + (self.cube_target - self.cube_centre[0]) * CUBE_MOVE_COEFFICIENT * delta_time, 2)
@@ -215,12 +216,12 @@ class Display():
             draw_y = start_pos[1] + difference * (i // self.cube_type + self.cube_type * 2) + 4
             pg.draw.rect(self.screen, colour_keys[facelet], pg.Rect(draw_x, draw_y, facelet_width, facelet_width))
 
-        # Draw outlines
-        for i in range(2):
-            # Draw long horizontal lines
-            pos_1 = (start_pos[0] - 3, start_pos[1] + facelet_width * self.cube_type + 6)
-            pos_2 = (start_pos[0] + face_width * 4 + 6, start_pos[1] + facelet_width * self.cube_type + 6)
-            self.draw_line((50, 50, 50), pos_1, pos_2, 4)
+        ## Draw outlines
+        #for i in range(2):
+        #    # Draw long horizontal lines
+        #    pos_1 = (start_pos[0] - 3, start_pos[1] + facelet_width * self.cube_type + 6)
+        #    pos_2 = (start_pos[0] + face_width * 4 + 6, start_pos[1] + facelet_width * self.cube_type + 6)
+        #    self.draw_line((50, 50, 50), pos_1, pos_2, 4)
 
     # Organises drawing all elements on screen
     def draw_screen(self, cube, delta_time, edit_pointer = -1):

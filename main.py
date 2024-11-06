@@ -12,7 +12,7 @@ from Assets.cqueue import Queue
 from thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 125
+ROTATION_SPEED = 12
 BG_SPEED = 40
 
 WIDTH = 700
@@ -78,9 +78,10 @@ class World:
 
 
 
-        # self.cube_3 = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"]) # Phase 3 works but is wrong
+        # self.cube_3 = Cube3(["BOOWWGGRB", "WGOBBGYYY", "WBYORGRRW", "RYBYGWGRO", "WYROOOBBO", "GGRRYWGWY"]) # Phase 3 works but is wrong (DONT KNOW WHAT THIS IS)
         # self.cube_3 = Cube3(['BBYYWWBGW', 'RORYGGOYR', 'YRBORWGBG', 'OOORBRRRO', 'BWWBOBGWG', 'WOYGYYWGY']) # does three transformations
-        self.cube_3 = Cube3()
+        self.cube_3 = Cube3(['GYRYWWGBB', 'YGYBGRWGG', 'RYYYROWGW', 'OOYGBBOOB', 'BOOROWRRO', 'RWBRYBGWW']) # Phase 3 not working
+        #self.cube_3 = Cube3(['BBRRWGRBG', 'WWWWGYROY', 'GRORRGGRW', 'YOYYBGGBY', 'BOOWOOBBB', 'RGOYYYWWO']) # Phase 4 not working
 
         #self.cube_3.move("F", "L", "R'", "D2", "B2", "U")
         #self.cube_3.move("F2", "D2", "L", "R'", "F", "R2", "F", "B2", "R", "B'", "R2", "B", "R", "B")

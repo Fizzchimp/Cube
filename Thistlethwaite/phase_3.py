@@ -186,44 +186,6 @@ PHASE_3_TRANSFORMATIONS = (
     {None : None}) # No transformation
 
 
-def phase_3(node):
-    phase_3_moves = []
-    
-    # Fix orbits to be 1 of 3 possible states
-    corner_orbits = get_orbits(node)
-    # print("Orbits: ", corner_orbits)
-    
-    orbit_moves = fix_orbits(corner_orbits)
-    for move in orbit_moves:
-        phase_3_moves.append(G_2[move])
-        node.move(G_2[move])
-        
-    
-    # print("Corner moves: ", phase_3_moves)
-    
-    # Transform node to be used in table
-    transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
-    # print("Transformations:", transformation_indexes)
-    
-    # Get the moves to fix the transformed node
-    moves = get_side_moves(transformed_node, table_num)
-    # print("Untransformed moves:", moves)
-    
-    # Transform moves to work on origional node
-    transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
-    transformation_2 = PHASE_3_TRANSFORMATIONS[transformation_indexes[1]]
-        
-    for move in moves:
-        if move in transformation_2.keys(): move = transformation_2[move]
-        if move in transformation_1.keys(): move = transformation_1[move]
-
-        phase_3_moves.append(move)
-        node.move(move)
-    
-    print("Phase 3 moves:", phase_3_moves)
-    
-    return phase_3_moves, node
-
 NO_CORNER_TRANSFORMATIONS = (
     ("reflect_XY", REF_XY),
     ("reflect_XZ", REF_XZ),
@@ -280,7 +242,7 @@ def get_side_moves(node, table_num):
                     if move in moveset_1.keys(): move = moveset_1[move]
                     
                     moves[i] = move
-
+                print("TWO TRANSFORMATIONS:", transformation_1, transformation_2)
                 return moves
 
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")        
@@ -314,18 +276,56 @@ def check_table(table, node):
             for move in moves:
                 test_node.move(move)
             
-            # Checks if the solution is in G_3
+            # Checks if the solution is in G_3 (WONT KNOW IF THIS WORKS FULLY UNTIL PHASE 3 IS FIXED)
             if test_corner_permutation(test_node):
-                # try:
-                #     phase_4(test_node)
-                return moves
+                print("Corner Permutation test success")
+                try:
+                    phase_4(test_node)
+                    return moves
                 
-                # except: pass
+                except: pass
             
     # If no solution is found, return false        
     return False
-            
 
-node = Node(['YYWRWOOYW', 'GBBGGGGGG', 'YORWRWWOW', 'BBBBBGGBB', 'ORROOYYRO', 'RWORYYYWR'])
-#phase_3(node)
-node.display()
+def phase_3(node):
+    phase_3_moves = []
+    
+    # Fix orbits to be 1 of 3 possible states
+    corner_orbits = get_orbits(node)
+    #print("Orbits: ", corner_orbits)
+    
+    orbit_moves = fix_orbits(corner_orbits)
+    for move in orbit_moves:
+        phase_3_moves.append(G_2[move])
+        node.move(G_2[move])
+        
+    
+    # print("Corner moves: ", phase_3_moves)
+    
+    # Transform node to be used in table
+    transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
+    # print("Transformations:", transformation_indexes)
+    
+    # Get the moves to fix the transformed node
+    moves = get_side_moves(transformed_node, table_num)
+    # print("Untransformed moves:", moves)
+    
+    # Transform moves to work on origional node
+    transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
+    transformation_2 = PHASE_3_TRANSFORMATIONS[transformation_indexes[1]]
+        
+    for move in moves:
+        if move in transformation_2.keys(): move = transformation_2[move]
+        if move in transformation_1.keys(): move = transformation_1[move]
+
+        phase_3_moves.append(move)
+        node.move(move)
+    
+    print("Phase 3 moves:", phase_3_moves)
+    
+    return phase_3_moves, node
+
+
+node = Node(['RWWWWRRWW', 'BBBBGGBBB', 'WOOYRWORY', 'GBGGBGGGG', 'RRYROOYOO', 'YYRYYOWYO'])
+#print(phase_3(node))

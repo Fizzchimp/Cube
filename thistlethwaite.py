@@ -11,15 +11,15 @@ def thistle_solve(start_cube):
     print(start_cube.cube)
     # Phase 1
     timer = time.time()
-    phase_1_moves, G_1_state = phase_1(start_cube) 
+    phase_1_moves, G_1_node = phase_1(start_cube) 
     print(f"Phase 1 finished in {round(time.time() - timer, 4)}s")
     print(phase_1_moves)
-    print(G_1_state)
+    print(G_1_node.cube)
     
 
     # Phase 2
     timer = time.time()
-    phase_2_moves, G_2_node = phase_2(G_1_state)
+    phase_2_moves, G_2_node = phase_2(G_1_node)
     print(f"Phase 2 finished in {round(time.time() - timer, 4)}s")
     print(phase_2_moves)
     print(G_2_node.cube)
@@ -36,5 +36,5 @@ def thistle_solve(start_cube):
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
-cube = Cube3(['WWBGWRRBR', 'GWWBGWBRR', 'GRBBRYYBB', 'WGRGBOOOO', 'YROGOOGOO', 'GYYYYWWYY'])
+cube = Cube3(['GYRYWWGBB', 'YGYBGRWGG', 'RYYYROWGW', 'OOYGBBOOB', 'BOOROWRRO', 'RWBRYBGWW'])
 #print(thistle_solve(cube))

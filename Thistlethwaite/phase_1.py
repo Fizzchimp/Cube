@@ -80,7 +80,7 @@ def solve_sides_iddfs(start_node):
 def phase_1(start_state):
     node = solve_sides_iddfs(Node(start_state))
     if node == None: return "Cannot Solve!"
-    end_state = node.cube
+    G1_node = node
 
     path = []
     while node.parent != None:
@@ -88,4 +88,4 @@ def phase_1(start_state):
         path.append(move)
         node = node.parent
 
-    return path[::-1], end_state
+    return path[::-1], G1_node

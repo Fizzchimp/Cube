@@ -34,6 +34,7 @@ def UD_side_check(cube):
     return False
 
 def get_UD_slice_iddfs(start_node):
+    if UD_side_check(start_node): return start_node
     # To get UD slice correct
     for i in range(5):
         node_stack = Stack(i + 1)
@@ -126,10 +127,23 @@ def get_table_2_moves(corners):
             if line[:8] == corners:
                 return line[11:].split(" ")
         
-def phase_2(G_1_state):
-    node = get_UD_slice_iddfs(Node(G_1_state))
+
+def check_state(node):
+    target_group = (node[1][4], node[3][4])
+    for face in (node[1], node[3]):
+        for facelet in face:
+            if facelet not in target_group: return False
+    return True
+
+
+def phase_2(G_1_node):
+    node = get_UD_slice_iddfs(Node(G_1_node))
+    
+    # Checks the state is not already in G_2
+    if check_state(G_1_node): return [], G_1_node
+    
     if node == None: return "Cannot Solve!"
-    G_1_state = node.cube
+    G_1_node = node.cube
 
     path = []
     while node.parent != None:
@@ -139,8 +153,9 @@ def phase_2(G_1_state):
     path = path[::-1]
 
 
-    corners = get_corners(G_1_state)
-    node = Node(G_1_state)
+    corners = get_corners(G_1_node)
+    print("Phase 2 Corners:", corners)
+    node = Node(G_1_node)
 
     # Attempt with no transformations
     moves = get_table_2_moves(corners)
