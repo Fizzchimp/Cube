@@ -77,8 +77,8 @@ def solve_sides_iddfs(start_node):
                     else:
                         node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, PHASE_1_MOVES), parent.movement + 1, parent.parent))
 
-def phase_1(start_state):
-    node = solve_sides_iddfs(Node(start_state))
+def phase_1(start_node):
+    node = solve_sides_iddfs(start_node)
     if node == None: return "Cannot Solve!"
     G1_node = node
 

@@ -1,3 +1,4 @@
+----|----|---- : 
 ----|----|---- : R B_2 L_Prime B_2 R_Prime L_Prime F_2 L_Prime F_2 L_Prime
 ----|----|---- : L_Prime U_2 F_2 L_2 F_2 L_Prime U_2 L_2 F_2 L_Prime
 ----|----|---- : F_2 L_Prime U_2 F_2 L_2 F_2 L_Prime U_2 L_2 F_2 L_Prime

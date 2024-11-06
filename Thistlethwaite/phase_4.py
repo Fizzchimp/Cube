@@ -102,23 +102,23 @@ PHASE_4_TRANSFORMATIONS = [
 def try_transformations(cube):
     
     # Try with no transformation
-    print("Trying no transformation")
+    #print("Trying no transformation")
     side_moves = read_table_4(cube)
     if side_moves != None:
         return side_moves
     
     # Try with one transformation
-    print("Trying 1 transformation")
+    #print("Trying 1 transformation")
     for transformation, moveset in PHASE_4_TRANSFORMATIONS:
         side_moves = read_table_4(getattr(cube, transformation)())
         if side_moves != None:
             for i, move in enumerate(side_moves):
                 if move in moveset.keys(): side_moves[i] = moveset[move]
-            print(transformation)
+            #print(transformation)
             return side_moves
     
     # Try with two transformations
-    print("Trying 2 transformations")
+    #print("Trying 2 transformations")
     for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
             for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
                 side_moves = read_table_4(getattr(Node(getattr(cube, transformation_1)()), transformation_2)())
@@ -132,12 +132,12 @@ def try_transformations(cube):
                         else: transformed_2 = transformed_1
                         
                         side_moves[i] = transformed_2
-                    print(transformation_1, transformation_2)
+                    #print(transformation_1, transformation_2)
                     return side_moves
     
 
     # Try with three transformations
-    print("Trying 3 transformations")
+    #print("Trying 3 transformations")
     for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
         for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
             for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
@@ -155,7 +155,7 @@ def try_transformations(cube):
                         else: transformed_3 = transformed_2
                         
                         side_moves[i] = transformed_3
-                    print(transformation_1, transformation_2, transformation_3)
+                    #print(transformation_1, transformation_2, transformation_3)
                     return side_moves
 
     ## Try with four transformations
@@ -199,11 +199,11 @@ def phase_4(start_node):
         corner_moves.append(G_3[stack_node.movement])
         
     corner_moves = corner_moves[::-1]
-    print("corner moves:", corner_moves)
+    #print("corner moves:", corner_moves)
     
-    print("Fixed corners:", corner_node.cube)
+    #print("Fixed corners:", corner_node.cube)
     side_moves = try_transformations(corner_node)
-    print(side_moves)
+    #print(side_moves)
                 
     
     

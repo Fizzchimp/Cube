@@ -272,13 +272,15 @@ def check_table(table, node):
         # Check if key matches item in table
         if line[:14] == key:
             moves = line[17:].strip("\n").split(" ")
+            if moves == ['']: moves = []
+            
             test_node = Node(node.cube)
             for move in moves:
                 test_node.move(move)
             
             # Checks if the solution is in G_3 (WONT KNOW IF THIS WORKS FULLY UNTIL PHASE 3 IS FIXED)
             if test_corner_permutation(test_node):
-                print("Corner Permutation test success")
+                print("Corner Permutation test success", moves)
                 try:
                     phase_4(test_node)
                     return moves
@@ -293,7 +295,7 @@ def phase_3(node):
     
     # Fix orbits to be 1 of 3 possible states
     corner_orbits = get_orbits(node)
-    #print("Orbits: ", corner_orbits)
+    # print("Orbits: ", corner_orbits)
     
     orbit_moves = fix_orbits(corner_orbits)
     for move in orbit_moves:
@@ -305,6 +307,7 @@ def phase_3(node):
     
     # Transform node to be used in table
     transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
+    print(transformed_node.cube, table_num)
     # print("Transformations:", transformation_indexes)
     
     # Get the moves to fix the transformed node
