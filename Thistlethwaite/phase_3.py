@@ -219,7 +219,7 @@ def get_side_moves(node, table_num):
     if moves != False: return moves
     
     # Try with 1 transformation
-    # print("TRYING UNO TRANSFORMATION")
+    print("TRYING UNO TRANSFORMATION")
     for transformation, moveset in transformations:
         transformed_node = Node(getattr(node, transformation)())
         moves = check_table(table, transformed_node)
@@ -227,11 +227,12 @@ def get_side_moves(node, table_num):
             for i, move in enumerate(moves):
                 if move in moveset.keys(): move = moveset[move]
                 moves[i] = move
-                
+            
+            print("ONE TRANSFORMATION SUCCESS:", transformation)
             return moves
     
     # Try with two transformations
-    # print("TRYING DOS TRANSFORMAITONS")    
+    print("TRYING DOS TRANSFORMAITONS")    
     for transformation_1, moveset_1 in transformations:
         for transformation_2, moveset_2 in transformations:
             transformed_node = Node(getattr(Node(getattr(node, transformation_1)()), transformation_2)())
@@ -242,13 +243,31 @@ def get_side_moves(node, table_num):
                     if move in moveset_1.keys(): move = moveset_1[move]
                     
                     moves[i] = move
-                print("TWO TRANSFORMATIONS:", transformation_1, transformation_2)
+                print("TWO TRANSFORMATIONSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS:", transformation_1, transformation_2)
                 return moves
+            
+    # Try with three transformations?   
+    print("TRYING TRES TRANSFORMATIONS")
+    for transformation_1, moveset_1 in transformations:
+        for transformation_2, moveset_2 in transformations:
+            for transformation_3, moveset_3 in transformations:
+                transformed_node = Node(getattr(Node(getattr(Node(getattr(node, transformation_1)()), transformation_2)()), transformation_3)())
+                moves = check_table(table, transformed_node)
+                if moves != False:
+                    for i, move in enumerate(moves):
+                        if move in moveset_3.keys(): move = moveset_3[move]
+                        if move in moveset_2.keys(): move = moveset_2[move]
+                        if move in moveset_1.keys(): move = moveset_1[move]
+                    
+                        moves[i] = move
+                    print("THREE TRANSFORMATIONSSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS:", transformation_1, transformation_2, transformation_3)
+                    return moves
 
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")        
 
 # Returns table from specified table_number
 def get_table(table_num):
+    print("Table num:", table_num)
     if table_num == 0:
         with open("Thistlethwaite/Tables/phase_3_no_corners.txt", "r") as table:
             return table.readlines()
@@ -332,3 +351,5 @@ def phase_3(node):
 
 node = Node(['RWWWWRRWW', 'BBBBGGBBB', 'WOOYRWORY', 'GBGGBGGGG', 'RRYROOYOO', 'YYRYYOWYO'])
 #print(phase_3(node))
+
+
