@@ -244,6 +244,7 @@ def get_side_moves(node, table_num):
                     
                     moves[i] = move
                 print("TWO TRANSFORMATIONSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS:", transformation_1, transformation_2)
+                #raise Exception("AHH")
                 return moves
             
     # Try with three transformations?   
@@ -261,8 +262,11 @@ def get_side_moves(node, table_num):
                     
                         moves[i] = move
                     print("THREE TRANSFORMATIONSSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS:", transformation_1, transformation_2, transformation_3)
+                    #raise Exception("AHH")
                     return moves
-
+    
+    #print("UH OH")
+    #return []
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")        
 
 # Returns table from specified table_number

@@ -20,9 +20,10 @@ INV_CONVERSION = {11: 1, 12: 2, 13: 0, # L
                   51: 12, 52: 13} # U/D
 
 def translate_table():
-    with open("tableinput.txt", "r") as input_file:
-        with open("Tables/phase_2.txt", "w") as table_file:
+    with open("Creating Tables/tableinput_2.txt", "r") as input_file:
+        with open("Thistlethwaite/Tables/phase_2.txt", "w") as table_file:
             incorrect = []
+            to_write = []
             for index, line in enumerate(input_file.readlines()):
                 moves = line[:26].split(" ")
                 node = Node(["1S2---2S1", "0-0---0-0", "1S2---2S1", "0-0---0-0", "1S2---2S1", "1S2---2S1"])
@@ -30,19 +31,21 @@ def translate_table():
                 
                 if moves[0][0] == "1":
                     node.move("F")
-                    move_string += " 7"
+                    move_string += " F_Prime"
                     
                 for move in moves:
-                    move_string = " " + str(INV_CONVERSION[int(move)]) + move_string
+                    move_string = " " + G_1[INV_CONVERSION[int(move)]] + move_string
                     node.cube = getattr(node, G_1[CONVERSION[int(move)]])()
                     
 
                 facelets = node[1][0] + node[1][2] + node[1][6] + node[1][8] + node[3][0] + node[3][2] + node[3][6] + node[3][8] + " :"
-                table_file.write(facelets + move_string + "\n")
+                to_write.append(facelets + move_string + "\n")
                 for face in(node[1], node[2], node[3], node[4]):
                     if face[3] != "S" or face[5] != "S":
                         incorrect.append(index)
                         break
+            for line in to_write:
+                table_file.write(line)
         print(incorrect)
     
 

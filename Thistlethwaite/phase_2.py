@@ -1,6 +1,6 @@
 from Assets.node_3 import Node
 from Assets.stack import Stack
-
+from Thistlethwaite.transformations import *
 
 # Return the state of a node after applied move
 def get_node_move(parent, move_num, move_set):
@@ -75,7 +75,7 @@ def get_UD_slice_iddfs(start_node):
                         exhausted = True
                     else:
                         node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, G_1), parent.movement + 1, parent.parent))
-
+    raise Exception("UD SLICE NOT SOLVABLE")
 def get_corners(node):
     state = ""
     target_colours = (node[1][4], node[3][4])
@@ -114,18 +114,18 @@ def rotation_Z(corners):
 ROT_Z_P2 = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 13, 12)
 
 TRANSFORMATION_LIST = (
-    (reflection_XY, REF_XY_P2),
-    (reflection_XZ, REF_XZ_P2),
-    (reflection_YZ, REF_YZ_P2),
-    (rotation_X, ROT_X_P2),
-    (rotation_Y, ROT_Y_P2),
-    (rotation_Z, ROT_Z_P2))
+    (reflection_XY, REF_XY),
+    (reflection_XZ, REF_XZ),
+    (reflection_YZ, REF_YZ),
+    (rotation_X, ROT_X),
+    (rotation_Y, ROT_Y),
+    (rotation_Z, ROT_Z))
 
 def get_table_2_moves(corners):
     with open("Thistlethwaite/Tables/phase_2.txt") as table:
         for line in table.readlines():
             if line[:8] == corners:
-                return line[11:].split(" ")
+                return line[11:].strip("\n").split(" ")
         
 
 def check_state(node):
@@ -163,6 +163,7 @@ def phase_2(G_1_node):
         for move in moves:
             path.append(G_1[int(move)])
             node.move(G_1[int(move)])
+        print("P2: NO TRANSFORMATIONS")
         return path, node
 
     # Attempt with 1 transformation
@@ -170,18 +171,31 @@ def phase_2(G_1_node):
         moves = get_table_2_moves(transformation(corners))
         if moves != None:
             for move in moves:
-                path.append(G_1[moveset[int(move)]])
-                node.move(G_1[moveset[int(move)]])
+                path.append(move)
+                node.move(move)
+            print("P2: ONE TRANSFORMATIONS", transformation)
             return path, node
         
     # Attempt with 2 transformations
     for transformation_1, moveset_1 in TRANSFORMATION_LIST:
         for transformation_2, moveset_2 in TRANSFORMATION_LIST:
-                moves = get_table_2_moves(transformation_2(transformation_1(corners)))
-                if moves != None:
-                    for move in moves:
-                        path.append(G_1[moveset_2[moveset_1[int(move)]]])
-                        node.move(G_1[moveset_2[moveset_1[int(move)]]])
-                    return path, node
+            moves = get_table_2_moves(transformation_2(transformation_1(corners)))
+            if moves != None:
+                for move in moves:
+                    path.append(move)
+                    node.move(move)
+                print("P2: TWO TRANSFORMATIONS", transformation_1, transformation_2)
+                return path, node
+    
+    # Attempt with 3 transformations
+    #for transformation_1, moveset_1 in TRANSFORMATION_LIST:
+    #    for transformation_2, moveset_2 in TRANSFORMATION_LIST:
+    #        for transformation_3, moveset_3 in TRANSFORMATION_LIST:
+    #            moves = get_table_2_moves(transformation_3(transformation_2(transformation_1(corners))))
+    #            if moves != None:
+    #                for move in moves:
+    #                    path.append(G_1[moveset_3[moveset_2[moveset_1[int(move)]]]])
+    #                    node.move(G_1[moveset_3[moveset_2[moveset_1[int(move)]]]])
+    #                return path, node
                 
     raise Exception("Phase 2 Broken")
