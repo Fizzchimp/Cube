@@ -19,6 +19,17 @@ INV_CONVERSION = {11: 1, 12: 2, 13: 0, # L
                   41: 10, 42: 11, 43: 9, # B
                   51: 12, 52: 13} # U/D
 
+
+CORNER_CONVERSION = [0, 4, 5, 1, 3, 7, 6, 2]
+
+def convert_corners(corners):
+    new_corners = ""
+    for new_pointer in CORNER_CONVERSION:
+        new_corners += corners[new_pointer]
+
+    return new_corners
+
+
 def translate_table():
     with open("Creating Tables/tableinput_2.txt", "r") as input_file:
         with open("Thistlethwaite/Tables/phase_2.txt", "w") as table_file:
@@ -38,8 +49,15 @@ def translate_table():
                     node.cube = getattr(node, G_1[CONVERSION[int(move)]])()
                     
 
-                facelets = node[1][0] + node[1][2] + node[1][6] + node[1][8] + node[3][0] + node[3][2] + node[3][6] + node[3][8] + " :"
-                to_write.append(facelets + move_string + "\n")
+                corners = "".join(line[34:70].strip("\n").split("    "))
+                converted_corners = convert_corners(corners)
+
+                new_corners = node[1][0] + node[1][2] + node[1][6] + node[1][8] + node[3][0] + node[3][2] + node[3][6] + node[3][8]
+                if new_corners != converted_corners:
+                    print(corners, converted_corners, new_corners)
+                    incorrect.append(index)
+
+                to_write.append(new_corners + " :" + move_string + "\n")
                 for face in(node[1], node[2], node[3], node[4]):
                     if face[3] != "S" or face[5] != "S":
                         incorrect.append(index)
@@ -47,7 +65,8 @@ def translate_table():
             for line in to_write:
                 table_file.write(line)
         print(incorrect)
-    
+
+
 
 
 translate_table()
