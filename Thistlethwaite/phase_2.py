@@ -76,6 +76,7 @@ def get_UD_slice_iddfs(start_node):
                     else:
                         node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, G_1), parent.movement + 1, parent.parent))
     raise Exception("UD SLICE NOT SOLVABLE")
+
 def get_corners(node):
     state = ""
     target_colours = (node[1][4], node[3][4])
@@ -101,15 +102,16 @@ def reflection_YZ(corners):
     return (corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[3] + corners[2]).replace("1", "x").replace("2", "1").replace("x", "2")
 REF_YZ_P2 = (4, 3, 5, 1, 0, 2, 7, 6, 8, 10, 9, 11, 12, 13)
 
-def rotation_X(corners):
+
+def rotation_X_2(corners):
     return corners[3] + corners[2] + corners[1] + corners[0] + corners[7] + corners[6] + corners[5] + corners[4]
 ROT_X_P2 = (0, 1, 2, 3, 4, 5, 9, 10, 11, 6, 7, 8, 13, 12)
 
-def rotation_Y(corners):
+def rotation_Y_2(corners):
     return corners[4:] + corners[:4]
 ROT_Y_P2 = (3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8, 12, 13)
 
-def rotation_Z(corners):
+def rotation_Z_2(corners):
     return corners[::-1]
 ROT_Z_P2 = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 13, 12)
 
@@ -117,9 +119,9 @@ TRANSFORMATION_LIST = (
     (reflection_XY, REF_XY),
     (reflection_XZ, REF_XZ),
     (reflection_YZ, REF_YZ),
-    (rotation_X, ROT_X),
-    (rotation_Y, ROT_Y),
-    (rotation_Z, ROT_Z))
+    (rotation_X_2, ROT_X_2),
+    (rotation_Y_2, ROT_Y_2),
+    (rotation_Z_2, ROT_Z_2))
 
 def get_table_2_moves(corners):
     with open("Thistlethwaite/Tables/phase_2.txt") as table:
@@ -143,7 +145,7 @@ def phase_2(G_1_node):
     if check_state(G_1_node): return [], G_1_node
     
     if node == None: return "Cannot Solve!"
-    G_1_node = node.cube
+    UD_state = node.cube
 
     path = []
     while node.parent != None:
@@ -151,9 +153,9 @@ def phase_2(G_1_node):
         path.append(move)
         node = node.parent
     path = path[::-1]
-
-
-    corners = get_corners(G_1_node)
+    print("UD SLICE MOVES:", path)
+    
+    corners = get_corners(UD_state)
     print("Phase 2 Corners:", corners)
     node = Node(G_1_node)
 
@@ -161,8 +163,8 @@ def phase_2(G_1_node):
     moves = get_table_2_moves(corners)
     if moves != None:
         for move in moves:
-            path.append(G_1[int(move)])
-            node.move(G_1[int(move)])
+            path.append(move)
+            node.move(move)
         print("P2: NO TRANSFORMATIONS")
         return path, node
 
@@ -171,6 +173,7 @@ def phase_2(G_1_node):
         moves = get_table_2_moves(transformation(corners))
         if moves != None:
             for move in moves:
+                if move in moveset.keys(): move = moveset[move]
                 path.append(move)
                 node.move(move)
             print("P2: ONE TRANSFORMATIONS", transformation)
@@ -182,20 +185,22 @@ def phase_2(G_1_node):
             moves = get_table_2_moves(transformation_2(transformation_1(corners)))
             if moves != None:
                 for move in moves:
+                    if move in moveset_2.keys(): move = moveset_2[move]
+                    if move in moveset_1.keys(): move = moveset_1[move]
                     path.append(move)
                     node.move(move)
                 print("P2: TWO TRANSFORMATIONS", transformation_1, transformation_2)
                 return path, node
     
     # Attempt with 3 transformations
-    #for transformation_1, moveset_1 in TRANSFORMATION_LIST:
+    # for transformation_1, moveset_1 in TRANSFORMATION_LIST:
     #    for transformation_2, moveset_2 in TRANSFORMATION_LIST:
     #        for transformation_3, moveset_3 in TRANSFORMATION_LIST:
     #            moves = get_table_2_moves(transformation_3(transformation_2(transformation_1(corners))))
     #            if moves != None:
     #                for move in moves:
-    #                    path.append(G_1[moveset_3[moveset_2[moveset_1[int(move)]]]])
-    #                    node.move(G_1[moveset_3[moveset_2[moveset_1[int(move)]]]])
+    #                    path.append(move)
+    #                    node.move(move)
     #                return path, node
                 
     raise Exception("Phase 2 Broken")
