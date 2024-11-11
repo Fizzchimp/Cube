@@ -88,11 +88,14 @@ def test_node(moves, target_corners):
         node.move(move)
     
     new_corners = node[1][0] + node[1][2] + node[1][6] + node[1][8] + node[3][0] + node[3][2] + node[3][6] + node[3][8]
-    if new_corners != target_corners: return False
     
+    if new_corners != target_corners: return False
+
     for face in(node[1], node[2], node[3], node[4]):
         if face[3] != "S" or face[5] != "S": return False
+        
+    return True
     
 
-print(fix_line("11 22 51 43 11 33 21 42 11        0    1    1    0    0    2    0    2        8"))
-#translate_table()
+print(fix_line("12 22 51 52 31 22 32 21 31        0    1    1    0    2    0    0    2        2"))
+translate_table()
