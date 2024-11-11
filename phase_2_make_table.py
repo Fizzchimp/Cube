@@ -67,6 +67,32 @@ def translate_table():
         print(incorrect)
 
 
+def fix_line(line):
+    moves = ["21"] + line[:26].split(" ")
+    
+    corners = "".join(line[34:70].strip("\n").split("    "))
+    converted_corners = convert_corners(corners)
+    
+    for i, move in enumerate(moves):
+        moves[i] = G_1[CONVERSION[int(move)]]
+        
+    for i in range(len(moves)):
+        for move in G_1:
+            new_moves = moves[:i] + [move] + moves[i + 1:]
+            if test_node(new_moves, converted_corners): return new_moves
+        
+            
+def test_node(moves, target_corners):
+    node = Node(["1S2---2S1", "0-0---0-0", "1S2---2S1", "0-0---0-0", "1S2---2S1", "1S2---2S1"])
+    for move in moves:
+        node.move(move)
+    
+    new_corners = node[1][0] + node[1][2] + node[1][6] + node[1][8] + node[3][0] + node[3][2] + node[3][6] + node[3][8]
+    if new_corners != target_corners: return False
+    
+    for face in(node[1], node[2], node[3], node[4]):
+        if face[3] != "S" or face[5] != "S": return False
+    
 
-
-translate_table()
+print(fix_line("11 22 51 43 11 33 21 42 11        0    1    1    0    0    2    0    2        8"))
+#translate_table()
