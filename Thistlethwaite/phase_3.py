@@ -202,7 +202,9 @@ NO_CORNER_TRANSFORMATIONS = (
 
 TWO_CORNER_TRANSFORMATIONS = (
     ("reflect_YZ", REF_YZ),
-    ("Y_2_X", ROT_X_PRIME_Y_2))
+    ("Y_2_X", ROT_X_PRIME_Y_2)
+    ("reflect_XZ_X_Prime", )) # reflect_XZ + X_Prime
+    # reflect_XY + Y_2
 
 FOUR_CORNER_TRANSFORMATIONS = (
     ("X_2", ROT_X_2),

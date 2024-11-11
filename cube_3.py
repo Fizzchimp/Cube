@@ -400,6 +400,10 @@ class Cube3():
         cube.move("Y", "Y")
         return cube.X()
     
+    def reflect_XZ_X_Prime(self):
+        cube = Cube3(self.cube)
+        cube.cube = cube.reflect_XZ()
+        return cube.X_Prime
 
     def move(self, *moves):
         for move in moves:
