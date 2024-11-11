@@ -5,9 +5,8 @@ SuperFlip: Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOY
 
 umm just check this move ['L2', 'L', 'B2', 'B2', 'U', 'F', "F'", "D'", "U'", 'D', "R'", "L'", 'D2', 'L', 'D2', 'F2', 'R2', 'D', 'L2', "R'"] for 3 by 3
 
-uhhh phase 2 broken ['OWBRWRGOW', 'YBWGGBGOG', 'OWBYRGYWR', 'OYRRBGYRW', 'YGBYOOBYR', 'OBGBYWWOR']
+
+['GWYYWYYBY', 'WBORGRRGB', 'BOGBRGRWW', 'OORRBGGOO', 'GGROOYBBY', 'WROYYWBWW'] # Phase 4 broken
 
 
-phase 3 orbits broken (["YYWYWWYYO", "BGBBBGGGG", "ORWRROORW", "GBBGGBBGG", "ROROORYOW", "YWOYYWRWR"]) at phase 3
-
-something funky (i think its the orbits again) ['GWYYWYYBY', 'WBORGRRGB', 'BOGBRGRWW', 'OORRBGGOO', 'GGROOYBBY', 'WROYYWBWW']
+['BYGYWWBWR', 'YGOBGWBRW', 'WOGBRRBYW', 'YGOGBBRBO', 'YRRYORWGY', 'ROGWYOOOG'] wow something very weird happend here

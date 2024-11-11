@@ -1,3 +1,4 @@
+from http.client import GATEWAY_TIMEOUT
 import time
 
 from Thistlethwaite.phase_1 import phase_1
@@ -29,13 +30,13 @@ def thistle_solve(start_cube):
     print(phase_2_moves)
     print("G2 state:", G_2_node.cube, "\n\n")
 
-    return phase_1_moves + phase_2_moves
 
     timer = time.time()
     phase_3_moves, G_3_cube = phase_3(G_2_node)
     print(f"Phase 3 finished in {round(time.time() - timer, 4)}s")
     print(phase_3_moves)
     print("G3 state:", G_3_cube.cube, "\n\n")
+    
 
     phase_4_moves = phase_4(G_3_cube)
     print("Phase 4 moves:", phase_4_moves)

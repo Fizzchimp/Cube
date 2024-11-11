@@ -10,9 +10,7 @@ G_3 = (
 
 ### Phase 4
 ## Fix corners
-def corners_iddfs(cube):
-
-    start_node = Node(cube.cube)
+def corners_iddfs(start_node):
     if check_corners(start_node): return Stack(0), start_node
     
     for i in range(4):

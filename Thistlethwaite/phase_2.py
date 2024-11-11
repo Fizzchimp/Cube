@@ -153,11 +153,9 @@ def phase_2(G_1_node):
         path.append(move)
         node = node.parent
     path = path[::-1]
-    print("UD SLICE MOVES:", path)
     
     corners = get_corners(UD_state)
-    print("Phase 2 Corners:", corners)
-    node = Node(G_1_node)
+    node = Node(UD_state)
 
     # Attempt with no transformations
     moves = get_table_2_moves(corners)
@@ -165,7 +163,6 @@ def phase_2(G_1_node):
         for move in moves:
             path.append(move)
             node.move(move)
-        print("P2: NO TRANSFORMATIONS")
         return path, node
 
     # Attempt with 1 transformation
@@ -176,7 +173,6 @@ def phase_2(G_1_node):
                 if move in moveset.keys(): move = moveset[move]
                 path.append(move)
                 node.move(move)
-            print("P2: ONE TRANSFORMATIONS", transformation)
             return path, node
         
     # Attempt with 2 transformations
@@ -189,7 +185,6 @@ def phase_2(G_1_node):
                     if move in moveset_1.keys(): move = moveset_1[move]
                     path.append(move)
                     node.move(move)
-                print("P2: TWO TRANSFORMATIONS", transformation_1, transformation_2)
                 return path, node
     
     # Attempt with 3 transformations
