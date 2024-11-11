@@ -210,6 +210,7 @@ FOUR_CORNER_TRANSFORMATIONS = (
 
 # Try transformations to get the moves to solve the sides
 def get_side_moves(node, table_num):
+
     table = get_table(table_num)
     transformations = (NO_CORNER_TRANSFORMATIONS, TWO_CORNER_TRANSFORMATIONS, FOUR_CORNER_TRANSFORMATIONS)[table_num]
     
