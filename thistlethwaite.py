@@ -36,7 +36,7 @@ def thistle_solve(start_cube):
     print(f"Phase 3 finished in {round(time.time() - timer, 4)}s")
     print(phase_3_moves)
     print("G3 state:", G_3_cube.cube, "\n\n")
-    
+
 
     phase_4_moves = phase_4(G_3_cube)
     print("Phase 4 moves:", phase_4_moves)

@@ -193,17 +193,13 @@ NO_CORNER_TRANSFORMATIONS = (
     ("X", ROT_X_PRIME),
     ("X_Prime", ROT_X),
     ("X_2", ROT_X_2),
-    ("Y", ROT_Y_PRIME),
-    ("Y_Prime", ROT_Y),
     ("Y_2", ROT_Y_2),
-    ("Z", ROT_Z_PRIME),
-    ("Z_Prime", ROT_Z),
     ("Z_2", ROT_Z_2))
 
 TWO_CORNER_TRANSFORMATIONS = (
     ("reflect_YZ", REF_YZ),
     ("Y_2_X", ROT_X_PRIME_Y_2)
-    ("reflect_XZ_X_Prime", )) # reflect_XZ + X_Prime
+    ) # reflect_XZ + X_Prime
     # reflect_XY + Y_2
 
 FOUR_CORNER_TRANSFORMATIONS = (
@@ -212,9 +208,9 @@ FOUR_CORNER_TRANSFORMATIONS = (
 
 # Try transformations to get the moves to solve the sides
 def get_side_moves(node, table_num):
-
+    corner_check = ("00000000", "10100000", "11001100")[table_num]
     table = get_table(table_num)
-    transformations = (NO_CORNER_TRANSFORMATIONS, TWO_CORNER_TRANSFORMATIONS, FOUR_CORNER_TRANSFORMATIONS)[table_num]
+    transformations = NO_CORNER_TRANSFORMATIONS
     
     # Try with no transformations
     # print("TRYING NO TRANSFORMATIONS")
@@ -225,6 +221,7 @@ def get_side_moves(node, table_num):
     print("TRYING UNO TRANSFORMATION")
     for transformation, moveset in transformations:
         transformed_node = Node(getattr(node, transformation)())
+        if get_orbits(transformed_node) != corner_check: pass
         moves = check_table(table, transformed_node)
         if moves != False:
             for i, move in enumerate(moves):
@@ -239,6 +236,7 @@ def get_side_moves(node, table_num):
     for transformation_1, moveset_1 in transformations:
         for transformation_2, moveset_2 in transformations:
             transformed_node = Node(getattr(Node(getattr(node, transformation_1)()), transformation_2)())
+            if get_orbits(transformed_node) != corner_check: pass
             moves = check_table(table, transformed_node)
             if moves != False:
                 for i, move in enumerate(moves):
@@ -255,6 +253,7 @@ def get_side_moves(node, table_num):
     for transformation_1, moveset_1 in transformations:
         for transformation_2, moveset_2 in transformations:
             for transformation_3, moveset_3 in transformations:
+                if get_orbits(transformed_node) != corner_check: pass
                 transformed_node = Node(getattr(Node(getattr(Node(getattr(node, transformation_1)()), transformation_2)()), transformation_3)())
                 moves = check_table(table, transformed_node)
                 if moves != False:
@@ -270,7 +269,7 @@ def get_side_moves(node, table_num):
     
     #print("UH OH")
     #return []
-    raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")        
+    raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
 
 # Returns table from specified table_number
 def get_table(table_num):
@@ -313,7 +312,7 @@ def check_table(table, node):
                 
                 except: pass
             
-    # If no solution is found, return false        
+    # If no solution is found, return false     
     return False
 
 def phase_3(node):
@@ -354,7 +353,6 @@ def phase_3(node):
     print("Phase 3 moves:", phase_3_moves)
     
     return phase_3_moves, node
-
 
 node = Node(['RWWWWRRWW', 'BBBBGGBBB', 'WOOYRWORY', 'GBGGBGGGG', 'RRYROOYOO', 'YYRYYOWYO'])
 #print(phase_3(node))
