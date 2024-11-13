@@ -1,5 +1,7 @@
 import time
 
+import random
+
 from Thistlethwaite.phase_1 import phase_1
 from Thistlethwaite.phase_2 import phase_2
 from Thistlethwaite.phase_3 import phase_3
@@ -41,10 +43,19 @@ def thistle_solve(start_cube):
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
-node = Node(['RWYWWRRYW', 'BGGBGGBBG', 'YORORWORR', 'BGGBBGGBB', 'OOYYOOORO', 'WWWYYRWYY'])
-print(thistle_solve(node))
 
+# node = Node(['YWWWWROYR', 'BGGGGBGBB', 'WOYYROROO', 'BBBBBGGGG', 'OROYOOWRY', 'WWYWYRRYR'])
+# print(thistle_solve(node))
 
-for i in range(0):
-    node.scramble()
-    print(thistle_solve(node))
+moves = (
+    "L_2", "R_2",
+    "F_2", "B_2",
+    "U_2", "D_2")
+
+node = Node()
+for i in range(1000):
+    for j in range(20):
+        node.move(random.choice(moves))
+    node.display()
+    print(i)
+    print(phase_4(node))

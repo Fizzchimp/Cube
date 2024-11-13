@@ -154,20 +154,22 @@ def get_key(cube):
     return "|".join(sides_key)
 
 # Tests if the given node is in G_3
-def test_corner_permutation(cube):
-    for face_1, face_2 in ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4])):
+def test_corner_permutation(test_node):
+
+    node = Node(test_node.cube)
+    for face_1, face_2 in ((node[0], node[5]), (node[1], node[3]), (node[2], node[4])):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
     
-    cube.move("X")
-    for face_1, face_2 in ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4])):
+    node.move("X")
+    for face_1, face_2 in ((node[0], node[5]), (node[1], node[3]), (node[2], node[4])):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
         
-    cube.move("Z")
-    for face_1, face_2 in ((cube[0], cube[5]), (cube[1], cube[3]), (cube[2], cube[4])):
+    node.move("Z")
+    for face_1, face_2 in ((node[0], node[5]), (node[1], node[3]), (node[2], node[4])):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
@@ -271,7 +273,6 @@ def get_side_moves(node, table_num):
 
 # Returns table from specified table_number
 def get_table(table_num):
-    print("Table num:", table_num)
     if table_num == 0:
         with open("Thistlethwaite/Tables/phase_3_no_corners.txt", "r") as table:
             return table.readlines()
@@ -287,7 +288,6 @@ def get_table(table_num):
 
 # Checks the table for moves to solve the given node
 def check_table(table, node):
-    print("Table, node", node.cube)
     key = get_key(node)
     
     # Checks through each line in the table
@@ -301,14 +301,15 @@ def check_table(table, node):
             test_node = Node(node.cube)
             for move in moves:
                 test_node.move(move)
-            
+
+
             # Checks if the solution is in G_3 (WONT KNOW IF THIS WORKS FULLY UNTIL PHASE 3 IS FIXED)
             if test_corner_permutation(test_node):
+
                 print("Corner Permutation test success")
                 try:
-                    phase_4(test_node)
-                    print("Node within G3:", test_node.cube)
-
+                    phase_4(Node(test_node.cube))
+                    print("Tested node:", test_node.cube)
                     return moves
                 
                 except: pass
@@ -333,17 +334,14 @@ def phase_3(node):
     
     # Transform node to be used in table
     transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
-    print("Transformations:", transformation_indexes)
     
     # Get the moves to fix the transformed node
     moves = get_side_moves(transformed_node, table_num)
-    # print("Untransformed moves:", moves)
     
     # Transform moves to work on origional node
     transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
     transformation_2 = PHASE_3_TRANSFORMATIONS[transformation_indexes[1]]
     
-    print("Node before:", node.cube)
 
     for move in moves:
         if move in transformation_2.keys(): move = transformation_2[move]
