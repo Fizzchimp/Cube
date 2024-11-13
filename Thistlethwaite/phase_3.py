@@ -308,6 +308,7 @@ def check_table(table, node):
                 print("Corner Permutation test success", moves)
                 try:
                     phase_4(test_node)
+                    print("Node within G3:", test_node.cube)
                     return moves
                 
                 except: pass
@@ -342,7 +343,8 @@ def phase_3(node):
     # Transform moves to work on origional node
     transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
     transformation_2 = PHASE_3_TRANSFORMATIONS[transformation_indexes[1]]
-        
+    
+    print(transformation_1, transformation_2)
     for move in moves:
         if move in transformation_2.keys(): move = transformation_2[move]
         if move in transformation_1.keys(): move = transformation_1[move]

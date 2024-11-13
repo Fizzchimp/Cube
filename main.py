@@ -76,11 +76,9 @@ class World:
         
         self.cube_2 = Cube2()
         
-        #self.cube_3 = Cube3(['GYRYWWGBB', 'YGYBGRWGG', 'RYYYROWGW', 'OOYGBBOOB', 'BOOROWRRO', 'RWBRYBGWW']) # Phase 3 not working
-        self.cube_3 = Cube3(['OWOWWWRGB', 'WBGBGYYGB', 'YROORORYG', 'WGYBBYWGR', 'GOGRORBRO', 'WBROYYBWY'])
+        #self.cube_3 = Cube3(['RWYOWWRWW', 'BBBGBGGBB', 'YORWROOOO', 'GBGGGGBBG', 'RRWYORORO', 'WYYYYRWYY']) # Does the weird thing 
+        self.cube_3 = Cube3(['RWYWWRRYW', 'BGGBGGBBG', 'YORORWORR', 'BGGBBGGBB', 'OOYYOOORO', 'WWWYYRWYY']) # Phase 4 breaks
         
-        #self.cube_3.move("F", "L", "R'", "D2", "B2", "U")
-        #self.cube_3.move("F2", "D2", "L", "R'", "F", "R2", "F", "B2", "R", "B'", "R2", "B", "R", "B")
 
         self.cube = getattr(self, f"cube_{self.cube_type}")
         

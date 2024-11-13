@@ -1,4 +1,3 @@
-from http.client import GATEWAY_TIMEOUT
 import time
 
 from Thistlethwaite.phase_1 import phase_1
@@ -43,6 +42,6 @@ def thistle_solve(start_cube):
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
 node = Node(['OWBRWRGOW', 'YBWGGBGOG', 'OWBYRGYWR', 'OYRRBGYRW', 'YGBYOOBYR', 'OBGBYWWOR'])
-for i in range(1000):
+for i in range(0):
     node.scramble()
     print(thistle_solve(node))
