@@ -12,7 +12,7 @@ from Assets.cqueue import Queue
 from thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 1
+ROTATION_SPEED = 125
 BG_SPEED = 40
 
 WIDTH = 700
@@ -78,7 +78,7 @@ class World:
         
         self.cube_3 = Cube3(['YWWWWROYR', 'BGGGGBGBB', 'WOYYROROO', 'BBBBBGGGG', 'OROYOOWRY', 'WWYWYRRYR']) # Breaks
         # self.cube_3 = Cube3(['RWYOWWRWW', 'BBBGBGGBB', 'YORWROOOO', 'GBGGGGBBG', 'RRWYORORO', 'WYYYYRWYY']) # Does the weird thing 
-        self.cube_3 = Cube3(['RRRORRORO', 'BGBGGGGGG', 'YYWYYYYWW', 'BBBBBBGBG', 'WWYWWWWYY', 'OOOROOROR'])
+        self.cube_3 = Cube3(['YYYWWWWYW', 'BBGGGGBBG', 'ROOORRRRO', 'GGBBBBGGB', 'RROOORROO', 'YWYYYYWWW']) # Phase 4 doesnt work
 
         self.cube = getattr(self, f"cube_{self.cube_type}")
         
