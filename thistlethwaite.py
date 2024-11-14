@@ -45,28 +45,30 @@ def thistle_solve(start_cube):
 
 
 node = Node(['WWWWWWWYW', 'GGGBGGGBG', 'RRRRRORRR', 'BBBBBGBGB', 'OOOOOROOO', 'YWYYYYYYY'])
-#print(phase_4(node))
+for transformation in ("reflect_XY", "reflect_XZ", "reflect_YZ", "X", "X_Prime", "X_2", "Y", "Y_Prime", "Y_2", "Z", "Z_Prime", "Z_2")
+print(phase_4(node))
 
 moves = (
     "L_2", "R_2",
     "F_2", "B_2",
     "U_2", "D_2")
 
-global tested_transformations
-tested_transformations = []
+tested = []
 
 success = 0
 fail = 0
 
 node = Node()
-for i in range(1000):
+for i in range(0):
     node = Node()
     for j in range(20):
         node.move(random.choice(moves))
+    
     try:
-        print(phase_4(node), "\n")
+        print(phase_4(node, tested), "\n")
         print(node.cube)
         success += 1
+    
     except: fail += 1
     print(i, "Success:", success, "Fail:", fail)
-    print("tested:", tested_transformations)
+    print("tested:", tested)

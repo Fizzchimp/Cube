@@ -24,10 +24,8 @@ def get_key(state):
     return key[:-1]
         
 
-
-
 def make_table():
-    with open("phase_4_input.txt", "r") as file:
+    with open("Creating Tables/phase_4_input.txt", "r") as file:
         lines = translate_table(file.readlines())
 
 
@@ -44,9 +42,9 @@ def make_table():
     lines = sorted(lines)
     lines[-1] = "XXXX|XXXX|XXXX|XXXX|XXXX|XXXX : L_2 R_2 F_2 B_2 U_2 D_2"
 
-    with open("Tables/phase_4.txt", "w") as table:
+    with open("Thistlethwaite/Tables/phase_4.txt", "w") as table:
         for line in lines:
             table.write(line)
 
 
-# make_table()
+make_table()

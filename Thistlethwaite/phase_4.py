@@ -97,13 +97,13 @@ PHASE_4_TRANSFORMATIONS = [
     ("Z_Prime", ROT_Z),
     ("Z_2", ROT_Z_2)]
 
-def try_transformations(cube):
-    global tested_transformations
+def try_transformations(cube, tested):
     
     # Try with no transformation
     #print("Trying no transformation")
     side_moves = read_table_4(cube)
     if side_moves != None:
+        print("NO TRANSFORMATIONS")
         return side_moves
     
     # Try with one transformation
@@ -114,9 +114,7 @@ def try_transformations(cube):
             for i, move in enumerate(side_moves):
                 if move in moveset.keys(): side_moves[i] = moveset[move]
                 
-            if transformation not in tested_transformations:
-                tested_transformations.append(transformation)
-                print("A")
+            if transformation not in tested: tested.append(transformation)
             return side_moves
     
     # Try with two transformations
@@ -137,9 +135,7 @@ def try_transformations(cube):
                     #print(transformation_1, transformation_2)
 
                     for transformation in (transformation_1, transformation_2):
-                        if transformation not in tested_transformations:
-                            tested_transformations.append(transformation)
-                            print("A")
+                        if transformation not in tested: tested.append(transformation)
                     return side_moves
     
 
@@ -165,9 +161,8 @@ def try_transformations(cube):
                     #print(transformation_1, transformation_2, transformation_3)
 
                     for transformation in (transformation_1, transformation_2, transformation_3):
-                        if transformation not in tested_transformations:
-                            tested_transformations.append(transformation_1)
-                            print("A")
+                        if transformation not in tested: tested.append(transformation_1)
+ 
                     return side_moves
 
     ## Try with four transformations
@@ -191,7 +186,7 @@ def try_transformations(cube):
     #                       
     #                       if transformed_3 in moveset_1.keys(): transformed_4 = moveset_1[transformed_3]
     #                       else: transformed_4 = transformed_2
-    #                       
+    #                      
     #                       side_moves[i] = transformed_4
     #                      
     #                   print(transformation_1, transformation_2, transformation_3, transformation_4)
@@ -201,7 +196,8 @@ def try_transformations(cube):
 
 
 
-def phase_4(start_node):
+def phase_4(start_node, tested):
+    
     corner_moves = []
     ## Get moves to fix the corners
     node_stack, corner_node = corners_iddfs(start_node)
@@ -211,10 +207,10 @@ def phase_4(start_node):
         corner_moves.append(G_3[stack_node.movement])
         
     corner_moves = corner_moves[::-1]
-    print("corner moves:", corner_moves)
+    #print("corner moves:", corner_moves)
     
     #print("Fixed corners:", corner_node.cube)
-    side_moves = try_transformations(corner_node)
+    side_moves = try_transformations(corner_node, tested)
     #print(side_moves)
                 
     
