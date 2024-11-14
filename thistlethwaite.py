@@ -44,19 +44,29 @@ def thistle_solve(start_cube):
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
 
-node = Node(['YYYWWWWYW', 'BBGGGGBBG', 'ROOORRRRO', 'GGBBBBGGB', 'RROOORROO', 'YWYYYYWWW'])
-print(phase_4(node))
+node = Node(['WWWWWWWYW', 'GGGBGGGBG', 'RRRRRORRR', 'BBBBBGBGB', 'OOOOOROOO', 'YWYYYYYYY'])
+#print(phase_4(node))
 
 moves = (
     "L_2", "R_2",
     "F_2", "B_2",
     "U_2", "D_2")
 
-# node = Node()
-# for i in range(1000):
-#     node = Node()
-#     for j in range(20):
-#         node.move(random.choice(moves))
-#     print(node.cube)
-#     print(i)
-#     print(phase_4(node), "\n")
+global tested_transformations
+tested_transformations = []
+
+success = 0
+fail = 0
+
+node = Node()
+for i in range(1000):
+    node = Node()
+    for j in range(20):
+        node.move(random.choice(moves))
+    try:
+        print(phase_4(node), "\n")
+        print(node.cube)
+        success += 1
+    except: fail += 1
+    print(i, "Success:", success, "Fail:", fail)
+    print("tested:", tested_transformations)

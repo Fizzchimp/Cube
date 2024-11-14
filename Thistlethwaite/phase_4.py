@@ -98,6 +98,7 @@ PHASE_4_TRANSFORMATIONS = [
     ("Z_2", ROT_Z_2)]
 
 def try_transformations(cube):
+    global tested_transformations
     
     # Try with no transformation
     #print("Trying no transformation")
@@ -112,7 +113,10 @@ def try_transformations(cube):
         if side_moves != None:
             for i, move in enumerate(side_moves):
                 if move in moveset.keys(): side_moves[i] = moveset[move]
-            #print(transformation)
+                
+            if transformation not in tested_transformations:
+                tested_transformations.append(transformation)
+                print("A")
             return side_moves
     
     # Try with two transformations
@@ -131,6 +135,11 @@ def try_transformations(cube):
                         
                         side_moves[i] = transformed_2
                     #print(transformation_1, transformation_2)
+
+                    for transformation in (transformation_1, transformation_2):
+                        if transformation not in tested_transformations:
+                            tested_transformations.append(transformation)
+                            print("A")
                     return side_moves
     
 
@@ -154,34 +163,39 @@ def try_transformations(cube):
                         
                         side_moves[i] = transformed_3
                     #print(transformation_1, transformation_2, transformation_3)
+
+                    for transformation in (transformation_1, transformation_2, transformation_3):
+                        if transformation not in tested_transformations:
+                            tested_transformations.append(transformation_1)
+                            print("A")
                     return side_moves
 
     ## Try with four transformations
     # print("Trying 4 transformations")
-    for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
-       for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
-           for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
-               for transformation_4, moveset_4 in PHASE_4_TRANSFORMATIONS:
-                   side_moves = read_table_4(getattr(Node(getattr(Node(getattr(Node(getattr(cube, transformation_1)()), transformation_2)()), transformation_3)()), transformation_4)())
-                   if side_moves != None:
-                       for i, move in enumerate(side_moves):
-                           
-                           if move in moveset_4.keys(): transformed_1 = moveset_4[move]
-                           else: transformed_1 = move
-                   
-                           if transformed_1 in moveset_3.keys(): transformed_2 = moveset_3[transformed_1]
-                           else: transformed_2 = transformed_1
-                           
-                           if transformed_2 in moveset_2.keys(): transformed_3 = moveset_2[transformed_2]
-                           else: transformed_3 = transformed_2
-                           
-                           if transformed_3 in moveset_1.keys(): transformed_4 = moveset_1[transformed_3]
-                           else: transformed_4 = transformed_2
-                           
-                           side_moves[i] = transformed_4
-                          
-                       print(transformation_1, transformation_2, transformation_3, transformation_4)
-                       return side_moves
+    #for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
+    #   for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
+    #       for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
+    #           for transformation_4, moveset_4 in PHASE_4_TRANSFORMATIONS:
+    #               side_moves = read_table_4(getattr(Node(getattr(Node(getattr(Node(getattr(cube, transformation_1)()), transformation_2)()), transformation_3)()), transformation_4)())
+    #               if side_moves != None:
+    #                   for i, move in enumerate(side_moves):
+    #                       
+    #                       if move in moveset_4.keys(): transformed_1 = moveset_4[move]
+    #                       else: transformed_1 = move
+    #               
+    #                       if transformed_1 in moveset_3.keys(): transformed_2 = moveset_3[transformed_1]
+    #                       else: transformed_2 = transformed_1
+    #                       
+    #                       if transformed_2 in moveset_2.keys(): transformed_3 = moveset_2[transformed_2]
+    #                       else: transformed_3 = transformed_2
+    #                       
+    #                       if transformed_3 in moveset_1.keys(): transformed_4 = moveset_1[transformed_3]
+    #                       else: transformed_4 = transformed_2
+    #                       
+    #                       side_moves[i] = transformed_4
+    #                      
+    #                   print(transformation_1, transformation_2, transformation_3, transformation_4)
+    #                   return side_moves
     raise Exception("No phase 4 table moves found")           
 
 
@@ -197,7 +211,7 @@ def phase_4(start_node):
         corner_moves.append(G_3[stack_node.movement])
         
     corner_moves = corner_moves[::-1]
-    #print("corner moves:", corner_moves)
+    print("corner moves:", corner_moves)
     
     #print("Fixed corners:", corner_node.cube)
     side_moves = try_transformations(corner_node)
