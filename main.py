@@ -237,6 +237,7 @@ class World:
         for event in pg.event.get():
                 if event.type == pg.QUIT: return False
                 elif event.type == pg.KEYDOWN:
+                    if self.key == pg.K_q: self.cube.cube = self.cube.reflect_XZ()
                     self.keyDown, self.key = True, event.key
                 elif event.type == pg.KEYUP: self.keyDown = False
       

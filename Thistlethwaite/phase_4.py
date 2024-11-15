@@ -114,6 +114,7 @@ def try_transformations(cube, tested):
             for i, move in enumerate(side_moves):
                 if move in moveset.keys(): side_moves[i] = moveset[move]
                 
+            print(transformation)
             if transformation not in tested: tested.append(transformation)
             return side_moves
     
@@ -132,7 +133,7 @@ def try_transformations(cube, tested):
                         else: transformed_2 = transformed_1
                         
                         side_moves[i] = transformed_2
-                    #print(transformation_1, transformation_2)
+                    print(transformation_1, transformation_2)
 
                     for transformation in (transformation_1, transformation_2):
                         if transformation not in tested: tested.append(transformation)
@@ -158,15 +159,16 @@ def try_transformations(cube, tested):
                         else: transformed_3 = transformed_2
                         
                         side_moves[i] = transformed_3
-                    #print(transformation_1, transformation_2, transformation_3)
+                    print(transformation_1, transformation_2, transformation_3)
 
                     for transformation in (transformation_1, transformation_2, transformation_3):
                         if transformation not in tested: tested.append(transformation_1)
- 
+                    
+                    raise Exception("THREE TRANSFORMATIONS")
                     return side_moves
 
-    ## Try with four transformations
-    # print("Trying 4 transformations")
+    # Try with four transformations
+    #print("Trying 4 transformations")
     #for transformation_1, moveset_1 in PHASE_4_TRANSFORMATIONS:
     #   for transformation_2, moveset_2 in PHASE_4_TRANSFORMATIONS:
     #       for transformation_3, moveset_3 in PHASE_4_TRANSFORMATIONS:
@@ -191,7 +193,7 @@ def try_transformations(cube, tested):
     #                      
     #                   print(transformation_1, transformation_2, transformation_3, transformation_4)
     #                   return side_moves
-    raise Exception("No phase 4 table moves found")           
+    raise Exception("No phase 4 table moves found")   
 
 
 
@@ -207,7 +209,7 @@ def phase_4(start_node, tested):
         corner_moves.append(G_3[stack_node.movement])
         
     corner_moves = corner_moves[::-1]
-    #print("corner moves:", corner_moves)
+    print("corner moves:", corner_moves)
     
     #print("Fixed corners:", corner_node.cube)
     side_moves = try_transformations(corner_node, tested)
