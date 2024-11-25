@@ -71,7 +71,7 @@ BOB_STRENGTH = WIDTH * 0.015
 
 class World:
     def __init__(self):
-        # Creating Cube object
+        # Tells the program what the current cube is
         self.cube_type = 3
         
         self.cube_2 = Cube2()
@@ -81,43 +81,51 @@ class World:
         self.cube_3 = Cube3(['WYYWWYYYW', 'GGBGGGGGB', 'RRROROOOO', 'BBGBBBBBG', 'OOORORRRR', 'YWWYYWWWY']) # Phase 4 doesnt work
         #self.cube_3 = Cube3()
 
+        # Sets the current cube to one of the cube objects
         self.cube = getattr(self, f"cube_{self.cube_type}")
         
         # Initiating Pygame and display module
         pg.init()
         self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, self.cube_type)
-        self.clock = pg.time.Clock()
-        self.move_queue = Queue(100)
+        self.clock = pg.time.Clock() # Clock to keep track of time and update frames accordingly
+        self.move_queue = Queue(100) # Queue of moves to be performed on the current cube
         
-        
-        self.edit_pointer = -1
+
+        # This points to a facelet on the current cube that is being edited. Set to -1 when program not in editing state
+        self.edit_pointer = -1 
            
     # Organises Pathfinding for each cube
     def find_path(self):
         if self.cube_type == 2:
+            # Executes meet in the middle BFS for the 2 by 2 cube
             sNode, eNode = solve_2(self.cube)
             path = []
             
+            # If no path is found, return false to indicate the cube cannot be solved
             if sNode == None:
                 return False
             
+            # Adds the move from each node at the start node chain then reverse it.
             while sNode.parent != None:
                 path.append(sNode.movement)
                 sNode = sNode.parent
             path = path[::-1]
 
+            # Adds the move from each node at the end chain to the move path
             while eNode.parent != None:
                 path.append(eNode.movement)
                 eNode = eNode.parent
 
             return path
         
+        # Executes the thistlethwaite solver for the 3 by 3 cube
         elif self.cube_type == 3:
             moves = thistle_solve(self.cube)
             return moves
     
     # Swaps between 2x2 and 3x3
     def swap_cubes(self):
+        # Changes the cube type, and sets the current cube structure accordingly
         if self.cube_type == 2:
             self.cube_type = 3
             self.cube = self.cube_3
@@ -126,6 +134,7 @@ class World:
             self.cube_type = 2
             self.cube = self.cube_2
         
+        # Tells the display class to swap cube models
         self.screen.swap_cubes()
     
     # Swaps between editing and solving
