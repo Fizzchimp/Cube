@@ -11,9 +11,11 @@ G_3 = (
 ### Phase 4
 ## Fix corners
 def corners_iddfs(start_node):
-    if check_corners(start_node): return start_node
+    possible_nodes = []
+    if check_corners(start_node): possible_nodes.append(start_node)
     
     for i in range(4):
+        print(possible_nodes)
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.L_2(), 0, start_node))
         
@@ -33,8 +35,7 @@ def corners_iddfs(start_node):
                 
                 # Check if the current node is correct
                 if check_corners(current_node):
-                    node_stack.push(current_node)
-                    return current_node
+                    possible_nodes.append(current_node)
                 
                 # Push next movement
                 if current_movement < 5:
@@ -51,8 +52,8 @@ def corners_iddfs(start_node):
                     if top: exhausted = True
                     else: node_stack.push(Node(getattr(node.parent, G_3[node.movement + 1])(), node.movement + 1, node.parent))
                         
-
-    print("Corner search exhausted!")
+    if possible_nodes != []: return possible_nodes
+    raise Exception("Corner search exhausted!")
                         
 # Check if all the corners are home
 def check_corners(node):
@@ -197,25 +198,25 @@ def phase_4(start_node):
     
     corner_moves = []
     ## Get moves to fix the corners
-    corner_node = corners_iddfs(Node(start_node.cube))
+    returned_nodes = corners_iddfs(Node(start_node.cube))
+    for corner_node in returned_nodes:
+        try:
+            corner_moves = []
     
-    corner_moves = [corner_node.movement]
-    
-    parent = corner_node.parent
-    if parent != None:
-        while parent.movement != None:
-            corner_moves.append(parent.movement)
-            parent = parent.parent
+            parent = corner_node.parent
+            if parent != None:
+                corner_moves.append(G_3[corner_node.movement])
+                while parent.movement != None:
+                    corner_moves.append(G_3[parent.movement])
+                    parent = parent.parent
     
         
-    corner_moves = corner_moves[::-1]
-    print("corner moves:", corner_moves)
+            corner_moves = corner_moves[::-1]
     
-    #print("Fixed corners:", corner_node.cube)
-    side_moves = try_transformations(corner_node)
-    print(side_moves)
-                
-    
-    
+            side_moves = try_transformations(corner_node)
 
-    return corner_moves + side_moves
+            return corner_moves + side_moves
+        
+        except: pass
+    raise Exception("No moves found for phase 4")
+
