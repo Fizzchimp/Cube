@@ -106,6 +106,7 @@ FIXED_ORBITS_TRANSFORMATIONS = [
 
 # Decides which table to use and which transformations are applied
 def get_fixed_orbits(cube):
+    print(cube.cube)
     
     # Try with no transformation
     orbits = get_orbits(cube)

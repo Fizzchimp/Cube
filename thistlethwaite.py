@@ -43,38 +43,6 @@ def thistle_solve(start_cube):
     print("Phase 4 moves:", phase_4_moves)
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
-node = Node(['OROOORORO', 'GGGBGGGBG', 'YWYWYYYWY', 'BGBGBBBBB', 'WYWYWWWYW', 'RORORRROR'])
-print("Basic:", phase_4(node, []), "\n\n")
-for transformation in ("reflect_XY", "reflect_XZ", "reflect_YZ", "X", "X_Prime", "X_2", "Y", "Y_Prime", "Y_2", "Z", "Z_Prime", "Z_2"):
-    try:
-        print("Node:", getattr(node, transformation)())
-        print(phase_4(Node(getattr(node, transformation)()), []))
-        print("Success!\n\n")
-    except:
-        print("FAIL")
-        #raise Exception("FAIL", transformation, "\n\n")
-
-moves = (
-    "L_2", "R_2",
-    "F_2", "B_2",
-    "U_2", "D_2")
-
-tested = []
-
-success = 0
-fail = 0
 
 node = Node()
-for i in range(0):
-    node = Node()
-    for j in range(20):
-        node.move(random.choice(moves))
-    
-    try:
-        print(phase_4(node, tested), "\n")
-        print(node.cube)
-        success += 1
-    
-    except: fail += 1
-    print(i, "Success:", success, "Fail:", fail)
-    print("tested:", tested)
+print(phase_4(node))

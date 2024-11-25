@@ -11,7 +11,7 @@ G_3 = (
 ### Phase 4
 ## Fix corners
 def corners_iddfs(start_node):
-    if check_corners(start_node): return Stack(0), start_node
+    if check_corners(start_node): return start_node
     
     for i in range(4):
         node_stack = Stack(i + 1)
@@ -34,7 +34,7 @@ def corners_iddfs(start_node):
                 # Check if the current node is correct
                 if check_corners(current_node):
                     node_stack.push(current_node)
-                    return node_stack, Node(current_node.cube)
+                    return current_node
                 
                 # Push next movement
                 if current_movement < 5:
@@ -97,7 +97,7 @@ PHASE_4_TRANSFORMATIONS = [
     ("Z_Prime", ROT_Z),
     ("Z_2", ROT_Z_2)]
 
-def try_transformations(cube, tested):
+def try_transformations(cube):
     
     # Try with no transformation
     #print("Trying no transformation")
@@ -115,7 +115,6 @@ def try_transformations(cube, tested):
                 if move in moveset.keys(): side_moves[i] = moveset[move]
                 
             print(transformation)
-            if transformation not in tested: tested.append(transformation)
             return side_moves
     
     # Try with two transformations
@@ -135,8 +134,6 @@ def try_transformations(cube, tested):
                         side_moves[i] = transformed_2
                     print(transformation_1, transformation_2)
 
-                    for transformation in (transformation_1, transformation_2):
-                        if transformation not in tested: tested.append(transformation)
                     return side_moves
     
 
@@ -161,8 +158,6 @@ def try_transformations(cube, tested):
                         side_moves[i] = transformed_3
                     print(transformation_1, transformation_2, transformation_3)
 
-                    for transformation in (transformation_1, transformation_2, transformation_3):
-                        if transformation not in tested: tested.append(transformation_1)
                     
                     raise Exception("THREE TRANSFORMATIONS")
                     return side_moves
@@ -198,22 +193,27 @@ def try_transformations(cube, tested):
 
 
 
-def phase_4(start_node, tested):
+def phase_4(start_node):
     
     corner_moves = []
     ## Get moves to fix the corners
-    node_stack, corner_node = corners_iddfs(start_node)
-
-    while not node_stack.is_empty():
-        stack_node = node_stack.pop()
-        corner_moves.append(G_3[stack_node.movement])
+    corner_node = corners_iddfs(Node(start_node.cube))
+    
+    corner_moves = [corner_node.movement]
+    
+    parent = corner_node.parent
+    if parent != None:
+        while parent.movement != None:
+            corner_moves.append(parent.movement)
+            parent = parent.parent
+    
         
     corner_moves = corner_moves[::-1]
     print("corner moves:", corner_moves)
     
     #print("Fixed corners:", corner_node.cube)
-    side_moves = try_transformations(corner_node, tested)
-    #print(side_moves)
+    side_moves = try_transformations(corner_node)
+    print(side_moves)
                 
     
     
