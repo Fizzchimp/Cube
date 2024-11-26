@@ -1,5 +1,8 @@
 from Assets.node_3 import Node
 from Assets.stack import Stack
+from Assets.cqueue import Queue
+from Assets.binsearch import binSearch
+from Assets.mergesort import mergeSort
 from Thistlethwaite.transformations import *
 
 
@@ -191,6 +194,36 @@ def try_transformations(cube):
     #                   return side_moves
     raise Exception("No phase 4 table moves found")   
 
+
+
+def bfs_sides(start_state):
+    cur_start_node = Node(start_state)
+    cur_end_node = Node([start_state[i][4] * 9 for i in range(6)])
+
+    start_queue = Queue(99999)
+    end_queue = Queue(99999)
+
+    visited_start_nodes = []
+    visited_end_nodes = []
+
+    generation = 0
+
+    # Limits the search to a certain depth
+    while generation <= 6:
+        next_gen = generation + 1
+
+        visited_start_nodes = []
+        while cur_start_node.generation == generation:
+            
+            # If the node is found in the visited end nodes, return both the current node and the found node
+            check, node = binSearch(visited_end_nodes, cur_start_node)
+            if check == True:
+                return cur_start_node, node
+            
+            # If the node is not found, add it to the visited start nodes list
+            
+
+        
 
 
 
