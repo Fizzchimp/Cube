@@ -44,5 +44,41 @@ def thistle_solve(start_cube):
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
 
-node = Node(['WWWWWWYWY', 'GGBBGBGGB', 'RRRORROOO', 'GBBGBGGBB', 'OOOOORRRR', 'YYYYYYWYW'])
-print(bfs_sides(node.cube))
+node = Node()
+for i in range(1000):
+    node.scramble()
+    print(thistle_solve(node))
+    
+# G_3 = (
+#     "L_2", "R_2",
+#     "F_2", "B_2",
+#     "U_2", "D_2")
+
+# # # node = Node(['WWWWWWYWY', 'GGBBGBGGB', 'RRRORROOO', 'GBBGBGGBB', 'OOOOORRRR', 'YYYYYYWYW'])
+# # node = Node()
+# # for i in range(100):
+# #     for i in range(20):
+# #         node.move(G_3[random.randint(0, 5)])
+
+# #     print(node.cube)
+# #     start_node, end_node = bfs_sides(node.cube)
+# #     path = []
+
+
+# #     if start_node == None:
+# #         print("No path found")
+
+# #     else:
+# #         while start_node.parent != None:
+# #             path.append(G_3[start_node.movement])
+# #             start_node = start_node.parent
+# #         path = path[::-1]
+
+# #         while end_node.parent != None:
+# #             path.append(G_3[end_node.movement])
+# #             end_node = end_node.parent
+
+
+# #     for move in path: node.move(move)
+# #     print(path)
+# #     print(node.cube)

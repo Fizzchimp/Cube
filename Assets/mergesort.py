@@ -1,9 +1,9 @@
 # Recursive merge sorting algorithm
-def mergeSort(arr):
+def merge_sort(arr):
     if len(arr) > 1:
         # Break the list down into smaller pieces
-        left = mergeSort(arr[:len(arr) // 2])
-        right = mergeSort(arr[len(arr) // 2:])
+        left = merge_sort(arr[:len(arr) // 2])
+        right = merge_sort(arr[len(arr) // 2:])
     
         # Merge the two ordered lists
         lPnt = rPnt = i = 0

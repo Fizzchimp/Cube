@@ -1,7 +1,7 @@
 from Assets.node_2 import Node
 from Assets.cqueue import Queue
 from Assets.binsearch import binSearch
-from Assets.mergesort import mergeSort
+from Assets.mergesort import merge_sort
 
 COL_KEYS = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
 
@@ -67,7 +67,7 @@ def solve_2(startState):
             cSNode = sNodeQ.dequeue()
 
         # Sort visited nodes
-        vSNodes = mergeSort(vSNodes)
+        vSNodes = merge_sort(vSNodes)
 
         # End state tree
         vENodes = []
@@ -101,7 +101,7 @@ def solve_2(startState):
             
 
         # Sort visited nodes
-        vENodes = mergeSort(vENodes)
+        vENodes = merge_sort(vENodes)
 
         # Increment the node generation counter
         generation += 1
@@ -129,7 +129,7 @@ def solve_2(startState):
             break
         
     # Sort visited nodes
-    vSNodes = mergeSort(vSNodes)
+    vSNodes = merge_sort(vSNodes)
     
     # End tree
     while True:

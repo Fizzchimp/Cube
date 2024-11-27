@@ -1,7 +1,7 @@
 from Assets.node_3 import Node
 from Assets.cqueue import Queue
 from Assets.binsearch import binSearch
-from Assets.mergesort import mergeSort
+from Assets.mergesort import merge_sort
 
 
 MOVES = ("U", "U2", "U'",
@@ -92,7 +92,7 @@ def solve_3(startState):
             cSNode = sNodeQ.dequeue()
             
         # Sort visited nodes
-        vSNodes = mergeSort(vSNodes)
+        vSNodes = merge_sort(vSNodes)
 
         # End state tree
         vENodes = []
@@ -112,7 +112,7 @@ def solve_3(startState):
             
 
         # Sort visited nodes
-        vENodes = mergeSort(vENodes)
+        vENodes = merge_sort(vENodes)
 
         # Increment the node generation counter
         generation += 1
