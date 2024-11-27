@@ -45,7 +45,7 @@ def thistle_solve(start_cube):
 
 
 node = Node()
-for i in range(1000):
+for i in range(0):
     node.scramble()
     print(thistle_solve(node))
     

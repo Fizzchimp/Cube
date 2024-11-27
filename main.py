@@ -77,7 +77,7 @@ class World:
         self.cube_2 = Cube2()
         
         # self.cube_3 = Cube3(['YWWWWROYR', 'BGGGGBGBB', 'WOYYROROO', 'BBBBBGGGG', 'OROYOOWRY', 'WWYWYRRYR']) # Second attempt at corners
-        self.cube_3 = Cube3(['OYOWWWYWR', 'BGBBGBBGG', 'RRWOROROO', 'GBGGBBGGB', 'WRWYOROOW', 'YYYRYYRWY'])
+        self.cube_3 = Cube3(['WYOOWRWYR', 'BGBBGGGBG', 'OOYYROYRY', 'BGBBBBGGG', 'YRRYOROOR', 'OWRWYWWWW'])
         # self.cube_3 = Cube3()
 
     
