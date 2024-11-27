@@ -209,7 +209,7 @@ def bfs_sides(start_state):
     generation = 0
 
     # Limits the search to a certain depth
-    while generation <= 6:
+    while generation <= 7:
         next_gen = generation + 1
 
 

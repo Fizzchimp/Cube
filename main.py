@@ -76,11 +76,11 @@ class World:
         
         self.cube_2 = Cube2()
         
-        #self.cube_3 = Cube3(['YWWWWROYR', 'BGGGGBGBB', 'WOYYROROO', 'BBBBBGGGG', 'OROYOOWRY', 'WWYWYRRYR']) # Breaks
-        # self.cube_3 = Cube3(['RWYOWWRWW', 'BBBGBGGBB', 'YORWROOOO', 'GBGGGGBBG', 'RRWYORORO', 'WYYYYRWYY']) # Does the weird thing 
-        self.cube_3 = Cube3(['WYYWWYYYW', 'GGBGGGGGB', 'RRROROOOO', 'BBGBBBBBG', 'OOORORRRR', 'YWWYYWWWY']) # Phase 4 doesnt work
-        #self.cube_3 = Cube3()
+        # self.cube_3 = Cube3(['YWWWWROYR', 'BGGGGBGBB', 'WOYYROROO', 'BBBBBGGGG', 'OROYOOWRY', 'WWYWYRRYR']) # Second attempt at corners
+        self.cube_3 = Cube3(['WWROWWOWR', 'BGBGGBBGG', 'YOYRRYWOW', 'BBGBBGGBG', 'YRRWOYYRO', 'RYORYOWYO'])
+        # self.cube_3 = Cube3()
 
+    
         # Sets the current cube to one of the cube objects
         self.cube = getattr(self, f"cube_{self.cube_type}")
         
