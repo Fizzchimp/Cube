@@ -200,8 +200,8 @@ def bfs_sides(start_state):
     cur_start_node = Node(start_state)
     cur_end_node = Node([start_state[i][4] * 9 for i in range(6)])
 
-    start_queue = Queue(99999)
-    end_queue = Queue(99999)
+    start_queue = Queue(999999)
+    end_queue = Queue(999999)
 
     visited_start_nodes = []
     visited_end_nodes = []
@@ -209,7 +209,8 @@ def bfs_sides(start_state):
     generation = 0
 
     # Limits the search to a certain depth
-    while generation <= 7:
+    while generation <= 8:
+        print(generation)
         next_gen = generation + 1
 
 
@@ -220,6 +221,7 @@ def bfs_sides(start_state):
             # If the node is found in the visited end nodes, return both the current node and the found node
             check, node = binSearch(visited_end_nodes, cur_start_node)
             if check == True:
+                print("FOUND")
                 return cur_start_node, node
             
             # If the node is not found, add it to the visited start nodes list
@@ -247,6 +249,7 @@ def bfs_sides(start_state):
             # If the node is found in the visited start nodes, return both the current node and the found node
             check, node = binSearch(visited_start_nodes, cur_end_node)
             if check == True:
+                print("FOUND")
                 return node, cur_end_node
             
             # If the node is not found, add it to the visited end nodes list
@@ -270,6 +273,7 @@ def bfs_sides(start_state):
         # Increment the generation counter
         generation += 1
 
+    print("STOPPING")
     raise Exception("NOT SOLVED")
 
 
