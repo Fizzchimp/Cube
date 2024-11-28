@@ -69,10 +69,15 @@ G_3 = (
 #        
 #
 #    print(i, thistle_solve(node))
+max_gen = 0
 
-
-for i in range(100):
+for i in range(10000):
     node = Node()
-    for j in range(20):
+    for j in range(21):
         node.move(random.choice(G_3))
+
+    moves, generation = phase_4(node)
+    print(moves)
+    if generation > max_gen: max_gen = generation
+    print("Max:", max_gen)
     
