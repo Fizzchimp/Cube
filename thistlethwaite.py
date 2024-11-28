@@ -49,8 +49,9 @@ for i in range(0):
     node.scramble()
     print(thistle_solve(node))
     
-#node = Node(['YYRRWYOWR', 'BGGGGBGGB', 'WOYWROWRR', 'BGBBBBGBG', 'WOOROWRRO', 'OWWOYYYYY'])
-#print(thistle_solve(node))
+node = Node()
+node.move('U_2', 'R_2', 'B_2', 'D_2', 'B_2', 'D_2', 'U_2', 'L_2', 'U_2', 'R_2', 'F_2', 'L_2', 'F_2', 'L_2')
+print(thistle_solve(node))
 
 G_2 = (
     "L", "L_Prime", "L_2",
@@ -69,15 +70,18 @@ G_3 = (
 #        
 #
 #    print(i, thistle_solve(node))
-max_gen = 0
+max_length = 0
 
-for i in range(10000):
+for i in range(0):
     node = Node()
-    for j in range(21):
+    for j in range(20 + (i % 2)):
         node.move(random.choice(G_3))
 
-    moves, generation = phase_4(node)
+    moves = phase_4(node)
     print(moves)
-    if generation > max_gen: max_gen = generation
-    print("Max:", max_gen)
+    print("Iteration:", i)
+    if len(moves) > max_length: max_length = len(moves)
+    if len(moves) > 13:
+        raise Exception("LONG ONE FOUND")
+    print("Max:", max_length, "\n\n")
     

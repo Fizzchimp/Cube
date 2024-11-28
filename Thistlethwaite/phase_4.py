@@ -209,7 +209,6 @@ def bfs_sides(start_state):
 
     # Limits the search to a certain depth
     while generation <= 8:
-        print(generation)
         next_gen = generation + 1
 
 
@@ -220,8 +219,7 @@ def bfs_sides(start_state):
             # If the node is found in the visited end nodes, return both the current node and the found node
             check, node = binSearch(visited_end_nodes, cur_start_node)
             if check == True:
-                print("FOUND")
-                return cur_start_node, node, generation
+                return cur_start_node, node
             
             # If the node is not found, add it to the visited start nodes list
             visited_start_nodes.append(cur_start_node)
@@ -248,7 +246,7 @@ def bfs_sides(start_state):
             # If the node is found in the visited start nodes, return both the current node and the found node
             check, node = binSearch(visited_start_nodes, cur_end_node)
             if check == True:
-                return node, cur_end_node, generation
+                return node, cur_end_node
             
             # If the node is not found, add it to the visited end nodes list
             visited_end_nodes.append(cur_end_node)
@@ -276,7 +274,7 @@ def bfs_sides(start_state):
 
 
 def phase_4(start_node):
-    start_node, end_node, generation = bfs_sides(start_node.cube)
+    start_node, end_node = bfs_sides(start_node.cube)
     path = []
 
 
@@ -293,7 +291,7 @@ def phase_4(start_node):
             path.append(G_3[end_node.movement])
             end_node = end_node.parent
 
-    return path, generation
+    return path
 
 
     # corner_moves = []
