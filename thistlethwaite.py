@@ -49,36 +49,30 @@ for i in range(0):
     node.scramble()
     print(thistle_solve(node))
     
-# G_3 = (
-#     "L_2", "R_2",
-#     "F_2", "B_2",
-#     "U_2", "D_2")
+#node = Node(['YYRRWYOWR', 'BGGGGBGGB', 'WOYWROWRR', 'BGBBBBGBG', 'WOOROWRRO', 'OWWOYYYYY'])
+#print(thistle_solve(node))
 
-# # # node = Node(['WWWWWWYWY', 'GGBBGBGGB', 'RRRORROOO', 'GBBGBGGBB', 'OOOOORRRR', 'YYYYYYWYW'])
-# # node = Node()
-# # for i in range(100):
-# #     for i in range(20):
-# #         node.move(G_3[random.randint(0, 5)])
+G_2 = (
+    "L", "L_Prime", "L_2",
+    "R", "R_Prime", "R_2",
+    "F_2", "B_2", "U_2", "D_2")
 
-# #     print(node.cube)
-# #     start_node, end_node = bfs_sides(node.cube)
-# #     path = []
+G_3 = (
+    "L_2", "R_2",
+    "F_2", "B_2",
+    "U_2", "D_2")
 
-
-# #     if start_node == None:
-# #         print("No path found")
-
-# #     else:
-# #         while start_node.parent != None:
-# #             path.append(G_3[start_node.movement])
-# #             start_node = start_node.parent
-# #         path = path[::-1]
-
-# #         while end_node.parent != None:
-# #             path.append(G_3[end_node.movement])
-# #             end_node = end_node.parent
+#for i in range(100):
+#    node = Node()
+#    for j in range(20):
+#        node.move(G_2[random.randint(0, 9)])
+#        
+#
+#    print(i, thistle_solve(node))
 
 
-# #     for move in path: node.move(move)
-# #     print(path)
-# #     print(node.cube)
+for i in range(100):
+    node = Node()
+    for j in range(20):
+        node.move(random.choice(G_3))
+    

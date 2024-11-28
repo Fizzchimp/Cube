@@ -308,12 +308,12 @@ def check_table(table, node):
             if test_corner_permutation(test_node):
 
                 print("Corner Permutation test success")
-                # try:
-                phase_4(Node(test_node.cube))
-                print("Tested node:", test_node.cube)
-                return moves
+                try:
+                    phase_4(Node(test_node.cube))
+                    print("Tested node:", test_node.cube)
+                    return moves
                 
-                # except: pass
+                except: pass
             
     # If no solution is found, return false     
     return False

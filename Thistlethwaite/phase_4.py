@@ -18,7 +18,6 @@ def corners_iddfs(start_node):
     if check_corners(start_node): possible_nodes.append(start_node)
     
     for i in range(4):
-        print(possible_nodes)
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.L_2(), 0, start_node))
         
@@ -200,8 +199,8 @@ def bfs_sides(start_state):
     cur_start_node = Node(start_state)
     cur_end_node = Node([start_state[i][4] * 9 for i in range(6)])
 
-    start_queue = Queue(999999)
-    end_queue = Queue(999999)
+    start_queue = Queue(9999999)
+    end_queue = Queue(9999999)
 
     visited_start_nodes = []
     visited_end_nodes = []
@@ -249,7 +248,6 @@ def bfs_sides(start_state):
             # If the node is found in the visited start nodes, return both the current node and the found node
             check, node = binSearch(visited_start_nodes, cur_end_node)
             if check == True:
-                print("FOUND")
                 return node, cur_end_node
             
             # If the node is not found, add it to the visited end nodes list
@@ -273,8 +271,7 @@ def bfs_sides(start_state):
         # Increment the generation counter
         generation += 1
 
-    print("STOPPING")
-    raise Exception("NOT SOLVED")
+    raise Exception("FINAL BFS NOT SOLVED")
 
 
 
