@@ -198,9 +198,9 @@ def try_transformations(cube):
 def bfs_sides(start_state):
     cur_start_node = Node(start_state)
     cur_end_node = Node([start_state[i][4] * 9 for i in range(6)])
-
-    start_queue = Queue(9999999)
-    end_queue = Queue(9999999)
+    
+    start_queue = Queue(999999)
+    end_queue = Queue(999999)
 
     visited_start_nodes = []
     visited_end_nodes = []
@@ -208,7 +208,7 @@ def bfs_sides(start_state):
     generation = 0
 
     # Limits the search to a certain depth
-    while generation <= 8:
+    while generation <= 7:
         next_gen = generation + 1
 
 

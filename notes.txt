@@ -7,6 +7,6 @@ SuperFlip: Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOY
 
 
 ['YYRRWYOWR', 'BGGGGBGGB', 'WOYWROWRR', 'BGBBBBGBG', 'WOOROWRRO', 'OWWOYYYYY'] Doesnt do phase 4 first try
-['L_2', 'U_2', 'R_2', 'U_2', 'L_2', 'F_2', 'U_2', 'B_2', 'U_2', 'R_2', 'U_2', 'R_2', 'F_2'] 13 moves for last phase
+
 
 ['U_2', 'R_2', 'B_2', 'D_2', 'B_2', 'D_2', 'U_2', 'L_2', 'U_2', 'R_2', 'F_2', 'L_2', 'F_2', 'L_2'] 14 moves for last phase
