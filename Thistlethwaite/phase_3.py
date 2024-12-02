@@ -320,13 +320,13 @@ def phase_3(node):
         phase_3_moves.append(G_2[move])
         node.move(G_2[move])
         
-    #print("After corners:", node.cube)
+    print("After corners:", node.cube)
     
     
     # Transform node to be used in table
     transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
     
-    #print("Transformed:", transformed_node.cube, table_num, transformation_indexes)
+    print("Transformed:", transformed_node.cube, table_num, transformation_indexes)
     
     # Get the moves to fix the transformed node
     moves = get_side_moves(transformed_node, table_num)
@@ -347,8 +347,3 @@ def phase_3(node):
     print("Phase 3 moves:", phase_3_moves)
     
     return phase_3_moves, node
-
-node = Node(['RWWWWRRWW', 'BBBBGGBBB', 'WOOYRWORY', 'GBGGBGGGG', 'RRYROOYOO', 'YYRYYOWYO'])
-#print(phase_3(node))
-
-

@@ -3,10 +3,10 @@
 SuperFlip: Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
 
 
-['WYOOWRWYR', 'BGBBGGGBG', 'OOYYROYRY', 'BGBBBBGGG', 'YRRYOROOR', 'OWRWYWWWW'] Broken like actually broken
-
-
-['YYRRWYOWR', 'BGGGGBGGB', 'WOYWROWRR', 'BGBBBBGBG', 'WOOROWRRO', 'OWWOYYYYY'] Doesnt do phase 4 first try
+['WYOOWRWYR', 'BGBBGGGBG', 'OOYYROYRY', 'BGBBBBGGG', 'YRRYOROOR', 'OWRWYWWWW'] no phase 3 entry (possible phase 2 error)
+['YYWOWWWYR', 'BBGGGGBBG', 'RRYRRYOOO', 'BGBBBGGBG', 'OOOOOYRRW', 'WWYWYRRWY'] Same no phase 3 entry
+['RWYWYRRYW', 'BBBGGBBBG', 'YRRYRROOO', 'GBGGBGGGB', 'RRWOOYOOO', 'YWWOWWYYW'] Same
+['YRRROWYOO', 'GBGGBGGGB', 'RWYRWWWYW', 'BBBGGBBBG', 'YWOYYOWYW', 'RROYROROO'] Same
 
 
 ['U_2', 'R_2', 'B_2', 'D_2', 'B_2', 'D_2', 'U_2', 'L_2', 'U_2', 'R_2', 'F_2', 'L_2', 'F_2', 'L_2'] 14 moves for last phase
