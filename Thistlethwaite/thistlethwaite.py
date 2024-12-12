@@ -5,7 +5,7 @@ import random
 from Thistlethwaite.phase_1 import phase_1
 from Thistlethwaite.phase_2 import phase_2
 from Thistlethwaite.phase_3 import phase_3
-from Thistlethwaite.phase_4 import phase_4, bfs_sides
+from Thistlethwaite.phase_4 import phase_4
 
 #from cube_3 import Cube3
 from Assets.node_3 import Node
