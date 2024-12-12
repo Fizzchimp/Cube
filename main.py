@@ -174,25 +174,25 @@ class World:
                 return
             
         if self.edit_pointer != -1:
-            for button in self.screen.buttons + self.screen.movement_buttons[:12]:
+            for button in self.screen.main_buttons + self.screen.movement_buttons:
                 button.hidden = False
             if self.cube_type == 3:
                 
                 for button in self.screen.movement_buttons[12:]:
                     button.hidden = False
             
-            self.screen.buttons[4].hidden = True
-            self.screen.buttons[5].hidden = True
+            self.screen.editing_buttons[0].hidden = True
+            self.screen.editing_buttons[1].hidden = True
             self.edit_pointer = -1
             self.screen.model.centre = [200 * self.cube_type - 150, 300]
 
 
         else:
-            for button in self.screen.buttons + self.screen.movement_buttons:
+            for button in self.screen.main_buttons + self.screen.movement_buttons:
                 button.hidden = True
         
-            self.screen.buttons[4].hidden = False
-            self.screen.buttons[5].hidden = False
+            self.screen.editing_buttons[0].hidden = False
+            self.screen.editing_buttons[1].hidden = False
             self.screen.model.centre = [450, 250]
             self.edit_pointer = self.cube_type ** 2 * 2
 
@@ -304,45 +304,87 @@ class World:
 
 
         # Get any buttons that are pressed
-        pressed = None
-        mousePos = pg.mouse.get_pos()
-        for i, button in enumerate(self.screen.buttons + self.screen.movement_buttons + self.screen.solving_buttons):
-            if not button.hidden and button.get_state(mousePos) == 2:
-                pressed = i
-                
-        if pressed != None and self.move_queue.is_empty() and not self.screen.model.is_moving():
-            if not self.buttonDown:
-                
-                # Solve Button
-                if pressed == 0:
-                    self.solve()
-                    
-                # Scramble Button
-                elif pressed == 1:
-                    moves = self.cube.scramble()
-                    print(moves)
-                    
-                elif pressed == 2:
-                    self.swap_cubes()
-                
-                elif pressed == 3 or pressed == 4:
-                    self.swap_editing()
-                    
-                elif pressed == 5:
-                    if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
-                    elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
-                    
+        # if not self.button_down:
+        if True:
+            self.button_down = True
+            mouse_pos = pg.mouse.get_pos()
 
-                # Movement Buttons
-                elif 0 <= pressed - len(self.screen.buttons) <= 17:
-                    self.do_move(BUTTON_KEYS[pressed - len(self.screen.buttons)], False)
-                    
-                    
-            self.buttonDown = True
+            # Main Buttons
+            if self.screen.main_buttons[0].get_state(mouse_pos) == 2:
+                print("A")
+                self.solve()
+                self.button_down = True
+
+            if self.screen.main_buttons[1].get_state(mouse_pos) == 2:
+                moves = self.cube.scramble()
+                print(moves)
+                self.button_down = True
+
+            if self.screen.main_buttons[2].get_state(mouse_pos) == 2:
+                self.swap_cubes()
+                self.button_down = True
+
+            # Editing Buttons
+            if self.screen.main_buttons[3].get_state(mouse_pos) == 2 or self.screen.editing_buttons[0].get_state(mouse_pos) == 2:
+                self.swap_editing()
+                self.button_down = True
+
+            if self.screen.editing_buttons[1].get_state(mouse_pos) == 2:
+                if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
+                elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
+                self.button_down = True
 
 
-        elif pressed == None:
-            self.buttonDown = False
+            # Solving Buttons
+
+
+
+            # Movement Buttons
+            for i, button in enumerate(self.screen.movement_buttons):
+                if button.get_state(mouse_pos) == 2:
+                    self.do_move(BUTTON_KEYS[i], False)
+
+                    self.button_down = True # If any movement button is pressed
+
+
+
+        # for i, button in enumerate(self.screen.main_buttons + self.screen.movement_buttons + self.screen.solving_buttons):
+        #     if not button.hidden and button.get_state(mousePos) == 2:
+        #         pressed = i
+                
+        # if pressed != None and self.move_queue.is_empty() and not self.screen.model.is_moving():
+        #     if not self.buttonDown:
+                
+        #         # Solve Button
+        #         if pressed == 0:
+        #             self.solve()
+                    
+        #         # Scramble Button
+        #         elif pressed == 1:
+        #             moves = self.cube.scramble()
+        #             print(moves)
+                    
+        #         elif pressed == 2:
+        #             self.swap_cubes()
+                
+        #         elif pressed == 3 or pressed == 4:
+        #             self.swap_editing()
+                    
+        #         elif pressed == 5:
+        #             if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
+        #             elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
+                    
+
+        #         # Movement Buttons
+        #         elif 0 <= pressed - len(self.screen.buttons) <= 17:
+        #             self.do_move(BUTTON_KEYS[pressed - len(self.screen.buttons)], False)
+                    
+                    
+        #     self.buttonDown = True
+
+
+        # elif pressed == None:
+        #     self.buttonDown = False
     
         return True
     
@@ -353,7 +395,7 @@ class World:
         # World loop
         self.keyDown = False
         self.key = None
-        self.buttonDown = False
+        self.button_down = False
 
         delta_time = 0
 
@@ -371,12 +413,11 @@ class World:
             
                 
             # Update aspects of the screen
-            # self.screen.update_cube_centre(delta_time)
             self.screen.model.update_phase((delta_time / ROTATION_SPEED) * HALF_PI)
             self.screen.cubeBob = (self.screen.cubeBob + delta_time / BOB_SPEED) % DOUBLE_PI
             
-            self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + delta_time / BG_SPEED) % 90 - 90
-            self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] + delta_time / BG_SPEED) % 90 - 90
+            # self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + delta_time / BG_SPEED) % 90 - 90
+            # self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] + delta_time / BG_SPEED) % 90 - 90
             
             iter += 1
             if iter % MAX_FPS == 0:
@@ -387,6 +428,7 @@ class World:
 
             delta_time = self.clock.tick(MAX_FPS)
             
+            if self.screen.movement_buttons[1].get_state(pg.mouse.get_pos()) == 2: print(2)
 
         pg.quit()
 

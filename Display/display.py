@@ -34,11 +34,11 @@ class Display():
         image = pg.transform.scale(pg.image.load("Display/Textures/Background.png"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
         dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 2), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 2))
 
-        self.background = pg.Surface(dims)
-        for i in range(dims[0] // BG_IMAGE_SIZE):
-            for j in range(dims[1] // BG_IMAGE_SIZE):
-                self.background.blit(image, (i * BG_IMAGE_SIZE, j * BG_IMAGE_SIZE))
-        self.backgroundPosition = [-BG_IMAGE_SIZE, -BG_IMAGE_SIZE]
+        # self.background = pg.Surface(dims)
+        # for i in range(dims[0] // BG_IMAGE_SIZE):
+        #     for j in range(dims[1] // BG_IMAGE_SIZE):
+        #         self.background.blit(image, (i * BG_IMAGE_SIZE, j * BG_IMAGE_SIZE))
+        # self.backgroundPosition = [-BG_IMAGE_SIZE, -BG_IMAGE_SIZE]
 
         ### Cube
 
@@ -64,11 +64,13 @@ class Display():
         
         # Buttons
         fontSize = 47
-        self.buttons = [
+        self.main_buttons = [
             Button((200, 600), 1 ,"SOLVE", 35),
             Button((400, 600), 1 ,"SCRAMBLE", 35),
             Button((350, 40), 1 ,"SWAP", 35),
-            Button((600, 600), 1 ,"EDIT", 35),
+            Button((600, 600), 1 ,"EDIT", 35)]
+
+        self.editing_buttons = [
             Button((550, 550), 1 ,"DONE", 35, True),
             Button((550, 630), 1 ,"CLEAR", 35, True)]
         
@@ -232,7 +234,7 @@ class Display():
 
         self.draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
-        for button in self.buttons + self.solving_buttons + self.movement_buttons:
+        for button in self.main_buttons + self.solving_buttons + self.movement_buttons:
             if not button.hidden:
                 image = button.get_image()
                 self.screen.blit(image, button.draw_point)
@@ -314,6 +316,7 @@ class Button():
         else: return self.image_up
         
     def get_state(self, mousePos):
+        if self.hidden: return 0
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
                 self.state = 2
