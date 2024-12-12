@@ -1,4 +1,3 @@
-import threading
 import pygame as pg
 from numpy import pi
 
@@ -9,7 +8,7 @@ from cube_3 import Cube3
 from Assets.solve_2 import solve_2
 from Assets.solve_3 import solve_3
 from Assets.cqueue import Queue
-from thistlethwaite import thistle_solve
+from Thistlethwaite.thistlethwaite import thistle_solve
       
 MAX_FPS = 200
 ROTATION_SPEED = 125
@@ -76,10 +75,9 @@ class World:
         
         self.cube_2 = Cube2()
         
-        # self.cube_3 = Cube3(['YWWWWROYR', 'BGGGGBGBB', 'WOYYROROO', 'BBBBBGGGG', 'OROYOOWRY', 'WWYWYRRYR']) # Second attempt at corners
-        self.cube_3 = Cube3(['OYWYWOOWY', 'GBGGBGGBB', 'YRRYRROOO', 'BGBGGBBBG', 'RRWROWROR', 'WYYOYWYWW']) # No move table in phase 3
+        # self.cube_3 = Cube3(['OYWYWOOWY', 'GBGGBGGBB', 'YRRYRROOO', 'BGBGGBBBG', 'RRWROWROR', 'WYYOYWYWW']) # No move table in phase 3
         # self.cube_3 = Cube3(['RWYWYRRYW', 'BBBGGBBBG', 'YRRYRROOO', 'GBGGBGGGB', 'RRWOOYOOO', 'YWWOWWYYW']) # No move table in phase 3
-        # self.cube_3 = Cube3()
+        self.cube_3 = Cube3()
 
     
         # Sets the current cube to one of the cube objects
@@ -95,37 +93,9 @@ class World:
         # This points to a facelet on the current cube that is being edited. Set to -1 when program not in editing state
         self.edit_pointer = -1 
            
-    # Organises Pathfinding for each cube
-    def find_path(self):
-        if self.cube_type == 2:
-            # Executes meet in the middle BFS for the 2 by 2 cube
-            sNode, eNode = solve_2(self.cube)
-            path = []
-            
-            # If no path is found, return false to indicate the cube cannot be solved
-            if sNode == None:
-                return False
-            
-            # Adds the move from each node at the start node chain then reverse it.
-            while sNode.parent != None:
-                path.append(sNode.movement)
-                sNode = sNode.parent
-            path = path[::-1]
-
-            # Adds the move from each node at the end chain to the move path
-            while eNode.parent != None:
-                path.append(eNode.movement)
-                eNode = eNode.parent
-
-            return path
-        
-        # Executes the thistlethwaite solver for the 3 by 3 cube
-        elif self.cube_type == 3:
-            moves = thistle_solve(self.cube)
-            return moves
-    
     # Swaps between 2x2 and 3x3
     def swap_cubes(self):
+
         # Changes the cube type, and sets the current cube structure accordingly
         if self.cube_type == 2:
             self.cube_type = 3
@@ -137,7 +107,58 @@ class World:
         
         # Tells the display class to swap cube models
         self.screen.swap_cubes()
+
+
+    ### SOLVING
+    # Organises Pathfinding for each cube
+    def solve(self):
+
+        if self.cube_type == 2:
+            # Executes meet in the middle BFS for the 2 by 2 cube
+            sNode, eNode = solve_2(self.cube)
+            moves = []
+            
+            # If no path is found, return false to indicate the cube cannot be solved
+            if sNode == None:
+                return False
+            
+            # Adds the move from each node at the start node chain then reverse it.
+            while sNode.parent != None:
+                moves.append(sNode.movement)
+                sNode = sNode.parent
+            moves = moves[::-1]
+
+            # Adds the move from each node at the end chain to the move path
+            while eNode.parent != None:
+                moves.append(eNode.movement)
+                eNode = eNode.parent
+
+        
+        # Executes the thistlethwaite solver for the 3 by 3 cube
+        elif self.cube_type == 3:
+            moves = thistle_solve(self.cube)
+        
+
+
+        if moves == False:
+            print("No solution")
+        elif moves == []:
+            print("Already Solved!")
+        else:
+            print(", ".join(moves))
+            for move in moves:
+                self.move_queue.enqueue(move)
+
+
+        self.clock.tick() # Tick the clock to stop the cube jumping as large amount of time may have passed
+        
+
+
     
+
+
+
+    ### EDITING
     # Swaps between editing and solving
     def swap_editing(self):
         for face in self.cube.cube:
@@ -194,6 +215,8 @@ class World:
         self.cube.cube[self.edit_pointer // (self.cube_type ** 2)] = first_half + colour + second_half
     
     
+
+
     # Executes a move on both cube data strucure and model
     def do_move(self, move, mod = None):
         if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
@@ -257,7 +280,7 @@ class World:
                                    
             else:
                 if not self.is_editing():
-                    if not self.screen.model.is_moving() and self.key in MOVE_KEYS.keys():
+                    if not self.screen.model.is_moving() and self.move_queue.is_empty() and self.key in MOVE_KEYS.keys():
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                     
                 elif self.is_editing():
@@ -285,16 +308,7 @@ class World:
                 
                 # Solve Button
                 if pressed == 0:
-                    solution = self.find_path()
-                    if solution == False:
-                        print("No solution")
-                    elif solution == []:
-                        print("Already Solved!")
-                    else:
-                        print(", ".join(solution))
-                        for move in solution:
-                            self.move_queue.enqueue(move)
-                    self.clock.tick()
+                    self.solve()
                     
                 # Scramble Button
                 elif pressed == 1:
@@ -325,7 +339,7 @@ class World:
     
         return True
     
-    
+    # Main program loop
     def run(self):
         iter = 0
         
