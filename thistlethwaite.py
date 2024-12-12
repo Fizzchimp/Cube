@@ -14,37 +14,36 @@ from Assets.node_3 import Node
 # Function to organise solving the cube
 def thistle_solve(start_cube):
     start_node = Node(start_cube.cube)
-    print("Start state:", start_node.cube)
+    print("\nStarting state:", start_node.cube, "\n")
     
     # Phase 1
     timer = time.time()
     phase_1_moves, G_1_node = phase_1(start_node) 
-    print(f"Phase 1 finished in {round(time.time() - timer, 4)}s")
-    print(phase_1_moves)
-    print("G1 state:", G_1_node.cube, "\n\n")
+    print(f"Phase 1 finished in {round((time.time() - timer) * 1000, 2)} ms")
     
 
     # Phase 2
     timer = time.time()
     phase_2_moves, G_2_node = phase_2(G_1_node)
-    print(f"Phase 2 finished in {round(time.time() - timer, 4)}s")
-    print(phase_2_moves)
-    print("G2 state:", G_2_node.cube, "\n\n")
+    print(f"Phase 2 finished in {round((time.time() - timer) * 1000, 2)} ms")
 
 
+    # Phase 3
     timer = time.time()
     phase_3_moves, G_3_cube = phase_3(G_2_node)
-    print(f"Phase 3 finished in {round(time.time() - timer, 4)}s")
-    print(phase_3_moves)
-    print("G3 state:", G_3_cube.cube, "\n\n")
+    print(f"Phase 3 finished in {round((time.time() - timer) * 1000, 2)} ms")
 
 
+    # Phase 4
+    timer = time.time()
     phase_4_moves = phase_4(G_3_cube)
-    print("Phase 4 moves:", phase_4_moves)
+    print(f"Phase 4 finished in {round((time.time() - timer) * 1000, 2)} ms\n")
+
+
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
     
-# node = Node(['YYWOWWWYR', 'BBGGGGBBG', 'RRYRRYOOO', 'BGBBBGGBG', 'OOOOOYRRW', 'WWYWYRRWY'])
+node = Node(['YYWOWWWYR', 'BBGGGGBBG', 'RRYRRYOOO', 'BGBBBGGBG', 'OOOOOYRRW', 'WWYWYRRWY'])
 # print(thistle_solve(node))
 
 G_1 = (
@@ -64,10 +63,9 @@ G_3 = (
     "F_2", "B_2",
     "U_2", "D_2")
 
-for i in range(10000):
-    node = Node()
-    for j in range(20):
-        node.move(G_2[random.randint(0, 9)])       
+# for i in range(10000):
+#     node = Node()
+#     for j in range(20):
+#         node.move(G_2[random.randint(0, 9)])       
 
-    print(i, thistle_solve(node))
-    
+#     print(i, thistle_solve(node))
