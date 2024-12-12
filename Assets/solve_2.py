@@ -21,12 +21,13 @@ def normalisedSolved(cube):
 
 def solve_2(startState):
     # Queue for the current nodes
+    
     sNodeQ = Queue(99999)
     cSNode = Node(startState)
     
     eNodeQ = Queue(99999)
     cENode = Node(normalisedSolved(startState))
-
+    
     generation = 0
     
     # List of visited nodes from the previous generation

@@ -47,10 +47,7 @@ BUTTON_KEYS = (
     "R", "R'",
     "D", "D'",
     "B", "B'",
-    "L", "L'",
-    "E", "E'",
-    "S", "S'",
-    "M", "M'")
+    "L", "L'")
 
 EDITING_COLS = {
     pg.K_w: "W",
@@ -115,23 +112,30 @@ class World:
 
         if self.cube_type == 2:
             # Executes meet in the middle BFS for the 2 by 2 cube
-            sNode, eNode = solve_2(self.cube)
+            solved = True
             moves = []
+            for face in self.cube.cube:
+                if not (face[0] == face[1] == face[2] == face[3]):
+                    solved = False
+                    break
             
-            # If no path is found, return false to indicate the cube cannot be solved
-            if sNode == None:
-                return False
+            if not solved:
+                sNode, eNode = solve_2(self.cube.cube)
             
-            # Adds the move from each node at the start node chain then reverse it.
-            while sNode.parent != None:
-                moves.append(sNode.movement)
-                sNode = sNode.parent
-            moves = moves[::-1]
+                # If no path is found, return false to indicate the cube cannot be solved
+                if sNode == None:
+                    return False
+            
+                # Adds the move from each node at the start node chain then reverse it.
+                while sNode.parent != None:
+                    moves.append(sNode.movement)
+                    sNode = sNode.parent
+                moves = moves[::-1]
 
-            # Adds the move from each node at the end chain to the move path
-            while eNode.parent != None:
-                moves.append(eNode.movement)
-                eNode = eNode.parent
+                # Adds the move from each node at the end chain to the move path
+                while eNode.parent != None:
+                    moves.append(eNode.movement)
+                    eNode = eNode.parent
 
         
         # Executes the thistlethwaite solver for the 3 by 3 cube
@@ -151,6 +155,9 @@ class World:
 
 
         self.clock.tick() # Tick the clock to stop the cube jumping as large amount of time may have passed
+        
+        return
+        
         
 
 
@@ -299,7 +306,7 @@ class World:
         # Get any buttons that are pressed
         pressed = None
         mousePos = pg.mouse.get_pos()
-        for i, button in enumerate(self.screen.buttons + self.screen.movement_buttons):
+        for i, button in enumerate(self.screen.buttons + self.screen.movement_buttons + self.screen.solving_buttons):
             if not button.hidden and button.get_state(mousePos) == 2:
                 pressed = i
                 

@@ -1,4 +1,4 @@
-import pygame as pg
+﻿import pygame as pg
 from pygame import gfxdraw
 from Display.model_2 import Model2
 from Display.model_3 import Model3
@@ -72,6 +72,11 @@ class Display():
             Button((550, 550), 1 ,"DONE", 35, True),
             Button((550, 630), 1 ,"CLEAR", 35, True)]
         
+        self.solving_buttons = [
+            Button((200, 600), 0, "<-", 60, False),
+            Button((300, 600), 0, "->", 60, False),
+            Button((450, 600), 0, ">>", 60, False)]
+        
         self.movement_buttons = [
             Button((45, 30), 0, "U", fontSize),
             Button((125, 30), 0, "U'", fontSize),
@@ -85,15 +90,7 @@ class Display():
             Button((45, 240), 0, "B", fontSize),
             Button((125, 240), 0, "B'", fontSize),
             Button((45, 290), 0, "L", fontSize),
-            Button((125, 290), 0, "L'", fontSize)#,
-            
-            # Button((45, 350), 0, "E", fontSize),
-            # Button((125, 350), 0, "E'", fontSize),
-            # Button((45, 400), 0, "S", fontSize),
-            # Button((125, 400), 0, "S'", fontSize),
-            # Button((45, 450), 0, "M", fontSize),
-            # Button((125, 450), 0, "M'", fontSize)
-            ]
+            Button((125, 290), 0, "L'", fontSize)]
 
     # Swaps between 2x2 and 3x3 cubes 
     def swap_cubes(self):
@@ -119,7 +116,6 @@ class Display():
 
     
     def update_cube_centre(self, delta_time):
-        print(self.cube_centre, delta_time)
         self.cube_centre[0] = np.round(self.cube_centre[0] + (self.cube_target - self.cube_centre[0]) * CUBE_MOVE_COEFFICIENT * delta_time, 2)
 
 
@@ -236,7 +232,7 @@ class Display():
 
         self.draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
-        for button in self.buttons + self.movement_buttons:
+        for button in self.buttons + self.solving_buttons + self.movement_buttons:
             if not button.hidden:
                 image = button.get_image()
                 self.screen.blit(image, button.draw_point)
