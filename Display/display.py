@@ -233,6 +233,7 @@ class Display():
         if edit_pointer != -1:
             self.edit_phase += delta_time * 0.005
             self.draw_net((50, 460), cube)
+
         self.draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
         for button in self.buttons + self.movement_buttons:
