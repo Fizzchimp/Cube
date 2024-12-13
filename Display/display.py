@@ -63,7 +63,6 @@ class Display():
         elif cube_type == 3: self.model = self.model_3
         
         # Buttons
-        fontSize = 47
         self.main_buttons = [
             Button((200, 600), 1 ,"SOLVE", 35),
             Button((400, 600), 1 ,"SCRAMBLE", 35),
@@ -77,22 +76,23 @@ class Display():
         self.solving_buttons = [
             Button((200, 600), 0, "<-", 60, False),
             Button((300, 600), 0, "->", 60, False),
-            Button((450, 600), 0, ">>", 60, False)]
+            Button((450, 600), 0, ">>", 60, False),
+            Button((350, 40), 1, "CANCEL", 35, False)]
         
         self.movement_buttons = [
-            Button((45, 30), 0, "U", fontSize),
-            Button((125, 30), 0, "U'", fontSize),
-            Button((45, 80), 0, "F", fontSize),
-            Button((125, 80), 0, "F'", fontSize),
-            Button((45, 130), 0, "R", fontSize),
-            Button((125, 130), 0, "R'", fontSize),
+            Button((45, 30), 0, "U", 47),
+            Button((125, 30), 0, "U'", 47),
+            Button((45, 80), 0, "F", 47),
+            Button((125, 80), 0, "F'", 47),
+            Button((45, 130), 0, "R", 47),
+            Button((125, 130), 0, "R'", 47),
                          
-            Button((45, 190), 0, "D", fontSize),
-            Button((125, 190), 0, "D'", fontSize),
-            Button((45, 240), 0, "B", fontSize),
-            Button((125, 240), 0, "B'", fontSize),
-            Button((45, 290), 0, "L", fontSize),
-            Button((125, 290), 0, "L'", fontSize)]
+            Button((45, 190), 0, "D", 47),
+            Button((125, 190), 0, "D'", 47),
+            Button((45, 240), 0, "B", 47),
+            Button((125, 240), 0, "B'", 47),
+            Button((45, 290), 0, "L", 47),
+            Button((125, 290), 0, "L'", 47)]
 
     # Swaps between 2x2 and 3x3 cubes 
     def swap_cubes(self):

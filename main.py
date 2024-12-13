@@ -87,8 +87,12 @@ class World:
         self.move_queue = Queue(100) # Queue of moves to be performed on the current cube
         
 
-        # This points to a facelet on the current cube that is being edited. Set to -1 when program not in editing state
-        self.edit_pointer = -1 
+        # Points to a facelet on the current cube that is being edited. Set to -1 when not on the editing screen
+        self.edit_pointer = -1
+        
+
+        # Set when on the solving screen
+        self.is_solving = False
            
     # Swaps between 2x2 and 3x3
     def swap_cubes(self):
@@ -156,10 +160,28 @@ class World:
 
         self.clock.tick() # Tick the clock to stop the cube jumping as large amount of time may have passed
         
+        self.swap_solving()
         return
         
+    def swap_solving(self):
+        if self.is_solving:
+            for button in self.screen.main_buttons + self.screen.movement_buttons:
+                button.hidden = False
+            
+            for button in self.screen.solving_buttons:
+                button.hidden = True
+                
+            self.is_solving = False
         
 
+        elif not self.is_solving:
+            for button in self.screen.main_buttons + self.screen.movement_buttons:
+                button.hidden = True
+                
+            for button in self.screen.solving_buttons:
+                button.hidden = False
+                
+            self.is_solving = True
 
     
 
@@ -306,38 +328,45 @@ class World:
         # Main Buttons
         if self.screen.main_buttons[0].get_state(mouse_pos) == 3:
             self.solve()
-            self.button_down = True
 
         if self.screen.main_buttons[1].get_state(mouse_pos) == 3:
             moves = self.cube.scramble()
             print(moves)
-            self.button_down = True
 
         if self.screen.main_buttons[2].get_state(mouse_pos) == 3:
             self.swap_cubes()
-            self.button_down = True
 
         # Editing Buttons
-        if self.screen.main_buttons[3].get_state(mouse_pos) == 3 or self.screen.editing_buttons[0].get_state(mouse_pos) == 3:
-            self.swap_editing()
-            self.button_down = True
+        if self.edit_pointer != -1:
+            if self.screen.main_buttons[3].get_state(mouse_pos) == 3 or self.screen.editing_buttons[0].get_state(mouse_pos) == 3:
+                self.swap_editing()
 
-        if self.screen.editing_buttons[1].get_state(mouse_pos) == 3:
-            if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
-            elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
-            self.button_down = True
+            if self.screen.editing_buttons[1].get_state(mouse_pos) == 3:
+                if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
+                elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
 
 
         # Solving Buttons
-
+        if self.is_solving:
+            if self.screen.solving_buttons[0].get_state(mouse_pos) == 3:
+                pass
+            
+            if self.screen.solving_buttons[1].get_state(mouse_pos) == 3:
+                pass
+            
+            if self.screen.solving_buttons[2].get_state(mouse_pos) == 3:
+                pass
+            
+            if self.screen.solving_buttons[3].get_state(mouse_pos) == 3:
+                self.swap_solving()
+            
 
 
         # Movement Buttons
-        for i, button in enumerate(self.screen.movement_buttons):
-            if button.get_state(mouse_pos) == 3:
-                self.do_move(BUTTON_KEYS[i], False)
-
-                self.button_down = True # If any movement button is pressed
+        if self.edit_pointer == -1:
+            for i, button in enumerate(self.screen.movement_buttons):
+                if button.get_state(mouse_pos) == 3:
+                    self.do_move(BUTTON_KEYS[i], False)
                     
 
     
@@ -350,7 +379,6 @@ class World:
         # World loop
         self.keyDown = False
         self.key = None
-        self.button_down = False
 
         delta_time = 0
 
