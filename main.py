@@ -117,7 +117,7 @@ class World:
         if self.cube_type == 2:
             # Executes meet in the middle BFS for the 2 by 2 cube
             solved = True
-            moves = []
+            solution = []
             for face in self.cube.cube:
                 if not (face[0] == face[1] == face[2] == face[3]):
                     solved = False
@@ -132,36 +132,38 @@ class World:
             
                 # Adds the move from each node at the start node chain then reverse it.
                 while sNode.parent != None:
-                    moves.append(sNode.movement)
+                    solution.append(sNode.movement)
                     sNode = sNode.parent
-                moves = moves[::-1]
+                solution = solution[::-1]
 
                 # Adds the move from each node at the end chain to the move path
                 while eNode.parent != None:
-                    moves.append(eNode.movement)
+                    solution.append(eNode.movement)
                     eNode = eNode.parent
 
         
         # Executes the thistlethwaite solver for the 3 by 3 cube
         elif self.cube_type == 3:
-            moves = thistle_solve(self.cube)
+            solution = thistle_solve(self.cube)
         
 
 
-        if moves == False:
+        if solution == False:
             print("No solution")
-        elif moves == []:
+        elif solution == []:
             print("Already Solved!")
         else:
-            print(", ".join(moves))
-            for move in moves:
-                self.move_queue.enqueue(move)
+            print(", ".join(solution))
+            self.solution = solution
+            print(solution)
+            self.solution_pointer = 0
 
 
         self.clock.tick() # Tick the clock to stop the cube jumping as large amount of time may have passed
         
         self.swap_solving()
-        return
+        
+            
         
     def swap_solving(self):
         if self.is_solving:
@@ -349,10 +351,20 @@ class World:
         # Solving Buttons
         if self.is_solving:
             if self.screen.solving_buttons[0].get_state(mouse_pos) == 3:
-                pass
+               move = self.solution[self.solution_pointer]
+               
+               if len(move) == 1: move += "_Prime"
+               elif len(move) == 7: move = move[0]
+               
+               try: self.move_queue.enqueue(move)
+               except: self.swap_solving()
+               self.solution_pointer -= 1
             
             if self.screen.solving_buttons[1].get_state(mouse_pos) == 3:
-                pass
+                self.solution_pointer += 1
+                try: self.move_queue.enqueue(self.solution[self.solution_pointer])
+                except: self.swap_solving()
+                
             
             if self.screen.solving_buttons[2].get_state(mouse_pos) == 3:
                 pass
@@ -393,6 +405,8 @@ class World:
             if not self.move_queue.is_empty() and not self.screen.model.is_moving():
                 move = self.move_queue.dequeue()
                 self.do_move(move, False)
+                    
+
             
                 
             # Update aspects of the screen
