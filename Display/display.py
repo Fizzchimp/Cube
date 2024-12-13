@@ -234,7 +234,7 @@ class Display():
 
         self.draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
 
-        for button in self.main_buttons + self.solving_buttons + self.movement_buttons:
+        for button in self.main_buttons + self.editing_buttons + self.solving_buttons + self.movement_buttons:
             if not button.hidden:
                 image = button.get_image()
                 self.screen.blit(image, button.draw_point)
@@ -311,7 +311,7 @@ class Button():
 
 
     def get_image(self):
-        if self.state == 2: return self.image_down
+        if self.state == 2 or self.state == 3: return self.image_down
         elif self.state == 1: return self.image_hov
         else: return self.image_up
         
@@ -319,8 +319,11 @@ class Button():
         if self.hidden: return 0
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
-                self.state = 2
-                return 2
+                if self.state == 2 or self.state == 3:
+                    self.state = 2
+                    return 2
+                self.state = 3 # Set to 3 to indicate that the button has been pressed this turn
+                return 3
             self.state = 1
             return 1
         self.state = 0
