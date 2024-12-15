@@ -74,10 +74,10 @@ class Display():
             Button((550, 630), 1 ,"CLEAR", 35, True)]
         
         self.solving_buttons = [
-            Button((150, 600), 0, "<-", 60, True),
-            Button((240, 600), 0, "->", 60, True),
-            Button((365, 600), 0, ">>", 60, True),
-            Button((550, 600), 1, "CANCEL", 35, True)]
+            Button((150, 500), 0, "<-", 60, True),
+            Button((240, 500), 0, "->", 60, True),
+            Button((365, 500), 0, ">>", 60, True),
+            Button((550, 500), 1, "CANCEL", 35, True)]
         
         self.movement_buttons = [
             Button((45, 30), 0, "U", 47),

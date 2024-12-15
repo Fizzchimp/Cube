@@ -164,7 +164,7 @@ class World:
         self.swap_solving()
         
             
-        
+    # Swaps between solving and main screens   
     def swap_solving(self):
         if self.is_solving:
             for button in self.screen.main_buttons + self.screen.movement_buttons:
@@ -190,7 +190,7 @@ class World:
 
 
     ### EDITING
-    # Swaps between editing and solving
+    # Swaps between editing and main screens
     def swap_editing(self):
         for face in self.cube.cube:
             if "-" in face:
@@ -328,18 +328,19 @@ class World:
 
         mouse_pos = pg.mouse.get_pos()
         # Main Buttons
-        if self.screen.main_buttons[0].get_state(mouse_pos) == 3:
-            self.solve()
+        if not self.is_editing() and self.is_solving == False:
+            if self.screen.main_buttons[0].get_state(mouse_pos) == 3:
+                self.solve()
 
-        if self.screen.main_buttons[1].get_state(mouse_pos) == 3:
-            moves = self.cube.scramble()
-            print(moves)
+            if self.screen.main_buttons[1].get_state(mouse_pos) == 3:
+                moves = self.cube.scramble()
+                print(moves)
 
-        if self.screen.main_buttons[2].get_state(mouse_pos) == 3:
-            self.swap_cubes()
+            if self.screen.main_buttons[2].get_state(mouse_pos) == 3:
+                self.swap_cubes()
 
         # Editing Buttons
-        if self.edit_pointer != -1:
+        if self.is_editing():
             if self.screen.main_buttons[3].get_state(mouse_pos) == 3 or self.screen.editing_buttons[0].get_state(mouse_pos) == 3:
                 self.swap_editing()
 
@@ -350,24 +351,30 @@ class World:
 
         # Solving Buttons
         if self.is_solving:
+
+            # Previous move button
             if self.screen.solving_buttons[0].get_state(mouse_pos) == 3:
-               move = self.solution[self.solution_pointer]
+
+                self.solution_pointer -= 1
+                move = self.solution[self.solution_pointer]
                
-               if len(move) == 1: move += "_Prime"
-               elif len(move) == 7: move = move[0]
-               
-               try: self.move_queue.enqueue(move)
-               except: self.swap_solving()
-               self.solution_pointer -= 1
-            
+                if len(move) == 1: move += "_Prime"
+                elif len(move) == 7: move = move[0]
+                
+                try: self.move_queue.enqueue(move)
+                except: self.swap_solving()
+
+            # Next move button
             if self.screen.solving_buttons[1].get_state(mouse_pos) == 3:
-                self.solution_pointer += 1
                 try: self.move_queue.enqueue(self.solution[self.solution_pointer])
                 except: self.swap_solving()
+                self.solution_pointer += 1
                 
             
             if self.screen.solving_buttons[2].get_state(mouse_pos) == 3:
-                pass
+                for move in self.solution[self.solution_pointer:]:
+                    self.move_queue.enqueue(move)
+                    self.solution_pointer = len(self.solution)
             
             if self.screen.solving_buttons[3].get_state(mouse_pos) == 3:
                 self.swap_solving()
@@ -375,7 +382,7 @@ class World:
 
 
         # Movement Buttons
-        if self.edit_pointer == -1:
+        if not self.is_editing() and self.is_solving == False:
             for i, button in enumerate(self.screen.movement_buttons):
                 if button.get_state(mouse_pos) == 3:
                     self.do_move(BUTTON_KEYS[i], False)
