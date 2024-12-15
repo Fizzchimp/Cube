@@ -41,31 +41,3 @@ def thistle_solve(start_cube):
 
 
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
-
-    
-node = Node(['YYWOWWWYR', 'BBGGGGBBG', 'RRYRRYOOO', 'BGBBBGGBG', 'OOOOOYRRW', 'WWYWYRRWY'])
-# print(thistle_solve(node))
-
-G_1 = (
-    "L", "L_Prime", "L_2",
-    "R", "R_Prime", "R_2", 
-    "F", "F_Prime", "F_2",
-    "B", "B_Prime", "B_2", 
-    "U_2", "D_2")
-
-G_2 = (
-    "L", "L_Prime", "L_2",
-    "R", "R_Prime", "R_2",
-    "F_2", "B_2", "U_2", "D_2")
-
-G_3 = (
-    "L_2", "R_2",
-    "F_2", "B_2",
-    "U_2", "D_2")
-
-# for i in range(10000):
-#     node = Node()
-#     for j in range(20):
-#         node.move(G_2[random.randint(0, 9)])       
-
-#     print(i, thistle_solve(node))

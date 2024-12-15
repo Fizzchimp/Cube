@@ -18,11 +18,17 @@ colour_keys = {
 BG_IMAGE_SIZE = 90
 CUBE_MOVE_COEFFICIENT = 0.02
 
+
+
+
 def depth(face):
     return face[-2]
 
 class Display():
     def __init__(self, width, height, bobStrength, cube_type):
+
+        self.MOVE_FONT = pg.font.SysFont("Jhomuria", 80)
+
 
         # Setup the window
         self.screen = pg.display.set_mode([width, height])
@@ -42,7 +48,7 @@ class Display():
 
         ### Cube
 
-        self.cube_target = 450
+        # self.cube_target = 450
 
         # Dimensions for the cube
         self.length = width / 5 if width <= height else height / 5
@@ -74,10 +80,10 @@ class Display():
             Button((550, 630), 1 ,"CLEAR", 35, True)]
         
         self.solving_buttons = [
-            Button((150, 500), 0, "<-", 60, True),
-            Button((240, 500), 0, "->", 60, True),
-            Button((365, 500), 0, ">>", 60, True),
-            Button((550, 500), 1, "CANCEL", 35, True)]
+            Button((150, 600), 0, "<-", 60, True),
+            Button((240, 600), 0, "->", 60, True),
+            Button((365, 600), 0, ">>", 60, True),
+            Button((550, 600), 1, "CANCEL", 35, True)]
         
         self.movement_buttons = [
             Button((45, 30), 0, "U", 47),
@@ -104,7 +110,7 @@ class Display():
             for button in self.movement_buttons:
                 button.set_position((button.centre[0] - 530, button.centre[1]))
 
-            self.cube_target = 450
+            # self.cube_target = 450
         
         elif self.cube_type == 3:
             self.cube_type = 2
@@ -114,11 +120,11 @@ class Display():
             for button in self.movement_buttons:
                 button.set_position((button.centre[0] + 530, button.centre[1]))
 
-            self.cube_target = 250
+            # self.cube_target = 250
 
     
-    def update_cube_centre(self, delta_time):
-        self.cube_centre[0] = np.round(self.cube_centre[0] + (self.cube_target - self.cube_centre[0]) * CUBE_MOVE_COEFFICIENT * delta_time, 2)
+    # def update_cube_centre(self, delta_time):
+    #     self.cube_centre[0] = np.round(self.cube_centre[0] + (self.cube_target - self.cube_centre[0]) * CUBE_MOVE_COEFFICIENT * delta_time, 2)
 
 
 
@@ -221,6 +227,19 @@ class Display():
         #    pos_2 = (start_pos[0] + face_width * 4 + 6, start_pos[1] + facelet_width * self.cube_type + 6)
         #    self.draw_line((50, 50, 50), pos_1, pos_2, 4)
 
+
+    def draw_moves(self, move_list, pointer):
+        prev_moves = move_list[:pointer]
+        cur_move = move_list[pointer]
+        next_moves = move_list[pointer:]
+
+        # Draw current_move
+        text_surface = self.MOVE_FONT.render(cur_move, True, (0, 0, 0)).convert_alpha()
+        self.screen.blit(text_surface, (310, 400))
+        
+        pg.display.flip()
+
+
     # Organises drawing all elements on screen
     def draw_screen(self, cube, delta_time, edit_pointer = -1):
         # Draw the background of the screen
@@ -241,7 +260,6 @@ class Display():
             
         
         pg.display.flip()
-    
     
 class Button():
     def __init__(self, centre, size, text, fontSize, hidden = False):
@@ -316,15 +334,15 @@ class Button():
         else: return self.image_up
         
     def get_state(self, mousePos):
-        if self.hidden: return 0
+        if self.hidden:
+            self.state = 0
+            return 0
         if self.hitbox[0][0] < mousePos[0] < self.hitbox[1][0] and self.hitbox[0][1] < mousePos[1] < self.hitbox[1][1]:
             if pg.mouse.get_pressed()[0]:
-                if self.state == 2 or self.state == 3:
-                    self.state = 2
-                    return 2
-                self.state = 3 # Set to 3 to indicate that the button has been pressed this turn
-                return 3
+                self.state = 2
+                return 2
             self.state = 1
             return 1
         self.state = 0
         return 0
+    

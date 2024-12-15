@@ -10,7 +10,7 @@ from Assets.solve_3 import solve_3
 from Assets.cqueue import Queue
 from Thistlethwaite.thistlethwaite import thistle_solve
       
-MAX_FPS = 200
+MAX_FPS = 200 
 ROTATION_SPEED = 125
 BG_SPEED = 40
 
@@ -173,6 +173,7 @@ class World:
             for button in self.screen.solving_buttons:
                 button.hidden = True
                 
+            self.screen.cube_target = 350
             self.is_solving = False
         
 
@@ -298,25 +299,115 @@ class World:
 
     # Handles all program events
     def handle_events(self):
-        for event in pg.event.get():
+        events = pg.event.get()
+
+        # Update all buttons on screen
+        mouse_pos = pg.mouse.get_pos()
+        for button in self.screen.main_buttons + self.screen.editing_buttons + self.screen.movement_buttons + self.screen.solving_buttons:
+            button.get_state(mouse_pos)
+
+
+        for event in events:
                 if event.type == pg.QUIT: return False
-                elif event.type == pg.KEYDOWN:
-                    if self.key == pg.K_q: self.cube.cube = self.cube.reflect_XZ()
-                    self.keyDown, self.key = True, event.key
+                elif event.type == pg.KEYDOWN: self.keyDown, self.key = True, event.key
                 elif event.type == pg.KEYUP: self.keyDown = False
-      
+
+                elif event.type == pg.MOUSEBUTTONDOWN:
+                    # Main Buttons
+                    if not self.is_editing() and self.is_solving == False:
+                        if self.screen.main_buttons[0].state == 2:
+                            self.solve()
+
+                        if self.screen.main_buttons[1].state == 2:
+                            moves = self.cube.scramble()
+                            print(moves)
+
+                        if self.screen.main_buttons[2].state == 2:
+                            self.swap_cubes()
+                        
+                        if self.screen.main_buttons[3].state == 2:
+                            self.swap_editing()
+
+
+                    # Editing Buttons
+                    if self.is_editing():
+                        if self.screen.editing_buttons[0].state == 2:
+                            self.swap_editing()
+
+
+                        if self.screen.editing_buttons[1].state == 2:
+                            if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
+                            elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
+
+
+                    # Solving Buttons
+                    if self.is_solving:
+
+                        # Previous move button
+                        if self.screen.solving_buttons[0].state == 2:
+
+                            self.solution_pointer -= 1
+                            move = self.solution[self.solution_pointer]
+                        
+                            if len(move) == 1: move += "_Prime"
+                            elif len(move) == 7: move = move[0]
+                            
+                            try: self.move_queue.enqueue(move)
+                            except: self.swap_solving()
+
+                        # Next move button
+                        if self.screen.solving_buttons[1].state == 2:
+                            try: self.move_queue.enqueue(self.solution[self.solution_pointer])
+                            except: self.swap_solving()
+                            self.solution_pointer += 1
+                            
+                        
+                        if self.screen.solving_buttons[2].state == 2:
+                            for move in self.solution[self.solution_pointer:]:
+                                self.move_queue.enqueue(move)
+                                self.solution_pointer = len(self.solution)
+                        
+                        if self.screen.solving_buttons[3].state == 2:
+                            self.swap_solving()
+                        
+
+
+                    # Movement Buttons
+                    if not self.is_editing() and self.is_solving == False:
+                        for i, button in enumerate(self.screen.movement_buttons):
+                            if button.state == 2:
+                                self.do_move(BUTTON_KEYS[i], False)
         
+
+
         if self.keyDown == True:
             if self.key == pg.K_ESCAPE: return False
                                    
             else:
-                if not self.is_editing():
+                if not self.is_editing() and not self.is_solving:
                     if not self.screen.model.is_moving() and self.move_queue.is_empty() and self.key in MOVE_KEYS.keys():
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                     
                 elif self.is_editing():
                     if not self.screen.model.is_moving() and self.key in EDITING_MOVES:
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
+
+                elif self.is_solving:
+                    if not self.screen.model.is_moving() and self.key == pg.K_LEFT:
+                        self.solution_pointer -= 1
+                        move = self.solution[self.solution_pointer]
+                    
+                        if len(move) == 1: move += "_Prime"
+                        elif len(move) == 7: move = move[0]
+                        
+                        try: self.move_queue.enqueue(move)
+                        except: self.swap_solving()
+                        
+                    elif not self.screen.model.is_moving() and self.key == pg.K_RIGHT:
+                        try: self.move_queue.enqueue(self.solution[self.solution_pointer])
+                        except: self.swap_solving()
+                        self.solution_pointer += 1
+
 
                     # Editing events
                     if self.key in EDITING_COLS.keys():
@@ -325,67 +416,6 @@ class World:
                         self.key = None
         
 
-
-        mouse_pos = pg.mouse.get_pos()
-        # Main Buttons
-        if not self.is_editing() and self.is_solving == False:
-            if self.screen.main_buttons[0].get_state(mouse_pos) == 3:
-                self.solve()
-
-            if self.screen.main_buttons[1].get_state(mouse_pos) == 3:
-                moves = self.cube.scramble()
-                print(moves)
-
-            if self.screen.main_buttons[2].get_state(mouse_pos) == 3:
-                self.swap_cubes()
-
-        # Editing Buttons
-        if self.is_editing():
-            if self.screen.main_buttons[3].get_state(mouse_pos) == 3 or self.screen.editing_buttons[0].get_state(mouse_pos) == 3:
-                self.swap_editing()
-
-            if self.screen.editing_buttons[1].get_state(mouse_pos) == 3:
-                if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
-                elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
-
-
-        # Solving Buttons
-        if self.is_solving:
-
-            # Previous move button
-            if self.screen.solving_buttons[0].get_state(mouse_pos) == 3:
-
-                self.solution_pointer -= 1
-                move = self.solution[self.solution_pointer]
-               
-                if len(move) == 1: move += "_Prime"
-                elif len(move) == 7: move = move[0]
-                
-                try: self.move_queue.enqueue(move)
-                except: self.swap_solving()
-
-            # Next move button
-            if self.screen.solving_buttons[1].get_state(mouse_pos) == 3:
-                try: self.move_queue.enqueue(self.solution[self.solution_pointer])
-                except: self.swap_solving()
-                self.solution_pointer += 1
-                
-            
-            if self.screen.solving_buttons[2].get_state(mouse_pos) == 3:
-                for move in self.solution[self.solution_pointer:]:
-                    self.move_queue.enqueue(move)
-                    self.solution_pointer = len(self.solution)
-            
-            if self.screen.solving_buttons[3].get_state(mouse_pos) == 3:
-                self.swap_solving()
-            
-
-
-        # Movement Buttons
-        if not self.is_editing() and self.is_solving == False:
-            for i, button in enumerate(self.screen.movement_buttons):
-                if button.get_state(mouse_pos) == 3:
-                    self.do_move(BUTTON_KEYS[i], False)
                     
 
     
@@ -429,6 +459,7 @@ class World:
             
             # Draw the screen
             self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer)
+            if self.is_solving: self.screen.draw_moves(self.solution, self.solution_pointer)
 
             delta_time = self.clock.tick(MAX_FPS)
 
