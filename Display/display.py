@@ -80,10 +80,10 @@ class Display():
             Button((550, 630), 1 ,"CLEAR", 35, True)]
         
         self.solving_buttons = [
-            Button((150, 600), 0, "<-", 60, True),
-            Button((240, 600), 0, "->", 60, True),
-            Button((365, 600), 0, ">>", 60, True),
-            Button((550, 600), 1, "CANCEL", 35, True)]
+            Button((150, 650), 0, "<-", 60, True),
+            Button((240, 650), 0, "->", 60, True),
+            Button((365, 650), 0, ">>", 60, True),
+            Button((550, 650), 1, "CANCEL", 35, True)]
         
         self.movement_buttons = [
             Button((45, 30), 0, "U", 47),
@@ -229,19 +229,33 @@ class Display():
 
 
     def draw_moves(self, move_list, pointer):
+        for i, move in enumerate(move_list):
+            if len(move) == 3: move_list[i] = move[0] + "2"
+            elif len(move) == 7: move_list[i] = move[0] + "'"
+            
         prev_moves = move_list[:pointer]
-        cur_move = move_list[pointer]
-        next_moves = move_list[pointer:]
+        # Draw all previous moves
+        for i, move in enumerate(move_list[:pointer][::-1]):
+            if i > 2: break
+            text_surface = self.MOVE_FONT.render(move, True, (70, 70, 70)).convert_alpha()
+            self.screen.blit(text_surface, (210 - 100 * i, 530))
 
         # Draw current_move
-        text_surface = self.MOVE_FONT.render(cur_move, True, (0, 0, 0)).convert_alpha()
-        self.screen.blit(text_surface, (310, 400))
+        if pointer < len(move_list):
+            cur_move = move_list[pointer]
+            text_surface = self.MOVE_FONT.render(cur_move, True, (0, 0, 0)).convert_alpha()
+            self.screen.blit(text_surface, (310, 530))
         
+        # Draw next moves
+        for i, move in enumerate(move_list[pointer + 1:]):
+            if i > 2: break
+            text_surface = self.MOVE_FONT.render(move, True, (70, 70, 70)).convert_alpha()
+            self.screen.blit(text_surface, (410 + 100 * i, 530))
         pg.display.flip()
 
 
     # Organises drawing all elements on screen
-    def draw_screen(self, cube, delta_time, edit_pointer = -1):
+    def draw_screen(self, cube, delta_time, edit_pointer = -1, solution = None, solution_pointer = None):
         # Draw the background of the screen
         self.screen.fill((255, 255, 255))
         # self.screen.blit(self.background, (self.backgroundPosition))
@@ -257,6 +271,8 @@ class Display():
             if not button.hidden:
                 image = button.get_image()
                 self.screen.blit(image, button.draw_point)
+               
+        if solution != None: self.draw_moves(solution, solution_pointer)
             
         
         pg.display.flip()

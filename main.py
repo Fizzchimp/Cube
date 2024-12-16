@@ -10,7 +10,7 @@ from Assets.solve_3 import solve_3
 from Assets.cqueue import Queue
 from Thistlethwaite.thistlethwaite import thistle_solve
       
-MAX_FPS = 200 
+MAX_FPS = 200
 ROTATION_SPEED = 125
 BG_SPEED = 40
 
@@ -155,9 +155,7 @@ class World:
         else:
             print(", ".join(solution))
             self.solution = solution
-            print(solution)
             self.solution_pointer = 0
-
 
         self.clock.tick() # Tick the clock to stop the cube jumping as large amount of time may have passed
         
@@ -175,6 +173,11 @@ class World:
                 
             self.screen.cube_target = 350
             self.is_solving = False
+            
+            if self.cube_type == 2: self.screen.model.centre = [250, 300]
+            if self.cube_type == 3: self.screen.model.centre = [450, 300]
+            
+
         
 
         elif not self.is_solving:
@@ -185,6 +188,7 @@ class World:
                 button.hidden = False
                 
             self.is_solving = True
+            self.screen.model.centre = [370, 250]
 
     
 
@@ -348,9 +352,9 @@ class World:
 
                             self.solution_pointer -= 1
                             move = self.solution[self.solution_pointer]
-                        
                             if len(move) == 1: move += "_Prime"
-                            elif len(move) == 7: move = move[0]
+                            elif len(move) == 7:
+                                move = move[0]
                             
                             try: self.move_queue.enqueue(move)
                             except: self.swap_solving()
@@ -458,9 +462,9 @@ class World:
                 pg.display.set_caption(str(self.clock.get_fps()))
             
             # Draw the screen
-            self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer)
-            if self.is_solving: self.screen.draw_moves(self.solution, self.solution_pointer)
-
+            if self.is_solving: self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer, self.solution.copy(), self.solution_pointer)
+            else: self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer)    
+            
             delta_time = self.clock.tick(MAX_FPS)
 
         pg.quit()
