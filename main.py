@@ -156,6 +156,8 @@ class World:
             self.solution = solution
             self.solution_pointer = 0
 
+
+        print("Length:", len(self.solution))
         self.clock.tick() # Tick the clock to stop the cube jumping as large amount of time may have passed
         
         self.swap_solving()
