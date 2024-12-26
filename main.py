@@ -392,10 +392,17 @@ class World:
                 if not self.is_editing() and not self.is_solving:
                     if not self.screen.model.is_moving() and self.move_queue.is_empty() and self.key in MOVE_KEYS.keys():
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
+                        
                     
                 elif self.is_editing():
                     if not self.screen.model.is_moving() and self.key in EDITING_MOVES:
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
+
+                    # Editing events
+                    elif self.key in EDITING_COLS.keys():
+                        self.edit_cube_colour(EDITING_COLS[self.key])
+                        self.update_edit_pointer()
+                        self.key = None
 
                 elif self.is_solving:
                     if not self.screen.model.is_moving() and self.key == pg.K_LEFT:
@@ -414,11 +421,6 @@ class World:
                         self.solution_pointer += 1
 
 
-                    # Editing events
-                    if self.key in EDITING_COLS.keys():
-                        self.edit_cube_colour(EDITING_COLS[self.key])
-                        self.update_edit_pointer()
-                        self.key = None
         
 
                     
@@ -439,7 +441,7 @@ class World:
         running = True
         self.clock.tick()
         while running:
-            
+
             # Get and run input events (keys, buttons and others)
             running = self.handle_events()
 

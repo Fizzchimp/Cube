@@ -32,7 +32,7 @@ class Display():
 
         # Setup the window
         self.screen = pg.display.set_mode([width, height])
-        image = pg.image.load("Display/Textures/01_icon.png")
+        image = pg.image.load("Display/Textures/icon.png")
         pg.display.set_icon(image)
         pg.display.set_caption("Cube")
     

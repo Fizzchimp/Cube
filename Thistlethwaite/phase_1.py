@@ -15,7 +15,7 @@ PHASE_1_MOVES = (
 
 ### Phase 1
 def side_check(cube):
-    # Flip all side peices to be "good" (can be returned home without the use of an odd number of quater turns of U or D)    
+    # Flip all side peices to be "good" (can be returned home without the use quater turns U or D)    
     facePattern1 = (3, 7, 5, 1)
     facePattern2 = (3, 1, 5, 7)
     groups = ((cube[2][4], cube[4][4]), (cube[1][4], cube[3][4]))
