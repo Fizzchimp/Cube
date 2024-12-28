@@ -9,7 +9,7 @@ def get_node_move(parent, move_num, move_set):
     
 
 # Phase 2 Moveset
-G_1 = (
+PHASE_2_MOVES = (
     "L", "L_Prime", "L_2",
     "R", "R_Prime", "R_2", 
     "F", "F_Prime", "F_2",
@@ -28,9 +28,19 @@ CORNERS = (
     ((3, 8), (4, 6), (5, 8)))
 
 ### Phase 2
-def UD_side_check(cube):
-    group_c = (cube[0][4], cube[5][4])
-    if cube[1][3] in group_c and cube[1][5] in group_c and cube[3][3] in group_c and cube[3][5] in group_c: return True
+# Checks if the given node is already in G_2
+def check_state(node):
+    target_group = (node[1][4], node[3][4])
+    for face in (node[1], node[3]):
+        for facelet in face:
+            if facelet not in target_group: return False
+    return True
+
+
+
+def UD_side_check(node):
+    group_c = (node[0][4], node[5][4])
+    if node[1][3] in group_c and node[1][5] in group_c and node[3][3] in group_c and node[3][5] in group_c: return True
     return False
 
 def get_UD_slice_iddfs(start_node):
@@ -61,7 +71,7 @@ def get_UD_slice_iddfs(start_node):
                 
             
                 if current_movement <= 10:
-                    node_stack.push(Node(get_node_move(parent, current_movement + 1, G_1), current_movement + 1, parent))
+                    node_stack.push(Node(get_node_move(parent, current_movement + 1, PHASE_2_MOVES), current_movement + 1, parent))
 
                 # If current branch exhausted remove node and change upper branch
                 else:
@@ -74,8 +84,13 @@ def get_UD_slice_iddfs(start_node):
                     if top:
                         exhausted = True
                     else:
-                        node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, G_1), parent.movement + 1, parent.parent))
+                        node_stack.push(Node(get_node_move(parent.parent, parent.movement + 1, PHASE_2_MOVES), parent.movement + 1, parent.parent))
     raise Exception("UD SLICE NOT SOLVABLE")
+
+
+
+
+
 
 def get_corners(node):
     state = ""
@@ -89,39 +104,6 @@ def get_corners(node):
 
     return state
 
-# All the transformations for the corner
-def reflection_XY(corners):
-    return (corners[1] + corners[0] + corners[3] + corners[2] + corners[5] + corners[4] + corners[7] + corners[6]).replace("1", "x").replace("2", "1").replace("x", "2")
-REF_XY_P2 = (1, 0, 2, 4, 3, 5, 10, 9, 11, 7, 6, 8, 12, 13)
-
-def reflection_XZ(corners):
-    return (corners[2] + corners[3] + corners[0] + corners[1] + corners[6] + corners[7] + corners[4] + corners[5]).replace("1", "x").replace("2", "1").replace("x", "2")
-REF_XZ_P2 = (1, 0, 2, 4, 3, 5, 7, 6, 8, 10, 9, 11, 13, 12)
-
-def reflection_YZ(corners):
-    return (corners[5] + corners[4] + corners[7] + corners[6] + corners[1] + corners[0] + corners[3] + corners[2]).replace("1", "x").replace("2", "1").replace("x", "2")
-REF_YZ_P2 = (4, 3, 5, 1, 0, 2, 7, 6, 8, 10, 9, 11, 12, 13)
-
-
-def rotation_X_2(corners):
-    return corners[3] + corners[2] + corners[1] + corners[0] + corners[7] + corners[6] + corners[5] + corners[4]
-ROT_X_P2 = (0, 1, 2, 3, 4, 5, 9, 10, 11, 6, 7, 8, 13, 12)
-
-def rotation_Y_2(corners):
-    return corners[4:] + corners[:4]
-ROT_Y_P2 = (3, 4, 5, 0, 1, 2, 9, 10, 11, 6, 7, 8, 12, 13)
-
-def rotation_Z_2(corners):
-    return corners[::-1]
-ROT_Z_P2 = (3, 4, 5, 0, 1, 2, 6, 7, 8, 9, 10, 11, 13, 12)
-
-TRANSFORMATION_LIST = (
-    (reflection_XY, REF_XY),
-    (reflection_XZ, REF_XZ),
-    (reflection_YZ, REF_YZ),
-    (rotation_X_2, ROT_X_2),
-    (rotation_Y_2, ROT_Y_2),
-    (rotation_Z_2, ROT_Z_2))
 
 def get_table_2_moves(corners):
     with open("Thistlethwaite/Tables/phase_2.txt") as table:
@@ -130,44 +112,42 @@ def get_table_2_moves(corners):
                 return line[11:].strip("\n").split(" ")
         
 
-def check_state(node):
-    target_group = (node[1][4], node[3][4])
-    for face in (node[1], node[3]):
-        for facelet in face:
-            if facelet not in target_group: return False
-    return True
-
+TRANSFORMATION_LIST = (
+    ("reflect_XY", REF_XY),
+    ("reflect_XZ", REF_XZ),
+    ("reflect_YZ", REF_YZ),
+    ("X_2", ROT_X_2),
+    ("Y_2", ROT_Y_2),
+    ("Z_2", ROT_Z_2))
 
 def phase_2(G_1_node):
-    node = get_UD_slice_iddfs(Node(G_1_node))
-    
     # Checks the state is not already in G_2
     if check_state(G_1_node): return [], G_1_node
-    
-    if node == None: return "Cannot Solve!"
-    UD_state = node.cube
 
-    path = []
-    while node.parent != None:
-        move = G_1[node.movement]
-        path.append(move)
-        node = node.parent
-    path = path[::-1]
+    node = get_UD_slice_iddfs(Node(G_1_node))
+    if node == None: return "Cannot Solve!"
     
-    corners = get_corners(UD_state)
-    node = Node(UD_state)
+    path = [PHASE_2_MOVES[node.movement]]
+    parent = node.parent
+    while parent.parent != None:
+        path.append(PHASE_2_MOVES[parent.movement])
+        parent = parent.parent
+
+    path = path[::-1]
 
     # Attempt with no transformations
+    corners = get_corners(node.cube)
     moves = get_table_2_moves(corners)
     if moves != None:
         for move in moves:
             path.append(move)
             node.move(move)
         return path, node
-
-    # Attempt with 1 transformation
+    
+    # Attempt with one transformation
     for transformation, moveset in TRANSFORMATION_LIST:
-        moves = get_table_2_moves(transformation(corners))
+        corners = get_corners(getattr(node, transformation)())
+        moves = get_table_2_moves(corners)
         if moves != None:
             for move in moves:
                 if move in moveset.keys(): move = moveset[move]
@@ -175,10 +155,11 @@ def phase_2(G_1_node):
                 node.move(move)
             return path, node
         
-    # Attempt with 2 transformations
+    # Attempt with two transformations
     for transformation_1, moveset_1 in TRANSFORMATION_LIST:
         for transformation_2, moveset_2 in TRANSFORMATION_LIST:
-            moves = get_table_2_moves(transformation_2(transformation_1(corners)))
+            corners = get_corners(getattr(Node(getattr(node, transformation_1)()), transformation_2)())
+            moves = get_table_2_moves(corners)
             if moves != None:
                 for move in moves:
                     if move in moveset_2.keys(): move = moveset_2[move]
@@ -186,16 +167,5 @@ def phase_2(G_1_node):
                     path.append(move)
                     node.move(move)
                 return path, node
-    
-    # Attempt with 3 transformations
-    # for transformation_1, moveset_1 in TRANSFORMATION_LIST:
-    #    for transformation_2, moveset_2 in TRANSFORMATION_LIST:
-    #        for transformation_3, moveset_3 in TRANSFORMATION_LIST:
-    #            moves = get_table_2_moves(transformation_3(transformation_2(transformation_1(corners))))
-    #            if moves != None:
-    #                for move in moves:
-    #                    path.append(move)
-    #                    node.move(move)
-    #                return path, node
-                
+            
     raise Exception("Phase 2 Broken")
