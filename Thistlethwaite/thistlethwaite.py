@@ -1,7 +1,5 @@
 import time
 
-import random
-
 from Thistlethwaite.phase_1 import phase_1
 from Thistlethwaite.phase_2 import phase_2
 from Thistlethwaite.phase_3 import phase_3
@@ -20,12 +18,12 @@ def thistle_solve(start_cube):
     start_time = time.time()
     phase_1_moves, G_1_node = phase_1(start_node) 
     print(f"Phase 1 finished in {round((time.time() - start_time) * 1000, 2)} ms")
-    
 
     # Phase 2
     timer = time.time()
     phase_2_moves, G_2_node = phase_2(G_1_node)
     print(f"Phase 2 finished in {round((time.time() - timer) * 1000, 2)} ms")
+    # print("Phase 2 node:", G_2_node.cube)
 
 
     # Phase 3
@@ -42,3 +40,9 @@ def thistle_solve(start_cube):
 
     print(f"Solved in {round((time.time() - start_time) * 1000, 2)} ms\n")
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
+
+
+node = Node()
+for i in range(1000):
+    node.scramble()
+    print(thistle_solve(node))

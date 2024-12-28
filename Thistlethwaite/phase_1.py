@@ -55,12 +55,10 @@ def solve_sides_iddfs(start_node):
                 parent = current_node.parent
 
                 # Check if the current node is correct
-                if side_check(current_node):
-                    node_stack.push(current_node)
-                    return current_node
+                if side_check(current_node): return current_node
                 
             
-                # Push D movement (Last move can only be U or D)
+                # We only push the D movement node as the final move can only be U or D
                 if current_movement == 0:
                     node_stack.push(Node(parent.D(), 2, parent))
 
