@@ -71,8 +71,7 @@ class World:
         
         self.cube_2 = Cube2()
         
-        # self.cube_3 = Cube3(['OYWYWOOWY', 'GBGGBGGBB', 'YRRYRROOO', 'BGBGGBBBG', 'RRWROWROR', 'WYYOYWYWW']) # No move table in phase 3
-        # self.cube_3 = Cube3(['RWYWYRRYW', 'BBBGGBBBG', 'YRRYRROOO', 'GBGGBGGGB', 'RRWOOYOOO', 'YWWOWWYYW']) # No move table in phase 3
+
         self.cube_3 = Cube3()
 
     

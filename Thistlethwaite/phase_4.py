@@ -1,9 +1,7 @@
 from Assets.node_3 import Node
-from Assets.stack import Stack
 from Assets.cqueue import Queue
-from Assets.binsearch import binSearch
+from Assets.binsearch import bin_search
 from Assets.mergesort import merge_sort
-from Thistlethwaite.transformations import *
 
 
 G_3 = (
@@ -34,7 +32,7 @@ def bfs_sides(start_state):
         while cur_start_node.generation == generation:
             
             # If the node is found in the visited end nodes, return both the current node and the found node
-            check, node = binSearch(visited_end_nodes, cur_start_node)
+            check, node = bin_search(visited_end_nodes, cur_start_node)
             if check == True:
                 return cur_start_node, node
             
@@ -61,7 +59,7 @@ def bfs_sides(start_state):
         while cur_end_node.generation == generation:
 
             # If the node is found in the visited start nodes, return both the current node and the found node
-            check, node = binSearch(visited_start_nodes, cur_end_node)
+            check, node = bin_search(visited_start_nodes, cur_end_node)
             if check == True:
                 return node, cur_end_node
             

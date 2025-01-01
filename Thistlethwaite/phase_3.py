@@ -1,5 +1,6 @@
 from Assets.node_3 import Node
 from Thistlethwaite.transformations import *
+from Thistlethwaite.Tables.table import Table
 from Thistlethwaite.phase_4 import phase_4
 
 
@@ -41,6 +42,7 @@ def get_orbits(cube):
     return corners
 
 # Transformations used in phase 2
+
 TRANSFORMATIONS = (
     # Corners  |  Moves
     ("10325476", "4351026789"), # Reflection YZ
@@ -51,6 +53,7 @@ TRANSFORMATIONS = (
     ("45670123", "0123457698"), # Rotation X 180
     ("76543210", "3450126798"), # Rotation Z 180
     ("32107654", "3450127689")) # Rotation Y 180
+# CHANGE THESE
 
 def transform_corners(corners, transformation):
     new_corners = ""
@@ -253,6 +256,11 @@ def get_table(table_num):
         with open("Thistlethwaite/Tables/phase_3_four_corners.txt", "r") as table:
             return table.readlines()
 
+
+# tables = [
+#     Table("Thistlethwaite/Tables/phase_3_no_corners.txt"),
+#     Table("Thistlethwaite/Tables/phase_3_two_corners.txt"),
+#     Table("Thistlethwaite/Tables/phase_3_four_corners.txt")]
 
 # Checks the table for moves to solve the given node
 def check_table(table, node):

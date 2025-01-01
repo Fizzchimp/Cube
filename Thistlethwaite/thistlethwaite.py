@@ -23,7 +23,6 @@ def thistle_solve(start_cube):
     timer = time.time()
     phase_2_moves, G_2_node = phase_2(G_1_node)
     print(f"Phase 2 finished in {round((time.time() - timer) * 1000, 2)} ms")
-    # print("Phase 2 node:", G_2_node.cube)
 
 
     # Phase 3
@@ -42,7 +41,7 @@ def thistle_solve(start_cube):
     return phase_1_moves + phase_2_moves + phase_3_moves + phase_4_moves
 
 
-node = Node()
-for i in range(1000):
-    node.scramble()
-    print(thistle_solve(node))
+# node = Node()
+# for i in range(0):
+#     node.scramble()
+#     print(thistle_solve(node))

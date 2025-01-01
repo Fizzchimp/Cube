@@ -1,6 +1,6 @@
 from Assets.node_2 import Node
 from Assets.cqueue import Queue
-from Assets.binsearch import binSearch
+from Assets.binsearch import bin_search
 from Assets.mergesort import merge_sort
 
 COL_KEYS = {"W":"YYYY", "G":"BBBB", "R":"OOOO", "B":"GGGG", "O":"RRRR", "Y":"WWWW"}
@@ -41,7 +41,7 @@ def solve_2(startState):
 
         while cSNode.generation == generation:
             
-            check, node = binSearch(vENodes, cSNode)
+            check, node = bin_search(vENodes, cSNode)
             if check == True:
                 return cSNode, node
             
@@ -74,7 +74,7 @@ def solve_2(startState):
         vENodes = []
         while cENode.generation == generation:
 
-            check, node = binSearch(vSNodes, cENode)
+            check, node = bin_search(vSNodes, cENode)
             if check == True:
                 return node, cENode
 
@@ -116,7 +116,7 @@ def solve_2(startState):
     vSNodes = []
     while True:
         try:
-            check, node = binSearch(vENodes, cSNode)
+            check, node = bin_search(vENodes, cSNode)
             if check == True:
                 return cSNode, node
         
@@ -135,7 +135,7 @@ def solve_2(startState):
     # End tree
     while True:
         try:
-            check, node = binSearch(vSNodes, cENode)
+            check, node = bin_search(vSNodes, cENode)
             if check == True:
                 return node, cENode
 

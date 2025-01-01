@@ -1,6 +1,7 @@
 from Assets.node_3 import Node
 from Assets.stack import Stack
 from Thistlethwaite.transformations import *
+from Thistlethwaite.Tables.table import Table
 
 # Return the state of a node after applied move
 def get_node_move(parent, move_num, move_set):
@@ -28,6 +29,7 @@ CORNERS = (
     ((3, 8), (4, 6), (5, 8)))
 
 ### Phase 2
+
 # Checks if the given node is already in G_2
 def check_state(node):
     target_group = (node[1][4], node[3][4])
@@ -37,12 +39,13 @@ def check_state(node):
     return True
 
 
-
+# Check the state of the UD slice
 def UD_side_check(node):
     group_c = (node[0][4], node[5][4])
     if node[1][3] in group_c and node[1][5] in group_c and node[3][3] in group_c and node[3][5] in group_c: return True
     return False
 
+# IDDFS to get required sides in the UD slice
 def get_UD_slice_iddfs(start_node):
     if UD_side_check(start_node): return start_node
     # To get UD slice correct
@@ -89,9 +92,7 @@ def get_UD_slice_iddfs(start_node):
 
 
 
-
-
-
+# Calculates key based on twist of corners
 def get_corners(node):
     state = ""
     target_colours = (node[1][4], node[3][4])
@@ -103,15 +104,9 @@ def get_corners(node):
                 break
 
     return state
-
-
-def get_table_2_moves(corners):
-    with open("Thistlethwaite/Tables/phase_2.txt") as table:
-        for line in table.readlines():
-            if line[:8] == corners:
-                return line[11:].strip("\n").split(" ")
         
 
+# List of transformations used to find moves in table
 TRANSFORMATION_LIST = (
     ("reflect_XY", REF_XY),
     ("reflect_XZ", REF_XZ),
@@ -119,6 +114,8 @@ TRANSFORMATION_LIST = (
     ("X_2", ROT_X_2),
     ("Y_2", ROT_Y_2),
     ("Z_2", ROT_Z_2))
+
+move_table = Table("Thistlethwaite/Tables/phase_2.txt")
 
 def phase_2(G_1_node):
     # Checks the state is not already in G_2
@@ -137,7 +134,7 @@ def phase_2(G_1_node):
 
     # Attempt with no transformations
     corners = get_corners(node.cube)
-    moves = get_table_2_moves(corners)
+    moves = move_table.search_table(corners)
     if moves != None:
         for move in moves:
             path.append(move)
@@ -146,8 +143,8 @@ def phase_2(G_1_node):
     
     # Attempt with one transformation
     for transformation, moveset in TRANSFORMATION_LIST:
-        corners = get_corners(getattr(node, transformation)())
-        moves = get_table_2_moves(corners)
+        corners = get_corners(node.transformation(transformation))
+        moves = move_table.search_table(corners)
         if moves != None:
             for move in moves:
                 if move in moveset.keys(): move = moveset[move]
@@ -158,8 +155,8 @@ def phase_2(G_1_node):
     # Attempt with two transformations
     for transformation_1, moveset_1 in TRANSFORMATION_LIST:
         for transformation_2, moveset_2 in TRANSFORMATION_LIST:
-            corners = get_corners(getattr(Node(getattr(node, transformation_1)()), transformation_2)())
-            moves = get_table_2_moves(corners)
+            corners = get_corners(node.transformation(transformation_1, transformation_2))
+            moves = move_table.search_table(corners)
             if moves != None:
                 for move in moves:
                     if move in moveset_2.keys(): move = moveset_2[move]
