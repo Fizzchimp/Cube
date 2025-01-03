@@ -1,14 +1,20 @@
 import numpy as np
 from numpy import cos, sin, pi, matmul
 
-alpha = pi / 9
-sinAlph = sin(alpha)
-cosAlph = cos(alpha)
-
+# Initial cube models are rotated around x axis by theta
 theta = pi / 6
 sinThet = sin(theta)
 cosThet = cos(theta)
 
+# Initial cube models are rotated around y axis by alpha
+alpha = pi / 9
+sinAlph = sin(alpha)
+cosAlph = cos(alpha)
+
+
+
+
+# Transformation matrix for rotation around x axis by a given angle
 def matrixX(angle):
     cosAngle = cos(angle)
     sinAngle = sin(angle)
@@ -27,6 +33,7 @@ def matrixX(angle):
         cosAngle + -cosThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle)]])
 
 
+# Transformation matrix for rotation around y axis by a given angle
 def matrixY(angle):
     cosAngle = cos(angle)
     sinAngle = sin(angle)
@@ -45,6 +52,7 @@ def matrixY(angle):
         cosAngle + sinThet * sinThet * (1 - cosAngle)]])
 
 
+# Transformation matrix for rotation around z axis by a given angle
 def matrixZ(angle):
     cosAngle = cos(angle)
     sinAngle = sin(angle)
@@ -64,6 +72,7 @@ def matrixZ(angle):
 
 
 
+# Returns given points after rotation about x axis
 def rotateX(angle, points):
     if angle == 0:
         return points
@@ -71,6 +80,7 @@ def rotateX(angle, points):
     rotX = matrixX(angle)
     return matmul(rotX, points)
 
+# Returns given points after rotation about y axis
 def rotateY(angle, points):
     if angle == 0:
         return points
@@ -78,6 +88,7 @@ def rotateY(angle, points):
     rotY = matrixY(angle)
     return matmul(rotY, points)
 
+# Returns fiven points after rotation about y axis
 def rotateZ(angle, points):
     if angle == 0:
         return points

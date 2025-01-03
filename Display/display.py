@@ -3,7 +3,6 @@ from pygame import gfxdraw
 from Display.model_2 import Model2
 from Display.model_3 import Model3
 from numpy import sin, cos, sqrt, arctan2
-import numpy as np
 
 colour_keys = {
     "W": (245, 245, 245),

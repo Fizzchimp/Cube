@@ -21,13 +21,19 @@ def normalisedSolved(cube):
 
 def solve_2(startState):
     # Queue for the current nodes
-    
     sNodeQ = Queue(99999)
+
+    # Current start node
     cSNode = Node(startState)
     
+
+    # Queue for current end nodes
     eNodeQ = Queue(99999)
+
+    # Current end node
     cENode = Node(normalisedSolved(startState))
     
+    # Used to determine when all nodes in one depth have been explored
     generation = 0
     
     # List of visited nodes from the previous generation
@@ -35,12 +41,13 @@ def solve_2(startState):
     vSNodes = []
     
     while generation <= 6:
-        # Start state tree
+        ## Start state tree
         vSNodes = []
         nextGen = generation + 1
 
-        while cSNode.generation == generation:
+        while cSNode.generation == generation: # Checks current node is at current depth
             
+            # Check visited start states for matching nodes
             check, node = bin_search(vENodes, cSNode)
             if check == True:
                 return cSNode, node
@@ -67,13 +74,14 @@ def solve_2(startState):
             # Fetch the next node
             cSNode = sNodeQ.dequeue()
 
-        # Sort visited nodes
+        # Sort visited start nodes
         vSNodes = merge_sort(vSNodes)
 
         # End state tree
         vENodes = []
         while cENode.generation == generation:
-
+            
+            # Check visited end states for matching nodes
             check, node = bin_search(vSNodes, cENode)
             if check == True:
                 return node, cENode
@@ -97,11 +105,11 @@ def solve_2(startState):
             if cENode.movement != "F":   
                 eNodeQ.enqueue(Node(cENode.F(), cENode, "F'", nextGen))
 
-            # Fetch the next node
+            # Fetch the next end node
             cENode = eNodeQ.dequeue()
             
 
-        # Sort visited nodes
+        # Sort visited end nodes
         vENodes = merge_sort(vENodes)
 
         # Increment the node generation counter
@@ -115,7 +123,8 @@ def solve_2(startState):
     # Start tree
     vSNodes = []
     while True:
-        try:
+        try: # Use try here to detect when queue runs out of nodes
+            # Check visited end states for matching nodes
             check, node = bin_search(vENodes, cSNode)
             if check == True:
                 return cSNode, node
@@ -134,7 +143,8 @@ def solve_2(startState):
     
     # End tree
     while True:
-        try:
+        try: # Use try here to detect when queue runs out of nodes
+            # Check visited start states for matching nodes
             check, node = bin_search(vSNodes, cENode)
             if check == True:
                 return node, cENode
@@ -144,4 +154,6 @@ def solve_2(startState):
             
         except:
             break
+
+    # If no connecting nodes found, return false (unsolvable)
     return None, None

@@ -7,6 +7,7 @@ class Model2():
     def __init__(self, centre):
         self.faces = self.generate_model()
 
+        # Phase attributes indicate how far round each part of the model is currently rotated
         self.x_phase = 0
         self.y_phase = 0
         self.z_phase = 0
@@ -20,9 +21,11 @@ class Model2():
         self.f_phase = 0
         self.b_phase = 0
 
+        # Determines where on the screen the cube is drawn
         self.centre = centre
         
 
+    # Generates each face of the model from one central defined face
     def generate_model(self):
         u_face = [
             (

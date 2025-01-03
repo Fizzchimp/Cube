@@ -37,7 +37,7 @@ def merge_sort(arr):
             elif rItem.cube <= lItem.cube:
                 # If the right item is smaller than the left, add the right item to the sorted list
                 arr[i] = rItem
-                # Incrmeent left pointer to next item to be compared
+                # Increment left pointer to next item to be compared
                 rPnt += 1
         
             # Increment the position pointer of the sorted list
