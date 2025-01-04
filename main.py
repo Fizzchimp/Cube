@@ -459,9 +459,9 @@ class World:
             # self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + delta_time / BG_SPEED) % 90 - 90
             # self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] + delta_time / BG_SPEED) % 90 - 90
             
-            iter += 1
-            if iter % MAX_FPS == 0:
-                pg.display.set_caption(str(self.clock.get_fps()))
+            # iter += 1
+            # if iter % MAX_FPS == 0:
+            #     pg.display.set_caption(str(self.clock.get_fps()))
             
             # Draw the screen
             if self.is_solving: self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer, self.solution.copy(), self.solution_pointer)
