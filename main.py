@@ -350,6 +350,9 @@ class World:
                         # Previous move button
                         if self.screen.solving_buttons[0].state == 2:
 
+                            self.screen.solving_buttons[1].hidden = False
+                            if self.solution_pointer == 1: self.screen.solving_buttons[0].hidden = True
+
                             self.solution_pointer -= 1
                             move = self.solution[self.solution_pointer]
                             if len(move) == 1: move += "_Prime"
@@ -361,12 +364,15 @@ class World:
 
                         # Next move button
                         if self.screen.solving_buttons[1].state == 2:
+                            self.screen.solving_buttons[0].hidden = False
+                            if self.solution_pointer == len(self.solution) - 1: self.screen.solving_buttons[1].hidden = True
                             try: self.move_queue.enqueue(self.solution[self.solution_pointer])
                             except: self.swap_solving()
                             self.solution_pointer += 1
                             
                         
                         if self.screen.solving_buttons[2].state == 2:
+                            self.screen.solving_buttons[1].hidden = True
                             for move in self.solution[self.solution_pointer:]:
                                 self.move_queue.enqueue(move)
                                 self.solution_pointer = len(self.solution)
