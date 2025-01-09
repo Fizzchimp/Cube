@@ -27,14 +27,15 @@ def thistle_solve(start_cube):
 
     # Phase 3
     timer = time.time()
-    phase_3_moves, G_3_cube = phase_3(G_2_node)
+    phase_3_moves, phase_4_moves = phase_3(G_2_node)
     print(f"Phase 3 finished in {round((time.time() - timer) * 1000, 2)} ms")
 
 
-    # Phase 4
-    timer = time.time()
-    phase_4_moves = phase_4(G_3_cube)
-    print(f"Phase 4 finished in {round((time.time() - timer) * 1000, 2)} ms\n")
+    # I do not like this
+    # # Phase 4
+    # timer = time.time()
+    # phase_4_moves = phase_4(G_3_cube)
+    # print(f"Phase 4 finished in {round((time.time() - timer) * 1000, 2)} ms\n")
 
 
     print(f"Solved in {round((time.time() - start_time) * 1000, 2)} ms\n")

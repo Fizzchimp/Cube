@@ -142,8 +142,7 @@ def get_key(cube):
 
     for i, face in enumerate((cube[0], cube[5])):
         for edge in (1, 3, 5, 7):
-            if face[edge] in group_UD:
-                sides_key[i * 2] += "-"
+            if face[edge] in group_UD: sides_key[i * 2] += "-"
             else: sides_key[i * 2] += "X"
     
     for i, face in enumerate((cube[2], cube[4])):
@@ -255,9 +254,9 @@ def check_table(table, node):
         if test_corner_permutation(test_node):
 
             try:
-                phase_4(Node(test_node.cube))
-                #print("Tested node:", test_node.cube)
-                return moveset
+                # I do not like this at all
+                phase_4_moves = phase_4(Node(test_node.cube))
+                return moveset, phase_4_moves
             
             except: pass
             
@@ -282,7 +281,7 @@ def phase_3(node):
     transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
     
     # Get the moves to fix the transformed node
-    moves = get_side_moves(transformed_node, table_num)
+    moves, phase_4_moves = get_side_moves(transformed_node, table_num)
     
     # Transform moves to work on origional node
     transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
@@ -296,4 +295,4 @@ def phase_3(node):
         phase_3_moves.append(move)
         node.move(move)
     
-    return phase_3_moves, node
+    return phase_3_moves, phase_4_moves
