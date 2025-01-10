@@ -33,9 +33,9 @@ ORBIT_KEYS = {
     "11111111" : ["L", "R"]}
 
 # Calculates the orbits of all 8 corners
-def get_orbits(cube):
+def get_orbits(node):
     # Define group of top and bottom faces
-    group_c = (cube[0][4], cube[5][4])
+    group_c = (node[0][4], node[5][4])
     corners = ""
 
     # Check top and bottom faces
@@ -43,13 +43,13 @@ def get_orbits(cube):
         # Check each corner of the face
         for index in (0, 2, 6, 8):
             # If facelet in correct group, corner is in orbit
-            if cube[face][index] not in group_c: corners += "1"
+            if node[face][index] not in group_c: corners += "1"
             else: corners += "0"
 
     return corners
 
 
-# Transformations used to fix orbits (node transformation, move transformation)
+# Transformations used throughout phase 3
 TRANSFORMATIONS = (
     ("reflect_XY", REF_XY),
     ("reflect_XZ", REF_XZ),
@@ -60,7 +60,7 @@ TRANSFORMATIONS = (
     ("Y_2", ROT_Y_2),
     ("Z_2", ROT_Z_2))
 
-
+# Finds moves to fix the corner orbits of given node
 def fix_orbits(node):
     # Try with no transformations
     orbits = get_orbits(node) # Determine the orbits
@@ -99,133 +99,134 @@ def fix_orbits(node):
 
     raise Exception("NOT SOLVED")
 
-
-
 ## Fixes sides and remaining corners
 # Orbits found in move tables
 ALLOWED_ORBITS = list(ORBIT_KEYS.keys())[:-12]
 
-# Transformations used to look through move tables
-#FIXED_ORBITS_TRANSFORMATIONS = [
-#    "reflect_XY",
-#    "reflect_XZ",
-#    "reflect_YZ",
-#    "X",
-#    "X_Prime",
-#    "X_2",
-#    "Y_2",
-#    "Z_2"]
-
 # Decides which table to use and which transformations are applied
-def get_fixed_orbits(cube):
+def get_fixed_orbits(node):
     
     # Try with no transformation
-    orbits = get_orbits(cube)
-    if orbits in ALLOWED_ORBITS:
-        return cube, ALLOWED_ORBITS.index(orbits), (dict(), dict())
+    orbits = get_orbits(node.cube) # Get the fixed orbits
+    # If already in correct state, no transformation needed. Return table number and blank transformation dictionaries
+    if orbits in ALLOWED_ORBITS: 
+        return node, ALLOWED_ORBITS.index(orbits), (dict(), dict())
     
-    transformed_node = Node()
     
     # Try with one transformation
     for i, (transformation, moveset) in enumerate(TRANSFORMATIONS):
-        transformed_node.cube = getattr(cube, transformation)()
-        orbits = get_orbits(transformed_node)
+        # Get the transformed state
+        transformed_state = node.transformation(transformation)
         
+        # Get orbits of transformed state
+        orbits = get_orbits(transformed_state)
+        
+        # If found in correct orbits, return transformed node, table number and the transformations applied
         if orbits in ALLOWED_ORBITS:
-            return transformed_node, ALLOWED_ORBITS.index(orbits), (moveset, dict())
+            return Node(transformed_state), ALLOWED_ORBITS.index(orbits), (moveset, dict())
     
+
     # Try with two transformations
     for i, (transformation_1, moveset_1) in enumerate(TRANSFORMATIONS):
         for j, (transformation_2, moveset_2) in enumerate(TRANSFORMATIONS):
-            transformed_node.cube = getattr(Node(getattr(cube, transformation_1)()), transformation_2)()
-            orbits = get_orbits(transformed_node)
+            # Get the transformed state
+            transformed_state = node.transformation(transformation_1, transformation_2)
             
+            # Get orbits of transformed state
+            orbits = get_orbits(transformed_state)
+            
+            # If found in correct orbits, return transformed node, table number and the transformations applied
             if orbits in ALLOWED_ORBITS:
-               return transformed_node, ALLOWED_ORBITS.index(orbits), (moveset_1, moveset_2)
+               return Node(transformed_state), ALLOWED_ORBITS.index(orbits), (moveset_1, moveset_2)
             
-    raise Exception("No resulting orbits (phase 3)")
+    raise Exception("No fixed orbits found (something has gone VERY wrong) - Phase 3")
 
 
 # Get the key for table moves
-def get_key(cube):
+def get_key(state):
+    # Side key consists of three strings: Top face sides, middle slice sides and bottom face sides
     sides_key = ["", "", ""]
-    group_UD = (cube[0][4], cube[5][4])
-    group_FB = (cube[2][4], cube[4][4])
+    # Declare group of top and bottom faces
+    group_UD = (state[0][4], state[5][4])
+    # Declare group of front and back faces
+    group_FB = (state[2][4], state[4][4])
 
-    for i, face in enumerate((cube[0], cube[5])):
+    # Check all side pieces of top and bottom faces
+    for i, face in enumerate((state[0], state[5])):
         for edge in (1, 3, 5, 7):
+            # If facelet in group
             if face[edge] in group_UD: sides_key[i * 2] += "-"
+            # If facelet not in group
             else: sides_key[i * 2] += "X"
     
-    for i, face in enumerate((cube[2], cube[4])):
+    # Check all side pieces in middle slice of cube
+    for i, face in enumerate((state[2], state[4])):
         for edge in (3, 5):
+            # If facelet in group
             if face[edge] in group_FB: sides_key[1] += "-"
+            # If facelet not in group
             else: sides_key[1] += "X"
     
+    # Return the key as a string
     return "|".join(sides_key)
 
-# Tests if the given node is in G_3
+
+# Tests given node find some states not in G_3
 def test_corner_permutation(test_node):
 
+    # Try with origional cube
     node = Node(test_node.cube)
+    # Check pattern of corners on each pair of faces
     for face_1, face_2 in ((node[0], node[5]), (node[1], node[3]), (node[2], node[4])):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
     
+    # Try with rotated cube
     node.move("X")
+    # Check pattern of corners on each pair of faces
     for face_1, face_2 in ((node[0], node[5]), (node[1], node[3]), (node[2], node[4])):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
         
+    # Try with rotated cube
     node.move("Z")
+    # Check pattern of corners on each pair of faces
     for face_1, face_2 in ((node[0], node[5]), (node[1], node[3]), (node[2], node[4])):
         if (face_1[0] == face_1[2]) ^ (face_2[0] == face_2[2]): return False
         if (face_1[0] == face_1[6]) ^ (face_2[0] == face_2[6]): return False
         if (face_1[0] == face_1[8]) ^ (face_2[0] == face_2[8]): return False
+    
+    # If returned true, does not necasserily mean state is in G_3, but has reduced number of states needed to try
+    # I also do not like this function at all    
     return True
 
-    
-
-PHASE_3_TRANSFORMATIONS = (
-    REF_XY,
-    REF_XZ,
-    REF_YZ,
-    ROT_X_PRIME,
-    ROT_X,
-    ROT_X_2,
-    ROT_Y_2,
-    ROT_Z_2,
-    {None : None}) # No transformation
-
-
-NO_CORNER_TRANSFORMATIONS = (
-    ("reflect_XY", REF_XY),
-    ("reflect_XZ", REF_XZ),
-    ("reflect_YZ", REF_YZ),
-    ("X", ROT_X_PRIME),
-    ("X_Prime", ROT_X),
-    ("X_2", ROT_X_2),
-    ("Y_2", ROT_Y_2),
-    ("Z_2", ROT_Z_2))
 
 # Try transformations to get the moves to solve the sides
 def get_side_moves(node, table_num):
+    # Corners to check node is still valid after transformations are applied
     corner_check = ("00000000", "10100000", "11001100")[table_num]
+    
+    # Determine which table to use
     table = TABLES[table_num]
-    transformations = NO_CORNER_TRANSFORMATIONS
     
     # Try with no transformations
     moves = check_table(table, node)
     if moves != False: return moves
     
     # Try with 1 transformation
-    for transformation, moveset in transformations:
-        transformed_node = Node(getattr(node, transformation)())
-        if get_orbits(transformed_node) != corner_check: continue
-        moves = check_table(table, transformed_node)
+    for transformation, moveset in TRANSFORMATIONS:
+        # Get the transformed state
+        transformed_state = node.transformation(transformation)
+        
+        # Check if the state after transformations is still valid for the table
+        if get_orbits(transformed_state) != corner_check: continue
+        
+        # Search table for corresponding moves
+        moves = check_table(table, transformed_state) 
         if moves != False:
+            # Transform returned moves to work for origional node
             for i, move in enumerate(moves):
                 if move in moveset.keys(): move = moveset[move]
                 moves[i] = move
@@ -233,19 +234,26 @@ def get_side_moves(node, table_num):
             return moves
     
     # Try with two transformations
-    for transformation_1, moveset_1 in transformations:
-        for transformation_2, moveset_2 in transformations:
-            transformed_node = Node(getattr(Node(getattr(node, transformation_1)()), transformation_2)())
-            if get_orbits(transformed_node) != corner_check: continue
-            moves = check_table(table, transformed_node)
+    for transformation_1, moveset_1 in TRANSFORMATIONS:
+        for transformation_2, moveset_2 in TRANSFORMATIONS:
+            # Get the transformed state
+            transformed_state = node.transformation(transformation_1, transformation_2)
+            
+            # Check if the state after transformations is still valid for the table
+            if get_orbits(transformed_state) != corner_check: continue
+            
+            # Search table for corresponding moves
+            moves = check_table(table, transformed_state)
             if moves != False:
+                # Transform returned moves to work for origional node
                 for i, move in enumerate(moves):
                     if move in moveset_2.keys(): move = moveset_2[move]
                     if move in moveset_1.keys(): move = moveset_1[move]
                     
                     moves[i] = move
                 return moves
-            
+    
+    # If no entry in table found, cube is deemed unsolvable
     raise Exception("NO MOVES FOUND IN PHASE 3 TABLES")
 
 
@@ -255,11 +263,11 @@ TABLES = [
     Table("Thistlethwaite/Tables/phase_3_four_corners.txt")]
 
 # Checks the table for moves to solve the given node
-def check_table(table, node):
-    key = get_key(node)
+def check_table(table, state):
+    key = get_key(state)
     
     for moves in table.search_table(key):
-        test_node = Node(node.cube)
+        test_node = Node(state)
         for move in moves:
             test_node.move(move)
 
