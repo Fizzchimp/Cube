@@ -13,6 +13,8 @@ from Thistlethwaite.phase_4 import phase_4
 
 ### Phase 3
 ## Fix corner orbits
+
+# Possible arrangements of corner orbits with corresponding moves
 ORBIT_KEYS = {
     "00000000" : [],
     "10100000" : [],
@@ -30,7 +32,7 @@ ORBIT_KEYS = {
     "11001111" : ["L", "R", "U_2"],
     "11111111" : ["L", "R"]}
 
-
+# Calculates the orbits of all 8 corners
 def get_orbits(cube):
     group_c = (cube[0][4], cube[5][4])
     corners = ""
@@ -245,9 +247,9 @@ TABLES = [
 def check_table(table, node):
     key = get_key(node)
     
-    for moveset in table.search_table(key):
+    for moves in table.search_table(key):
         test_node = Node(node.cube)
-        for move in moveset:
+        for move in moves:
             test_node.move(move)
 
         # Checks if the solution is in G_3
@@ -256,7 +258,7 @@ def check_table(table, node):
             try:
                 # I do not like this at all
                 phase_4_moves = phase_4(Node(test_node.cube))
-                return moveset, phase_4_moves
+                return moves + phase_4_moves
             
             except: pass
             
@@ -281,8 +283,9 @@ def phase_3(node):
     transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
     
     # Get the moves to fix the transformed node
-    moves, phase_4_moves = get_side_moves(transformed_node, table_num)
+    moves = get_side_moves(transformed_node, table_num)
     
+
     # Transform moves to work on origional node
     transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
     transformation_2 = PHASE_3_TRANSFORMATIONS[transformation_indexes[1]]
@@ -294,5 +297,5 @@ def phase_3(node):
 
         phase_3_moves.append(move)
         node.move(move)
-    
-    return phase_3_moves, phase_4_moves
+        
+    return phase_3_moves

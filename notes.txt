@@ -10,4 +10,6 @@ SuperFlip: Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOY
 ['YWYYWWOYR', 'GGGBGGBBB', 'WOWRRWYRO', 'GGGBBBBGB', 'OOROOYRRY', 'RYWRYOOWW'] Same
 
 
+['RRGBWBRGB', 'WOGGGOWWO', 'YYRYRGYYW', 'YROWBYGOO', 'YGBROOBWG', 'BBOBYWRRW'] Scuse me lad
+
 ['U_2', 'R_2', 'B_2', 'D_2', 'B_2', 'D_2', 'U_2', 'L_2', 'U_2', 'R_2', 'F_2', 'L_2', 'F_2', 'L_2'] 14 moves for last phase

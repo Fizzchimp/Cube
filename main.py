@@ -1,5 +1,15 @@
-import pygame as pg
-from numpy import pi
+try:
+    import pygame as pg
+    from numpy import pi
+    
+except ImportError:
+    import pip
+    pip.main(["install", "pygame"])
+    pip.main(["install", "numpy"])
+    import pygame as pg
+    from numpy import pi
+    
+    
 
 from Display.display import Display
 from cube_2 import Cube2
@@ -72,7 +82,7 @@ class World:
         self.cube_2 = Cube2()
         
 
-        self.cube_3 = Cube3()
+        self.cube_3 = Cube3(['RRGBWBRGB', 'WOGGGOWWO', 'YYRYRGYYW', 'YROWBYGOO', 'YGBROOBWG', 'BBOBYWRRW'])
 
     
         # Sets the current cube to one of the cube objects
@@ -184,7 +194,7 @@ class World:
             for button in self.screen.main_buttons + self.screen.movement_buttons:
                 button.hidden = True
                 
-            for button in self.screen.solving_buttons:
+            for button in self.screen.solving_buttons[1:]:
                 button.hidden = False
                 
             self.is_solving = True
@@ -364,8 +374,10 @@ class World:
 
                         # Next move button
                         if self.screen.solving_buttons[1].state == 2:
+                            
                             self.screen.solving_buttons[0].hidden = False
                             if self.solution_pointer == len(self.solution) - 1: self.screen.solving_buttons[1].hidden = True
+                            
                             try: self.move_queue.enqueue(self.solution[self.solution_pointer])
                             except: self.swap_solving()
                             self.solution_pointer += 1
@@ -410,7 +422,10 @@ class World:
                         self.key = None
 
                 elif self.is_solving:
-                    if not self.screen.model.is_moving() and self.key == pg.K_LEFT:
+                    if not self.screen.model.is_moving() and self.key == pg.K_LEFT and self.solution_pointer > 0:
+                        self.screen.solving_buttons[1].hidden = False
+                        if self.solution_pointer == 1: self.screen.solving_buttons[0].hidden = True
+
                         self.solution_pointer -= 1
                         move = self.solution[self.solution_pointer]
                     
@@ -420,7 +435,10 @@ class World:
                         try: self.move_queue.enqueue(move)
                         except: self.swap_solving()
                         
-                    elif not self.screen.model.is_moving() and self.key == pg.K_RIGHT:
+                    elif not self.screen.model.is_moving() and self.key == pg.K_RIGHT and self.solution_pointer < len(self.solution):
+                        self.screen.solving_buttons[0].hidden = False
+                        if self.solution_pointer == len(self.solution) - 1: self.screen.solving_buttons[1].hidden = True
+                        
                         try: self.move_queue.enqueue(self.solution[self.solution_pointer])
                         except: self.swap_solving()
                         self.solution_pointer += 1
