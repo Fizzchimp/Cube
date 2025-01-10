@@ -20,7 +20,7 @@ from Assets.cqueue import Queue
 from Thistlethwaite.thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 125
+ROTATION_SPEED = 12
 BG_SPEED = 40
 
 WIDTH = 700
@@ -82,7 +82,7 @@ class World:
         self.cube_2 = Cube2()
         
 
-        self.cube_3 = Cube3(['RRGBWBRGB', 'WOGGGOWWO', 'YYRYRGYYW', 'YROWBYGOO', 'YGBROOBWG', 'BBOBYWRRW'])
+        self.cube_3 = Cube3()
 
     
         # Sets the current cube to one of the cube objects

@@ -34,23 +34,28 @@ ORBIT_KEYS = {
 
 # Calculates the orbits of all 8 corners
 def get_orbits(cube):
+    # Define group of top and bottom faces
     group_c = (cube[0][4], cube[5][4])
     corners = ""
 
+    # Check top and bottom faces
     for face in (0, 5):
+        # Check each corner of the face
         for index in (0, 2, 6, 8):
+            # If facelet in correct group, corner is in orbit
             if cube[face][index] not in group_c: corners += "1"
             else: corners += "0"
 
     return corners
 
-# Transformations used in phase 2
+
+# Transformations used to fix orbits (node transformation, move transformation)
 TRANSFORMATIONS = (
     ("reflect_XY", REF_XY),
-    ("reflect_XZ",REF_XZ),
+    ("reflect_XZ", REF_XZ),
     ("reflect_YZ", REF_YZ),
     ("X", ROT_X_PRIME),
-    ("X_Prime", ROT_X),    
+    ("X_Prime", ROT_X),
     ("X_2", ROT_X_2),
     ("Y_2", ROT_Y_2),
     ("Z_2", ROT_Z_2))
@@ -58,17 +63,18 @@ TRANSFORMATIONS = (
 
 def fix_orbits(node):
     # Try with no transformations
-    orbits = get_orbits(node)
-    if orbits in ORBIT_KEYS.keys():
+    orbits = get_orbits(node) # Determine the orbits
+    if orbits in ORBIT_KEYS.keys(): # If match is found, return corresponding moves
         return ORBIT_KEYS[orbits]
     
     # Try with one transformation
     for transformation, moveset in TRANSFORMATIONS:
+        # Determine orbits of transformed node
         orbits = get_orbits(node.transformation(transformation))
-        if orbits in ORBIT_KEYS.keys():
-            print(orbits, transformation)
+        if orbits in ORBIT_KEYS.keys(): # If match found, transform and return moves
             transformed_moves = []
             for move in ORBIT_KEYS[orbits]:
+                # Apply transformation if given in moveset
                 if move in moveset.keys(): move = moveset[move]
                 transformed_moves.append(move)
             return transformed_moves
@@ -78,11 +84,12 @@ def fix_orbits(node):
     # Try with two transformations
     for transformation_1, moveset_1 in TRANSFORMATIONS:
         for transformation_2, moveset_2 in TRANSFORMATIONS:
+            # Determine orbits of transformed node
             orbits = get_orbits(node.transformation(transformation_1, transformation_2))
-            if orbits in ORBIT_KEYS.keys():
-                print(orbits, transformation_1, transformation_2)
+            if orbits in ORBIT_KEYS.keys(): # If match is found, transform and return moves
                 transformed_moves = []
                 for move in ORBIT_KEYS[orbits]:
+                    # Apply transformations if given in movesets
                     if move in moveset_2.keys(): move = moveset_2[move]
                     if move in moveset_1.keys(): move = moveset_1[move]
                     transformed_moves.append(move)
@@ -95,16 +102,19 @@ def fix_orbits(node):
 
 
 ## Fixes sides and remaining corners
+# Orbits found in move tables
 ALLOWED_ORBITS = list(ORBIT_KEYS.keys())[:-12]
 
-FIXED_ORBITS_TRANSFORMATIONS = [
-    "reflect_XY",
-    "reflect_XZ",
-    "reflect_YZ",
-    "X",
-    "X_Prime",
-    "Y_2",
-    "Z_2"]
+# Transformations used to look through move tables
+#FIXED_ORBITS_TRANSFORMATIONS = [
+#    "reflect_XY",
+#    "reflect_XZ",
+#    "reflect_YZ",
+#    "X",
+#    "X_Prime",
+#    "X_2",
+#    "Y_2",
+#    "Z_2"]
 
 # Decides which table to use and which transformations are applied
 def get_fixed_orbits(cube):
@@ -112,26 +122,26 @@ def get_fixed_orbits(cube):
     # Try with no transformation
     orbits = get_orbits(cube)
     if orbits in ALLOWED_ORBITS:
-        return cube, ALLOWED_ORBITS.index(orbits), (-1, -1)
+        return cube, ALLOWED_ORBITS.index(orbits), (dict(), dict())
     
     transformed_node = Node()
     
     # Try with one transformation
-    for i, transformation in enumerate(FIXED_ORBITS_TRANSFORMATIONS):
+    for i, (transformation, moveset) in enumerate(TRANSFORMATIONS):
         transformed_node.cube = getattr(cube, transformation)()
         orbits = get_orbits(transformed_node)
         
         if orbits in ALLOWED_ORBITS:
-            return transformed_node, ALLOWED_ORBITS.index(orbits), (i, -1)
+            return transformed_node, ALLOWED_ORBITS.index(orbits), (moveset, dict())
     
     # Try with two transformations
-    for i, transformation_1 in enumerate(FIXED_ORBITS_TRANSFORMATIONS):
-        for j, transformation_2 in enumerate(FIXED_ORBITS_TRANSFORMATIONS):
+    for i, (transformation_1, moveset_1) in enumerate(TRANSFORMATIONS):
+        for j, (transformation_2, moveset_2) in enumerate(TRANSFORMATIONS):
             transformed_node.cube = getattr(Node(getattr(cube, transformation_1)()), transformation_2)()
             orbits = get_orbits(transformed_node)
             
             if orbits in ALLOWED_ORBITS:
-               return transformed_node, ALLOWED_ORBITS.index(orbits), (i, j)
+               return transformed_node, ALLOWED_ORBITS.index(orbits), (moveset_1, moveset_2)
             
     raise Exception("No resulting orbits (phase 3)")
 
@@ -184,6 +194,7 @@ PHASE_3_TRANSFORMATIONS = (
     REF_YZ,
     ROT_X_PRIME,
     ROT_X,
+    ROT_X_2,
     ROT_Y_2,
     ROT_Z_2,
     {None : None}) # No transformation
@@ -280,20 +291,17 @@ def phase_3(node):
     
     
     # Transform node to be used in table
-    transformed_node, table_num, transformation_indexes = get_fixed_orbits(node)
+    transformed_node, table_num, move_transformations = get_fixed_orbits(node)
     
     # Get the moves to fix the transformed node
     moves = get_side_moves(transformed_node, table_num)
     
-
     # Transform moves to work on origional node
-    transformation_1 = PHASE_3_TRANSFORMATIONS[transformation_indexes[0]]
-    transformation_2 = PHASE_3_TRANSFORMATIONS[transformation_indexes[1]]
-    
-
     for move in moves:
-        if move in transformation_2.keys(): move = transformation_2[move]
-        if move in transformation_1.keys(): move = transformation_1[move]
+        # Undo second transformation
+        if move in move_transformations[1].keys(): move = move_transformations[1][move]
+        # Undo first transformation
+        if move in move_transformations[0].keys(): move = move_transformations[0][move]
 
         phase_3_moves.append(move)
         node.move(move)
