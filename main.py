@@ -20,7 +20,7 @@ from Assets.cqueue import Queue
 from Thistlethwaite.thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 12
+ROTATION_SPEED = 125
 BG_SPEED = 40
 
 WIDTH = 700
