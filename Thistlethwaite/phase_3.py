@@ -264,39 +264,43 @@ TABLES = [
 
 # Checks the table for moves to solve the given node
 def check_table(table, state):
+    # Calculate key from given node
     key = get_key(state)
     
+    # Search table for matching keys (Should find 4)
     for moves in table.search_table(key):
         test_node = Node(state)
+        
+        # Perform moves on a test node
         for move in moves:
             test_node.move(move)
 
-        # Checks if the solution is in G_3
+        # Checks if the test node is in G_3
         if test_corner_permutation(test_node):
-
+            # If node passes the corner permutation test, attempt to execute phase 4 on the node.
+            # I dont like this at all
             try:
-                # I do not like this at all
                 phase_4_moves = phase_4(Node(test_node.cube))
                 return moves + phase_4_moves
             
+            # If phase 4 fails, (no node found at maximum depth), try next set of moves found
             except: pass
             
     # If no solution is found, return false     
     return False
 
 def phase_3(node):
-    #print("Before corners:", node.cube)
+    # List of returned moves
     phase_3_moves = []
     
     # Fix orbits to be 1 of 3 possible states
     orbit_moves = fix_orbits(node)
-    print(orbit_moves)
-
+    
+    # Execute moves on node
     for move in orbit_moves:
         phase_3_moves.append(move)
         node.move(move)
         
-    
     
     # Transform node to be used in table
     transformed_node, table_num, move_transformations = get_fixed_orbits(node)
@@ -311,7 +315,8 @@ def phase_3(node):
         # Undo first transformation
         if move in move_transformations[0].keys(): move = move_transformations[0][move]
 
+        # Add moves to the list
         phase_3_moves.append(move)
-        node.move(move)
+        #node.move(move)
         
     return phase_3_moves

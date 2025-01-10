@@ -2,12 +2,12 @@ try:
     import pygame as pg
     from numpy import pi
     
-except ImportError:
+except:
     import pip
     pip.main(["install", "pygame"])
     pip.main(["install", "numpy"])
-    import pygame as pg
-    from numpy import pi
+    print("MODULES INSTALLED. CLOSE AND RUN PROGRAM AGAIN")
+    exit()
     
     
 
@@ -20,7 +20,7 @@ from Assets.cqueue import Queue
 from Thistlethwaite.thistlethwaite import thistle_solve
       
 MAX_FPS = 200
-ROTATION_SPEED = 125
+ROTATION_SPEED = 12
 BG_SPEED = 40
 
 WIDTH = 700

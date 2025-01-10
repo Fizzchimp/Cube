@@ -1,3 +1,4 @@
+# Transform moves with reflection in XY plane
 REF_XY = {
     "L" : "L_Prime",
     "L_Prime" : "L",
@@ -13,6 +14,7 @@ REF_XY = {
     "B_Prime" : "F",
     "B_2" : "F_2"}
 
+# Transform moves with reflection in XZ plane
 REF_XZ = {
     "L" : "L_Prime",
     "L_Prime" : "L",
@@ -29,6 +31,7 @@ REF_XZ = {
     "U_2" : "D_2",
     "D_2" : "U_2"}
 
+# Transform moves with reflection in YZ plane
 REF_YZ = {
     "L" : "R_Prime",
     "L_Prime" : "R",
@@ -45,6 +48,7 @@ REF_YZ = {
     "B_Prime" : "B"}
 
 
+# Transform moves with 90 degree clockwise rotation about x axis
 ROT_X = {   
     "F" : "U",
     "F_Prime" : "U_Prime",
@@ -57,6 +61,7 @@ ROT_X = {
     "U_2" : "B_2",
     "D_2" : "F_2"}
 
+# Transform moves with 90 degree anticlockwise rotation about x axis
 ROT_X_PRIME = {
     "F" : "D",
     "F_Prime" : "D_Prime",
@@ -69,6 +74,7 @@ ROT_X_PRIME = {
     "U_2" : "F_2",
     "D_2" : "B_2"}
 
+# Transform moves with 180 degree rotation about x axis
 ROT_X_2 = {
     "F" : "B",
     "F_Prime" : "B_Prime",
@@ -87,40 +93,41 @@ ROT_X_2 = {
     "D_2" : "U_2"}
 
 
-ROT_Y = {
-    "L" : "B",
-    "L_Prime" : "B_Prime",
-    "L_2" : "B_2",
-    
-    "R" : "F",
-    "R_Prime" : "F_Prime",
-    "R_2" : "F_2",
-    
-    "F" : "L",
-    "F_Prime" : "L_Prime",
-    "F_2" : "L_2",
-    
-    "B" : "R",
-    "B_Prime" : "R_Prime",
-    "B_2" : "R_2"}
+#ROT_Y = {
+#    "L" : "B",
+#    "L_Prime" : "B_Prime",
+#    "L_2" : "B_2",
+#    
+#    "R" : "F",
+#    "R_Prime" : "F_Prime",
+#    "R_2" : "F_2",
+#    
+#    "F" : "L",
+#    "F_Prime" : "L_Prime",
+#    "F_2" : "L_2",
+#    
+#    "B" : "R",
+#    "B_Prime" : "R_Prime",
+#    "B_2" : "R_2"}
 
-ROT_Y_PRIME = {
-    "L" : "F",
-    "L_Prime" : "F_Prime",
-    "L_2" : "F_2",
-    
-    "R" : "B",
-    "R_Prime" : "B_Prime",
-    "R_2" : "B_2",
-    
-    "F" : "R",
-    "F_Prime" : "R_Prime",
-    "F_2" : "R_2",
-    
-    "B" : "L",
-    "B_Prime" : "L_Prime",
-    "B_2" : "L_2"}
+#ROT_Y_PRIME = {
+#    "L" : "F",
+#    "L_Prime" : "F_Prime",
+#    "L_2" : "F_2",
+#    
+#    "R" : "B",
+#    "R_Prime" : "B_Prime",
+#    "R_2" : "B_2",
+#    
+#    "F" : "R",
+#    "F_Prime" : "R_Prime",
+#    "F_2" : "R_2",
+#   
+#    "B" : "L",
+#    "B_Prime" : "L_Prime",
+#    "B_2" : "L_2"}
 
+# Transform moves with 180 degree rotation about y axis
 ROT_Y_2 = {
     "L" : "R",
     "L_Prime" : "R_Prime",
@@ -139,30 +146,31 @@ ROT_Y_2 = {
     "B_2" : "F_2"}
 
 
-ROT_Z = {
-    "L" : "U",
-    "L_Prime" : "U_Prime",
-    "L_2" : "U_2",
-    
-    "R" : "D",
-    "R_Prime" : "D_Prime",
-    "R_2" : "D_2",
-    
-    "U_2" : "R_2",
-    "D_2" : "L_2"}
+#ROT_Z = {
+#    "L" : "U",
+#    "L_Prime" : "U_Prime",
+#    "L_2" : "U_2",
+#    
+#    "R" : "D",
+#    "R_Prime" : "D_Prime",
+#    "R_2" : "D_2",
+#    
+#    "U_2" : "R_2",
+#    "D_2" : "L_2"}
 
-ROT_Z_PRIME = {
-    "L" : "D",
-    "L_Prime" : "D_Prime",
-    "L_2" : "D_2",
-    
-    "R" : "U",
-    "R_Prime" : "U_Prime",
-    "R_2" : "U_2",
-    
-    "U_2" : "L_2",
-    "D_2" : "R_2"}
+#ROT_Z_PRIME = {
+#    "L" : "D",
+#    "L_Prime" : "D_Prime",
+#    "L_2" : "D_2",
+#    
+#    "R" : "U",
+#    "R_Prime" : "U_Prime",
+#    "R_2" : "U_2",
+#    
+#    "U_2" : "L_2",
+#    "D_2" : "R_2"}
 
+# Transform moves with 180 degree rotation about z axis
 ROT_Z_2 = {
     "L" : "R",
     "L_Prime" : "R_Prime",
@@ -175,27 +183,28 @@ ROT_Z_2 = {
     "U_2" : "D_2",
     "D_2" : "U_2"}
 
-ROT_X_PRIME_Y_2 = {
-    "L" : "R",
-    "L_Prime" : "R_Prime",
-    "L_2" : "R_2",
-    
-    "R" : "L",
-    "R_Prime" : "L_Prime",
-    "R_2" : "L_2",
-    
-    "F" : "D",
-    "F_Prime" : "D_Prime",
-    "F_2" : "D_2",
-    
-    "B" : "U",
-    "B_Prime" : "U_Prime",
-    "B_2" : "U_2",
-    
-    "U" : "B",
-    "U_Prime" : "B_Prime",
-    "U_2" : "B_2",
-    
-    "D" : "F",
-    "D_Prime" : "F_Prime",
-    "D_2" :  "F_2"}
+# Transform moves with 90 degree anticlockwise rotation followed by 180 degree rotation around y axis
+#ROT_X_PRIME_Y_2 = {
+#    "L" : "R",
+#    "L_Prime" : "R_Prime",
+#    "L_2" : "R_2",
+#    
+#    "R" : "L",
+#    "R_Prime" : "L_Prime",
+#    "R_2" : "L_2",
+#    
+#    "F" : "D",
+#    "F_Prime" : "D_Prime",
+#    "F_2" : "D_2",
+#    
+#    "B" : "U",
+#    "B_Prime" : "U_Prime",
+#    "B_2" : "U_2",
+#    
+#    "U" : "B",
+#    "U_Prime" : "B_Prime",
+#    "U_2" : "B_2",
+#    
+#    "D" : "F",
+#    "D_Prime" : "F_Prime",
+#    "D_2" :  "F_2"}

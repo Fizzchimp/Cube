@@ -82,13 +82,13 @@ class Node(Cube3):
         return cube.Z()
     
     # Returns 180 degree rotation about y axis followed by 90 degree clockwise rotation about x axis
-    def Y_2_X(self):
+    def something(self):
         cube = Cube3(self.cube)
         cube.move("Y", "Y")
         return cube.X()
     
     # Returns reflection in XZ plane then 90 degrees anticlockwise rotation about x axis
-    def reflect_XZ_X_Prime(self):
+    def something_else(self):
         cube = Cube3(self.cube)
         cube.cube = cube.reflect_XZ()
         return cube.X_Prime

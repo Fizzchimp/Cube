@@ -10,22 +10,26 @@ G_3 = (
     "U_2", "D_2")
 
 ### Phase 4
+# Meet in the middle BFS to find path
 def bfs_sides(start_state):
+    # Create starting nodes for start and end trees
     cur_start_node = Node(start_state)
     cur_end_node = Node([start_state[i][4] * 9 for i in range(6)])
     
+    # Create two queues start and end trees
     start_queue = Queue(999999)
     end_queue = Queue(999999)
 
+    # List of visited spaces for both trees
     visited_start_nodes = []
     visited_end_nodes = []
 
+    # Indicates what generation (depth) the search is at
     generation = 0
 
     # Limits the search to a certain depth
     while generation <= 7:
         next_gen = generation + 1
-
 
         # Searches through the current generation of start nodes
         visited_start_nodes = []
@@ -84,27 +88,28 @@ def bfs_sides(start_state):
         # Increment the generation counter
         generation += 1
 
-    raise Exception("FINAL BFS NOT SOLVED")
+    # If no path is found, node is deemed unsolvable
+    raise Exception("Final BFS not solved - Phase 4")
 
 
 
 def phase_4(start_node):
+    # Get the two meeting nodes
     start_node, end_node = bfs_sides(start_node.cube)
     path = []
 
+    # Add moves from the start tree to list of moves
+    while start_node.parent != None:
+        path.append(G_3[start_node.movement])
+        start_node = start_node.parent
+        
+    # Reverse moves to correct order
+    path = path[::-1]
 
-    if start_node == None:
-        raise Exception("No path found")
+    # Add moves from end tree to list of moves
+    while end_node.parent != None:
+        path.append(G_3[end_node.movement])
+        end_node = end_node.parent
 
-    else:
-        while start_node.parent != None:
-            path.append(G_3[start_node.movement])
-            start_node = start_node.parent
-        path = path[::-1]
-
-        while end_node.parent != None:
-            path.append(G_3[end_node.movement])
-            end_node = end_node.parent
 
     return path
-

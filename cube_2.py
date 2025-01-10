@@ -4,14 +4,14 @@ class Cube2():
     def __init__(self, cube = None):
         # Representation of cube as an array
         self.cube = cube if cube != None else [
-            "WWWW",
+            "WWWW", # Top face
                         
-            "GGGG",
-            "RRRR",
-            "BBBB",
-            "OOOO",
+            "GGGG", # Right face
+            "RRRR", # Front face
+            "BBBB", # Left face
+            "OOOO", # Back face
 
-            "YYYY"]
+            "YYYY"] # Bottom face
         
     
     def display(self):
@@ -24,7 +24,7 @@ class Cube2():
    |{self.cube[5][:2]}|
    |{self.cube[5][2:4]}|""")
    
-
+    # Allows object to be indexed and return attribute structure
     def __getitem__(self, index):
         return self.cube[index]
         
@@ -168,7 +168,7 @@ class Cube2():
 
 
     def X(self):
-        # Returns full clockwise cube rotation about x axis
+        # Returns full 90 degree clockwise cube rotation about x axis
         return [self.cube[2],
                 
                 self.cube[1][1] + self.cube[1][3] + self.cube[1][0] + self.cube[1][2],
@@ -179,7 +179,7 @@ class Cube2():
                 self.cube[4][::-1]]
 
     def X_Prime(self):
-        # Returns full anticlockwise cube rotation about x axis
+        # Returns full 90 degree anticlockwise cube rotation about x axis
         return [self.cube[4][::-1],
                 
                 self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
@@ -191,7 +191,7 @@ class Cube2():
     
 
     def Y(self):
-        # Returns full clockwise cube rotation about y axis
+        # Returns full 90 degree clockwise cube rotation about y axis
         return [self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1],
                 
                 self.cube[2],
@@ -202,7 +202,7 @@ class Cube2():
                 self.cube[5][1] + self.cube[5][3] + self.cube[5][0] + self.cube[5][2]]
     
     def Y_Prime(self):
-        # Returns full anticlockwise cube rotation about y axis
+        # Returns full 90 degree anticlockwise cube rotation about y axis
         return [self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
                 
                 self.cube[4],
@@ -214,6 +214,7 @@ class Cube2():
     
 
     def Z(self):
+        # Returns full 90 degree clockwise cube rotation about z axis
         return [self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
                 
                 self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1],
@@ -224,6 +225,7 @@ class Cube2():
                 self.cube[3][2] + self.cube[3][0] + self.cube[3][3] + self.cube[3][1]]
     
     def Z_Prime(self):
+        # Returns full 90 degree anticlockwise cube rotation about z axis
         return [self.cube[3][1] + self.cube[3][3] + self.cube[3][0] + self.cube[3][2],
                 
                 self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
@@ -233,35 +235,15 @@ class Cube2():
                 
                 self.cube[1][1] + self.cube[1][3] + self.cube[1][0] + self.cube[1][2]]
     
-
-    def move(self, move):
-        # Sets the cube structure after given movement
-        if move == "U": self.cube = self.U()
-        elif move == "U'": self.cube = self.U_Prime()
-
-        elif move == "D": self.cube = self.D()
-        elif move == "D'": self.cube = self.D_Prime()
-
-        elif move == "F": self.cube = self.F()
-        elif move == "F'": self.cube = self.F_Prime()
-
-        elif move == "B": self.cube = self.B()
-        elif move == "B'": self.cube = self.B_Prime()
-
-        elif move == "L": self.cube = self.L()
-        elif move == "L'": self.cube = self.L_Prime()
-
-        elif move == "R": self.cube = self.R()
-        elif move == "R'": self.cube = self.R_Prime()
-
-        elif move == "X": self.cube = self.X()
-        elif move == "X'": self.cube = self.X_Prime()
-
-        elif move == "Y": self.cube = self.Y()
-        elif move == "Y'": self.cube = self.Y_Prime()
-
-        elif move == "Z": self.cube = self.Z()
-        elif move == "Z'": self.cube = self.Z_Prime()
+    
+    def move(self, *moves):
+        # Executes given moves on the cube
+        for move in moves:
+            try: self.cube = getattr(self, move)()
+            except AttributeError: # If move not an attribute, try translating
+                move = move.replace("'", "_Prime").replace("2", "_2")
+                try: self.cube = getattr(self, move)() # If still not an attribute, entered move is not valid
+                except AttributeError: print(f"'{move}' not a valid movement")
 
         else: print("Not a valid movement")
 
