@@ -385,6 +385,7 @@ class World:
                         
                         if self.screen.solving_buttons[2].state == 2:
                             self.screen.solving_buttons[1].hidden = True
+                            self.screen.solving_buttons[0].hidden = False
                             for move in self.solution[self.solution_pointer:]:
                                 self.move_queue.enqueue(move)
                                 self.solution_pointer = len(self.solution)

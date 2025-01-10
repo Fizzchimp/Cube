@@ -6,9 +6,9 @@ class Cube2():
         self.cube = cube if cube != None else [
             "WWWW", # Top face
                         
-            "GGGG", # Right face
+            "GGGG", # Left face
             "RRRR", # Front face
-            "BBBB", # Left face
+            "BBBB", # Right face
             "OOOO", # Back face
 
             "YYYY"] # Bottom face
@@ -29,8 +29,9 @@ class Cube2():
         return self.cube[index]
         
 
+
+    # Returns rotation U clockwise
     def U(self):
-        # Returns rotation U clockwise
         return [self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1],
                 
                 self.cube[2][:2] + self.cube[1][2:4],
@@ -39,9 +40,9 @@ class Cube2():
                 self.cube[1][:2] + self.cube[4][2:4],
                 
                 self.cube[5]]
-
+    
+    # Return rotation U anticlockwise
     def U_Prime(self):
-        # Return rotation U anticlockwise
         return [self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
                 
                 self.cube[4][:2] + self.cube[1][2:4],
@@ -52,8 +53,9 @@ class Cube2():
                 self.cube[5]]
 
 
+
+    # Returns rotation D clockwise
     def D(self):
-        # Returns rotation D clockwise
         return [self.cube[0],
                 
                 self.cube[1][:2] + self.cube[4][2:4],
@@ -63,8 +65,8 @@ class Cube2():
                 
                 self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1]]
 
+    # Returns rotation D anticlockwise
     def D_Prime(self):
-        # Returns rotation D anticlockwise
         return [self.cube[0],
                 
                 self.cube[1][:2] + self.cube[2][2:4],
@@ -75,8 +77,9 @@ class Cube2():
                 self.cube[5][1] + self.cube[5][3] + self.cube[5][0] + self.cube[5][2]]
 
 
+
+    # Returns rotation F clockwise
     def F(self):
-        # Returns rotation F clockwise
         return [self.cube[0][:2] + self.cube[1][3] + self.cube[1][1],
                 
                 self.cube[1][0] + self.cube[5][0] + self.cube[1][2] + self.cube[5][1],
@@ -86,8 +89,8 @@ class Cube2():
                 
                 self.cube[3][2] + self.cube[3][0] + self.cube[5][2:4]]
     
+    # Returns rotation F anticlockwise
     def F_Prime(self):
-        # Returns rotation F anticlockwise
         return [self.cube[0][:2] + self.cube[3][0] + self.cube[3][2],
                 
                 self.cube[1][0] + self.cube[0][3] + self.cube[1][2] + self.cube[0][2],
@@ -98,8 +101,9 @@ class Cube2():
                 self.cube[1][1] + self.cube[1][3] + self.cube[5][2:4]]
 
 
+
+    # Returns rotation B clockwise
     def B(self):
-        # Returns rotation B clockwise
         return [self.cube[3][1] + self.cube[3][3] + self.cube[0][2:4],
                 
                 self.cube[0][1] + self.cube[1][1] + self.cube[0][0] + self.cube[1][3],
@@ -109,8 +113,8 @@ class Cube2():
 
                 self.cube[5][:2] + self.cube[1][0] + self.cube[1][2]]
     
+    # Returns rotation B anticlockwise
     def B_Prime(self):
-        # Returns rotation B anticlockwise
         return [self.cube[1][2] + self.cube[1][0] + self.cube[0][2:4],
                 
                 self.cube[5][2] + self.cube[1][1] + self.cube[5][3] + self.cube[1][3],
@@ -121,8 +125,9 @@ class Cube2():
                 self.cube[5][:2] + self.cube[3][3] + self.cube[3][1]]
 
 
+
+    # Returns rotation L clockwise
     def L(self):
-        # Returns rotation L clockwise
         return [self.cube[4][3] + self.cube[0][1] + self.cube[4][1] + self.cube[0][3],
                 
                 self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
@@ -132,8 +137,8 @@ class Cube2():
 
                 self.cube[2][0] + self.cube[5][1] + self.cube[2][2] + self.cube[5][3]]
 
+    # Returns rotation L anticlockwise
     def L_Prime(self):
-        # Returns rotation L anticlockwise
         return [self.cube[2][0] + self.cube[0][1] + self.cube[2][2] + self.cube[0][3],
                 
                 self.cube[1][1] + self.cube[1][3] + self.cube[1][0] + self.cube[1][2],
@@ -144,8 +149,9 @@ class Cube2():
                 self.cube[4][3] + self.cube[5][1] + self.cube[4][1] + self.cube[5][3]]
         
 
+
+    # Returns rotation R clockwise
     def R(self):
-        # Returns rotation R clockwise
         return [self.cube[0][0] + self.cube[2][1] + self.cube[0][2] + self.cube[2][3],
 
                 self.cube[1],
@@ -154,9 +160,9 @@ class Cube2():
                 self.cube[0][3] + self.cube[4][1] + self.cube[0][1] + self.cube[4][3],
 
                 self.cube[5][0] + self.cube[4][2] + self.cube[5][2] + self.cube[4][0]]
-        
+    
+    # Returns rotation R anticlockwise
     def R_Prime(self):
-        # Returns rotation R anticlockwise
         return [self.cube[0][0] + self.cube[4][2] + self.cube[0][2] + self.cube[4][0],
                 
                 self.cube[1],
@@ -167,8 +173,9 @@ class Cube2():
                 self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]]
 
 
+
+    # Returns full 90 degree clockwise cube rotation about x axis
     def X(self):
-        # Returns full 90 degree clockwise cube rotation about x axis
         return [self.cube[2],
                 
                 self.cube[1][1] + self.cube[1][3] + self.cube[1][0] + self.cube[1][2],
@@ -178,8 +185,8 @@ class Cube2():
                 
                 self.cube[4][::-1]]
 
+    # Returns full 90 degree anticlockwise cube rotation about x axis
     def X_Prime(self):
-        # Returns full 90 degree anticlockwise cube rotation about x axis
         return [self.cube[4][::-1],
                 
                 self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
@@ -190,8 +197,9 @@ class Cube2():
                 self.cube[2]]
     
 
+
+    # Returns full 90 degree clockwise cube rotation about y axis
     def Y(self):
-        # Returns full 90 degree clockwise cube rotation about y axis
         return [self.cube[0][2] + self.cube[0][0] + self.cube[0][3] + self.cube[0][1],
                 
                 self.cube[2],
@@ -201,8 +209,8 @@ class Cube2():
                 
                 self.cube[5][1] + self.cube[5][3] + self.cube[5][0] + self.cube[5][2]]
     
+    # Returns full 90 degree anticlockwise cube rotation about y axis
     def Y_Prime(self):
-        # Returns full 90 degree anticlockwise cube rotation about y axis
         return [self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
                 
                 self.cube[4],
@@ -213,8 +221,9 @@ class Cube2():
                 self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1]]
     
 
+
+    # Returns full 90 degree clockwise cube rotation about z axis
     def Z(self):
-        # Returns full 90 degree clockwise cube rotation about z axis
         return [self.cube[1][2] + self.cube[1][0] + self.cube[1][3] + self.cube[1][1],
                 
                 self.cube[5][2] + self.cube[5][0] + self.cube[5][3] + self.cube[5][1],
@@ -224,8 +233,8 @@ class Cube2():
 
                 self.cube[3][2] + self.cube[3][0] + self.cube[3][3] + self.cube[3][1]]
     
+    # Returns full 90 degree anticlockwise cube rotation about z axis
     def Z_Prime(self):
-        # Returns full 90 degree anticlockwise cube rotation about z axis
         return [self.cube[3][1] + self.cube[3][3] + self.cube[3][0] + self.cube[3][2],
                 
                 self.cube[0][1] + self.cube[0][3] + self.cube[0][0] + self.cube[0][2],
@@ -235,23 +244,31 @@ class Cube2():
                 
                 self.cube[1][1] + self.cube[1][3] + self.cube[1][0] + self.cube[1][2]]
     
-    
-    def move(self, *moves):
-        # Executes given moves on the cube
+
+
+    # Executes given moves on the cube
+    def move(self, *moves):  
         for move in moves:
             try: self.cube = getattr(self, move)()
-            except AttributeError: # If move not an attribute, try translating
+            # If move not an attribute, try translating
+            except AttributeError: 
                 move = move.replace("'", "_Prime").replace("2", "_2")
-                try: self.cube = getattr(self, move)() # If still not an attribute, entered move is not valid
+                try: self.cube = getattr(self, move)()
+                # If still not an attribute, entered move is not valid
                 except AttributeError: print(f"'{move}' not a valid movement")
 
         else: print("Not a valid movement")
 
+
+    # Scrambles the cube to a random position
     def scramble(self, num = 20):
-        # Scrambles the cube to a random position
+        # List of moves to be returned
         moves = []
+        
+        # Generate random moves and execute them on the cube
         for i in range(num):
             move = rnd.choice(["U", "D", "F", "B", "R", "L"]) + rnd.choice(["'", ""])
             moves.append(move)
             self.move(move)
+            
         return moves

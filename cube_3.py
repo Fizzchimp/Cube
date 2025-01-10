@@ -3,16 +3,18 @@ import random as rnd
 
 class Cube3():
     def __init__(self, cube = None):
+        # Representation of cube as an array
         self.cube = cube if cube != None else [
-            "WWWWWWWWW",
+            "WWWWWWWWW", # Top face
 
-            "GGGGGGGGG",
-            "RRRRRRRRR",
-            "BBBBBBBBB",
-            "OOOOOOOOO",
+            "GGGGGGGGG", # Left face
+            "RRRRRRRRR", # Front face
+            "BBBBBBBBB", # Right face
+            "OOOOOOOOO", # Back face
 
-            "YYYYYYYYY"]
+            "YYYYYYYYY"] # Bottom face
         
+
     def display(self):
         # Display the cube in net form
         print(f"""
@@ -26,9 +28,13 @@ class Cube3():
     |{self[5][3:6]}|
     |{self[5][6:]}|""")
         
+    # Allows object to be indexed and return attribute structure
     def __getitem__(self, index):
         return self.cube[index]
     
+
+
+    # Returns full 90 degree clockwise cube rotation about x axis
     def X(self):
         return [self[2],
                 
@@ -39,6 +45,7 @@ class Cube3():
                 
                 self[4][::-1]]
     
+    # Returns full 90 degree anticlockwise cube rotation about x axis
     def X_Prime(self):
         return [self[4][::-1],
                 
@@ -50,6 +57,8 @@ class Cube3():
                 self[2]]
 
     
+
+    # Returns full 90 degree clockwise cube rotation about y axis
     def Y(self):
         return [self[0][6] + self[0][3] + self[0][0] + self[0][7] + self[0][4] + self[0][1] + self[0][8] + self[0][5] + self[0][2],
                 
@@ -60,6 +69,7 @@ class Cube3():
                 
                 self[5][2] + self[5][5] + self[5][8] + self[5][1] + self[5][4] + self[5][7] + self[5][0] + self[5][3] + self[5][6]]
     
+    # Returns full 90 degree anticlockwise cube rotation about y axis
     def Y_Prime(self): 
         return [self[0][2] + self[0][5] + self[0][8] + self[0][1] + self[0][4] + self[0][7] + self[0][0] + self[0][3] + self[0][6],
                 
@@ -71,6 +81,8 @@ class Cube3():
                 self[5][6] + self[5][3] + self[5][0] + self[5][7] + self[5][4] + self[5][1] + self[5][8] + self[5][5] + self[5][2]]
 
 
+
+    # Returns full 90 degree clockwise cube rotation about z axis
     def Z(self):
         return [self[1][6] + self[1][3] + self[1][0] + self[1][7] + self[1][4] + self[1][1] + self[1][8] + self[1][5] + self[1][2],
                 
@@ -81,6 +93,7 @@ class Cube3():
                 
                 self[3][6] + self[3][3] + self[3][0] + self[3][7] + self[3][4] + self[3][1] + self[3][8] + self[3][5] + self[3][2]]
     
+    # Returns full 90 degree anticlockwise cube rotation about z axis
     def Z_Prime(self):
         return [self[3][2] + self[3][5] + self[3][8] + self[3][1] + self[3][4] + self[3][7] + self[3][0] + self[3][3] + self[3][6],
                 
@@ -93,7 +106,7 @@ class Cube3():
     
 
 
-
+    # Returns rotation U clockwise
     def U(self):
         return [self[0][6] + self[0][3] + self[0][0] + self[0][7] + self[0][4] + self[0][1] + self[0][8] + self[0][5] + self[0][2],
                 
@@ -103,7 +116,8 @@ class Cube3():
                 self[1][:3] + self[4][3:],
                 
                 self[5]]
-                
+    
+    # Return rotation U anticlockwise
     def U_Prime(self):
         return [self[0][2] + self[0][5] + self[0][8] + self[0][1] + self[0][4] + self[0][7] + self[0][0] + self[0][3] + self[0][6],
                 
@@ -114,6 +128,7 @@ class Cube3():
                 
                 self[5]]
 
+    # Return 180 degree rotation U
     def U_2(self):
         return [self[0][::-1],
                 
@@ -123,6 +138,8 @@ class Cube3():
                 self[2][:3] + self[4][3:],
                 
                 self[5]]
+
+
 
 
     def E(self):
@@ -366,6 +383,4 @@ class Cube3():
             moves.append(move)
             self.move(move)
         return moves
-
-
 
