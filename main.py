@@ -1,7 +1,9 @@
+# Try and import pygame and numpy modules
 try:
     import pygame as pg
     from numpy import pi
-    
+
+# If not installed, install then restart program
 except:
     import pip
     pip.main(["install", "pygame"])
@@ -10,24 +12,29 @@ except:
     exit()
     
     
-
+# Import used modules
 from Display.display import Display
 from cube_2 import Cube2
 from cube_3 import Cube3
 
-from Assets.solve_2 import solve_2
 from Assets.cqueue import Queue
 from Thistlethwaite.thistlethwaite import thistle_solve
-      
-MAX_FPS = 200
-ROTATION_SPEED = 12
-BG_SPEED = 40
 
+# Maximum number of frames claculated per second
+MAX_FPS = 100
+
+# Time taken to complete one cube rotation in milliseconds
+ROTATION_SPEED = 125
+
+
+# Dimensions of the screen
 WIDTH = 700
 HEIGHT = 700
 
-
+# Modifier values for shift key
 SHIFT = (1, 2, 3)
+
+# Keyboard inputs and corresponding moves
 MOVE_KEYS = {pg.K_u: "U",
              pg.K_r: "R",
              pg.K_f: "F",
@@ -38,11 +45,12 @@ MOVE_KEYS = {pg.K_u: "U",
              pg.K_s: "S",
              pg.K_e: "E",
              pg.K_LEFT: "Y",
-             pg.K_RIGHT: "Y'",
+             pg.K_RIGHT: "Y_Prime",
              pg.K_UP: "X",
-             pg.K_DOWN: "X'",
+             pg.K_DOWN: "X_Prime",
              pg.K_z: "Z"}
 
+# Keyboard inputs used in editing screen
 EDITING_MOVES = (
     pg.K_LEFT,
     pg.K_RIGHT,
@@ -50,14 +58,18 @@ EDITING_MOVES = (
     pg.K_DOWN,
     pg.K_z)
 
-BUTTON_KEYS = (
-    "U", "U'",
-    "F", "F'",
-    "R", "R'",
-    "D", "D'",
-    "B", "B'",
-    "L", "L'")
 
+# Values corresponding to movement buttons on main screen
+BUTTON_KEYS = (
+    "U", "U_Prime",
+    "F", "F_Prime",
+    "R", "R_Prime",
+    "D", "D_Prime",
+    "B", "B_Prime",
+    "L", "L_Prime")
+
+
+# Keyboard inputs and corresponding facelet colours used in editing screen
 EDITING_COLS = {
     pg.K_w: "W",
     pg.K_g: "G",
@@ -67,12 +79,14 @@ EDITING_COLS = {
     pg.K_y: "Y"}
 
 
-
+# Constant used to rotate model
 HALF_PI = pi / 2
-DOUBLE_PI = pi * 2
 
+# Constant used to animate cube bobbing
+DOUBLE_PI = pi * 2
 BOB_SPEED = 600
 BOB_STRENGTH = WIDTH * 0.015
+
 
 class World:
     def __init__(self):
@@ -124,6 +138,8 @@ class World:
         self.screen.swap_cubes()
 
 
+
+    ### SOLVING
     # Organises Pathfinding for each cube
     def solve(self):
 
@@ -188,7 +204,6 @@ class World:
         # Swap to solving screen
         self.swap_solving()
         
-            
     # Swaps between solving and main screens   
     def swap_solving(self):
 
@@ -205,9 +220,8 @@ class World:
             # Attribute to tell if cube is solving
             self.is_solving = False
             
-            # Reset cube positions to origional positions
-            if self.cube_type == 2: self.screen.model.centre = [250, 300]
-            if self.cube_type == 3: self.screen.model.centre = [450, 300]
+            # Reset cube position to origional position
+            self.screen.model.centre = [200 * self.cube_type - 150, 300]
             
 
         
@@ -227,154 +241,207 @@ class World:
             # Set cube centre to middle of screen
             self.screen.model.centre = [370, 250]
 
-    
+    # Undo the last move on the solving screen
+    def prev_move(self):
+        # Unhide next move button
+        self.screen.solving_buttons[1].hidden = False
+
+        # If last move in solution, hide next move button
+        if self.solution_pointer == 1: self.screen.solving_buttons[0].hidden = True
+
+        # Decrease current move pointer by 1
+        self.solution_pointer -= 1
+
+        # Get and reverse move (undo previous move)
+        move = self.solution[self.solution_pointer]
+        if len(move) == 1: move += "_Prime"
+        elif len(move.replace("'", "_Prime")) == 7: move = move[0]
+        
+        # Add reversed move to move queue
+        try: self.move_queue.enqueue(move)
+        except: self.swap_solving()
+
+    # Execute next move on solving screen
+    def next_move(self):
+        # Unhide previous move button
+        self.screen.solving_buttons[0].hidden = False
+
+        # If at first move in solution, hide hide previous move button
+        if self.solution_pointer == len(self.solution) - 1: self.screen.solving_buttons[1].hidden = True
+        
+        # Add move to move queue
+        self.move_queue.enqueue(self.solution[self.solution_pointer])
+
+        # Increase current move pointer by 1
+        self.solution_pointer += 1
+
+    # Execute all remaining moves in solution
+    def all_moves(self):
+        # Hide next move button (at end of solution)
+        self.screen.solving_buttons[1].hidden = True
+
+        # Unhide previous move button
+        self.screen.solving_buttons[0].hidden = False
+
+        # Enqueue all moves from current move onwards to move queue
+        for move in self.solution[self.solution_pointer:]:
+            self.move_queue.enqueue(move)
+
+            # Set current move pointer to end of solution
+            self.solution_pointer = len(self.solution)
+
+
 
     ### EDITING
     # Swaps between editing and main screens
     def swap_editing(self):
+        # Check there are no blank facelets on the cube
         for face in self.cube.cube:
             if "-" in face:
+                # If any blank facelet, stay on editing screen
                 print("Not finished editing!")
                 return
             
-        if self.edit_pointer != -1:
+        # If on editing screen
+        if self.is_editing():
+            # Unhide main screen buttons
             for button in self.screen.main_buttons + self.screen.movement_buttons:
                 button.hidden = False
-            if self.cube_type == 3:
-                
-                for button in self.screen.movement_buttons[12:]:
-                    button.hidden = False
             
+            # Hide editing screen buttons
             self.screen.editing_buttons[0].hidden = True
             self.screen.editing_buttons[1].hidden = True
+
+            # Set the edit pointer to -1 to indicate not editing
             self.edit_pointer = -1
+
+            # Reset cube position to origional position
             self.screen.model.centre = [200 * self.cube_type - 150, 300]
 
-
+        # If on main screen
         else:
+            # Hide all main screen buttons
             for button in self.screen.main_buttons + self.screen.movement_buttons:
                 button.hidden = True
         
+            # Unhide editing screen buttons
             self.screen.editing_buttons[0].hidden = False
             self.screen.editing_buttons[1].hidden = False
+
+            # Set new cube position on screen
             self.screen.model.centre = [450, 250]
+
+            # Set the edit pointer to the top left of the front face
             self.edit_pointer = self.cube_type ** 2 * 2
 
     # Method to check if the program is in editing state
     def is_editing(self):
+        # When edit pointer is set to -1, program is not in editing state
         if self.edit_pointer == -1:
             return False
         return True
-    
+
     # Updates the edit pointer 
     def update_edit_pointer(self):
+        # Increment the edit pointer
         self.edit_pointer += 1
 
+        # If edit pointer now points to facelet not on front face,
         if self.edit_pointer == self.cube_type ** 2 * 3:
-            self.do_move("Y")
-            self.edit_pointer = self.cube_type ** 2 * 2
+            self.do_move("Y") # Rotate cube to next face
+            self.edit_pointer = self.cube_type ** 2 * 2 # Set edit pointer to top left of front face
 
     # Edits the facelet of one colour
     def edit_cube_colour(self, colour):
+        # Determine which face is being edited
         editing_face = self.cube[self.edit_pointer // (self.cube_type ** 2)]
 
+        # Points at facelet being edited
         facelet_pointer = self.edit_pointer % (self.cube_type ** 2)
 
-        first_half = editing_face[:facelet_pointer]
-        second_half = editing_face[facelet_pointer + 1:]
+        first_half = editing_face[:facelet_pointer] # Get face string from start to facelet being edited
+        second_half = editing_face[facelet_pointer + 1:] # Get face string from facelet being edited to end
 
+        # Set the face on the cube to the first half plus the new facelet plus the second half
         self.cube.cube[self.edit_pointer // (self.cube_type ** 2)] = first_half + colour + second_half
     
     
+
     # Executes a move on both cube data strucure and model
     def do_move(self, move, mod = None):
-        if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
-        move = move.replace("_Prime", "'").replace("_2", "2")
+        # Translate move into program notation
+        move = move.replace("'", "_Prime").replace("_2", "-").replace("2", "_2").replace("-", "_2")
+
+        # Apply shift modifier to move
+        if mod in SHIFT and len(move) == 1 and move not in ("X", "Y"): move += "_Prime"
+        
+        # Execute move on cube object
         self.cube.move(move)
         
-        if move == "U": self.screen.model.u_phase = -HALF_PI
-        elif move == "U'": self.screen.model.u_phase = HALF_PI
-        elif move == "U2": self.screen.model.u_phase = -pi
-            
-        elif move == "R": self.screen.model.r_phase = HALF_PI
-        elif move == "R'": self.screen.model.r_phase = -HALF_PI
-        elif move == "R2": self.screen.model.r_phase = pi
-            
-        elif move == "F": self.screen.model.f_phase = -HALF_PI
-        elif move == "F'": self.screen.model.f_phase = HALF_PI
-        elif move == "F2": self.screen.model.f_phase = -pi
-            
-        elif move == "D": self.screen.model.d_phase = HALF_PI
-        elif move == "D'": self.screen.model.d_phase = -HALF_PI
-        elif move == "D2": self.screen.model.d_phase = pi
-            
-        elif move == "L": self.screen.model.l_phase = -HALF_PI
-        elif move == "L'": self.screen.model.l_phase = HALF_PI
-        elif move == "L2": self.screen.model.l_phase = -pi
-            
-        elif move == "B": self.screen.model.b_phase = HALF_PI
-        elif move == "B'": self.screen.model.b_phase = -HALF_PI
-        elif move == "B2": self.screen.model.b_phase = -pi
-        
-        elif move == "M": self.screen.model.m_phase = -HALF_PI
-        elif move == "M'": self.screen.model.m_phase = HALF_PI
-        
-        elif move == "S": self.screen.model.s_phase = HALF_PI
-        elif move == "S'": self.screen.model.s_phase = -HALF_PI
-        
-        elif move == "E": self.screen.model.e_phase = HALF_PI
-        elif move == "E'": self.screen.model.e_phase = -HALF_PI
-            
-        elif move == "X": self.screen.model.x_phase = HALF_PI
-        elif move == "X'": self.screen.model.x_phase = -HALF_PI
-            
-        elif move == "Y": self.screen.model.y_phase = -HALF_PI
-        elif move == "Y'": self.screen.model.y_phase = HALF_PI
-            
-        elif move == "Z": self.screen.model.z_phase = -HALF_PI
-        elif move == "Z'": self.screen.model.z_phase = HALF_PI
+        # Get the angle of rotation for the model
+        if move[0] in ("U", "F", "L", "M", "Y", "Z"):
+            if len(move) == 1: rot_angle = -HALF_PI
+            elif len(move) == 3: rot_angle = -pi
+            elif len(move) == 7: rot_angle = HALF_PI
+
+        elif move[0] in ("R", "D", "B", "S", "E", "X"):
+            if len(move) == 1: rot_angle = HALF_PI
+            elif len(move) == 3: rot_angle = pi
+            elif len(move) == 7: rot_angle = -HALF_PI
+
+        # Set the corresponding phase attribute to model
+        setattr(self.screen.model, move[0].lower() + "_phase", rot_angle)
 
     # Handles all program events
     def handle_events(self):
+        # Get all events in the pygame event queue
         events = pg.event.get()
 
-        # Update all buttons on screen
+        # Get the current mouse position
         mouse_pos = pg.mouse.get_pos()
+
+        # Update the state of all buttons on screen
         for button in self.screen.main_buttons + self.screen.editing_buttons + self.screen.movement_buttons + self.screen.solving_buttons:
             button.get_state(mouse_pos)
 
-
+        # Check each event
         for event in events:
-                if event.type == pg.QUIT: return False
-                elif event.type == pg.KEYDOWN: self.keyDown, self.key = True, event.key
-                elif event.type == pg.KEYUP: self.keyDown = False
+                if event.type == pg.QUIT: return False # Exit program
+                elif event.type == pg.KEYDOWN: self.key_down, self.key = True, event.key # Keyboard pressed
+                elif event.type == pg.KEYUP: self.key_down = False # Keyboard released
 
+                # Mouse click (check buttons)
                 elif event.type == pg.MOUSEBUTTONDOWN:
-                    # Main Buttons
+                    ## Main Buttons
                     if not self.is_editing() and self.is_solving == False:
+
+                        # Solve button
                         if self.screen.main_buttons[0].state == 2:
                             self.solve()
 
+                        # Scramble button
                         if self.screen.main_buttons[1].state == 2:
                             moves = self.cube.scramble()
                             print(moves)
 
+                        # Swap cube button
                         if self.screen.main_buttons[2].state == 2:
                             self.swap_cubes()
                         
+                        # Editing screen button
                         if self.screen.main_buttons[3].state == 2:
                             self.swap_editing()
 
 
-                    # Editing Buttons
+                    ## Editing Buttons
                     if self.is_editing():
+                        # Done button (back to main screen)
                         if self.screen.editing_buttons[0].state == 2:
                             self.swap_editing()
 
-
+                        # Clear cube button
                         if self.screen.editing_buttons[1].state == 2:
-                            if self.cube_type == 2: self.cube.cube = ["----" for i in range(6)]
-                            elif self.cube_type == 3: self.cube.cube = ["---------" for i in range(6)]
+                            self.cube.cube = ["-" * (self.cube_type ** 2) for i in range(6)]
 
 
                     # Solving Buttons
@@ -382,142 +449,134 @@ class World:
 
                         # Previous move button
                         if self.screen.solving_buttons[0].state == 2:
+                            # Undo previous move in solution
+                            self.prev_move()
 
-                            self.screen.solving_buttons[1].hidden = False
-                            if self.solution_pointer == 1: self.screen.solving_buttons[0].hidden = True
-
-                            self.solution_pointer -= 1
-                            move = self.solution[self.solution_pointer]
-                            if len(move) == 1: move += "_Prime"
-                            elif len(move) == 7:
-                                move = move[0]
-                            
-                            try: self.move_queue.enqueue(move)
-                            except: self.swap_solving()
 
                         # Next move button
                         if self.screen.solving_buttons[1].state == 2:
-                            
-                            self.screen.solving_buttons[0].hidden = False
-                            if self.solution_pointer == len(self.solution) - 1: self.screen.solving_buttons[1].hidden = True
-                            
-                            try: self.move_queue.enqueue(self.solution[self.solution_pointer])
-                            except: self.swap_solving()
-                            self.solution_pointer += 1
+                            # Execute next move in solution
+                            self.next_move()
                             
                         
+                        # All moves button
                         if self.screen.solving_buttons[2].state == 2:
-                            self.screen.solving_buttons[1].hidden = True
-                            self.screen.solving_buttons[0].hidden = False
-                            for move in self.solution[self.solution_pointer:]:
-                                self.move_queue.enqueue(move)
-                                self.solution_pointer = len(self.solution)
+                            # Execute all remaining moves in solution
+                            self.all_moves()
                         
+                        
+                        # Cancel button
                         if self.screen.solving_buttons[3].state == 2:
+                            # Return to main screen
                             self.swap_solving()
                         
 
 
                     # Movement Buttons
                     if not self.is_editing() and self.is_solving == False:
+                        # Check all move buttons
                         for i, button in enumerate(self.screen.movement_buttons):
                             if button.state == 2:
+                                # Perform corresponding move to cube object and model
                                 self.do_move(BUTTON_KEYS[i], False)
         
 
-
-        if self.keyDown == True:
+        # Keyboard pressed
+        if self.key_down == True:
+            # Exit the program
             if self.key == pg.K_ESCAPE: return False
                                    
             else:
+                # Move the cube with movement keys
                 if not self.is_editing() and not self.is_solving:
+                    # Check the cube is not already moving and there are no moves in the queue
                     if not self.screen.model.is_moving() and self.move_queue.is_empty() and self.key in MOVE_KEYS.keys():
+                        # Execute move on cube object and model
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                         
-                    
+                # Editing screen keys
                 elif self.is_editing():
+                    # Rotate whole cube
                     if not self.screen.model.is_moving() and self.key in EDITING_MOVES:
+                        # Perform move on cube object and model
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
 
-                    # Editing events
+                    # Change the colour of the selected facelet
                     elif self.key in EDITING_COLS.keys():
+                        # Get the selected colour
                         self.edit_cube_colour(EDITING_COLS[self.key])
+                        
+                        # Change the colour of the facelet
                         self.update_edit_pointer()
+                        
+                        # Reset key attribute
                         self.key = None
 
-                elif self.is_solving:
-                    if not self.screen.model.is_moving() and self.key == pg.K_LEFT and self.solution_pointer > 0:
-                        self.screen.solving_buttons[1].hidden = False
-                        if self.solution_pointer == 1: self.screen.solving_buttons[0].hidden = True
+                # Solving screen keys
+                elif self.is_solving and not self.screen.model.is_moving():
 
-                        self.solution_pointer -= 1
-                        move = self.solution[self.solution_pointer]
-                    
-                        if len(move) == 1: move += "_Prime"
-                        elif len(move) == 7: move = move[0]
+                    # Previous move key
+                    if self.key == pg.K_LEFT and self.solution_pointer > 0:
+                        # Undo previous move in solution
+                        self.prev_move()
                         
-                        try: self.move_queue.enqueue(move)
-                        except: self.swap_solving()
-                        
-                    elif not self.screen.model.is_moving() and self.key == pg.K_RIGHT and self.solution_pointer < len(self.solution):
-                        self.screen.solving_buttons[0].hidden = False
-                        if self.solution_pointer == len(self.solution) - 1: self.screen.solving_buttons[1].hidden = True
-                        
-                        try: self.move_queue.enqueue(self.solution[self.solution_pointer])
-                        except: self.swap_solving()
-                        self.solution_pointer += 1
+                    elif self.key == pg.K_RIGHT and self.solution_pointer < len(self.solution):
+                        # Execute next move in solution
+                        self.next_move()
 
+                    elif self.key == pg.K_RETURN:
+                        # Execute all remaining moves in solution
+                        self.all_moves()
 
-        
-
-                    
-
-    
+        # Return true to indicate program still running
         return True
     
     # Main program loop
     def run(self):
-        iter = 0
         
-        # World loop
-        self.keyDown = False
+        # Indicates if a key is being pressed
+        self.key_down = False
+        # Indicates what key is being pressed
         self.key = None
 
+        # Indicates when to exit program
+        running = True
+
+        # Tick the clock to start timing
+        self.clock.tick()
+
+        # Time passed between frames
         delta_time = 0
 
-        running = True
-        self.clock.tick()
+        # Main loop
         while running:
 
             # Get and run input events (keys, buttons and others)
             running = self.handle_events()
 
-            # Get moves from the movement queue
+            # Execute moves from the movement queue
             if not self.move_queue.is_empty() and not self.screen.model.is_moving():
                 move = self.move_queue.dequeue()
                 self.do_move(move, False)
                     
 
-            
-                
-            # Update aspects of the screen
+            # Update phase attributes of current model
             self.screen.model.update_phase((delta_time / ROTATION_SPEED) * HALF_PI)
+
+            # Update the position of the cube model
             self.screen.cubeBob = (self.screen.cubeBob + delta_time / BOB_SPEED) % DOUBLE_PI
             
-            # self.screen.backgroundPosition[0] = (self.screen.backgroundPosition[0] + delta_time / BG_SPEED) % 90 - 90
-            # self.screen.backgroundPosition[1] = (self.screen.backgroundPosition[1] + delta_time / BG_SPEED) % 90 - 90
-            
-            # iter += 1
-            # if iter % MAX_FPS == 0:
-            #     pg.display.set_caption(str(self.clock.get_fps()))
-            
+
             # Draw the screen
             if self.is_solving: self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer, self.solution.copy(), self.solution_pointer)
             else: self.screen.draw_screen(self.cube.cube, delta_time, self.edit_pointer)    
             
+            # Get time taken to process frame
             delta_time = self.clock.tick(MAX_FPS)
 
+        # When loop ends, exit the program
         pg.quit()
+
 
 world = World()
 world.run()
