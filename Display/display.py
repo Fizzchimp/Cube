@@ -83,10 +83,10 @@ class Display():
         
         ### Buttons
         self.main_buttons = [ # Buttons at edges of screen
-            Button((200, 600), 1 ,"SOLVE", 35), # Initiates solving
-            Button((400, 600), 1 ,"SCRAMBLE", 35), # Scrambles the cube
+            Button((150, 600), 1 ,"SOLVE", 35), # Initiates solving
+            Button((350, 600), 1 ,"SCRAMBLE", 35), # Scrambles the cube
             Button((350, 40), 1 ,"SWAP", 35), # Swaps between 2 by 2 and 3 by 3
-            Button((600, 600), 1 ,"EDIT", 35)] # Goes to editing screen
+            Button((550, 600), 1 ,"EDIT", 35)] # Goes to editing screen
 
         self.editing_buttons = [ # Buttons that appear on editing screen
             Button((550, 550), 1 ,"DONE", 35, True), # Returns to main screen with new cube
