@@ -257,7 +257,6 @@ class Cube2():
                 # If still not an attribute, entered move is not valid
                 except AttributeError: print(f"'{move}' not a valid movement")
 
-        else: print("Not a valid movement")
 
 
     # Scrambles the cube to a random position

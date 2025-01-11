@@ -79,20 +79,27 @@ class World:
         # Tells the program what the current cube is
         self.cube_type = 3
         
+        # 2 by 2 cube object
         self.cube_2 = Cube2()
         
-
+        # 3 by 3 cube object
         self.cube_3 = Cube3()
 
     
         # Sets the current cube to one of the cube objects
         self.cube = getattr(self, f"cube_{self.cube_type}")
         
-        # Initiating Pygame and display module
+        # Initiating Pygame
         pg.init()
+
+        # Initiate display module
         self.screen = Display(WIDTH, HEIGHT, BOB_STRENGTH, self.cube_type)
-        self.clock = pg.time.Clock() # Clock to keep track of time and update frames accordingly
-        self.move_queue = Queue(100) # Queue of moves to be performed on the current cube
+
+         # Clock to keep track of time and update frames accordingly
+        self.clock = pg.time.Clock()
+
+         # Queue of moves to be performed on the current cube
+        self.move_queue = Queue(100)
         
 
         # Points to a facelet on the current cube that is being edited. Set to -1 when not on the editing screen
@@ -105,12 +112,11 @@ class World:
     # Swaps between 2x2 and 3x3
     def swap_cubes(self):
 
-        # Changes the cube type, and sets the current cube structure accordingly
-        if self.cube_type == 2:
+        if self.cube_type == 2: # If cube type is 2 by 2, set current cube to 3 by 3
             self.cube_type = 3
             self.cube = self.cube_3
 
-        elif self.cube_type == 3:
+        elif self.cube_type == 3: # If cube type is 3 by 3, set current cube to 2 by 2
             self.cube_type = 2
             self.cube = self.cube_2
         
@@ -118,91 +124,110 @@ class World:
         self.screen.swap_cubes()
 
 
-    ### SOLVING
     # Organises Pathfinding for each cube
     def solve(self):
 
+        # Solving for 2 by 2 cube
         if self.cube_type == 2:
-            # Executes meet in the middle BFS for the 2 by 2 cube
             solved = True
             solution = []
+            
+            # Check cube is not already solved
             for face in self.cube.cube:
                 if not (face[0] == face[1] == face[2] == face[3]):
                     solved = False
                     break
             
             if not solved:
+                # Executes meet in the middle BFS for the 2 by 2 cube
                 sNode, eNode = solve_2(self.cube.cube)
             
                 # If no path is found, return false to indicate the cube cannot be solved
                 if sNode == None:
                     return False
             
-                # Adds the move from each node at the start node chain then reverse it.
+                # Adds the move from each node at start tree
                 while sNode.parent != None:
                     solution.append(sNode.movement)
                     sNode = sNode.parent
+
+                # Reverse moves to correct order
                 solution = solution[::-1]
 
-                # Adds the move from each node at the end chain to the move path
+                # Adds the move from each node at the end tree
                 while eNode.parent != None:
                     solution.append(eNode.movement)
                     eNode = eNode.parent
 
-        
-        # Executes the thistlethwaite solver for the 3 by 3 cube
+        # Solving for 3 by 3
         elif self.cube_type == 3:
+            # Execute thistlethwaite algorithm
             solution = thistle_solve(self.cube)
         
 
-
+        # If algorithm returns none, cube is not solvable
         if solution == False:
             print("No solution")
+        
+        # If solution is blank, cube is already in solved state
         elif solution == []:
             print("Already Solved!")
+
         else:
             print(", ".join(solution))
+            # Set the solution attribute to display solution on screen
             self.solution = solution
             self.solution_pointer = 0
 
 
-        print("Length:", len(self.solution))
-        self.clock.tick() # Tick the clock to stop the cube jumping as large amount of time may have passed
+        # print("Length:", len(self.solution))
+
+         # Tick the clock to stop the cube jumping as large amount of time may have passed
+        self.clock.tick()
         
+        # Swap to solving screen
         self.swap_solving()
         
             
     # Swaps between solving and main screens   
     def swap_solving(self):
+
+        # If already on solving screen, switch to main screen
         if self.is_solving:
+            # Unhide main screen buttons
             for button in self.screen.main_buttons + self.screen.movement_buttons:
                 button.hidden = False
             
+            # Hide solving screen buttons
             for button in self.screen.solving_buttons:
                 button.hidden = True
                 
-            self.screen.cube_target = 350
+            # Attribute to tell if cube is solving
             self.is_solving = False
             
+            # Reset cube positions to origional positions
             if self.cube_type == 2: self.screen.model.centre = [250, 300]
             if self.cube_type == 3: self.screen.model.centre = [450, 300]
             
 
         
-
+        # If not on solving screen, switch to solving screen
         elif not self.is_solving:
+            # Hide main screen buttons
             for button in self.screen.main_buttons + self.screen.movement_buttons:
                 button.hidden = True
                 
+            # Unhide solving screen buttons (apart from previous move button)
             for button in self.screen.solving_buttons[1:]:
                 button.hidden = False
                 
+            # Attribute to tell if cube is solving
             self.is_solving = True
+
+            # Set cube centre to middle of screen
             self.screen.model.centre = [370, 250]
 
     
-
-
 
     ### EDITING
     # Swaps between editing and main screens
@@ -261,8 +286,6 @@ class World:
         self.cube.cube[self.edit_pointer // (self.cube_type ** 2)] = first_half + colour + second_half
     
     
-
-
     # Executes a move on both cube data strucure and model
     def do_move(self, move, mod = None):
         if mod in SHIFT and move not in ("X", "X'", "Y", "Y'"): move += "'"
