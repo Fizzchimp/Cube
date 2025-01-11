@@ -24,7 +24,7 @@ from Thistlethwaite.thistlethwaite import thistle_solve
 MAX_FPS = 100
 
 # Time taken to complete one cube rotation in milliseconds
-ROTATION_SPEED = 125
+ROTATION_SPEED = 150
 
 
 # Dimensions of the screen
