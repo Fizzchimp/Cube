@@ -269,6 +269,7 @@ def check_table(table, state):
     
     # Search table for matching keys (Should find 4)
     for moves in table.search_table(key):
+        if moves == ['']: moves = []
         test_node = Node(state)
         
         # Perform moves on a test node

@@ -17,6 +17,7 @@ from Display.display import Display
 from cube_2 import Cube2
 from cube_3 import Cube3
 
+from Assets.solve_2 import solve_2
 from Assets.cqueue import Queue
 from Thistlethwaite.thistlethwaite import thistle_solve
 
@@ -183,11 +184,13 @@ class World:
 
         # If algorithm returns none, cube is not solvable
         if solution == False:
-            print("No solution")
+            print("No solution!")
+            return
         
         # If solution is blank, cube is already in solved state
         elif solution == []:
             print("Already Solved!")
+            return
 
         else:
             print(", ".join(solution))

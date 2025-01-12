@@ -94,6 +94,13 @@ def bfs_sides(start_state):
 
 
 def phase_4(start_node):
+    # Test if already solved
+    solved = True
+    for face in start_node.cube:
+        if not (face[0] == face[1] == face[2] == face[3] == face[4] == face[5] == face[6] == face[7] == face[8]):
+            solved = False
+    if solved: return []
+
     # Get the two meeting nodes
     start_node, end_node = bfs_sides(start_node.cube)
     path = []
