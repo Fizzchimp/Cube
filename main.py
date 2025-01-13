@@ -469,7 +469,7 @@ class World:
                         
                         
                         # Cancel button
-                        if self.screen.solving_buttons[3].state == 2:
+                        if self.screen.solving_buttons[3].state == 2 and self.move_queue.is_empty():
                             # Return to main screen
                             self.swap_solving()
                         
