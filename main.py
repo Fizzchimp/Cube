@@ -451,13 +451,13 @@ class World:
                     if self.is_solving:
 
                         # Previous move button
-                        if self.screen.solving_buttons[0].state == 2:
+                        if self.screen.solving_buttons[0].state == 2 and not self.screen.model.is_moving():
                             # Undo previous move in solution
                             self.prev_move()
 
 
                         # Next move button
-                        if self.screen.solving_buttons[1].state == 2:
+                        if self.screen.solving_buttons[1].state == 2 and not self.screen.model.is_moving():
                             # Execute next move in solution
                             self.next_move()
                             
