@@ -49,7 +49,7 @@ def thistle_solve(start_cube):
     # Display total amount of time to solve whole cube
     print(f"Solved in {round((time.time() - start_time) * 1000, 2)} ms\n")
     
-    return phase_1_moves + phase_2_moves + phase_3_moves, time.time() - start_time
+    return phase_1_moves + phase_2_moves + phase_3_moves
 
 
 # node = Node()
