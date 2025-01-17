@@ -184,7 +184,7 @@ class World:
 
         # If algorithm returns none, cube is not solvable
         if solution == False:
-            print("No solution!")
+            print("Invalid cube. No solution!")
             return
         
         # If solution is blank, cube is already in solved state

@@ -36,6 +36,7 @@ def solve_sides_iddfs(start_node):
     if side_check(start_node): return start_node
 
     for i in range(7):
+        print(i)
         # Create the stack and push the starting node
         node_stack = Stack(i + 1)
         node_stack.push(Node(start_node.U(), 0, start_node))
