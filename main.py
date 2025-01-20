@@ -98,7 +98,7 @@ class World:
         self.cube_2 = Cube2()
         
         # 3 by 3 cube object
-        self.cube_3 = Cube3()
+        self.cube_3 = Cube3(['BYGRWRROB', 'YBGBGWWGR', 'YWORROWGO', 'WYOGBBYYG', 'YBROOWWGO', 'BRBYYOGWR'])
 
     
         # Sets the current cube to one of the cube objects
@@ -124,6 +124,8 @@ class World:
         # Set when on the solving screen
         self.is_solving = False
            
+        self.time_clock = pg.time.Clock()
+        self.times = []
     # Swaps between 2x2 and 3x3
     def swap_cubes(self):
 
@@ -157,7 +159,12 @@ class World:
             
             if not solved:
                 # Executes meet in the middle BFS for the 2 by 2 cube
+                self.time_clock.tick()
                 sNode, eNode = solve_2(self.cube.cube)
+                time_taken = self.time_clock.tick()
+                self.times.append(time_taken)
+                print("Average time:", round(sum(self.times) / len(self.times), 2), "| Maximum time:", max(self.times))
+
             
                 # If no path is found, return false to indicate the cube cannot be solved
                 if sNode == None:
@@ -179,12 +186,14 @@ class World:
         # Solving for 3 by 3
         elif self.cube_type == 3:
             # Execute thistlethwaite algorithm
-            solution = thistle_solve(self.cube)
-        
+            try:
+                solution = thistle_solve(self.cube)
+            except:
+                solution = False
 
         # If algorithm returns none, cube is not solvable
         if solution == False:
-            print("Invalid cube. No solution!")
+            print("No solution!")
             return
         
         # If solution is blank, cube is already in solved state
@@ -582,4 +591,8 @@ class World:
 
 
 world = World()
+world.swap_cubes()
+for i in range(1000):
+    world.cube.scramble()
+    world.solve()
 world.run()
