@@ -95,10 +95,10 @@ class World:
         self.cube_type = 3
         
         # 2 by 2 cube object
-        self.cube_2 = Cube2()
+        self.cube_2 = Cube2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
         
         # 3 by 3 cube object
-        self.cube_3 = Cube3(['BYGRWRROB', 'YBGBGWWGR', 'YWORROWGO', 'WYOGBBYYG', 'YBROOWWGO', 'BRBYYOGWR'])
+        self.cube_3 = Cube3()
 
     
         # Sets the current cube to one of the cube objects
@@ -591,8 +591,8 @@ class World:
 
 
 world = World()
-world.swap_cubes()
-for i in range(1000):
-    world.cube.scramble()
-    world.solve()
+# world.swap_cubes()
+# for i in range(1000):
+#     world.cube.scramble()
+#     world.solve()
 world.run()
