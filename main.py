@@ -168,7 +168,8 @@ class World:
             
                 # If no path is found, return false to indicate the cube cannot be solved
                 if sNode == None:
-                    return False
+                    print("No solution!")
+                    return
             
                 # Adds the move from each node at start tree
                 while sNode.parent != None:
