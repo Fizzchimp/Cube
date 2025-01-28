@@ -49,20 +49,20 @@ def thistle_solve(start_cube):
     return phase_1_moves + phase_2_moves + phase_3_moves, time.time() - start_time
 
 
-# node = Node()
-# times =[]
-# paths = []
-# max_time = 0
-# max_path = 0
+node = Node()
+times =[]
+paths = []
+max_time = 0
+max_path = 0
 
-# for i in range(1000):
-#     node.scramble()
-#     path, time_taken = thistle_solve(node)
-#     times.append(time_taken)
-#     if time_taken > max_time: max_time = time_taken
+for i in range(1000):
+    node.scramble()
+    path, time_taken = thistle_solve(node)
+    times.append(time_taken)
+    if time_taken > max_time: max_time = time_taken
     
-#     paths.append(len(path))
-#     if len(path) > max_path: max_path = len(path)
+    paths.append(len(path))
+    if len(path) > max_path: max_path = len(path)
 
-#     print("Average time:", round(sum(times) / len(times) * 1000, 2), "| Maximum time:", round(max_time * 1000, 2))
-#     print("Average path length:", (sum(paths) // len(paths)), "| Maximum path length:", max_path)
+    print("Average time:", round(sum(times) / len(times) * 1000, 2), "| Maximum time:", round(max_time * 1000, 2))
+    print("Average path length:", (sum(paths) // len(paths)), "| Maximum path length:", max_path)

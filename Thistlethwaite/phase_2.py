@@ -142,15 +142,21 @@ def phase_2(G_1_node):
     node = get_UD_slice_iddfs(Node(G_1_node))
     
     # Create path using returned node
-    path = [PHASE_2_MOVES[node.movement]]
-    parent = node.parent
-    # Append each nodes move in reverse order
-    while parent.parent != None:
-        path.append(PHASE_2_MOVES[parent.movement])
-        parent = parent.parent
+    if node.movement != None:
+        parent = node.parent
+        path = [PHASE_2_MOVES[node.movement]]
+        
+        # Append each nodes move in reverse order
+        while parent.parent != None:
+            path.append(PHASE_2_MOVES[parent.movement])
+            parent = parent.parent
 
-    # Reverse order of moves to correct them
-    path = path[::-1]
+        # Reverse order of moves to correct them
+        path = path[::-1]
+
+    else: path = []
+
+
 
     ## Use the move table to find moves
     # Attempt with no transformations
