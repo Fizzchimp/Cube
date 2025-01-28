@@ -1,4 +1,4 @@
-14 move scramble: ["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"]
+11 move scramble: ['WWBY', 'GOGO', 'WRYR', 'GRGR', 'BOBO', 'BWYY']
 
 SuperFlip: Cube_3(["WOWGWBWRW", "GWGOGRGYG", "RWRGRBRYR", "BWBRBOBYB", "OWOBOGOYO", "YRYGYBYOY"])
 

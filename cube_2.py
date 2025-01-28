@@ -52,7 +52,10 @@ class Cube2():
                 
                 self.cube[5]]
 
-
+    # Return 180 degree rotation U
+    def U_2(self):
+        cube = Cube2(self.U())
+        return cube.U()
 
     # Returns rotation D clockwise
     def D(self):
@@ -100,7 +103,10 @@ class Cube2():
                 
                 self.cube[1][1] + self.cube[1][3] + self.cube[5][2:4]]
 
-
+    # Returns 180 degree rotation F
+    def F_2(self):
+       cube = Cube2(self.F())
+       return cube.F()
 
     # Returns rotation B clockwise
     def B(self):
@@ -172,6 +178,10 @@ class Cube2():
 
                 self.cube[5][0] + self.cube[2][1] + self.cube[5][2] + self.cube[2][3]]
 
+    # Returns 180 degree rotation R
+    def R_2(self):
+       cube = Cube2(self.R())
+       return cube.R()
 
 
     # Returns full 90 degree clockwise cube rotation about x axis
