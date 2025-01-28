@@ -95,7 +95,7 @@ class World:
         self.cube_type = 3
         
         # 2 by 2 cube object
-        self.cube_2 = Cube2(["BROO", "RGGB", "WBWR", "YWYB", "GWYO", "OGYR"])
+        self.cube_2 = Cube2(['WWBY', 'GOGO', 'WRYR', 'GRGR', 'BOBO', 'BWYY'])
         
         # 3 by 3 cube object
         self.cube_3 = Cube3()
@@ -126,6 +126,8 @@ class World:
            
         self.time_clock = pg.time.Clock()
         self.times = []
+        self.paths = []
+        
     # Swaps between 2x2 and 3x3
     def swap_cubes(self):
 
@@ -161,9 +163,7 @@ class World:
                 # Executes meet in the middle BFS for the 2 by 2 cube
                 self.time_clock.tick()
                 sNode, eNode = solve_2(self.cube.cube)
-                time_taken = self.time_clock.tick()
-                self.times.append(time_taken)
-                print("Average time:", round(sum(self.times) / len(self.times), 2), "| Maximum time:", max(self.times))
+                
 
             
                 # If no path is found, return false to indicate the cube cannot be solved
@@ -182,6 +182,18 @@ class World:
                 while eNode.parent != None:
                     solution.append(eNode.movement)
                     eNode = eNode.parent
+                    
+                time_taken = self.time_clock.tick()
+                self.times.append(time_taken)
+                print("Average time:", round(sum(self.times) / len(self.times), 2), "| Maximum time:", max(self.times))
+                self.paths.append(solution)
+                
+                total_len = 0
+                max_len = 0
+                for path in self.paths:
+                    total_len += len(path)
+                    if len(path) > max_len: max_len = len(path)
+                print("Average length:", total_len / len(self.paths), "| Maximum length:", max_len)
 
         # Solving for 3 by 3
         elif self.cube_type == 3:
@@ -591,8 +603,8 @@ class World:
 
 
 world = World()
-# world.swap_cubes()
-# for i in range(1000):
-#     world.cube.scramble()
-#     world.solve()
+#world.swap_cubes()
+#for i in range(1000):
+#    world.cube.scramble(21)
+#    world.solve()
 world.run()
