@@ -5,7 +5,7 @@ from Thistlethwaite.phase_4 import phase_4
 
 
 # Phase 3 Moveset
-# G_2 = (
+# PHASE_3_MOVES = (
 #     "L", "L_Prime", "L_2",
 #     "R", "R_Prime", "R_2",
 #     "F_2", "B_2", "U_2", "D_2")

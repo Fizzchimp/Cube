@@ -3,8 +3,8 @@ from Assets.cqueue import Queue
 from Assets.binsearch import bin_search
 from Assets.mergesort import merge_sort
 
-
-G_3 = (
+# Phase 4 moveset
+PHASE_4_MOVES = (
     "L_2", "R_2",
     "F_2", "B_2",
     "U_2", "D_2")
@@ -47,7 +47,7 @@ def bfs_sides(start_state):
             # Enqueue all adjacent nodes to start queue
             for i in range(6):
                 if cur_start_node.movement != i:
-                    start_queue.enqueue(Node(getattr(cur_start_node, G_3[i])(), i, cur_start_node, next_gen))
+                    start_queue.enqueue(Node(getattr(cur_start_node, PHASE_4_MOVES[i])(), i, cur_start_node, next_gen))
 
 
             # Fetch the next node
@@ -74,7 +74,7 @@ def bfs_sides(start_state):
             # Enqueue all adjacent nodes to end queue
             for i in range(6):
                 if cur_end_node.movement != i:
-                    end_queue.enqueue(Node(getattr(cur_end_node, G_3[i])(), i, cur_end_node, next_gen))
+                    end_queue.enqueue(Node(getattr(cur_end_node, PHASE_4_MOVES[i])(), i, cur_end_node, next_gen))
 
             # Fetch the next node
             cur_end_node = end_queue.dequeue()
@@ -107,7 +107,7 @@ def phase_4(start_node):
 
     # Add moves from the start tree to list of moves
     while start_node.parent != None:
-        path.append(G_3[start_node.movement])
+        path.append(PHASE_4_MOVES[start_node.movement])
         start_node = start_node.parent
         
     # Reverse moves to correct order
@@ -115,7 +115,7 @@ def phase_4(start_node):
 
     # Add moves from end tree to list of moves
     while end_node.parent != None:
-        path.append(G_3[end_node.movement])
+        path.append(PHASE_4_MOVES[end_node.movement])
         end_node = end_node.parent
 
 
