@@ -42,14 +42,14 @@ MOVE_KEYS = {pg.K_u: "U",
              pg.K_d: "D",
              pg.K_l: "L",
              pg.K_b: "B",
-             pg.K_m: "M",
-             pg.K_s: "S",
-             pg.K_e: "E",
              pg.K_LEFT: "Y",
              pg.K_RIGHT: "Y_Prime",
              pg.K_UP: "X",
              pg.K_DOWN: "X_Prime",
-             pg.K_z: "Z"}
+             pg.K_z: "Z",
+             pg.K_m: "M",
+             pg.K_s: "S",
+             pg.K_e: "E"}
 
 # Keyboard inputs used in editing screen
 EDITING_MOVES = (
@@ -95,7 +95,7 @@ class World:
         self.cube_type = 3
         
         # 2 by 2 cube object
-        self.cube_2 = Cube2(['WWBY', 'GOGO', 'WRYR', 'GRGR', 'BOBO', 'BWYY'])
+        self.cube_2 = Cube2()
         
         # 3 by 3 cube object
         self.cube_3 = Cube3()
@@ -473,19 +473,19 @@ class World:
                     if self.is_solving:
 
                         # Previous move button
-                        if self.screen.solving_buttons[0].state == 2 and not self.screen.model.is_moving():
+                        if self.screen.solving_buttons[0].state == 2 and not self.screen.model.is_moving() and self.move_queue.is_empty():
                             # Undo previous move in solution
                             self.prev_move()
 
 
                         # Next move button
-                        if self.screen.solving_buttons[1].state == 2 and not self.screen.model.is_moving():
+                        if self.screen.solving_buttons[1].state == 2 and not self.screen.model.is_moving() and self.move_queue.is_empty():
                             # Execute next move in solution
                             self.next_move()
                             
                         
                         # All moves button
-                        if self.screen.solving_buttons[2].state == 2:
+                        if self.screen.solving_buttons[2].state == 2 and self.move_queue.is_empty():
                             # Execute all remaining moves in solution
                             self.all_moves()
                         
@@ -515,7 +515,7 @@ class World:
                 # Move the cube with movement keys
                 if not self.is_editing() and not self.is_solving:
                     # Check the cube is not already moving and there are no moves in the queue
-                    if not self.screen.model.is_moving() and self.move_queue.is_empty() and self.key in MOVE_KEYS.keys():
+                    if not self.screen.model.is_moving() and self.move_queue.is_empty() and self.key in list(MOVE_KEYS.keys())[:14 - (3 - self.cube_type) * 3]:
                         # Execute move on cube object and model
                         self.do_move(MOVE_KEYS[self.key], pg.key.get_mods())
                         
@@ -538,7 +538,7 @@ class World:
                         self.key = None
 
                 # Solving screen keys
-                elif self.is_solving and not self.screen.model.is_moving():
+                elif self.is_solving and not self.screen.model.is_moving() and self.move_queue.is_empty():
 
                     # Previous move key
                     if self.key == pg.K_LEFT and self.solution_pointer > 0:
