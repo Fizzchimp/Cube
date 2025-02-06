@@ -32,7 +32,7 @@ class Display():
     def __init__(self, width, height, bobStrength, cube_type):
 
         # Font used for moves in solving screen
-        self.MOVE_FONT = pg.font.SysFont("Jhomuria", 80)
+        self.MOVE_FONT = pg.font.SysFont("", 80)
 
 
         # Setup the window
@@ -313,7 +313,7 @@ class Button():
             self.image_down = pg.image.load("Display/Textures/Button_Down.png").convert_alpha()
         
             # Surface for text on the button
-            font = pg.font.SysFont("Jhomuria", fontSize)
+            font = pg.font.SysFont("", fontSize)
             textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
             dims = textSurface.get_size()
             textPoint = (39 - dims[0] / 2, 22 - dims[1] / 2)
@@ -332,7 +332,7 @@ class Button():
             self.image_down = pg.image.load("Display/Textures/L_Button_Down.png").convert_alpha()
         
             # Surface for text on the button
-            font = pg.font.SysFont("Jhomuria", fontSize)
+            font = pg.font.SysFont("", fontSize)
             textSurface = font.render(text, True, (0, 0, 0)).convert_alpha()
             dims = textSurface.get_size()
             textPoint = (79 - dims[0] / 2, 26 - dims[1] / 2)
