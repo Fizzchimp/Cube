@@ -54,16 +54,16 @@ class Cube2():
 
     # Return 180 degree rotation U
     def U_2(self):
-        val = [self.cube[0][::-1],
+        return [self.cube[0][::-1],
                 
                 self.cube[3][:2] + self.cube[1][2:],
                 self.cube[4][:2] + self.cube[2][2:],
                 self.cube[1][:2] + self.cube[3][2:],
-                self.cube[2]
-                ]
-        cube = Cube2(self.U())
-        if val = cube.U(): return val
-        raise Exception("NOT RIGHT")
+                self.cube[2][:2] + self.cube[4][2:],
+                
+                self.cube[5]]
+
+
 
     # Returns rotation D clockwise
     def D(self):
@@ -113,6 +113,10 @@ class Cube2():
 
     # Returns 180 degree rotation F
     def F_2(self):
+       return [self.cube[0][:2] + self.cube[5][1] + self.cube[5][0],
+               
+               self.cube[1][0] + self.cube[3][2] + self.cube[1][2] + self.cube[3][0]
+           ]
        cube = Cube2(self.F())
        return cube.F()
 
