@@ -252,7 +252,7 @@ class Display():
         # Draw all previous moves
         for i, move in enumerate(move_list[:pointer][::-1]):
             if i > 2: break # Stops drawing moves off screen
-            text_surface = self.MOVE_FONT.render(move, True, (70, 70, 70)).convert_alpha()
+            text_surface = self.MOVE_FONT.render(move, True, (120, 120, 120)).convert_alpha()
             self.screen.blit(text_surface, (210 - 100 * i, 530))
 
         # Draw current_move
@@ -263,7 +263,7 @@ class Display():
         # Draw next moves
         for i, move in enumerate(move_list[pointer + 1:]):
             if i > 2: break # Stops drawing moves off screen
-            text_surface = self.MOVE_FONT.render(move, True, (70, 70, 70)).convert_alpha()
+            text_surface = self.MOVE_FONT.render(move, True, (120, 120, 120)).convert_alpha()
             self.screen.blit(text_surface, (410 + 100 * i, 530))
 
 
