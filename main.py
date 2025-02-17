@@ -123,10 +123,7 @@ class World:
 
         # Set when on the solving screen
         self.is_solving = False
-           
-        self.time_clock = pg.time.Clock()
-        self.times = []
-        self.paths = []
+
         
     # Swaps between 2x2 and 3x3
     def swap_cubes(self):
@@ -161,7 +158,6 @@ class World:
             
             if not solved:
                 # Executes meet in the middle BFS for the 2 by 2 cube
-                self.time_clock.tick()
                 sNode, eNode = solve_2(self.cube.cube)
                 
 
@@ -184,18 +180,7 @@ class World:
                     solution.append(eNode.movement)
                     eNode = eNode.parent
                     
-                time_taken = self.time_clock.tick()
-                self.times.append(time_taken)
-                print("Average time:", round(sum(self.times) / len(self.times), 2), "| Maximum time:", max(self.times))
-                self.paths.append(solution)
                 
-                total_len = 0
-                max_len = 0
-                for path in self.paths:
-                    total_len += len(path)
-                    if len(path) > max_len: max_len = len(path)
-                print("Average length:", total_len / len(self.paths), "| Maximum length:", max_len)
-
         # Solving for 3 by 3
         elif self.cube_type == 3:
             # Execute thistlethwaite algorithm
@@ -220,8 +205,6 @@ class World:
             self.solution = solution
             self.solution_pointer = 0
 
-
-        # print("Length:", len(self.solution))
 
          # Tick the clock to stop the cube jumping as large amount of time may have passed
         self.clock.tick()
