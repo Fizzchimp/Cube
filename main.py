@@ -587,8 +587,4 @@ class World:
 
 
 world = World()
-#world.swap_cubes()
-#for i in range(1000):
-#    world.cube.scramble(21)
-#    world.solve()
 world.run()
