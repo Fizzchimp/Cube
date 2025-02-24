@@ -158,7 +158,7 @@ class World:
             
             if not solved:
                 # Executes meet in the middle BFS for the 2 by 2 cube
-                sNode, eNode = solve_2(self.cube.cube)
+                start_node, end_node = solve_2(self.cube.cube)
                 
 
             

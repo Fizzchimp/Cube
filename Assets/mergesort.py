@@ -10,35 +10,35 @@ def merge_sort(arr):
 
         # Merge the two ordered lists
 
-        lPnt = rPnt = i = 0
+        left_ptr = right_ptr = i = 0
         while True:
             try:
-                # Set lItem to next item in list to be compared
-                lItem = left[lPnt]
+                # Set left_item to next item in list to be compared
+                left_item = left[left_ptr]
             except IndexError:
                 # If no more items in left list, add the rest of the right list to the sorted list
-                arr[i:] = right[rPnt:]
+                arr[i:] = right[right_ptr:]
                 break
             
             try:
-                # Set rItem to next item in list to be compared
-                rItem = right[rPnt]
+                # Set right_item to next item in list to be compared
+                right_item = right[right_ptr]
             except IndexError:
                 # If no more items in right list, add the rest of the left list to the sorted list
-                arr[i:] = left[lPnt:]
+                arr[i:] = left[left_ptr:]
                 break
       
-            if lItem.cube <= rItem.cube:
+            if left_item.cube <= right_item.cube:
                 # If the left item is smaller than the right, add the left item to the sorted list
-                arr[i] = lItem
+                arr[i] = left_item
                 # Increment left pointer to next item to be compared
-                lPnt += 1
+                left_ptr += 1
                 
-            elif rItem.cube <= lItem.cube:
+            elif right_item.cube <= left_item.cube:
                 # If the right item is smaller than the left, add the right item to the sorted list
-                arr[i] = rItem
+                arr[i] = right_item
                 # Increment left pointer to next item to be compared
-                rPnt += 1
+                right_ptr += 1
         
             # Increment the position pointer of the sorted list
             i += 1

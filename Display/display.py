@@ -15,13 +15,6 @@ colour_keys = {
     "-": (150, 150, 150)}
 
 
-
-# BG_IMAGE_SIZE = 90
-CUBE_MOVE_COEFFICIENT = 0.02
-
-
-
-
 # Key used to sort faces back to front
 def depth(face):
     return face[-2]
@@ -29,7 +22,7 @@ def depth(face):
 
 # Controls how the screen is drawn
 class Display():
-    def __init__(self, width, height, bobStrength, cube_type):
+    def __init__(self, width, height, bob_strength, cube_type):
 
         # Font used for moves in solving screen
         self.MOVE_FONT = pg.font.SysFont("", 80)
@@ -44,25 +37,14 @@ class Display():
         # Caption at top left corner of window
         pg.display.set_caption("Cube")
     
-        # Background
-        # image = pg.transform.scale(pg.image.load("Display/Textures/Background.png"), (BG_IMAGE_SIZE, BG_IMAGE_SIZE)).convert()
-        # dims = (BG_IMAGE_SIZE * (width // BG_IMAGE_SIZE + 2), BG_IMAGE_SIZE * (height // BG_IMAGE_SIZE + 2))
-
-        # self.background = pg.Surface(dims)
-        # for i in range(dims[0] // BG_IMAGE_SIZE):
-        #     for j in range(dims[1] // BG_IMAGE_SIZE):
-        #         self.background.blit(image, (i * BG_IMAGE_SIZE, j * BG_IMAGE_SIZE))
-        # self.backgroundPosition = [-BG_IMAGE_SIZE, -BG_IMAGE_SIZE]
-
-
         ### Cube
         # Dimensions for the cube
         self.length = width / 5 if width <= height else height / 5
 
 
         # Attributes to create little cube bobbing animation on screen
-        self.cubeBob = 0 # Determines current displacement of cube
-        self.bobStrength = bobStrength # Determines maximum displacement of cube
+        self.cube_bob = 0 # Determines current displacement of cube
+        self.bob_strength = bob_strength # Determines maximum displacement of cube
 
 
         # Determines the transparency of the editing facelet cover to create animation when editing
@@ -84,7 +66,7 @@ class Display():
         ### Buttons
         self.main_buttons = [ # Buttons at edges of screen
             Button((150, 625), 1 ,"SOLVE", 35), # Initiates solving
-            Button((350, 625), 1 ,"SCRAMBLE", 35), # Scrambles the cube
+            Button((350, 625), 1 ,"SCRAMbottom_leftE", 35), # Scrambles the cube
             Button((350, 40), 1 ,"SWAP", 35), # Swaps between 2 by 2 and 3 by 3
             Button((550, 625), 1 ,"EDIT", 35)] # Goes to editing screen
 
@@ -142,31 +124,31 @@ class Display():
         # Get length of line
         length = sqrt((p2[0] - p1[0]) ** 2 + (p2[1] - p1[1]) ** 2)
         
-        # Constants used in calculating line corners
+        # Constants used in calcupper_leftating line corners
         angle = arctan2(p2[0] - p1[0], p2[1] - p1[1])
-        cosAngle = cos(angle)
-        sinAngle = sin(angle)
+        cos_angle = cos(angle)
+        sin_angle = sin(angle)
 
-        sinHaldWidth = (width / 2) * sinAngle
-        cosHalfWidth = (width / 2) * cosAngle
+        sin_half_width = (width / 2) * sin_angle
+        cos_half_width = (width / 2) * cos_angle
 
-        sinHalfLength = (length / 2) * sinAngle
-        cosHalfLength = (length / 2) * cosAngle
+        sin_half_length = (length / 2) * sin_angle
+        cos_half_length = (length / 2) * cos_angle
         
         # Positions of all 4 corners of the line
-        UL = (centre[0] + sinHalfLength - cosHalfWidth,
-              centre[1] + cosHalfLength + sinHaldWidth)
-        UR = (centre[0] - sinHalfLength - cosHalfWidth,
-              centre[1] - cosHalfLength + sinHaldWidth)
-        BL = (centre[0] + sinHalfLength + cosHalfWidth,
-              centre[1] + cosHalfLength - sinHaldWidth)
-        BR = (centre[0] - sinHalfLength + cosHalfWidth,
-              centre[1] - cosHalfLength - sinHaldWidth)
+        upper_left =   (centre[0] + sin_half_length - cos_half_width,
+                        centre[1] + cos_half_length + sin_half_width)
+        upper_right =  (centre[0] - sin_half_length - cos_half_width,
+                        centre[1] - cos_half_length + sin_half_width)
+        bottom_left =  (centre[0] + sin_half_length + cos_half_width,
+                        centre[1] + cos_half_length - sin_half_width)
+        bottom_right = (centre[0] - sin_half_length + cos_half_width,
+                        centre[1] - cos_half_length - sin_half_width)
         
         # Draw antialiased outline
-        pg.gfxdraw.aapolygon(self.screen, (UL, UR, BR, BL), colour)
+        pg.gfxdraw.aapolygon(self.screen, (upper_left, upper_right, bottom_right, bottom_left), colour)
         # Fill the outline
-        pg.gfxdraw.filled_polygon(self.screen, (UL, UR, BR, BL), colour)
+        pg.gfxdraw.filled_polygon(self.screen, (upper_left, upper_right, bottom_right, bottom_left), colour)
 
     # Draws the current cube
     def draw_cube(self, cube, centre_offset = 0, edit_pointer = -1):
@@ -279,7 +261,7 @@ class Display():
             self.draw_net((50, 460), cube)# Draw cube in net form
 
         # Draw the cube onto the screen
-        self.draw_cube(cube, self.bobStrength * sin(self.cubeBob), edit_pointer)
+        self.draw_cube(cube, self.bob_strength * sin(self.cube_bob), edit_pointer)
 
         # Draw all buttons on screen
         for button in self.main_buttons + self.editing_buttons + self.solving_buttons + self.movement_buttons:

@@ -3,72 +3,72 @@ from numpy import cos, sin, pi, matmul
 
 # Initial cube models are rotated around x axis by theta
 theta = pi / 6
-sinThet = sin(theta)
-cosThet = cos(theta)
+sin_theta = sin(theta)
+cos_theta = cos(theta)
 
 # Initial cube models are rotated around y axis by alpha
 alpha = pi / 9
-sinAlph = sin(alpha)
-cosAlph = cos(alpha)
+sin_alpha = sin(alpha)
+cos_alpha = cos(alpha)
 
 
 
 
 # Transformation matrix for rotation around x axis by a given angle
 def matrixX(angle):
-    cosAngle = cos(angle)
-    sinAngle = sin(angle)
+    cos_angle = cos(angle)
+    sin_angle = sin(angle)
     
     return np.array([
-        [cosAngle + cosAlph ** 2 * (1 - cosAngle),
-        cosAlph * sinThet * sinAlph * (1 - cosAngle) + cosThet * sinAlph * sinAngle,
-        cosAlph * -cosThet * sinAlph * (1 - cosAngle) + sinThet * sinAlph * sinAngle],
+        [cos_angle + cos_alpha ** 2 * (1 - cos_angle),
+        cos_alpha * sin_theta * sin_alpha * (1 - cos_angle) + cos_theta * sin_alpha * sin_angle,
+        cos_alpha * -cos_theta * sin_alpha * (1 - cos_angle) + sin_theta * sin_alpha * sin_angle],
 
-        [cosAlph * sinThet * sinAlph * (1 - cosAngle) + -cosThet * sinAlph * sinAngle,
-        cosAngle + (sinThet * sinAlph) ** 2 * (1 - cosAngle),
-        sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) - cosAlph * sinAngle],
+        [cos_alpha * sin_theta * sin_alpha * (1 - cos_angle) + -cos_theta * sin_alpha * sin_angle,
+        cos_angle + (sin_theta * sin_alpha) ** 2 * (1 - cos_angle),
+        sin_theta * sin_alpha * -cos_theta * sin_alpha * (1 - cos_angle) - cos_alpha * sin_angle],
 
-        [cosAlph * -cosThet * sinAlph * (1 - cosAngle) - sinThet * sinAlph * sinAngle,
-        sinThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle) + cosAlph * sinAngle,
-        cosAngle + -cosThet * sinAlph * -cosThet * sinAlph * (1 - cosAngle)]])
+        [cos_alpha * -cos_theta * sin_alpha * (1 - cos_angle) - sin_theta * sin_alpha * sin_angle,
+        sin_theta * sin_alpha * -cos_theta * sin_alpha * (1 - cos_angle) + cos_alpha * sin_angle,
+        cos_angle + -cos_theta * sin_alpha * -cos_theta * sin_alpha * (1 - cos_angle)]])
 
 
 # Transformation matrix for rotation around y axis by a given angle
 def matrixY(angle):
-    cosAngle = cos(angle)
-    sinAngle = sin(angle)
+    cos_angle = cos(angle)
+    sin_angle = sin(angle)
     
     return np.array([
-        [cosAngle,
-        -sinThet * sinAngle,
-        cosThet * sinAngle],
+        [cos_angle,
+        -sin_theta * sin_angle,
+        cos_theta * sin_angle],
 
-        [sinThet * sinAngle,
-        cosAngle + cosThet ** 2 * (1 - cosAngle),
-        cosThet * sinThet * (1 - cosAngle)],
+        [sin_theta * sin_angle,
+        cos_angle + cos_theta ** 2 * (1 - cos_angle),
+        cos_theta * sin_theta * (1 - cos_angle)],
 
-        [-cosThet * sinAngle,
-        cosThet * sinThet * (1 - cosAngle),
-        cosAngle + sinThet * sinThet * (1 - cosAngle)]])
+        [-cos_theta * sin_angle,
+        cos_theta * sin_theta * (1 - cos_angle),
+        cos_angle + sin_theta * sin_theta * (1 - cos_angle)]])
 
 
 # Transformation matrix for rotation around z axis by a given angle
 def matrixZ(angle):
-    cosAngle = cos(angle)
-    sinAngle = sin(angle)
+    cos_angle = cos(angle)
+    sin_angle = sin(angle)
 
     return np.array([
-        [cosAngle + sinAlph ** 2 * (1 - cosAngle),
-        sinAlph * -sinThet * cosAlph * (1 - cosAngle) - cosThet * cosAlph * sinAngle,
-        sinAlph * cosThet * cosAlph * (1 - cosAngle) + -sinThet * cosAlph * sinAngle],
+        [cos_angle + sin_alpha ** 2 * (1 - cos_angle),
+        sin_alpha * -sin_theta * cos_alpha * (1 - cos_angle) - cos_theta * cos_alpha * sin_angle,
+        sin_alpha * cos_theta * cos_alpha * (1 - cos_angle) + -sin_theta * cos_alpha * sin_angle],
 
-        [sinAlph * -sinThet * cosAlph * (1 - cosAngle) + cosThet * cosAlph * sinAngle,
-        cosAngle + (sinThet * cosAlph) ** 2 * (1 - cosAngle),
-        -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) - sinAlph * sinAngle],
+        [sin_alpha * -sin_theta * cos_alpha * (1 - cos_angle) + cos_theta * cos_alpha * sin_angle,
+        cos_angle + (sin_theta * cos_alpha) ** 2 * (1 - cos_angle),
+        -sin_theta * cos_alpha * cos_theta * cos_alpha * (1 - cos_angle) - sin_alpha * sin_angle],
 
-        [sinAlph * cosThet * cosAlph * (1 - cosAngle) + sinThet * cosAlph * sinAngle,
-        -sinThet * cosAlph * cosThet * cosAlph * (1 - cosAngle) + sinAlph * sinAngle,
-        cosAngle + (cosThet * cosAlph) ** 2 * (1 - cosAngle)]])
+        [sin_alpha * cos_theta * cos_alpha * (1 - cos_angle) + sin_theta * cos_alpha * sin_angle,
+        -sin_theta * cos_alpha * cos_theta * cos_alpha * (1 - cos_angle) + sin_alpha * sin_angle,
+        cos_angle + (cos_theta * cos_alpha) ** 2 * (1 - cos_angle)]])
 
 
 
@@ -77,21 +77,21 @@ def rotateX(angle, points):
     if angle == 0:
         return points
     
-    rotX = matrixX(angle)
-    return matmul(rotX, points)
+    rot_x = matrixX(angle)
+    return matmul(rot_x, points)
 
 # Returns given points after rotation about y axis
 def rotateY(angle, points):
     if angle == 0:
         return points
     
-    rotY = matrixY(angle)
-    return matmul(rotY, points)
+    rot_y = matrixY(angle)
+    return matmul(rot_y, points)
 
 # Returns fiven points after rotation about y axis
 def rotateZ(angle, points):
     if angle == 0:
         return points
 
-    rotZ = matrixZ(angle)
-    return matmul(rotZ, points)
+    rot_z = matrixZ(angle)
+    return matmul(rot_z, points)
