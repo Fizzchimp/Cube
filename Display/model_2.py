@@ -59,15 +59,15 @@ class Model2():
 
         # Offset face rotation slightly to give 3d view
         for i, facelet in enumerate(u_face):
-            u_face[i] = rotateX(theta, rotateY(alpha, facelet))
+            u_face[i] = rotate_x(theta, rotate_y(alpha, facelet))
         
         # Translates U face using rotation matrices to create all 5 other faces
         for i, facelet in enumerate(u_face):
-            l_face.append(rotateY(pi / 2, rotateX(pi / 2, u_face[i])))
-            f_face.append(rotateX(pi / 2, u_face[i]))
-            r_face.append(rotateY(-pi / 2, rotateX(pi / 2, u_face[i])))
-            b_face.append(rotateY(pi, rotateX(pi / 2, u_face[i])))
-            d_face.append(rotateX(pi, u_face[i]))
+            l_face.append(rotate_y(pi / 2, rotate_x(pi / 2, u_face[i])))
+            f_face.append(rotate_x(pi / 2, u_face[i]))
+            r_face.append(rotate_y(-pi / 2, rotate_x(pi / 2, u_face[i])))
+            b_face.append(rotate_y(pi, rotate_x(pi / 2, u_face[i])))
+            d_face.append(rotate_x(pi, u_face[i]))
 
         return np.array([u_face, l_face, f_face, r_face, b_face, d_face])
     
@@ -79,32 +79,32 @@ class Model2():
         # U Face
         for i, row_phase in enumerate((self.b_phase, self.f_phase)):
             for j, col_phase in enumerate((self.l_phase, self.r_phase)):
-                points[0][i * 2 + j] = rotateX(self.x_phase + col_phase, rotateY(self.y_phase + self.u_phase, rotateZ(self.z_phase + row_phase, self.faces[0][i * 2 + j])))
+                points[0][i * 2 + j] = rotate_x(self.x_phase + col_phase, rotate_y(self.y_phase + self.u_phase, rotate_z(self.z_phase + row_phase, self.faces[0][i * 2 + j])))
 
         # L Face
         for i, row_phase in enumerate((self.u_phase, self.d_phase)):
             for j, col_phase in enumerate((self.b_phase, self.f_phase)):
-                points[1][i * 2 + j] = rotateX(self.x_phase + self.l_phase, rotateY(self.y_phase + row_phase, rotateZ(self.z_phase + col_phase, self.faces[1][i * 2 + j])))
+                points[1][i * 2 + j] = rotate_x(self.x_phase + self.l_phase, rotate_y(self.y_phase + row_phase, rotate_z(self.z_phase + col_phase, self.faces[1][i * 2 + j])))
 
         # F Face
         for i, row_phase in enumerate((self.u_phase, self.d_phase)):
             for j, col_phase in enumerate((self.l_phase, self.r_phase)):
-                points[2][i * 2 + j] = rotateX(self.x_phase + col_phase, rotateY(self.y_phase + row_phase, rotateZ(self.z_phase + self.f_phase, self.faces[2][i * 2 + j])))
+                points[2][i * 2 + j] = rotate_x(self.x_phase + col_phase, rotate_y(self.y_phase + row_phase, rotate_z(self.z_phase + self.f_phase, self.faces[2][i * 2 + j])))
         
         # R Face
         for i, row_phase in enumerate((self.u_phase, self.d_phase)):
             for j, col_phase in enumerate((self.f_phase, self.b_phase)):
-                points[3][i * 2 + j] = rotateX(self.x_phase + self.r_phase, rotateY(self.y_phase + row_phase, rotateZ(self.z_phase + col_phase, self.faces[3][i * 2 + j])))
+                points[3][i * 2 + j] = rotate_x(self.x_phase + self.r_phase, rotate_y(self.y_phase + row_phase, rotate_z(self.z_phase + col_phase, self.faces[3][i * 2 + j])))
         
         # B Face
         for i, row_phase in enumerate((self.u_phase, self.d_phase)):
             for j, col_phase in enumerate((self.r_phase, self.l_phase)):
-                points[4][i * 2 + j] = rotateX(self.x_phase + col_phase, rotateY(self.y_phase + row_phase, rotateZ(self.z_phase + self.b_phase, self.faces[4][i * 2 + j])))
+                points[4][i * 2 + j] = rotate_x(self.x_phase + col_phase, rotate_y(self.y_phase + row_phase, rotate_z(self.z_phase + self.b_phase, self.faces[4][i * 2 + j])))
         
         # D Face
         for i, row_phase in enumerate((self.f_phase, self.b_phase)):
             for j, col_phase in enumerate((self.l_phase, self.r_phase)):
-                points[5][i * 2 + j] = rotateX(self.x_phase + col_phase, rotateY(self.y_phase + self.d_phase, rotateZ(self.z_phase + row_phase, self.faces[5][i * 2 + j])))
+                points[5][i * 2 + j] = rotate_x(self.x_phase + col_phase, rotate_y(self.y_phase + self.d_phase, rotate_z(self.z_phase + row_phase, self.faces[5][i * 2 + j])))
 
         return points
     

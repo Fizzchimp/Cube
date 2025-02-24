@@ -572,7 +572,7 @@ class World:
             self.screen.model.update_phase((delta_time / ROTATION_SPEED) * HALF_PI)
 
             # Update the position of the cube model
-            self.screen.cubeBob = (self.screen.cubeBob + delta_time / BOB_SPEED) % DOUBLE_PI
+            self.screen.cube_bob = (self.screen.cube_bob + delta_time / BOB_SPEED) % DOUBLE_PI
             
 
             # Draw the screen

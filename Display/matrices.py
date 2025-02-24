@@ -15,7 +15,7 @@ cos_alpha = cos(alpha)
 
 
 # Transformation matrix for rotation around x axis by a given angle
-def matrixX(angle):
+def matrix_x(angle):
     cos_angle = cos(angle)
     sin_angle = sin(angle)
     
@@ -34,7 +34,7 @@ def matrixX(angle):
 
 
 # Transformation matrix for rotation around y axis by a given angle
-def matrixY(angle):
+def matrix_y(angle):
     cos_angle = cos(angle)
     sin_angle = sin(angle)
     
@@ -53,7 +53,7 @@ def matrixY(angle):
 
 
 # Transformation matrix for rotation around z axis by a given angle
-def matrixZ(angle):
+def matrix_z(angle):
     cos_angle = cos(angle)
     sin_angle = sin(angle)
 
@@ -73,25 +73,25 @@ def matrixZ(angle):
 
 
 # Returns given points after rotation about x axis
-def rotateX(angle, points):
+def rotate_x(angle, points):
     if angle == 0:
         return points
     
-    rot_x = matrixX(angle)
+    rot_x = matrix_x(angle)
     return matmul(rot_x, points)
 
 # Returns given points after rotation about y axis
-def rotateY(angle, points):
+def rotate_y(angle, points):
     if angle == 0:
         return points
     
-    rot_y = matrixY(angle)
+    rot_y = matrix_y(angle)
     return matmul(rot_y, points)
 
 # Returns fiven points after rotation about y axis
-def rotateZ(angle, points):
+def rotate_z(angle, points):
     if angle == 0:
         return points
 
-    rot_z = matrixZ(angle)
+    rot_z = matrix_z(angle)
     return matmul(rot_z, points)
