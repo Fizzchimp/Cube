@@ -162,27 +162,27 @@ class World:
             if not solved:
                 # Executes meet in the middle BFS for the 2 by 2 cube
                 self.time_clock.tick()
-                sNode, eNode = solve_2(self.cube.cube)
+                start_node, end_node = solve_2(self.cube.cube)
                 
 
             
                 # If no path is found, return false to indicate the cube cannot be solved
-                if sNode == None:
+                if start_node == None:
                     print("No solution!")
                     return
             
                 # Adds the move from each node at start tree
-                while sNode.parent != None:
-                    solution.append(sNode.movement)
-                    sNode = sNode.parent
+                while start_node.parent != None:
+                    solution.append(start_node.movement)
+                    start_node = start_node.parent
 
                 # Reverse moves to correct order
                 solution = solution[::-1]
 
                 # Adds the move from each node at the end tree
-                while eNode.parent != None:
-                    solution.append(eNode.movement)
-                    eNode = eNode.parent
+                while end_node.parent != None:
+                    solution.append(end_node.movement)
+                    end_node = end_node.parent
                     
                 time_taken = self.time_clock.tick()
                 self.times.append(time_taken)
