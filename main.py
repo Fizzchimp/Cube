@@ -585,6 +585,6 @@ class World:
         # When loop ends, exit the program
         pg.quit()
 
-
 world = World()
 world.run()
+quit()
